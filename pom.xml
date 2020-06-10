@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.bardframework</groupId>
+        <artifactId>bard-parent</artifactId>
+        <version>2</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>org.bardframework.form</groupId>
+    <artifactId>form</artifactId>
+    <version>0.3.1</version>
+
+    <properties>
+        <bardframework.version>0.3.1</bardframework.version>
+        <generex.version>1.0.2</generex.version>
+        <jackson-bom.version>2.11.0</jackson-bom.version>
+        <slf4j.version>1.7.30</slf4j.version>
+        <spring-framework.version>5.2.6.RELEASE</spring-framework.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson-bom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bardframework.commons</groupId>
+            <artifactId>common-utils</artifactId>
+            <version>${bardframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring-framework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.mifmif</groupId>
+            <artifactId>generex</artifactId>
+            <version>${generex.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>maven-farco</id>
+            <url>https://artifactory.chaapaar.ir/artifactory/maven-farco</url>
+        </repository>
+    </distributionManagement>
+</project>
