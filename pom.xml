@@ -11,13 +11,13 @@
 
     <groupId>org.bardframework.form</groupId>
     <artifactId>form</artifactId>
-    <version>0.3.2</version>
+    <version>0.3.3</version>
 
     <properties>
         <generex.version>1.0.2</generex.version>
         <jackson-bom.version>2.11.0</jackson-bom.version>
         <slf4j.version>1.7.30</slf4j.version>
-        <spring-framework.version>5.2.6.RELEASE</spring-framework.version>
+        <spring-framework.version>5.2.7.RELEASE</spring-framework.version>
     </properties>
 
     <dependencies>
