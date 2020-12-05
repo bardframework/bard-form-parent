@@ -19,6 +19,7 @@ public class FormField implements Comparable<FormField> {
     private Integer maxLength;
     private Long minValue;
     private Long maxValue;
+    private boolean disable;
     private boolean required;
     private boolean showInTable;
     private String errorMessage;
@@ -95,6 +96,14 @@ public class FormField implements Comparable<FormField> {
 
     public void setRegex(String regex) {
         this.regex = regex;
+    }
+
+    public boolean isDisable() {
+        return disable;
+    }
+
+    public void setDisable(boolean disable) {
+        this.disable = disable;
     }
 
     public boolean isRequired() {

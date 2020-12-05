@@ -107,6 +107,7 @@ public class FormService {
         field.setTooltip(this.getFieldValue(formTemplate, fieldTemplate, "tooltip", locale));
         field.setRegex(this.getFieldValue(formTemplate, fieldTemplate, "regex", locale));
         field.setRequired(this.getBooleanValue(formTemplate, fieldTemplate, "required", locale));
+        field.setDisable(this.getBooleanValue(formTemplate, fieldTemplate, "disable", locale));
         field.setMask(this.getFieldValue(formTemplate, fieldTemplate, "mask", locale));
         field.setPrefix(this.getFieldValue(formTemplate, fieldTemplate, "prefix", locale));
         field.setSuffix(this.getFieldValue(formTemplate, fieldTemplate, "suffix", locale));
