@@ -14,6 +14,7 @@
     <version>0.4</version>
 
     <properties>
+        <bardframework.commons.version>0.4</bardframework.commons.version>
         <generex.version>1.0.2</generex.version>
         <jackson-bom.version>2.11.3</jackson-bom.version>
         <slf4j.version>1.7.30</slf4j.version>
@@ -29,7 +30,7 @@
         <dependency>
             <groupId>org.bardframework.commons</groupId>
             <artifactId>common-utils</artifactId>
-            <version>${project.version}</version>
+            <version>${bardframework.commons.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
