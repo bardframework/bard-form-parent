@@ -21,6 +21,7 @@ public class FormField implements Comparable<FormField> {
     private Long maxValue;
     private boolean disable;
     private boolean required;
+    private boolean invalid;
     private boolean showInTable;
     private String errorMessage;
     @JsonIgnore
@@ -180,6 +181,14 @@ public class FormField implements Comparable<FormField> {
 
     public void setMaxValue(Long maxValue) {
         this.maxValue = maxValue;
+    }
+
+    public boolean isInvalid() {
+        return invalid;
+    }
+
+    public void setInvalid(boolean invalid) {
+        this.invalid = invalid;
     }
 
     @Override
