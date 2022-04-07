@@ -1,7 +1,8 @@
 package org.bardframework.form;
 
-import org.bardframework.commons.utils.CollectionUtils;
-import org.bardframework.commons.utils.StringUtils;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.exception.FormDataValidationException;
 import org.bardframework.form.model.Form;
 import org.bardframework.form.model.FormField;
@@ -34,7 +35,7 @@ public class FormService {
                 validationException.addFiledError(field.getName(), field.getErrorMessage());
             }
         }
-        if (!CollectionUtils.isEmpty(validationException.getInvalidFields())) {
+        if (!MapUtils.isEmpty(validationException.getInvalidFields())) {
             throw validationException;
         }
     }
