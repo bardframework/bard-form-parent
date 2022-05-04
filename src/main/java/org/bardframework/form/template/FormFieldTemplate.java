@@ -1,16 +1,29 @@
 package org.bardframework.form.template;
 
+import org.bardframework.form.model.SelectOptionsDataProvider;
+import org.bardframework.form.processor.FormProcessor;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FormFieldTemplate {
     private final String name;
     private final String type;
-    private List<OptionTemplate> options;
-    private Class<? extends Enum> enumOptionsClass;
+    private final boolean volatile_;
+    private SelectOptionsDataProvider optionsDataProvider;
+    private List<FormProcessor> preProcessors;
+    private List<FormProcessor> postProcessors;
+    private Map<String, List<FormProcessor>> actionProcessors = new HashMap<>();
 
     public FormFieldTemplate(String name, String type) {
+        this(name, type, false);
+    }
+
+    public FormFieldTemplate(String name, String type, boolean volatile_) {
         this.name = name;
         this.type = type;
+        this.volatile_ = volatile_;
     }
 
     public String getName() {
@@ -21,19 +34,39 @@ public class FormFieldTemplate {
         return type;
     }
 
-    public List<OptionTemplate> getOptions() {
-        return options;
+    public SelectOptionsDataProvider getOptionsDataProvider() {
+        return optionsDataProvider;
     }
 
-    public void setOptions(List<OptionTemplate> options) {
-        this.options = options;
+    public void setOptionsDataProvider(SelectOptionsDataProvider optionsDataProvider) {
+        this.optionsDataProvider = optionsDataProvider;
     }
 
-    public Class<? extends Enum> getEnumOptionsClass() {
-        return enumOptionsClass;
+    public boolean isVolatile() {
+        return volatile_;
     }
 
-    public void setEnumOptionsClass(Class<? extends Enum> enumOptionsClass) {
-        this.enumOptionsClass = enumOptionsClass;
+    public List<FormProcessor> getPreProcessors() {
+        return preProcessors;
+    }
+
+    public void setPreProcessors(List<FormProcessor> preProcessors) {
+        this.preProcessors = preProcessors;
+    }
+
+    public List<FormProcessor> getPostProcessors() {
+        return postProcessors;
+    }
+
+    public void setPostProcessors(List<FormProcessor> postProcessors) {
+        this.postProcessors = postProcessors;
+    }
+
+    public Map<String, List<FormProcessor>> getActionProcessors() {
+        return actionProcessors;
+    }
+
+    public void setActionProcessors(Map<String, List<FormProcessor>> actionProcessors) {
+        this.actionProcessors = actionProcessors;
     }
 }

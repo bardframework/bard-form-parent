@@ -6,16 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Form implements Comparable<Form> {
+public class Form {
 
     private String id;
     private String title;
     private String description;
+    private String confirmMessage;
     private List<FormField> fields;
     private List<Map<String, String>> data;
-    @JsonIgnore
-    private int order;
-    private Boolean enable;
 
     public String getId() {
         return id;
@@ -23,14 +21,6 @@ public class Form implements Comparable<Form> {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public Boolean getEnable() {
-        return enable;
-    }
-
-    public void setEnable(Boolean enable) {
-        this.enable = enable;
     }
 
     public String getTitle() {
@@ -65,8 +55,12 @@ public class Form implements Comparable<Form> {
         this.data = data;
     }
 
-    public void setOrder(int order) {
-        this.order = order;
+    public String getConfirmMessage() {
+        return confirmMessage;
+    }
+
+    public void setConfirmMessage(String confirmMessage) {
+        this.confirmMessage = confirmMessage;
     }
 
     public void addField(FormField field) {
@@ -97,10 +91,5 @@ public class Form implements Comparable<Form> {
     @Override
     public int hashCode() {
         return id.hashCode();
-    }
-
-    @Override
-    public int compareTo(Form other) {
-        return Integer.compare(this.order, other.order);
     }
 }

@@ -3,19 +3,19 @@ package org.bardframework.form;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.bardframework.commons.utils.StringTemplateUtils;
 import org.bardframework.form.exception.FormDataValidationException;
 import org.bardframework.form.model.Form;
 import org.bardframework.form.model.FormField;
-import org.bardframework.form.model.Option;
-import org.bardframework.form.model.OptionListPropertiesFile;
+import org.bardframework.form.template.DisabledTextFieldTemplate;
 import org.bardframework.form.template.FormFieldTemplate;
 import org.bardframework.form.template.FormTemplate;
-import org.bardframework.form.template.OptionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 
-import java.util.*;
+import java.util.Locale;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class FormService {
@@ -31,6 +31,9 @@ public class FormService {
     public void validate(Form form, Map<String, String> values) throws FormDataValidationException {
         FormDataValidationException validationException = new FormDataValidationException();
         for (FormField field : form.getFields()) {
+            if (Boolean.TRUE.equals(field.getDisable())) {
+                continue;
+            }
             if (!this.isValid(field, values.get(field.getName()))) {
                 validationException.addFiledError(field.getName(), field.getErrorMessage());
             }
@@ -40,9 +43,14 @@ public class FormService {
         }
     }
 
+    public boolean isValid(String value, FormTemplate formTemplate, FormFieldTemplate fieldTemplate, Locale locale, Map<String, String> args) {
+        FormField field = this.translate(formTemplate, fieldTemplate, locale, args);
+        return this.isValid(field, value);
+    }
+
     public boolean isValid(FormField field, String value) {
         if (StringUtils.isBlank(value)) {
-            if (!field.isRequired()) {
+            if (!Boolean.TRUE.equals(field.getDisable())) {
                 /*
                     filed not required and value is empty
                  */
@@ -83,101 +91,66 @@ public class FormService {
         return true;
     }
 
+    @Deprecated
     public <F extends Form> F translate(F form, FormTemplate formTemplate, Locale locale) {
+        return this.translate(form, formTemplate, locale, Map.of());
+    }
+
+    public <F extends Form> F translate(F form, FormTemplate formTemplate, Locale locale, Map<String, String> args) {
         form.setId(formTemplate.getName());
-        form.setTitle(this.getFormValue(formTemplate, "name", locale));
-        form.setDescription(this.getFormValue(formTemplate, "description", locale));
-        form.setEnable(this.getFormBooleanValue(formTemplate, "enable", locale));
-        form.setOrder(this.getFormIntValue(formTemplate, "order", locale));
+        form.setTitle(this.getFormValue(formTemplate, "name", locale, args));
+        form.setDescription(this.getFormValue(formTemplate, "description", locale, args));
+        form.setConfirmMessage(this.getFormValue(formTemplate, "confirmMessage", locale, args));
         for (FormFieldTemplate fieldTemplate : formTemplate.getFields()) {
-            if (this.getBooleanValue(formTemplate, fieldTemplate, "enable", locale)) {
-                form.addField(this.translate(formTemplate, fieldTemplate, locale));
-            }
-        }
-        if (null != form.getFields()) {
-            Collections.sort(form.getFields());
+            form.addField(this.translate(formTemplate, fieldTemplate, locale, args));
         }
         return form;
     }
 
-    public FormField translate(FormTemplate formTemplate, FormFieldTemplate fieldTemplate, Locale locale) {
+    public FormField translate(FormTemplate formTemplate, FormFieldTemplate fieldTemplate, Locale locale, Map<String, String> args) {
         FormField field = new FormField(fieldTemplate.getName(), fieldTemplate.getType());
-        field.setValue(this.getFieldValue(formTemplate, fieldTemplate, "value", locale));
-        field.setLabel(this.getFieldValue(formTemplate, fieldTemplate, "label", locale));
-        field.setPlaceholder(this.getFieldValue(formTemplate, fieldTemplate, "placeholder", locale));
-        field.setTooltip(this.getFieldValue(formTemplate, fieldTemplate, "tooltip", locale));
-        field.setRegex(this.getFieldValue(formTemplate, fieldTemplate, "regex", locale));
-        field.setRequired(this.getBooleanValue(formTemplate, fieldTemplate, "required", locale));
-        field.setDisable(this.getBooleanValue(formTemplate, fieldTemplate, "disable", locale));
-        field.setMask(this.getFieldValue(formTemplate, fieldTemplate, "mask", locale));
-        field.setPrefix(this.getFieldValue(formTemplate, fieldTemplate, "prefix", locale));
-        field.setSuffix(this.getFieldValue(formTemplate, fieldTemplate, "suffix", locale));
-        field.setMaxLength(this.getIntegerValue(formTemplate, fieldTemplate, "maxLength", locale));
-        field.setShowInTable(this.getBooleanValue(formTemplate, fieldTemplate, "showInTable", locale));
-        field.setErrorMessage(this.getFieldValue(formTemplate, fieldTemplate, "errorMessage", locale));
-        field.setOrder(this.getIntValue(formTemplate, fieldTemplate, "order", locale));
-        field.setMinValue(this.getLongValue(formTemplate, fieldTemplate, "minValue", locale));
-        field.setMaxValue(this.getLongValue(formTemplate, fieldTemplate, "maxValue", locale));
-        if (null != fieldTemplate.getEnumOptionsClass()) {
-            field.setOptions(this.getOptions(fieldTemplate.getEnumOptionsClass(), locale));
+        field.setValue(this.getFieldValue(formTemplate, fieldTemplate, "value", locale, args));
+        field.setLabel(this.getFieldValue(formTemplate, fieldTemplate, "label", locale, args));
+        field.setPlaceholder(this.getFieldValue(formTemplate, fieldTemplate, "placeholder", locale, args));
+        field.setTooltip(this.getFieldValue(formTemplate, fieldTemplate, "tooltip", locale, args));
+        field.setRegex(this.getFieldValue(formTemplate, fieldTemplate, "regex", locale, args));
+        field.setRequired(this.getBooleanValue(formTemplate, fieldTemplate, "required", locale, args));
+        if (fieldTemplate instanceof DisabledTextFieldTemplate) {
+            field.setDisable(true);
+        } else {
+            field.setDisable(this.getBooleanValue(formTemplate, fieldTemplate, "disable", locale, args));
         }
-        if (!CollectionUtils.isEmpty(fieldTemplate.getOptions())) {
-            if (fieldTemplate.getOptions() instanceof OptionListPropertiesFile) {
-                field.setOptions(((OptionListPropertiesFile) fieldTemplate.getOptions()).getOptions(locale));
-            } else {
-                field.setOptions(this.getOptions(fieldTemplate.getOptions(), locale));
-            }
+        field.setMask(this.getFieldValue(formTemplate, fieldTemplate, "mask", locale, args));
+        field.setPrefix(this.getFieldValue(formTemplate, fieldTemplate, "prefix", locale, args));
+        field.setSuffix(this.getFieldValue(formTemplate, fieldTemplate, "suffix", locale, args));
+        field.setMaxLength(this.getIntegerValue(formTemplate, fieldTemplate, "maxLength", locale, args));
+        field.setShowInTable(this.getBooleanValue(formTemplate, fieldTemplate, "showInTable", locale, args));
+        field.setErrorMessage(this.getFieldValue(formTemplate, fieldTemplate, "errorMessage", locale, args));
+        field.setMinValue(this.getLongValue(formTemplate, fieldTemplate, "minValue", locale, args));
+        field.setMaxValue(this.getLongValue(formTemplate, fieldTemplate, "maxValue", locale, args));
+        if (null != fieldTemplate.getOptionsDataProvider()) {
+            field.setOptions(fieldTemplate.getOptionsDataProvider().getOptions(messageSource, locale));
         }
-        String newType = this.getFieldValue(formTemplate, fieldTemplate, "type", locale);
+        String newType = this.getFieldValue(formTemplate, fieldTemplate, "type", locale, args);
         if (StringUtils.isNotBlank(newType)) {
             field.setType(newType);
         }
         return field;
     }
 
-    public List<Option> getOptions(List<OptionTemplate> fieldTemplates, Locale locale) {
-        Collections.sort(fieldTemplates);
-        List<Option> options = new ArrayList<>();
-        for (OptionTemplate optionTemplate : fieldTemplates) {
-            Option option = new Option();
-            option.setId(optionTemplate.getId());
-            option.setTitle(this.getString(optionTemplate.getName(), locale));
-            options.add(option);
-        }
-        return options;
-    }
-
-    public List<Option> getOptions(Class<? extends Enum> clazz, Locale locale) {
-        List<Option> options = new ArrayList<>();
-        for (Enum anEnum : clazz.getEnumConstants()) {
-            Option option = new Option();
-            option.setId(anEnum.name());
-            option.setTitle(this.getString(clazz.getSimpleName() + "." + anEnum.name(), locale));
-            options.add(option);
-        }
-        return options;
-    }
-
-    public String getString(String key, Locale locale) {
-        return messageSource.getMessage(key, null, null, locale);
-    }
-
-    public String getFormValue(FormTemplate formTemplate, String property, Locale locale) {
-        String value = this.getString(formTemplate.getName() + "." + property, locale);
+    public String getFormValue(FormTemplate formTemplate, String property, Locale locale, Map<String, String> args) {
+        String value = this.getString(formTemplate.getName() + "." + property, locale, args);
         if (null == value) {
-            value = this.getString("form." + property, locale);
+            value = this.getString("form." + property, locale, args);
         }
-        return value;
+        return StringTemplateUtils.fillTemplate(value, args);
     }
 
     /**
-     * @param formTemplate
-     * @param property
-     * @param locale
      * @return false if can't find
      */
-    public boolean getFormBooleanValue(FormTemplate formTemplate, String property, Locale locale) {
-        String value = this.getFormValue(formTemplate, property, locale);
+    public boolean getFormBooleanValue(FormTemplate formTemplate, String property, Locale locale, Map<String, String> args) {
+        String value = this.getFormValue(formTemplate, property, locale, args);
         if (StringUtils.isBlank(value)) {
             return false;
         }
@@ -190,13 +163,10 @@ public class FormService {
     }
 
     /**
-     * @param formTemplate
-     * @param property
-     * @param locale
      * @return 0 if can't read property value
      */
-    public int getFormIntValue(FormTemplate formTemplate, String property, Locale locale) {
-        String value = this.getFormValue(formTemplate, property, locale);
+    public int getFormIntValue(FormTemplate formTemplate, String property, Locale locale, Map<String, String> args) {
+        String value = this.getFormValue(formTemplate, property, locale, args);
         if (StringUtils.isBlank(value)) {
             return 0;
         }
@@ -209,49 +179,37 @@ public class FormService {
     }
 
     /**
-     * @param formTemplate
-     * @param fieldTemplate
-     * @param property
-     * @param locale
      * @return null if can't read property value
      */
-    public String getFieldValue(FormTemplate formTemplate, FormFieldTemplate fieldTemplate, String property, Locale locale) {
-        String value = this.getString(formTemplate.getName() + "." + fieldTemplate.getName() + "." + property, locale);
+    public String getFieldValue(FormTemplate formTemplate, FormFieldTemplate fieldTemplate, String property, Locale locale, Map<String, String> args) {
+        String value = this.getString(formTemplate.getName() + "." + fieldTemplate.getName() + "." + property, locale, args);
         if (null == value) {
-            value = this.getString("field." + fieldTemplate.getName() + "." + property, locale);
+            value = this.getString("field." + fieldTemplate.getName() + "." + property, locale, args);
         }
         return value;
     }
 
     /**
-     * @param formTemplate
-     * @param fieldTemplate
-     * @param property
-     * @param locale
      * @return false if can't read property value
      */
-    public boolean getBooleanValue(FormTemplate formTemplate, FormFieldTemplate fieldTemplate, String property, Locale locale) {
-        String value = this.getFieldValue(formTemplate, fieldTemplate, property, locale);
+    public Boolean getBooleanValue(FormTemplate formTemplate, FormFieldTemplate fieldTemplate, String property, Locale locale, Map<String, String> args) {
+        String value = this.getFieldValue(formTemplate, fieldTemplate, property, locale, args);
         if (StringUtils.isBlank(value)) {
-            return false;
+            return null;
         }
         try {
             return Boolean.parseBoolean(value);
         } catch (Exception e) {
             LOGGER.error("error reading [{}] of [{}.{}] as boolean", property, formTemplate.getName(), fieldTemplate.getName(), e);
-            return false;
+            return null;
         }
     }
 
     /**
-     * @param formTemplate
-     * @param fieldTemplate
-     * @param property
-     * @param locale
      * @return 0 if can't read property value
      */
-    public int getIntValue(FormTemplate formTemplate, FormFieldTemplate fieldTemplate, String property, Locale locale) {
-        String value = this.getFieldValue(formTemplate, fieldTemplate, property, locale);
+    public int getIntValue(FormTemplate formTemplate, FormFieldTemplate fieldTemplate, String property, Locale locale, Map<String, String> args) {
+        String value = this.getFieldValue(formTemplate, fieldTemplate, property, locale, args);
         if (StringUtils.isBlank(value)) {
             return 0;
         }
@@ -264,14 +222,10 @@ public class FormService {
     }
 
     /**
-     * @param formTemplate
-     * @param fieldTemplate
-     * @param property
-     * @param locale
      * @return null if can't read property value
      */
-    public Integer getIntegerValue(FormTemplate formTemplate, FormFieldTemplate fieldTemplate, String property, Locale locale) {
-        String value = this.getFieldValue(formTemplate, fieldTemplate, property, locale);
+    public Integer getIntegerValue(FormTemplate formTemplate, FormFieldTemplate fieldTemplate, String property, Locale locale, Map<String, String> args) {
+        String value = this.getFieldValue(formTemplate, fieldTemplate, property, locale, args);
         if (StringUtils.isBlank(value)) {
             return null;
         }
@@ -284,14 +238,10 @@ public class FormService {
     }
 
     /**
-     * @param formTemplate
-     * @param fieldTemplate
-     * @param property
-     * @param locale
      * @return null if can't read property value
      */
-    public Long getLongValue(FormTemplate formTemplate, FormFieldTemplate fieldTemplate, String property, Locale locale) {
-        String value = this.getFieldValue(formTemplate, fieldTemplate, property, locale);
+    public Long getLongValue(FormTemplate formTemplate, FormFieldTemplate fieldTemplate, String property, Locale locale, Map<String, String> args) {
+        String value = this.getFieldValue(formTemplate, fieldTemplate, property, locale, args);
         if (StringUtils.isBlank(value)) {
             return null;
         }
@@ -301,5 +251,10 @@ public class FormService {
             LOGGER.error("error reading [{}] of [{}.{}] as long", property, formTemplate.getName(), fieldTemplate.getName(), e);
             return null;
         }
+    }
+
+    public String getString(String key, Locale locale, Map<String, String> args) {
+        String value = messageSource.getMessage(key, null, null, locale);
+        return StringTemplateUtils.fillTemplate(value, args);
     }
 }

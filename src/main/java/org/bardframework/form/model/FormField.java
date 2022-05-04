@@ -1,10 +1,8 @@
 package org.bardframework.form.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.List;
 
-public class FormField implements Comparable<FormField> {
+public class FormField {
     private String name;
     private String type;
     private List<Option> options;
@@ -19,13 +17,11 @@ public class FormField implements Comparable<FormField> {
     private Integer maxLength;
     private Long minValue;
     private Long maxValue;
-    private boolean disable;
-    private boolean required;
-    private boolean invalid;
-    private boolean showInTable;
+    private Boolean disable;
+    private Boolean required;
+    private Boolean invalid;
+    private Boolean showInTable;
     private String errorMessage;
-    @JsonIgnore
-    private int order;
 
     public FormField() {
     }
@@ -99,22 +95,6 @@ public class FormField implements Comparable<FormField> {
         this.regex = regex;
     }
 
-    public boolean isDisable() {
-        return disable;
-    }
-
-    public void setDisable(boolean disable) {
-        this.disable = disable;
-    }
-
-    public boolean isRequired() {
-        return required;
-    }
-
-    public void setRequired(boolean required) {
-        this.required = required;
-    }
-
     public String getErrorMessage() {
         return errorMessage;
     }
@@ -147,24 +127,12 @@ public class FormField implements Comparable<FormField> {
         this.suffix = suffix;
     }
 
-    public boolean isShowInTable() {
-        return showInTable;
-    }
-
-    public void setShowInTable(boolean showInTable) {
-        this.showInTable = showInTable;
-    }
-
     public Integer getMaxLength() {
         return maxLength;
     }
 
     public void setMaxLength(Integer maxLength) {
         this.maxLength = maxLength;
-    }
-
-    public void setOrder(int order) {
-        this.order = order;
     }
 
     public Long getMinValue() {
@@ -183,11 +151,35 @@ public class FormField implements Comparable<FormField> {
         this.maxValue = maxValue;
     }
 
-    public boolean isInvalid() {
+    public Boolean getDisable() {
+        return disable;
+    }
+
+    public void setDisable(Boolean disable) {
+        this.disable = disable;
+    }
+
+    public Boolean getRequired() {
+        return required;
+    }
+
+    public void setRequired(Boolean required) {
+        this.required = required;
+    }
+
+    public Boolean getShowInTable() {
+        return showInTable;
+    }
+
+    public void setShowInTable(Boolean showInTable) {
+        this.showInTable = showInTable;
+    }
+
+    public Boolean getInvalid() {
         return invalid;
     }
 
-    public void setInvalid(boolean invalid) {
+    public void setInvalid(Boolean invalid) {
         this.invalid = invalid;
     }
 
@@ -210,11 +202,6 @@ public class FormField implements Comparable<FormField> {
     }
 
     @Override
-    public int compareTo(FormField other) {
-        return Integer.compare(this.order, other.order);
-    }
-
-    @Override
     public String toString() {
         return "FormField{" +
                 "name='" + name + '\'' +
@@ -230,7 +217,6 @@ public class FormField implements Comparable<FormField> {
                 ", required=" + required +
                 ", showInTable=" + showInTable +
                 ", errorMessage='" + errorMessage + '\'' +
-                ", order=" + order +
                 '}';
     }
 }

@@ -22,7 +22,7 @@ public final class FormDataProvider {
     public static Map<String, String> getValidData(Form form) {
         HashMap<String, String> map = new HashMap<>();
         for (FormField field : form.getFields()) {
-            if (!field.isRequired() && RandomUtils.nextBoolean()) {
+            if (!Boolean.TRUE.equals(field.getRequired()) && RandomUtils.nextBoolean()) {
                 continue;
             }
             if (CollectionUtils.isNotEmpty(field.getOptions())) {
