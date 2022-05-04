@@ -25,7 +25,7 @@ import java.util.UUID;
 
 public class FlowHandler {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FlowHandler.class);
+    protected static final Logger LOGGER = LoggerFactory.getLogger(FlowHandler.class);
     protected final List<FormTemplate> forms;
     protected final FlowDataRepository<FlowData> flowDataRepository;
     protected final MessageSource messageSource;
@@ -43,14 +43,10 @@ public class FlowHandler {
         FlowData flowData = new FlowData();
         flowData.setLocale(locale);
         flowData.setCurrentStepIndex(-1);
-        FormTemplate formTemplate = forms.get(0);
+        FormTemplate formTemplate = this.getNextFormTemplate(flowData);
         FlowResponse<String> response = this.prepareForSend(formTemplate, flowToken, flowData, Map.of(), flowToken, httpRequest, httpResponse);
         flowDataRepository.put(flowToken, flowData);
         return response;
-    }
-
-    public int getStepsCounts() {
-        return this.forms.size();
     }
 
     public FlowResponse<String> submit(String flowToken, Map<String, String> formData, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
@@ -68,11 +64,11 @@ public class FlowHandler {
         FlowResponse<String> response = null;
         try {
             for (FormFieldTemplate fieldTemplate : currentFormTemplate.getFields()) {
-                this.process(fieldTemplate.getPostProcessors(), flowToken, flowData, formData, httpRequest, httpResponse);
+                this.action(fieldTemplate.getPostProcessors(), flowToken, flowData, formData, httpRequest, httpResponse);
             }
-            this.process(currentFormTemplate.getPostProcessors(), flowToken, flowData, formData, httpRequest, httpResponse);
+            this.action(currentFormTemplate.getPostProcessors(), flowToken, flowData, formData, httpRequest, httpResponse);
 
-            FormTemplate nextFormTemplate = forms.get(flowData.getCurrentStepIndex() + 1);
+            FormTemplate nextFormTemplate = this.getNextFormTemplate(flowData);
             response = this.prepareForSend(nextFormTemplate, flowToken, flowData, formData, null, httpRequest, httpResponse);
             return response;
         } catch (InvalidateFlowException e) {
@@ -97,11 +93,49 @@ public class FlowHandler {
         }
     }
 
-    private FlowResponse<String> prepareForSend(FormTemplate formTemplate, String flowToken, FlowData flowData, Map<String, String> formData, String responseData, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
-        for (FormFieldTemplate fieldTemplate : formTemplate.getFields()) {
-            this.process(fieldTemplate.getPreProcessors(), flowToken, flowData, formData, httpRequest, httpResponse);
+    public void action(String flowToken, String action, Map<String, String> formData, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
+            throws Exception {
+        LOGGER.debug("start action[{}] processing, flow token [{}], form data [{}]", action, flowToken, formData);
+        FlowData flowData = flowDataRepository.get(flowToken);
+        FormTemplate currentFormTemplate = forms.get(flowData.getCurrentStepIndex());
+        if (StringUtils.isBlank(action)) {
+            LOGGER.warn("null action can't process, flow token [{}], form [{}]", flowToken, currentFormTemplate.getName());
+            httpResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return;
         }
-        this.process(formTemplate.getPreProcessors(), flowToken, flowData, formData, httpRequest, httpResponse);
+        try {
+            boolean process = false;
+            for (FormFieldTemplate fieldTemplate : currentFormTemplate.getFields()) {
+                process |= this.action(fieldTemplate.getActionProcessors().get(action), flowToken, flowData, formData, httpRequest, httpResponse);
+            }
+            process |= this.action(currentFormTemplate.getActionProcessors().get(action), flowToken, flowData, formData, httpRequest, httpResponse);
+            if (!process) {
+                /*
+                    در صورتی که عملیات نامناسب درخواست شود، فلو را پاک می کنیم
+                 */
+                LOGGER.warn("no processor exist to handle action [{}], flow token [{}], form [{}]", action, flowToken, currentFormTemplate.getName());
+                throw new InvalidateFlowException(flowToken, "invalid action");
+            }
+        } catch (InvalidateFlowException e) {
+            /*
+                در برخی موارد مانند تلاش زیاد برای تولید کپچا و ... خطای InvalidateFlowException تولید می شود و باید داده های مربوط به فلو پاک شوند
+             */
+            this.cleanFlowData(flowToken);
+            throw e;
+        } finally {
+            flowDataRepository.put(flowToken, flowData);
+        }
+    }
+
+    protected FormTemplate getNextFormTemplate(FlowData flowData) throws Exception {
+        return forms.get(flowData.getCurrentStepIndex() + 1);
+    }
+
+    protected FlowResponse<String> prepareForSend(FormTemplate formTemplate, String flowToken, FlowData flowData, Map<String, String> formData, String responseData, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
+        for (FormFieldTemplate fieldTemplate : formTemplate.getFields()) {
+            this.action(fieldTemplate.getPreProcessors(), flowToken, flowData, formData, httpRequest, httpResponse);
+        }
+        this.action(formTemplate.getPreProcessors(), flowToken, flowData, formData, httpRequest, httpResponse);
         Form nextForm = formService.translate(new Form(), formTemplate, flowData.getLocale(), flowData.getData());
         /*
             fill form
@@ -126,45 +160,15 @@ public class FlowHandler {
         return response;
     }
 
-    public void process(String flowToken, String action, Map<String, String> formData, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
-            throws Exception {
-        LOGGER.debug("start action[{}] processing, flow token [{}], form data [{}]", action, flowToken, formData);
-        FlowData flowData = flowDataRepository.get(flowToken);
-        FormTemplate currentFormTemplate = forms.get(flowData.getCurrentStepIndex());
-        if (StringUtils.isBlank(action)) {
-            LOGGER.warn("null action can't process, flow token [{}], form [{}]", flowToken, currentFormTemplate.getName());
-            httpResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            return;
-        }
-        try {
-            boolean process = false;
-            for (FormFieldTemplate fieldTemplate : currentFormTemplate.getFields()) {
-                process |= this.process(fieldTemplate.getActionProcessors().get(action), flowToken, flowData, formData, httpRequest, httpResponse);
-            }
-            process |= this.process(currentFormTemplate.getActionProcessors().get(action), flowToken, flowData, formData, httpRequest, httpResponse);
-            if (!process) {
-                /*
-                    در صورتی که عملیات نامناسب درخواست شود، فلو را پاک می کنیم
-                 */
-                LOGGER.warn("no processor exist to handle action [{}], flow token [{}], form [{}]", action, flowToken, currentFormTemplate.getName());
-                throw new InvalidateFlowException(flowToken, "invalid action");
-            }
-        } catch (InvalidateFlowException e) {
-            /*
-                در برخی موارد مانند تلاش زیاد برای تولید کپچا و ... خطای InvalidateFlowException تولید می شود و باید داده های مربوط به فلو پاک شوند
-             */
-            this.cleanFlowData(flowToken);
-            throw e;
-        } finally {
-            flowDataRepository.put(flowToken, flowData);
-        }
+    protected int getStepsCounts() {
+        return this.forms.size();
     }
 
-    private void cleanFlowData(String flowToken) {
+    protected void cleanFlowData(String flowToken) {
         flowDataRepository.remove(flowToken);
     }
 
-    private boolean process(List<FormProcessor> processors, String flowToken, FlowData flowData, Map<String, String> formData, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
+    protected boolean action(List<FormProcessor> processors, String flowToken, FlowData flowData, Map<String, String> formData, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
         if (CollectionUtils.isEmpty(processors)) {
             return false;
         }

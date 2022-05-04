@@ -26,7 +26,7 @@ public interface FlowController {
     @PutMapping(value = "", consumes = APPLICATION_JSON_VALUE)
     default void action(@RequestHeader("X-Flow-Token") String flowToken, @RequestParam("action") String action, @RequestBody Map<String, String> formData, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
             throws Exception {
-        this.getFlowHandler().process(flowToken, action, formData, httpRequest, httpResponse);
+        this.getFlowHandler().action(flowToken, action, formData, httpRequest, httpResponse);
     }
 
     FlowHandler getFlowHandler();
