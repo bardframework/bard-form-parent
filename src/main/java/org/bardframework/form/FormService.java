@@ -115,6 +115,7 @@ public class FormService {
         field.setTooltip(this.getFieldValue(formTemplate, fieldTemplate, "tooltip", locale, args));
         field.setRegex(this.getFieldValue(formTemplate, fieldTemplate, "regex", locale, args));
         field.setRequired(this.getBooleanValue(formTemplate, fieldTemplate, "required", locale, args));
+        field.setActive(this.getBooleanValue(formTemplate, fieldTemplate, "active", locale, args));
         if (fieldTemplate instanceof DisabledTextFieldTemplate) {
             field.setDisable(true);
         } else {
@@ -147,7 +148,7 @@ public class FormService {
     }
 
     /**
-     * @return false if can't find
+     * @return false if it can't find
      */
     public boolean getFormBooleanValue(FormTemplate formTemplate, String property, Locale locale, Map<String, String> args) {
         String value = this.getFormValue(formTemplate, property, locale, args);

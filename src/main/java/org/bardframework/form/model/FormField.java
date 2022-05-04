@@ -20,6 +20,7 @@ public class FormField {
     private Boolean disable;
     private Boolean required;
     private Boolean invalid;
+    private Boolean active;
     private Boolean showInTable;
     private String errorMessage;
 
@@ -181,6 +182,14 @@ public class FormField {
 
     public void setInvalid(Boolean invalid) {
         this.invalid = invalid;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     @Override
