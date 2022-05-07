@@ -10,8 +10,14 @@
     </parent>
 
     <groupId>org.bardframework.form</groupId>
-    <artifactId>form</artifactId>
+    <artifactId>form-parent</artifactId>
     <version>1.2.12</version>
+
+    <packaging>pom</packaging>
+    <modules>
+        <module>form</module>
+        <module>form-common</module>
+    </modules>
 
     <properties>
         <bardframework.commons.version>1.2.13</bardframework.commons.version>
@@ -29,52 +35,42 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>org.bardframework.form</groupId>
+                <artifactId>form-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.bardframework.commons</groupId>
+                <artifactId>common-utils</artifactId>
+                <version>${bardframework.commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.bardframework.commons</groupId>
+                <artifactId>common-web</artifactId>
+                <version>${bardframework.commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.bardframework.commons</groupId>
+                <artifactId>common-utils-persian</artifactId>
+                <version>${bardframework.commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.bardframework.commons</groupId>
+                <artifactId>common-captcha</artifactId>
+                <version>${bardframework.commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.mifmif</groupId>
+                <artifactId>generex</artifactId>
+                <version>${generex.version}</version>
+                <scope>test</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.bardframework.commons</groupId>
-            <artifactId>common-utils</artifactId>
-            <version>${bardframework.commons.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.bardframework.commons</groupId>
-            <artifactId>common-web</artifactId>
-            <version>${bardframework.commons.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.bardframework.commons</groupId>
-            <artifactId>common-utils-persian</artifactId>
-            <version>${bardframework.commons.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.bardframework.commons</groupId>
-            <artifactId>common-captcha</artifactId>
-            <version>${bardframework.commons.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.annotation</groupId>
-            <artifactId>jakarta.annotation-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.github.mifmif</groupId>
-            <artifactId>generex</artifactId>
-            <version>${generex.version}</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
 </project>
