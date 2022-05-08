@@ -1,6 +1,7 @@
-package org.bardframework.form.processor;
+package org.bardframework.form.processor.dataprovider;
 
 import org.bardframework.commons.utils.reflection.ReflectionUtils;
+import org.bardframework.form.processor.FormProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

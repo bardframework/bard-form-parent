@@ -11,7 +11,7 @@
 
     <groupId>org.bardframework.form</groupId>
     <artifactId>form-parent</artifactId>
-    <version>1.2.12</version>
+    <version>1.2.18</version>
 
     <packaging>pom</packaging>
     <modules>
@@ -20,7 +20,7 @@
     </modules>
 
     <properties>
-        <bardframework.commons.version>1.2.13</bardframework.commons.version>
+        <bardframework.commons.version>1.2.17</bardframework.commons.version>
         <generex.version>1.0.2</generex.version>
         <guava.version>31.1-jre</guava.version>
         <spring-boot.version>2.6.7</spring-boot.version>
@@ -52,6 +52,11 @@
             </dependency>
             <dependency>
                 <groupId>org.bardframework.commons</groupId>
+                <artifactId>common-sms</artifactId>
+                <version>${bardframework.commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.bardframework.commons</groupId>
                 <artifactId>common-utils-persian</artifactId>
                 <version>${bardframework.commons.version}</version>
             </dependency>
@@ -69,7 +74,6 @@
                 <groupId>com.github.mifmif</groupId>
                 <artifactId>generex</artifactId>
                 <version>${generex.version}</version>
-                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

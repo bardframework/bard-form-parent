@@ -9,6 +9,7 @@ public enum FieldTypeBase implements FieldType<FieldTypeBase> {
     NUMBER_RANGE,
     DATE,
     DATE_RANGE,
+    SINGLE_CHECKBOX,
     SINGLE_SELECT,
     SINGLE_SELECT_SEARCHABLE,
     MULTI_SELECT,

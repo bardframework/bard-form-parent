@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.bardframework.form</groupId>
         <artifactId>form-parent</artifactId>
-        <version>1.2.12</version>
+        <version>1.2.18</version>
     </parent>
 
     <artifactId>form</artifactId>
@@ -30,6 +30,10 @@
         </dependency>
         <dependency>
             <groupId>org.bardframework.commons</groupId>
+            <artifactId>common-sms</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.bardframework.commons</groupId>
             <artifactId>common-utils-persian</artifactId>
         </dependency>
         <dependency>
@@ -51,7 +55,6 @@
         <dependency>
             <groupId>com.github.mifmif</groupId>
             <artifactId>generex</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

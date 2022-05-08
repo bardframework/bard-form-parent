@@ -1,5 +1,6 @@
 package org.bardframework.form.field.option;
 
+import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.common.field.common.SelectOption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -23,10 +24,22 @@ public class OptionsDataSourceEnum extends CachableOptionDataSource {
     protected List<SelectOption> loadOption(Locale locale) {
         List<SelectOption> options = new ArrayList<>();
         for (Enum<?> anEnum : enumOptionsClass.getEnumConstants()) {
-            String titleMessageKey = keyPrefix + "." + anEnum.name();
+            String titleMessageKey = this.getMessageKey(anEnum);
             options.add(new SelectOption(anEnum.name(), messageSource.getMessage(titleMessageKey, null, titleMessageKey, locale), null));
         }
         return options;
+    }
+
+    protected String getMessageKey(Enum<?> anEnum) {
+        String prefix;
+        if (null == keyPrefix) {
+            prefix = anEnum.getClass().getSimpleName() + ".";
+        } else if (StringUtils.isBlank(keyPrefix)) {
+            prefix = "";
+        } else {
+            prefix = keyPrefix + ".";
+        }
+        return prefix + anEnum.name();
     }
 
     public String getKeyPrefix() {
