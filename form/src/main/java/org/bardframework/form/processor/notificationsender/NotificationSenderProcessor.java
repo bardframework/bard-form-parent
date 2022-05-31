@@ -9,6 +9,7 @@ import org.springframework.context.MessageSource;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -31,7 +32,7 @@ public abstract class NotificationSenderProcessor implements FormProcessor {
         this.messageSource = messageSource;
     }
 
-    protected abstract void send(Map<String, String> flowData, String message);
+    protected abstract void send(Map<String, String> flowData, String message) throws IOException;
 
     @Override
     public final void process(String flowToken, Map<String, String> flowData, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {

@@ -7,6 +7,7 @@ import org.bardframework.form.field.base.FieldTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +23,7 @@ public class NotificationSmsSenderProcessor extends NotificationSenderProcessor 
     }
 
     @Override
-    protected void send(Map<String, String> flowData, String message) {
+    protected void send(Map<String, String> flowData, String message) throws IOException {
         String mobileNumber = this.getMobileNumber(flowData);
         LOGGER.debug("sending message [{}]", message);
         boolean sendResult = this.getSmsSender().send(mobileNumber, message, flowData);
