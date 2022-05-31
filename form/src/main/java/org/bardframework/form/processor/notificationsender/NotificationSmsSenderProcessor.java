@@ -25,8 +25,8 @@ public class NotificationSmsSenderProcessor extends NotificationSenderProcessor 
     protected void send(Map<String, String> flowData, String message) {
         String mobileNumber = this.getMobileNumber(flowData);
         LOGGER.debug("sending message [{}]", message);
-        SmsSender.SendResult sendResult = this.getSmsSender().send(mobileNumber, message, flowData);
-        if (sendResult != SmsSender.SendResult.SUCCESS) {
+        boolean sendResult = this.getSmsSender().send(mobileNumber, message, flowData);
+        if (!sendResult) {
             LOGGER.error("error sending sms to [{}]", mobileNumber);
             throw new FlowExecutionException(List.of(this.getErrorMessageCode()));
         }

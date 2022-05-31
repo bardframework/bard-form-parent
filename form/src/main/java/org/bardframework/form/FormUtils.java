@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -200,6 +202,32 @@ public class FormUtils {
             return LocalDate.parse(value);
         } catch (Exception e) {
             LOGGER.error("error reading [{}] of [{}.{}] as LocalDate", property, formTemplate, fieldName, e);
+            return null;
+        }
+    }
+
+    public static LocalDateTime getLocalDateTimeValue(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, String> args) {
+        String value = FormUtils.getFieldValue(formTemplate, fieldName, property, locale, args);
+        if (StringUtils.isBlank(value)) {
+            return null;
+        }
+        try {
+            return LocalDateTime.parse(value);
+        } catch (Exception e) {
+            LOGGER.error("error reading [{}] of [{}.{}] as LocalDateTime", property, formTemplate, fieldName, e);
+            return null;
+        }
+    }
+
+    public static LocalTime getLocalTimeValue(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, String> args) {
+        String value = FormUtils.getFieldValue(formTemplate, fieldName, property, locale, args);
+        if (StringUtils.isBlank(value)) {
+            return null;
+        }
+        try {
+            return LocalTime.parse(value);
+        } catch (Exception e) {
+            LOGGER.error("error reading [{}] of [{}.{}] as LocalTime", property, formTemplate, fieldName, e);
             return null;
         }
     }
