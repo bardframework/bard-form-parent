@@ -35,12 +35,12 @@ public abstract class FormFieldTemplate<F extends FormField<T>, T> extends Field
     public void fill(FormTemplate formTemplate, F field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
         field.setName(this.getName());
-        field.setPlaceholder(FormUtils.getFieldValue(formTemplate, this.getName(), "placeholder", locale, args));
-        field.setTooltip(FormUtils.getFieldValue(formTemplate, this.getName(), "tooltip", locale, args));
-        field.setRequired(FormUtils.getBooleanValue(formTemplate, this.getName(), "required", locale, args));
-        field.setFocused(FormUtils.getBooleanValue(formTemplate, this.getName(), "focused", locale, args));
-        field.setDisable(FormUtils.getBooleanValue(formTemplate, this.getName(), "disable", locale, args));
-        field.setErrorMessage(FormUtils.getFieldValue(formTemplate, this.getName(), "errorMessage", locale, args));
+        field.setPlaceholder(FormUtils.getFieldStringProperty(formTemplate, this.getName(), "placeholder", locale, args, null));
+        field.setTooltip(FormUtils.getFieldStringProperty(formTemplate, this.getName(), "tooltip", locale, args, null));
+        field.setRequired(FormUtils.getFieldBooleanProperty(formTemplate, this.getName(), "required", locale, args, null));
+        field.setFocused(FormUtils.getFieldBooleanProperty(formTemplate, this.getName(), "focused", locale, args, null));
+        field.setDisable(FormUtils.getFieldBooleanProperty(formTemplate, this.getName(), "disable", locale, args, null));
+        field.setErrorMessage(FormUtils.getFieldStringProperty(formTemplate, this.getName(), "errorMessage", locale, args, null));
         if (null != valueProvider) {
             field.setValue(valueProvider.getValue(field));
         }

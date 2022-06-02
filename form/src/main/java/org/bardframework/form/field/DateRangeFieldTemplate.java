@@ -23,10 +23,10 @@ public class DateRangeFieldTemplate extends FormFieldTemplate<DateRangeField, Ra
     @Override
     public void fill(FormTemplate formTemplate, DateRangeField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
-        field.setMinLength(FormUtils.getLongValue(formTemplate, this.getName(), "minLength", locale, args));
-        field.setMaxLength(FormUtils.getLongValue(formTemplate, this.getName(), "maxLength", locale, args));
-        field.setMinValue(FormUtils.getLocalDateValue(formTemplate, this.getName(), "minValue", locale, args));
-        field.setMaxValue(FormUtils.getLocalDateValue(formTemplate, this.getName(), "maxValue", locale, args));
+        field.setMinLength(FormUtils.getFieldLongProperty(formTemplate, this.getName(), "minLength", locale, args, null));
+        field.setMaxLength(FormUtils.getFieldLongProperty(formTemplate, this.getName(), "maxLength", locale, args, null));
+        field.setMinValue(FormUtils.getFieldLocalDateProperty(formTemplate, this.getName(), "minValue", locale, args, null));
+        field.setMaxValue(FormUtils.getFieldLocalDateProperty(formTemplate, this.getName(), "maxValue", locale, args, null));
         if (null == field.getMinValue()) {
             field.setMinValue(this.getMinValue());
         }

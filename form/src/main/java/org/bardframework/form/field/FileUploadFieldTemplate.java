@@ -25,9 +25,9 @@ public class FileUploadFieldTemplate extends FormFieldTemplate<FileUploadField, 
     @Override
     public void fill(FormTemplate formTemplate, FileUploadField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
-        field.setMinSize(FormUtils.getIntegerValue(formTemplate, this.getName(), "minSize", locale, args));
-        field.setMaxSize(FormUtils.getIntegerValue(formTemplate, this.getName(), "maxSize", locale, args));
-        field.setContentTypes(FormUtils.getListValue(formTemplate, this.getName(), "contentTypes", locale, args));
+        field.setMinSize(FormUtils.getFieldIntegerProperty(formTemplate, this.getName(), "minSize", locale, args, null));
+        field.setMaxSize(FormUtils.getFieldIntegerProperty(formTemplate, this.getName(), "maxSize", locale, args, null));
+        field.setContentTypes(FormUtils.getFieldListProperty(formTemplate, this.getName(), "contentTypes", locale, args, null));
         field.setUploadAction(this.getUploadAction());
         field.setDownloadAction(this.getDownloadAction());
     }

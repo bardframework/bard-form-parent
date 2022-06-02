@@ -17,9 +17,9 @@ public class FileFieldTemplate extends FieldTemplate<FileField> {
     @Override
     public void fill(FormTemplate formTemplate, FileField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
-        field.setContentType(FormUtils.getFieldValue(formTemplate, this.getName(), "contentType", locale, args));
-        field.setSize(FormUtils.getIntegerValue(formTemplate, this.getName(), "size", locale, args));
-        field.setUrl(FormUtils.getFieldValue(formTemplate, this.getName(), "url", locale, args));
+        field.setContentType(FormUtils.getFieldStringProperty(formTemplate, this.getName(), "contentType", locale, args, null));
+        field.setSize(FormUtils.getFieldIntegerProperty(formTemplate, this.getName(), "size", locale, args, null));
+        field.setUrl(FormUtils.getFieldStringProperty(formTemplate, this.getName(), "url", locale, args, null));
     }
 
 }

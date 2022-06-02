@@ -20,9 +20,9 @@ public class ReadOnlyFieldTemplate extends FieldTemplate<ReadonlyField> implemen
 
     public void fill(FormTemplate formTemplate, ReadonlyField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
-        field.setTooltip(FormUtils.getFieldValue(formTemplate, this.getName(), "tooltip", locale, args));
-        field.setMask(FormUtils.getFieldValue(formTemplate, this.getName(), "mask", locale, args));
-        field.setPlaceholder(FormUtils.getFieldValue(formTemplate, this.getName(), "placeholder", locale, args));
+        field.setTooltip(FormUtils.getFieldStringProperty(formTemplate, this.getName(), "tooltip", locale, args, null));
+        field.setMask(FormUtils.getFieldStringProperty(formTemplate, this.getName(), "mask", locale, args, null));
+        field.setPlaceholder(FormUtils.getFieldStringProperty(formTemplate, this.getName(), "placeholder", locale, args, null));
     }
 
     @Override

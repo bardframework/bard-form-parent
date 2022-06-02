@@ -49,11 +49,11 @@ public class FormUtils {
     }
 
     public static <F extends Form, T> F toForm(F form, FormTemplate formTemplate, Locale locale, Map<String, String> args, Map<String, String> values) throws Exception {
-        form.setId(formTemplate.getName());
-        form.setTitle(FormUtils.getFormValue(formTemplate, "name", locale, args));
-        form.setHint(FormUtils.getFormValue(formTemplate, "description", locale, args));
-        form.setConfirmMessage(FormUtils.getFormValue(formTemplate, "confirmMessage", locale, args));
-        for (FieldTemplate<?> fieldTemplate : formTemplate.getFields()) {
+        form.setName(formTemplate.getName());
+        form.setTitle(FormUtils.getFormStringProperty(formTemplate, "name", locale, args, formTemplate.getTitle()));
+        form.setHint(FormUtils.getFormStringProperty(formTemplate, "description", locale, args, formTemplate.getHint()));
+        form.setConfirmMessage(FormUtils.getFormStringProperty(formTemplate, "confirmMessage", locale, args, formTemplate.getConfirmMessage()));
+        for (FieldTemplate<?> fieldTemplate : formTemplate.getFieldTemplates()) {
             Field field = fieldTemplate.toField(formTemplate, args, locale);
             String valueString = values.get(fieldTemplate.getName());
             if (field instanceof WithValueField && fieldTemplate instanceof WithValueFieldTemplate) {
@@ -66,52 +66,42 @@ public class FormUtils {
         return form;
     }
 
-    public static String getFormValue(FormTemplate formTemplate, String property, Locale locale, Map<String, String> args) {
-        return FormUtils.getFormValue(formTemplate.getName(), property, locale, args, formTemplate.getMessageSource());
-    }
-
-    public static String getFormValue(String formName, String property, Locale locale, Map<String, String> args, MessageSource messageSource) {
-        String value = FormUtils.getString(formName + "." + property, locale, args, messageSource);
-        if (null == value) {
-            value = FormUtils.getString("form." + property, locale, args, messageSource);
-        }
-        return StringTemplateUtils.fillTemplate(value, args);
-    }
-
     /**
      * @return false if we can't find
      */
-    public static Boolean getFormBooleanValue(FormTemplate formTemplate, String property, Locale locale, Map<String, String> args) {
-        String value = FormUtils.getFormValue(formTemplate, property, locale, args);
+    public static Boolean getFormBooleanProperty(FormTemplate formTemplate, String property, Locale locale, Map<String, String> args, Boolean defaultValue) {
+        String value = FormUtils.getFormStringProperty(formTemplate, property, locale, args, null);
         if (StringUtils.isBlank(value)) {
-            return false;
+            return defaultValue;
         }
         try {
             return Boolean.parseBoolean(value);
         } catch (Exception e) {
             LOGGER.error("error reading [{}] of [{}] as boolean", property, formTemplate.getName(), e);
-            return false;
+            return null;
         }
+    }
+
+
+    public static String getFormStringProperty(FormTemplate formTemplate, String property, Locale locale, Map<String, String> args, String defaultValue) {
+        return FormUtils.getFormStringProperty(formTemplate.getName(), property, locale, args, defaultValue, formTemplate.getMessageSource());
+    }
+
+    public static String getFormStringProperty(String formName, String property, Locale locale, Map<String, String> args, String defaultValue, MessageSource messageSource) {
+        String value = FormUtils.getString(formName + "." + property, locale, args, null, messageSource);
+        if (null == value) {
+            value = FormUtils.getString("form." + property, locale, args, defaultValue, messageSource);
+        }
+        return StringTemplateUtils.fillTemplate(value, args);
     }
 
     /**
      * @return null if we can't read property value
      */
-    public static String getFieldValue(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, String> args) {
-        String value = FormUtils.getString(formTemplate.getName() + "." + fieldName + "." + property, locale, args, formTemplate.getMessageSource());
-        if (null == value) {
-            value = FormUtils.getString("field." + fieldName + "." + property, locale, args, formTemplate.getMessageSource());
-        }
-        return value;
-    }
-
-    /**
-     * @return false if we can't read property value
-     */
-    public static Boolean getBooleanValue(FormTemplate FormTemplate, String fieldName, String property, Locale locale, Map<String, String> args) {
-        String value = FormUtils.getFieldValue(FormTemplate, fieldName, property, locale, args);
+    public static Boolean getFieldBooleanProperty(FormTemplate FormTemplate, String fieldName, String property, Locale locale, Map<String, String> args, Boolean defaultValue) {
+        String value = FormUtils.getFieldStringProperty(FormTemplate, fieldName, property, locale, args, null);
         if (StringUtils.isBlank(value)) {
-            return null;
+            return defaultValue;
         }
         try {
             return Boolean.parseBoolean(value);
@@ -124,10 +114,10 @@ public class FormUtils {
     /**
      * @return false if we can't read property value
      */
-    public static List<String> getListValue(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, String> args) {
-        String value = FormUtils.getFieldValue(formTemplate, fieldName, property, locale, args);
+    public static List<String> getFieldListProperty(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, String> args, List<String> defaultValue) {
+        String value = FormUtils.getFieldStringProperty(formTemplate, fieldName, property, locale, args, null);
         if (StringUtils.isBlank(value)) {
-            return null;
+            return defaultValue;
         }
         return Arrays.stream(value.split(",")).map(String::trim).collect(Collectors.toList());
     }
@@ -135,10 +125,10 @@ public class FormUtils {
     /**
      * @return null if we can't read property value
      */
-    public static Integer getIntegerValue(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, String> args) {
-        String value = FormUtils.getFieldValue(formTemplate, fieldName, property, locale, args);
+    public static Integer getFieldIntegerProperty(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, String> args, Integer defaultValue) {
+        String value = FormUtils.getFieldStringProperty(formTemplate, fieldName, property, locale, args, null);
         if (StringUtils.isBlank(value)) {
-            return null;
+            return defaultValue;
         }
         try {
             return Integer.parseInt(value);
@@ -151,10 +141,10 @@ public class FormUtils {
     /**
      * @return null if we can't read property value
      */
-    public static Double getDoubleValue(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, String> args) {
-        String value = FormUtils.getFieldValue(formTemplate, fieldName, property, locale, args);
+    public static Double getFieldDoubleProperty(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, String> args, Double defaultValue) {
+        String value = FormUtils.getFieldStringProperty(formTemplate, fieldName, property, locale, args, null);
         if (StringUtils.isBlank(value)) {
-            return null;
+            return defaultValue;
         }
         try {
             return Double.parseDouble(value);
@@ -167,10 +157,10 @@ public class FormUtils {
     /**
      * @return null if we can't read property value
      */
-    public static Long getLongValue(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, String> args) {
-        String value = FormUtils.getFieldValue(formTemplate, fieldName, property, locale, args);
+    public static Long getFieldLongProperty(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, String> args, Long defaultValue) {
+        String value = FormUtils.getFieldStringProperty(formTemplate, fieldName, property, locale, args, null);
         if (StringUtils.isBlank(value)) {
-            return null;
+            return defaultValue;
         }
         try {
             return Long.parseLong(value);
@@ -183,10 +173,10 @@ public class FormUtils {
     /**
      * @return null if we can't read property value
      */
-    public static LocalDate getLocalDateValue(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, String> args) {
-        String value = FormUtils.getFieldValue(formTemplate, fieldName, property, locale, args);
+    public static LocalDate getFieldLocalDateProperty(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, String> args, LocalDate defaultValue) {
+        String value = FormUtils.getFieldStringProperty(formTemplate, fieldName, property, locale, args, null);
         if (StringUtils.isBlank(value)) {
-            return null;
+            return defaultValue;
         }
         try {
             return LocalDate.parse(value);
@@ -196,10 +186,10 @@ public class FormUtils {
         }
     }
 
-    public static LocalDateTime getLocalDateTimeValue(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, String> args) {
-        String value = FormUtils.getFieldValue(formTemplate, fieldName, property, locale, args);
+    public static LocalDateTime getFieldLocalDateTimeProperty(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, String> args, LocalDateTime defaultValue) {
+        String value = FormUtils.getFieldStringProperty(formTemplate, fieldName, property, locale, args, null);
         if (StringUtils.isBlank(value)) {
-            return null;
+            return defaultValue;
         }
         try {
             return LocalDateTime.parse(value);
@@ -209,10 +199,10 @@ public class FormUtils {
         }
     }
 
-    public static LocalTime getLocalTimeValue(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, String> args) {
-        String value = FormUtils.getFieldValue(formTemplate, fieldName, property, locale, args);
+    public static LocalTime getFieldLocalTimeProperty(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, String> args, LocalTime defaultValue) {
+        String value = FormUtils.getFieldStringProperty(formTemplate, fieldName, property, locale, args, null);
         if (StringUtils.isBlank(value)) {
-            return null;
+            return defaultValue;
         }
         try {
             return LocalTime.parse(value);
@@ -222,8 +212,22 @@ public class FormUtils {
         }
     }
 
-    public static String getString(String key, Locale locale, Map<String, String> args, MessageSource messageSource) {
+    /**
+     * @return null if we can't read property value
+     */
+    public static String getFieldStringProperty(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, String> args, String defaultValue) {
+        String value = FormUtils.getString(formTemplate.getName() + "." + fieldName + "." + property, locale, args, null, formTemplate.getMessageSource());
+        if (StringUtils.isBlank(value)) {
+            value = FormUtils.getString("field." + fieldName + "." + property, locale, args, defaultValue, formTemplate.getMessageSource());
+        }
+        return value;
+    }
+
+    public static String getString(String key, Locale locale, Map<String, String> args, String defaultValue, MessageSource messageSource) {
         String value = messageSource.getMessage(key, null, null, locale);
+        if (StringUtils.isBlank(value)) {
+            value = defaultValue;
+        }
         return StringTemplateUtils.fillTemplate(value, args);
     }
 }

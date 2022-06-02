@@ -41,9 +41,9 @@ public class ListFieldTemplate extends FormFieldTemplate<ListField, List<String>
     @Override
     public void fill(FormTemplate formTemplate, ListField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
-        field.setMinLength(FormUtils.getIntegerValue(formTemplate, this.getName(), "minLength", locale, args));
-        field.setMaxLength(FormUtils.getIntegerValue(formTemplate, this.getName(), "maxLength", locale, args));
-        field.setMaxCount(FormUtils.getIntegerValue(formTemplate, this.getName(), "maxCount", locale, args));
+        field.setMinLength(FormUtils.getFieldIntegerProperty(formTemplate, this.getName(), "minLength", locale, args, null));
+        field.setMaxLength(FormUtils.getFieldIntegerProperty(formTemplate, this.getName(), "maxLength", locale, args, null));
+        field.setMaxCount(FormUtils.getFieldIntegerProperty(formTemplate, this.getName(), "maxCount", locale, args, null));
     }
 
     @Override

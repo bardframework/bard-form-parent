@@ -7,19 +7,19 @@ import java.util.List;
 
 public class Form {
 
-    private String id;
-    private String title;
-    private String hint;
-    private String confirmMessage;
-    private String submitLabel;
-    private List<Field> fields = new ArrayList<>();
+    protected String name;
+    protected String title;
+    protected String hint;
+    protected String confirmMessage;
+    protected String submitLabel;
+    protected List<Field> fields = new ArrayList<>();
 
-    public String getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getTitle() {
@@ -76,11 +76,11 @@ public class Form {
 
         Form that = (Form) o;
 
-        return id.equals(that.id);
+        return name.equals(that.name);
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return name.hashCode();
     }
 }

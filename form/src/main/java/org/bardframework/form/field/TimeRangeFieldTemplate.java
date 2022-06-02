@@ -25,10 +25,10 @@ public class TimeRangeFieldTemplate extends FormFieldTemplate<TimeRangeField, Ra
     @Override
     public void fill(FormTemplate formTemplate, TimeRangeField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
-        field.setMinLength(FormUtils.getLongValue(formTemplate, this.getName(), "minLength", locale, args));
-        field.setMaxLength(FormUtils.getLongValue(formTemplate, this.getName(), "maxLength", locale, args));
-        field.setMinValue(FormUtils.getLocalTimeValue(formTemplate, this.getName(), "minValue", locale, args));
-        field.setMaxValue(FormUtils.getLocalTimeValue(formTemplate, this.getName(), "maxValue", locale, args));
+        field.setMinLength(FormUtils.getFieldLongProperty(formTemplate, this.getName(), "minLength", locale, args, null));
+        field.setMaxLength(FormUtils.getFieldLongProperty(formTemplate, this.getName(), "maxLength", locale, args, null));
+        field.setMinValue(FormUtils.getFieldLocalTimeProperty(formTemplate, this.getName(), "minValue", locale, args, null));
+        field.setMaxValue(FormUtils.getFieldLocalTimeProperty(formTemplate, this.getName(), "maxValue", locale, args, null));
         field.setLengthUnit(field.getLengthUnit());
         if (null == field.getMinValue()) {
             field.setMinValue(this.getMinValue());

@@ -2,6 +2,7 @@ package org.bardframework.form;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
+import org.bardframework.form.common.Form;
 import org.bardframework.form.common.field.base.FormField;
 import org.bardframework.form.exception.FormDataValidationException;
 import org.bardframework.form.field.base.FieldTemplate;
@@ -16,19 +17,18 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class FormTemplate {
+public class FormTemplate extends Form {
 
     protected final MessageSource messageSource;
-    private final String name;
-    private final List<FieldTemplate<?>> fields;
+    private final List<FieldTemplate<?>> fieldTemplates;
     private List<FormProcessor> preProcessors;
     private List<FormProcessor> postProcessors;
     private Map<String, List<FormProcessor>> actionProcessors = new HashMap<>();
     private boolean finished;
 
-    public FormTemplate(String name, List<FieldTemplate<?>> fields, @Autowired MessageSource messageSource) {
+    public FormTemplate(String name, List<FieldTemplate<?>> fieldTemplates, @Autowired MessageSource messageSource) {
         this.name = name;
-        this.fields = fields;
+        this.fieldTemplates = fieldTemplates;
         this.messageSource = messageSource;
     }
 
@@ -47,7 +47,7 @@ public class FormTemplate {
 
     public <F extends FormField<T>, T> void validate(Map<String, String> values, Map<String, String> args, Locale locale) throws Exception {
         FormDataValidationException ex = new FormDataValidationException();
-        for (FieldTemplate<?> fieldTemplate : this.getFields()) {
+        for (FieldTemplate<?> fieldTemplate : this.getFieldTemplates()) {
             if (!(fieldTemplate instanceof FormFieldTemplate<?, ?>)) {
                 continue;
             }
@@ -90,12 +90,8 @@ public class FormTemplate {
         this.finished = finished;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public List<FieldTemplate<?>> getFields() {
-        return fields;
+    public List<FieldTemplate<?>> getFieldTemplates() {
+        return fieldTemplates;
     }
 
     public Map<String, List<FormProcessor>> getActionProcessors() {
@@ -107,7 +103,7 @@ public class FormTemplate {
     }
 
     public FieldTemplate<?> getField(String name) {
-        return this.getFields().stream().filter(field -> field.getName().equals(name)).findFirst().orElse(null);
+        return this.getFieldTemplates().stream().filter(field -> field.getName().equals(name)).findFirst().orElse(null);
     }
 
     public MessageSource getMessageSource() {

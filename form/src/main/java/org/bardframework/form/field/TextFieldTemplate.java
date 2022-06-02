@@ -40,10 +40,10 @@ public class TextFieldTemplate extends FormFieldTemplate<TextField, String> {
     @Override
     public void fill(FormTemplate formTemplate, TextField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
-        field.setRegex(FormUtils.getFieldValue(formTemplate, this.getName(), "regex", locale, args));
-        field.setMask(FormUtils.getFieldValue(formTemplate, this.getName(), "mask", locale, args));
-        field.setMinLength(FormUtils.getIntegerValue(formTemplate, this.getName(), "minLength", locale, args));
-        field.setMaxLength(FormUtils.getIntegerValue(formTemplate, this.getName(), "maxLength", locale, args));
+        field.setRegex(FormUtils.getFieldStringProperty(formTemplate, this.getName(), "regex", locale, args, null));
+        field.setMask(FormUtils.getFieldStringProperty(formTemplate, this.getName(), "mask", locale, args, null));
+        field.setMinLength(FormUtils.getFieldIntegerProperty(formTemplate, this.getName(), "minLength", locale, args, null));
+        field.setMaxLength(FormUtils.getFieldIntegerProperty(formTemplate, this.getName(), "maxLength", locale, args, null));
     }
 
     @Override

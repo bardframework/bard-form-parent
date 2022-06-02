@@ -64,10 +64,10 @@ public class NumberRangeFieldTemplate extends FormFieldTemplate<NumberRangeField
     @Override
     public void fill(FormTemplate formTemplate, NumberRangeField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
-        field.setMinLength(FormUtils.getLongValue(formTemplate, this.getName(), "minLength", locale, args));
-        field.setMaxLength(FormUtils.getLongValue(formTemplate, this.getName(), "maxLength", locale, args));
-        field.setMinValue(FormUtils.getLongValue(formTemplate, this.getName(), "minValue", locale, args));
-        field.setMaxValue(FormUtils.getLongValue(formTemplate, this.getName(), "maxValue", locale, args));
+        field.setMinLength(FormUtils.getFieldLongProperty(formTemplate, this.getName(), "minLength", locale, args, null));
+        field.setMaxLength(FormUtils.getFieldLongProperty(formTemplate, this.getName(), "maxLength", locale, args, null));
+        field.setMinValue(FormUtils.getFieldLongProperty(formTemplate, this.getName(), "minValue", locale, args, null));
+        field.setMaxValue(FormUtils.getFieldLongProperty(formTemplate, this.getName(), "maxValue", locale, args, null));
     }
 
 

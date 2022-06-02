@@ -22,18 +22,18 @@ public class ImageUploadFieldTemplate extends FormFieldTemplate<ImageUploadField
     @Override
     public void fill(FormTemplate formTemplate, ImageUploadField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
-        field.setMinSize(FormUtils.getIntegerValue(formTemplate, this.getName(), "minSize", locale, args));
-        field.setMaxSize(FormUtils.getIntegerValue(formTemplate, this.getName(), "maxSize", locale, args));
-        field.setContentTypes(FormUtils.getListValue(formTemplate, this.getName(), "contentTypes", locale, args));
+        field.setMinSize(FormUtils.getFieldIntegerProperty(formTemplate, this.getName(), "minSize", locale, args, null));
+        field.setMaxSize(FormUtils.getFieldIntegerProperty(formTemplate, this.getName(), "maxSize", locale, args, null));
+        field.setContentTypes(FormUtils.getFieldListProperty(formTemplate, this.getName(), "contentTypes", locale, args, null));
         field.setUploadAction(this.getUploadAction());
         field.setDownloadAction(this.getDownloadAction());
 
-        field.setAspectRatio(FormUtils.getDoubleValue(formTemplate, this.getName(), "aspectRatio", locale, args));
-        field.setAspectRatio(FormUtils.getDoubleValue(formTemplate, this.getName(), "aspectRatioTolerance", locale, args));
-        field.setMinWidth(FormUtils.getIntegerValue(formTemplate, this.getName(), "minWidth", locale, args));
-        field.setMaxWidth(FormUtils.getIntegerValue(formTemplate, this.getName(), "maxWidth", locale, args));
-        field.setMinHeight(FormUtils.getIntegerValue(formTemplate, this.getName(), "minHeight", locale, args));
-        field.setMaxHeight(FormUtils.getIntegerValue(formTemplate, this.getName(), "maxHeight", locale, args));
+        field.setAspectRatio(FormUtils.getFieldDoubleProperty(formTemplate, this.getName(), "aspectRatio", locale, args, null));
+        field.setAspectRatio(FormUtils.getFieldDoubleProperty(formTemplate, this.getName(), "aspectRatioTolerance", locale, args, null));
+        field.setMinWidth(FormUtils.getFieldIntegerProperty(formTemplate, this.getName(), "minWidth", locale, args, null));
+        field.setMaxWidth(FormUtils.getFieldIntegerProperty(formTemplate, this.getName(), "maxWidth", locale, args, null));
+        field.setMinHeight(FormUtils.getFieldIntegerProperty(formTemplate, this.getName(), "minHeight", locale, args, null));
+        field.setMaxHeight(FormUtils.getFieldIntegerProperty(formTemplate, this.getName(), "maxHeight", locale, args, null));
     }
 
     @Override

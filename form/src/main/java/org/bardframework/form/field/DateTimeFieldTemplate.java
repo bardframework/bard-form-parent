@@ -37,8 +37,8 @@ public class DateTimeFieldTemplate extends FormFieldTemplate<DateTimeField, Loca
     @Override
     public void fill(FormTemplate formTemplate, DateTimeField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
-        field.setMinValue(FormUtils.getLocalDateTimeValue(formTemplate, this.getName(), "minValue", locale, args));
-        field.setMaxValue(FormUtils.getLocalDateTimeValue(formTemplate, this.getName(), "maxValue", locale, args));
+        field.setMinValue(FormUtils.getFieldLocalDateTimeProperty(formTemplate, this.getName(), "minValue", locale, args, null));
+        field.setMaxValue(FormUtils.getFieldLocalDateTimeProperty(formTemplate, this.getName(), "maxValue", locale, args, null));
         if (null == field.getMinValue()) {
             field.setMinValue(this.getMinValue());
         }

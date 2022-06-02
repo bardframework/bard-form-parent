@@ -37,8 +37,8 @@ public class TimeFieldTemplate extends FormFieldTemplate<TimeField, LocalTime> {
     @Override
     public void fill(FormTemplate formTemplate, TimeField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
-        field.setMinValue(FormUtils.getLocalTimeValue(formTemplate, this.getName(), "minValue", locale, args));
-        field.setMaxValue(FormUtils.getLocalTimeValue(formTemplate, this.getName(), "maxValue", locale, args));
+        field.setMinValue(FormUtils.getFieldLocalTimeProperty(formTemplate, this.getName(), "minValue", locale, args, null));
+        field.setMaxValue(FormUtils.getFieldLocalTimeProperty(formTemplate, this.getName(), "maxValue", locale, args, null));
         if (null == field.getMinValue()) {
             field.setMinValue(this.getMinValue());
         }

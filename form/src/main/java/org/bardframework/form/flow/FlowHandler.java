@@ -49,7 +49,7 @@ public class FlowHandler {
         FlowData flowData = flowDataRepository.get(flowToken);
         FormTemplate currentFormTemplate = forms.get(flowData.getCurrentStepIndex());
         currentFormTemplate.validate(formData, flowData.getData(), flowData.getLocale());
-        for (FieldTemplate<?> fieldTemplate : currentFormTemplate.getFields()) {
+        for (FieldTemplate<?> fieldTemplate : currentFormTemplate.getFieldTemplates()) {
             if (!(fieldTemplate instanceof FormFieldTemplate<?, ?>)) {
                 continue;
             }
@@ -64,7 +64,7 @@ public class FlowHandler {
         }
         FlowResponse<String> response = null;
         try {
-            for (FieldTemplate<?> fieldTemplate : currentFormTemplate.getFields()) {
+            for (FieldTemplate<?> fieldTemplate : currentFormTemplate.getFieldTemplates()) {
                 if (!(fieldTemplate instanceof FormFieldTemplate<?, ?>)) {
                     continue;
                 }
@@ -107,7 +107,7 @@ public class FlowHandler {
         }
         try {
             boolean process = false;
-            for (FieldTemplate<?> fieldTemplate : currentFormTemplate.getFields()) {
+            for (FieldTemplate<?> fieldTemplate : currentFormTemplate.getFieldTemplates()) {
                 if (process || !(fieldTemplate instanceof FormFieldTemplate<?, ?>)) {
                     continue;
                 }
@@ -152,7 +152,7 @@ public class FlowHandler {
     }
 
     protected FlowResponse<String> prepareForSend(FormTemplate formTemplate, String flowToken, FlowData flowData, Map<String, String> formData, String responseData, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
-        for (FieldTemplate<?> fieldTemplate : formTemplate.getFields()) {
+        for (FieldTemplate<?> fieldTemplate : formTemplate.getFieldTemplates()) {
             if (!(fieldTemplate instanceof FormFieldTemplate<?, ?>)) {
                 continue;
             }

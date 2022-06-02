@@ -17,6 +17,6 @@ public class DividerFieldTemplate extends FieldTemplate<DividerField> {
     @Override
     public void fill(FormTemplate formTemplate, DividerField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
-        field.setLabel(FormUtils.getFieldValue(formTemplate, this.getName(), "label", locale, args));
+        field.setLabel(FormUtils.getFieldStringProperty(formTemplate, this.getName(), "label", locale, args, null));
     }
 }

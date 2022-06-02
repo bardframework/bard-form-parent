@@ -25,10 +25,10 @@ public class DateTimeRangeFieldTemplate extends FormFieldTemplate<DateTimeRangeF
     @Override
     public void fill(FormTemplate formTemplate, DateTimeRangeField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
-        field.setMinLength(FormUtils.getLongValue(formTemplate, this.getName(), "minLength", locale, args));
-        field.setMaxLength(FormUtils.getLongValue(formTemplate, this.getName(), "maxLength", locale, args));
-        field.setMinValue(FormUtils.getLocalDateTimeValue(formTemplate, this.getName(), "minValue", locale, args));
-        field.setMaxValue(FormUtils.getLocalDateTimeValue(formTemplate, this.getName(), "maxValue", locale, args));
+        field.setMinLength(FormUtils.getFieldLongProperty(formTemplate, this.getName(), "minLength", locale, args, null));
+        field.setMaxLength(FormUtils.getFieldLongProperty(formTemplate, this.getName(), "maxLength", locale, args, null));
+        field.setMinValue(FormUtils.getFieldLocalDateTimeProperty(formTemplate, this.getName(), "minValue", locale, args, null));
+        field.setMaxValue(FormUtils.getFieldLocalDateTimeProperty(formTemplate, this.getName(), "maxValue", locale, args, null));
         field.setLengthUnit(field.getLengthUnit());
         if (null == field.getMinValue()) {
             field.setMinValue(this.getMinValue());
