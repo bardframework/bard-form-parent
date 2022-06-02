@@ -18,6 +18,7 @@ public abstract class TableHeaderTemplate<H extends TableHeader, T> extends Tabl
 
     public H toHeader(TableTemplate tableTemplate, Map<String, String> args, Locale locale) throws Exception {
         H header = this.getEmptyHeader();
+        header.setName(this.getName());
         this.fill(tableTemplate, header, args, locale);
         return header;
     }

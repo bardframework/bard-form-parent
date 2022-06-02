@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>org.bardframework.form</groupId>
-    <artifactId>form-parent</artifactId>
+    <artifactId>bard-form</artifactId>
     <version>1.3.12</version>
 
     <packaging>pom</packaging>
