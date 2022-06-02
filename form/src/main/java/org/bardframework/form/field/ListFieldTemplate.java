@@ -39,11 +39,6 @@ public class ListFieldTemplate extends FormFieldTemplate<ListField, List<String>
     }
 
     @Override
-    public ListField getEmptyField() {
-        return new ListField();
-    }
-
-    @Override
     public void fill(FormTemplate formTemplate, ListField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
         field.setMinLength(FormUtils.getIntegerValue(formTemplate, this.getName(), "minLength", locale, args));

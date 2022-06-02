@@ -22,8 +22,4 @@ public class FileFieldTemplate extends FieldTemplate<FileField> {
         field.setUrl(FormUtils.getFieldValue(formTemplate, this.getName(), "url", locale, args));
     }
 
-    @Override
-    public FileField getEmptyField() {
-        return new FileField();
-    }
 }

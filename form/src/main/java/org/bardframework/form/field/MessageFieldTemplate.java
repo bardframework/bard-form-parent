@@ -20,8 +20,4 @@ public class MessageFieldTemplate extends FieldTemplate<MessageField> {
         field.setMessage(FormUtils.getFieldValue(formTemplate, this.getName(), "message", locale, args));
     }
 
-    @Override
-    public MessageField getEmptyField() {
-        return new MessageField();
-    }
 }

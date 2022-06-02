@@ -35,11 +35,6 @@ public class DateTimeFieldTemplate extends FormFieldTemplate<DateTimeField, Loca
     }
 
     @Override
-    public DateTimeField getEmptyField() {
-        return new DateTimeField();
-    }
-
-    @Override
     public void fill(FormTemplate formTemplate, DateTimeField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
         field.setMinValue(FormUtils.getLocalDateTimeValue(formTemplate, this.getName(), "minValue", locale, args));

@@ -45,11 +45,6 @@ public class CaptchaFieldTemplate extends FormFieldTemplate<CaptchaField, String
     }
 
     @Override
-    public CaptchaField getEmptyField() {
-        return new CaptchaField();
-    }
-
-    @Override
     public void fill(FormTemplate formTemplate, CaptchaField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
         field.setLength(this.getCaptchaLength());

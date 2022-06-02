@@ -37,11 +37,6 @@ public class ImageUploadFieldTemplate extends FormFieldTemplate<ImageUploadField
     }
 
     @Override
-    public ImageUploadField getEmptyField() {
-        return new ImageUploadField();
-    }
-
-    @Override
     public boolean isValid(ImageUploadField field, String value) {
         //TODO not implement
         return true;

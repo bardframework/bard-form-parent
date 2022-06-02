@@ -33,11 +33,6 @@ public class FileUploadFieldTemplate extends FormFieldTemplate<FileUploadField, 
     }
 
     @Override
-    public FileUploadField getEmptyField() {
-        return new FileUploadField();
-    }
-
-    @Override
     public boolean isValid(FileUploadField field, String value) {
         //TODO not implement
         return true;

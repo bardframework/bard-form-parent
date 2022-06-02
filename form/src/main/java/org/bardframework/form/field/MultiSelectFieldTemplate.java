@@ -24,11 +24,6 @@ public class MultiSelectFieldTemplate extends FormFieldTemplate<MultiSelectField
     }
 
     @Override
-    public MultiSelectField getEmptyField() {
-        return new MultiSelectField();
-    }
-
-    @Override
     public void fill(FormTemplate formTemplate, MultiSelectField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
         field.setMaxCount(FormUtils.getIntegerValue(formTemplate, this.getName(), "maxCount", locale, args));

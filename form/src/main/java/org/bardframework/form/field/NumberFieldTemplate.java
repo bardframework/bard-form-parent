@@ -32,11 +32,6 @@ public class NumberFieldTemplate extends FormFieldTemplate<NumberField, Long> {
     }
 
     @Override
-    public NumberField getEmptyField() {
-        return new NumberField();
-    }
-
-    @Override
     public void fill(FormTemplate formTemplate, NumberField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
         field.setMinValue(FormUtils.getLongValue(formTemplate, this.getName(), "minValue", locale, args));

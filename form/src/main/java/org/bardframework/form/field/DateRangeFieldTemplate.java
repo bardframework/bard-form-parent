@@ -21,11 +21,6 @@ public class DateRangeFieldTemplate extends FormFieldTemplate<DateRangeField, Ra
     }
 
     @Override
-    public DateRangeField getEmptyField() {
-        return new DateRangeField();
-    }
-
-    @Override
     public void fill(FormTemplate formTemplate, DateRangeField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
         field.setMinLength(FormUtils.getLongValue(formTemplate, this.getName(), "minLength", locale, args));

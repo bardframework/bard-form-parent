@@ -31,10 +31,16 @@ public class FormUtils {
     }
 
     public static Form toForm(FormTemplate formTemplate, Locale locale, Map<String, String> args, Map<String, String> values) throws Exception {
+        if (null == formTemplate) {
+            return null;
+        }
         return FormUtils.toForm(new Form(), formTemplate, locale, args, values);
     }
 
     public static Form toForm(FormTemplate formTemplate, Locale locale, Map<String, String> args) throws Exception {
+        if (null == formTemplate) {
+            return null;
+        }
         return FormUtils.toForm(new Form(), formTemplate, locale, args, Map.of());
     }
 
@@ -75,7 +81,7 @@ public class FormUtils {
     /**
      * @return false if we can't find
      */
-    public static boolean getFormBooleanValue(FormTemplate formTemplate, String property, Locale locale, Map<String, String> args) {
+    public static Boolean getFormBooleanValue(FormTemplate formTemplate, String property, Locale locale, Map<String, String> args) {
         String value = FormUtils.getFormValue(formTemplate, property, locale, args);
         if (StringUtils.isBlank(value)) {
             return false;
@@ -85,22 +91,6 @@ public class FormUtils {
         } catch (Exception e) {
             LOGGER.error("error reading [{}] of [{}] as boolean", property, formTemplate.getName(), e);
             return false;
-        }
-    }
-
-    /**
-     * @return 0 if we can't read property value
-     */
-    public static int getFormIntValue(FormTemplate formTemplate, String property, Locale locale, Map<String, String> args) {
-        String value = FormUtils.getFormValue(formTemplate, property, locale, args);
-        if (StringUtils.isBlank(value)) {
-            return 0;
-        }
-        try {
-            return Integer.parseInt(value);
-        } catch (Exception e) {
-            LOGGER.error("error reading [{}] of [{}] as int", property, formTemplate, e);
-            return 0;
         }
     }
 

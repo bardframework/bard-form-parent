@@ -62,11 +62,6 @@ public class NumberRangeFieldTemplate extends FormFieldTemplate<NumberRangeField
     }
 
     @Override
-    public NumberRangeField getEmptyField() {
-        return new NumberRangeField();
-    }
-
-    @Override
     public void fill(FormTemplate formTemplate, NumberRangeField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
         field.setMinLength(FormUtils.getLongValue(formTemplate, this.getName(), "minLength", locale, args));

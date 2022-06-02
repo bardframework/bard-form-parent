@@ -23,11 +23,6 @@ public class TimeRangeFieldTemplate extends FormFieldTemplate<TimeRangeField, Ra
     }
 
     @Override
-    public TimeRangeField getEmptyField() {
-        return new TimeRangeField();
-    }
-
-    @Override
     public void fill(FormTemplate formTemplate, TimeRangeField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
         field.setMinLength(FormUtils.getLongValue(formTemplate, this.getName(), "minLength", locale, args));

@@ -35,11 +35,6 @@ public class TimeFieldTemplate extends FormFieldTemplate<TimeField, LocalTime> {
     }
 
     @Override
-    public TimeField getEmptyField() {
-        return new TimeField();
-    }
-
-    @Override
     public void fill(FormTemplate formTemplate, TimeField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
         field.setMinValue(FormUtils.getLocalTimeValue(formTemplate, this.getName(), "minValue", locale, args));

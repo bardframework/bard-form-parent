@@ -47,11 +47,6 @@ public class TextFieldTemplate extends FormFieldTemplate<TextField, String> {
     }
 
     @Override
-    public TextField getEmptyField() {
-        return new TextField();
-    }
-
-    @Override
     public String toValue(String value) {
         return value;
     }

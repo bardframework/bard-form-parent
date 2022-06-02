@@ -19,8 +19,4 @@ public class SingleCheckboxFieldTemplate extends FormFieldTemplate<SingleCheckBo
         return null == value ? null : Boolean.parseBoolean(value);
     }
 
-    @Override
-    public SingleCheckBoxField getEmptyField() {
-        return new SingleCheckBoxField();
-    }
 }

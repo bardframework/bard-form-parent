@@ -19,11 +19,6 @@ public class SingleSelectFieldTemplate extends FormFieldTemplate<SingleSelectFie
     }
 
     @Override
-    public SingleSelectField getEmptyField() {
-        return new SingleSelectField();
-    }
-
-    @Override
     public void fill(FormTemplate formTemplate, SingleSelectField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
         field.setOptions(optionDataSource.getOptions(locale));

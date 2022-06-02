@@ -1,6 +1,5 @@
 package org.bardframework.form.field;
 
-import org.bardframework.form.common.field.MultiSelectField;
 import org.bardframework.form.field.option.OptionDataSource;
 
 public class MultiSelectSearchableFieldTemplate extends MultiSelectFieldTemplate {
@@ -9,8 +8,4 @@ public class MultiSelectSearchableFieldTemplate extends MultiSelectFieldTemplate
         super(name, optionDataSource);
     }
 
-    @Override
-    public MultiSelectField getEmptyField() {
-        return new MultiSelectField();
-    }
 }
