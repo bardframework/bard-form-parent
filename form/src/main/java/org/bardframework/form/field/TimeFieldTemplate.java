@@ -1,5 +1,6 @@
 package org.bardframework.form.field;
 
+import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
 import org.bardframework.form.common.field.TimeField;
@@ -49,6 +50,9 @@ public class TimeFieldTemplate extends FormFieldTemplate<TimeField, LocalTime> {
 
     @Override
     public LocalTime toValue(String value) {
+        if (StringUtils.isBlank(value)) {
+            return null;
+        }
         return LocalTime.parse(value);
     }
 

@@ -1,6 +1,7 @@
 package org.bardframework.form.field;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
 import org.bardframework.form.common.field.MultiSelectField;
@@ -49,6 +50,9 @@ public class MultiSelectFieldTemplate extends FormFieldTemplate<MultiSelectField
 
     @Override
     public List<String> toValue(String value) {
+        if (StringUtils.isBlank(value)) {
+            return null;
+        }
         return Arrays.stream(value.split(FormField.SEPARATOR)).map(String::trim).collect(Collectors.toList());
     }
 }

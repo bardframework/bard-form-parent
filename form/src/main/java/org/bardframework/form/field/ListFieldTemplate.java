@@ -1,6 +1,7 @@
 package org.bardframework.form.field;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
 import org.bardframework.form.common.field.ListField;
@@ -48,6 +49,9 @@ public class ListFieldTemplate extends FormFieldTemplate<ListField, List<String>
 
     @Override
     public List<String> toValue(String value) {
+        if (StringUtils.isBlank(value)) {
+            return null;
+        }
         return List.of(value.split(FormField.SEPARATOR));
     }
 }

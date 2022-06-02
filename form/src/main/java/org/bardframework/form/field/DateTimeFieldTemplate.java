@@ -1,5 +1,6 @@
 package org.bardframework.form.field;
 
+import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
 import org.bardframework.form.common.field.DateTimeField;
@@ -49,6 +50,9 @@ public class DateTimeFieldTemplate extends FormFieldTemplate<DateTimeField, Loca
 
     @Override
     public LocalDateTime toValue(String value) {
+        if (StringUtils.isBlank(value)) {
+            return null;
+        }
         return LocalDateTime.parse(value);
     }
 

@@ -1,5 +1,6 @@
 package org.bardframework.form.field;
 
+import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
 import org.bardframework.form.common.field.NumberField;
@@ -41,6 +42,9 @@ public class NumberFieldTemplate extends FormFieldTemplate<NumberField, Long> {
 
     @Override
     public Long toValue(String value) {
+        if (StringUtils.isBlank(value)) {
+            return null;
+        }
         return Long.valueOf(value);
     }
 

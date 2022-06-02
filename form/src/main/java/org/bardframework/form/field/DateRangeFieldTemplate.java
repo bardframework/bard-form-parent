@@ -1,5 +1,6 @@
 package org.bardframework.form.field;
 
+import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
 import org.bardframework.form.common.field.DateRangeField;
@@ -37,6 +38,9 @@ public class DateRangeFieldTemplate extends FormFieldTemplate<DateRangeField, Ra
 
     @Override
     public RangeValue<LocalDate> toValue(String value) {
+        if (StringUtils.isBlank(value)) {
+            return null;
+        }
         String[] parts = value.split(FormField.SEPARATOR);
         if (parts.length != 2) {
             throw new IllegalStateException(value + " is not valid for range value");

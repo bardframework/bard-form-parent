@@ -1,7 +1,6 @@
 package org.bardframework.form.table;
 
 import org.apache.commons.lang3.StringUtils;
-import org.bardframework.commons.utils.StringTemplateUtils;
 import org.bardframework.form.FormUtils;
 import org.bardframework.form.common.table.TableModel;
 import org.bardframework.form.table.header.TableHeaderTemplate;
@@ -92,11 +91,7 @@ public class TableUtils {
     }
 
     public static String getTableValue(String tableName, String property, Locale locale, Map<String, String> args, String defaultValue, MessageSource messageSource) {
-        String value = FormUtils.getString(tableName + "." + property, locale, args, null, messageSource);
-        if (StringUtils.isBlank(value)) {
-            value = FormUtils.getString("table." + property, locale, args, defaultValue, messageSource);
-        }
-        return StringTemplateUtils.fillTemplate(value, args);
+        return FormUtils.getString("table", property, List.of(tableName), locale, args, defaultValue, messageSource);
     }
 
     /**
@@ -204,11 +199,13 @@ public class TableUtils {
      * @return null if we can't read property value
      */
     public static String getHeaderStringValue(TableTemplate tableTemplate, String headerName, String property, Locale locale, Map<String, String> args, String defaultValue) {
-        String value = FormUtils.getString(tableTemplate.getName() + "." + headerName + "." + property, locale, args, null, tableTemplate.getMessageSource());
-        if (StringUtils.isBlank(value)) {
-            value = FormUtils.getString("header." + headerName + "." + property, locale, args, defaultValue, tableTemplate.getMessageSource());
-        }
-        return value;
+        return TableUtils.getHeaderStringValue(tableTemplate.getName(), headerName, property, locale, args, defaultValue, tableTemplate.getMessageSource());
     }
 
+    /**
+     * @return null if we can't read property value
+     */
+    public static String getHeaderStringValue(String tableName, String headerName, String property, Locale locale, Map<String, String> args, String defaultValue, MessageSource messageSource) {
+        return FormUtils.getString("header", property, List.of(tableName, headerName), locale, args, defaultValue, messageSource);
+    }
 }
