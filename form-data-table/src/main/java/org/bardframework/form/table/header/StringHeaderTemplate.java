@@ -9,7 +9,7 @@ public class StringHeaderTemplate extends TableHeaderTemplate<TableHeader, Strin
     }
 
     @Override
-    public String format(String value) {
+    public Object format(String value) {
         return value;
     }
 }

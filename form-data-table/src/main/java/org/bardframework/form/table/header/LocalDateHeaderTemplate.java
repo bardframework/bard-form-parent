@@ -23,7 +23,7 @@ public class LocalDateHeaderTemplate extends TableHeaderTemplate<TableHeader, Lo
     }
 
     @Override
-    public String format(LocalDate value) {
+    public Object format(LocalDate value) {
         if (null == value) {
             return null;
         }

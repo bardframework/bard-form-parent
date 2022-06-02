@@ -10,6 +10,7 @@ import java.util.Map;
 
 public abstract class TableHeaderTemplate<H extends TableHeader, T> extends TableHeader {
     private final Class<H> headerClazz;
+    private String excelFormat;
 
     protected TableHeaderTemplate() {
         this.headerClazz = ReflectionUtils.getGenericArgType(this.getClass(), 0);
@@ -35,5 +36,13 @@ public abstract class TableHeaderTemplate<H extends TableHeader, T> extends Tabl
 
     public abstract T toValue(String value);
 
-    public abstract String format(T value);
+    public abstract Object format(T value);
+
+    public String getExcelFormat() {
+        return excelFormat;
+    }
+
+    public void setExcelFormat(String excelFormat) {
+        this.excelFormat = excelFormat;
+    }
 }
