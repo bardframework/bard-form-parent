@@ -27,6 +27,8 @@
         <guava.version>31.1-jre</guava.version>
         <poi.version>5.2.2</poi.version>
         <spring-boot-dependencies.version>2.7.0</spring-boot-dependencies.version>
+        <!-- plugin versions -->
+        <typescript-generator-maven-plugin.version>2.36.1070</typescript-generator-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
