@@ -23,12 +23,12 @@ public class DataProviderHttpCallProcessor extends HttpCaller implements FormPro
     private static final Logger LOGGER = LoggerFactory.getLogger(DataProviderHttpCallProcessor.class);
 
     protected final Map<String, Pattern> fieldsFetcher = new HashMap<>();
-    private final Pattern foundPattern;
+    private final Pattern fetchPattern;
     private final String errorMessageCode;
 
     public DataProviderHttpCallProcessor(String httpMethod, String urlTemplate, String successPattern, Map<String, String> fieldsFetcher, String errorMessageCode) {
         super(httpMethod, urlTemplate);
-        this.foundPattern = Pattern.compile(successPattern);
+        this.fetchPattern = Pattern.compile(successPattern);
         this.errorMessageCode = errorMessageCode;
         for (Map.Entry<String, String> entry : fieldsFetcher.entrySet()) {
             this.fieldsFetcher.put(entry.getKey(), Pattern.compile(entry.getValue()));
@@ -40,7 +40,7 @@ public class DataProviderHttpCallProcessor extends HttpCaller implements FormPro
         HttpCallResult result = super.call(flowData);
         String responseString = null == result.getBody() ? null : new String(result.getBody(), StandardCharsets.UTF_8);
         LOGGER.debug("data provider http call result: [{}]", responseString);
-        if (StringUtils.isBlank(responseString) || !this.getFoundPattern().matcher(responseString).find()) {
+        if (StringUtils.isBlank(responseString) || !this.getFetchPattern().matcher(responseString).find()) {
             LOGGER.warn("data not found calling ws[{}], [{}].", this.getUrlTemplate(), flowData);
             throw new FlowExecutionException(List.of(this.getErrorMessageCode()));
         }
@@ -53,8 +53,8 @@ public class DataProviderHttpCallProcessor extends HttpCaller implements FormPro
         }
     }
 
-    public Pattern getFoundPattern() {
-        return foundPattern;
+    public Pattern getFetchPattern() {
+        return fetchPattern;
     }
 
     public Map<String, Pattern> getFieldsFetcher() {

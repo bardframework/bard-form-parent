@@ -23,17 +23,16 @@ public class DataProviderCsvFileProcessor implements FormProcessor {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataProviderCsvFileProcessor.class);
 
     protected final String csvFileLocation;
-    protected final int identifierIndexInCsvFile;
-    protected final Map<Integer, String> fieldsMapper;
+    protected final Map<Integer, String> mapper;
     protected final String identifierFieldName;
     protected final String errorMessageCode;
+    protected String separator = ",";
 
-    public DataProviderCsvFileProcessor(String csvFileLocation, int identifierIndexInCsvFile, String identifierFieldName, Map<Integer, String> fieldsMapper, String errorMessageCode) {
+    public DataProviderCsvFileProcessor(String csvFileLocation, String identifierFieldName, Map<Integer, String> mapper, String errorMessageCode) {
         this.csvFileLocation = csvFileLocation;
-        this.identifierIndexInCsvFile = identifierIndexInCsvFile;
         this.identifierFieldName = identifierFieldName;
         this.errorMessageCode = errorMessageCode;
-        this.fieldsMapper = fieldsMapper;
+        this.mapper = mapper;
     }
 
     @Override
@@ -52,13 +51,13 @@ public class DataProviderCsvFileProcessor implements FormProcessor {
                         if (null == line) {
                             continue;
                         }
-                        String[] parts = new String(line.getBytes(), StandardCharsets.UTF_8).split(",");
+                        String[] parts = new String(line.getBytes(), StandardCharsets.UTF_8).split(this.getSeparator());
                         if (parts[0].trim().equalsIgnoreCase(identifier)) {
-                            for (Integer index : fieldsMapper.keySet()) {
+                            for (Integer index : mapper.keySet()) {
                                 if (index >= parts.length) {
-                                    LOGGER.warn("can't find attribute[{}] value for[{}]", fieldsMapper.get(index), identifier);
+                                    LOGGER.warn("can't find attribute[{}] value for[{}]", mapper.get(index), identifier);
                                 } else {
-                                    flowData.put(fieldsMapper.get(index), WebUtils.escapeString(parts[index]));
+                                    flowData.put(mapper.get(index), WebUtils.escapeString(parts[index]));
                                 }
                             }
                             return;
@@ -75,8 +74,8 @@ public class DataProviderCsvFileProcessor implements FormProcessor {
         return csvFileLocation;
     }
 
-    public Map<Integer, String> getFieldsMapper() {
-        return fieldsMapper;
+    public Map<Integer, String> getMapper() {
+        return mapper;
     }
 
     public String getIdentifierFieldName() {
@@ -85,5 +84,13 @@ public class DataProviderCsvFileProcessor implements FormProcessor {
 
     public String getErrorMessageCode() {
         return errorMessageCode;
+    }
+
+    public String getSeparator() {
+        return separator;
+    }
+
+    public void setSeparator(String separator) {
+        this.separator = separator;
     }
 }
