@@ -9,7 +9,6 @@ import org.bardframework.form.common.table.TableData;
 import org.bardframework.form.common.table.TableModel;
 import org.bardframework.form.table.utils.TableModeCheckUtils;
 import org.junit.jupiter.api.Test;
-import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -33,8 +32,6 @@ public interface TableModelRestControllerTest<CL extends TableModelRestControlle
     P getDataProvider();
 
     List<Locale> getLocales();
-
-    MessageSource getMessageSource();
 
     String BASE_URL();
 
@@ -86,7 +83,11 @@ public interface TableModelRestControllerTest<CL extends TableModelRestControlle
         C criteria = this.getDataProvider().getFilterCriteria();
         Pageable pageable = this.getDataProvider().getPageable();
         //FIXME set pageable
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post(this.TABLE_EXPORT_URL()).content(this.getObjectMapper().writeValueAsBytes(criteria)).contentType(MediaType.APPLICATION_JSON);
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .post(this.TABLE_EXPORT_URL())
+                .content(this.getObjectMapper().writeValueAsBytes(criteria))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(APPLICATION_OOXML_SHEET);
         MvcResult result = this.execute(request);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         //FIXME read and check excel file from response body
@@ -95,7 +96,7 @@ public interface TableModelRestControllerTest<CL extends TableModelRestControlle
     @Test
     default void checkTableModelI18n() {
         for (Locale locale : this.getLocales()) {
-            List<String> notExistKeys = TableModeCheckUtils.checkI18nExistence(this.getController().getTableTemplate(), this.getMessageSource(), locale);
+            List<String> notExistKeys = TableModeCheckUtils.checkI18nExistence(this.getController().getTableTemplate(), locale);
             Assertions.assertThat(notExistKeys).withFailMessage("these message translation not found in lang <%s>:\n<%s>\n", String.join("\n", notExistKeys), locale).isEmpty();
         }
     }
@@ -103,7 +104,7 @@ public interface TableModelRestControllerTest<CL extends TableModelRestControlle
     @Test
     default void checkTableDefinitionValidity() {
         for (Locale locale : this.getLocales()) {
-            TableModeCheckUtils.checkDefinitionValidity(this.getController().getTableTemplate(), this.getMessageSource(), locale);
+            TableModeCheckUtils.checkDefinitionValidity(this.getController().getTableTemplate(), locale);
         }
     }
 }

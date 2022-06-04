@@ -25,7 +25,7 @@ public interface TableModelRestController<M extends BaseModel<?>, C extends Base
     String APPLICATION_OOXML_SHEET = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
     String TABLE_GET_URL = "table";
     String TABLE_FILTER_URL = "table/filter";
-    String TABLE_EXPORT_URL = "table/filter";
+    String TABLE_EXPORT_URL = "table/export";
 
     TableTemplate getTableTemplate();
 
@@ -49,12 +49,12 @@ public interface TableModelRestController<M extends BaseModel<?>, C extends Base
     }
 
     @PostMapping(path = TABLE_EXPORT_URL, consumes = MediaType.APPLICATION_JSON_VALUE, produces = APPLICATION_OOXML_SHEET)
-    default void exportTable(@RequestBody @Validated C criteria, Locale locale, HttpServletResponse response) throws Exception {
+    default void exportTable(@RequestBody @Validated C criteria, Locale locale, HttpServletResponse httpResponse) throws Exception {
         PagedData<M> pagedData = this.getService().get(criteria, Pageable.ofSize(Integer.MAX_VALUE), this.getUser());
         TableData tableData = TableUtils.toTableData(pagedData, this.getTableTemplate());
-        try (OutputStream outputStream = response.getOutputStream()) {
-            response.setContentType(APPLICATION_OOXML_SHEET);
-            response.addHeader("Content-Disposition", "attachment;filename=\"" + this.getExportFileName(APPLICATION_OOXML_SHEET, locale, this.getUser()) + " \"");
+        try (OutputStream outputStream = httpResponse.getOutputStream()) {
+            httpResponse.setContentType(APPLICATION_OOXML_SHEET);
+            httpResponse.addHeader("Content-Disposition", "attachment;filename=\"" + this.getExportFileName(APPLICATION_OOXML_SHEET, locale, this.getUser()) + " \"");
             ExcelUtils.generateExcel(this.getTableTemplate(), tableData, outputStream, locale, this.isRtl(locale));
         }
     }

@@ -18,10 +18,10 @@ import java.util.*;
 public class TableModeCheckUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(TableModeCheckUtils.class);
 
-    public static void checkDefinitionValidity(TableTemplate template, MessageSource messageSource, Locale locale) {
-        Assertions.assertThat(template.getModelClass()).withFailMessage("model class of [<%s>] table not set", template.getName()).isNotNull();
+    public static void checkDefinitionValidity(TableTemplate template, Locale locale) {
+        Assertions.assertThat(template.getModelClass()).withFailMessage("model class of [%s] table not set", template.getName()).isNotNull();
         for (TableHeaderTemplate<?, ?> headerTemplate : template.getHeaderTemplates()) {
-            Assertions.assertThat(headerTemplate.getTitle()).withFailMessage("some headers name of table [<%s>] is empty.", template.getName()).isNotEmpty();
+            Assertions.assertThat(headerTemplate.getName()).withFailMessage("some headers name of table [%s] is empty.", template.getName()).isNotEmpty();
             try {
                 ReflectionUtils.getGetter(template.getModelClass(), headerTemplate.getName());
                 //TODO check getter return type with header dataType
@@ -30,7 +30,7 @@ public class TableModeCheckUtils {
                 Assertions.fail(headerTemplate.getName() + " field not exist in " + template.getModelClass().getName());
             }
             String headerTitle = TableUtils.getHeaderStringValue(template, headerTemplate, "title", locale, Map.of(), headerTemplate.getTitle());
-            Assertions.assertThat(headerTitle).withFailMessage("header title [<%s>.<%s>] in locale [<%s>] is not set", template.getName(), headerTemplate.getName(), locale.getLanguage()).isNotEmpty();
+            Assertions.assertThat(headerTitle).withFailMessage("header title [%s.%s] in locale [%s] is not set", template.getName(), headerTemplate.getName(), locale.getLanguage()).isNotEmpty();
         }
         TableModeCheckUtils.checkFormModelValidity(template, template.getFilterFormTemplate());
         TableModeCheckUtils.checkFormModelValidity(template, template.getSaveFormTemplate());
@@ -41,12 +41,12 @@ public class TableModeCheckUtils {
         if (null == formTemplate) {
             return;
         }
-        Assertions.assertThat(formTemplate.getDtoClass()).withFailMessage("dto class of [<%s>] forms not set", tableTemplate.getName()).isNotNull();
+        Assertions.assertThat(formTemplate.getDtoClass()).withFailMessage("dto class of [%s] forms not set", tableTemplate.getName()).isNotNull();
         try {
             ReflectionUtils.newInstance(formTemplate.getDtoClass());
         } catch (Exception e) {
             LOGGER.error("error instantiating class: " + formTemplate.getDtoClass(), e);
-            Assertions.fail("can't instantiate class [<%s>], maybe default constructor not exist", formTemplate.getDtoClass());
+            Assertions.fail("can't instantiate class [%s], maybe default constructor not exist", formTemplate.getDtoClass());
         }
         for (FieldTemplate<?> formField : formTemplate.getFieldTemplates()) {
             TableModeCheckUtils.checkSetter(formTemplate.getDtoClass(), formField.getName());
@@ -61,19 +61,19 @@ public class TableModeCheckUtils {
         //TODO check setter arg by field type (String, Integer, LocalDate, etc)
     }
 
-    public static List<String> checkI18nExistence(TableTemplate template, MessageSource messageSource, Locale locale) {
+    public static List<String> checkI18nExistence(TableTemplate template, Locale locale) {
         List<String> notExistence = new ArrayList<>();
-        if (TableModeCheckUtils.isNotExist(template.getTitle(), messageSource, locale)) {
+        if (TableModeCheckUtils.isNotExist(template.getTitle(), template.getMessageSource(), locale)) {
             notExistence.add(template.getTitle());
         }
-        if (TableModeCheckUtils.isNotExist(template.getHint(), messageSource, locale)) {
+        if (TableModeCheckUtils.isNotExist(template.getHint(), template.getMessageSource(), locale)) {
             notExistence.add(template.getHint());
         }
-        template.getHeaderTemplates().forEach(header -> notExistence.addAll(TableModeCheckUtils.checkI18nExistence(header, messageSource, locale)));
+        template.getHeaderTemplates().forEach(header -> notExistence.addAll(TableModeCheckUtils.checkI18nExistence(header, template.getMessageSource(), locale)));
 
-        notExistence.addAll(TableModeCheckUtils.checkI18nExistence(template.getFilterFormTemplate(), messageSource, locale));
-        notExistence.addAll(TableModeCheckUtils.checkI18nExistence(template.getSaveFormTemplate(), messageSource, locale));
-        notExistence.addAll(TableModeCheckUtils.checkI18nExistence(template.getUpdateFormTemplate(), messageSource, locale));
+        notExistence.addAll(TableModeCheckUtils.checkI18nExistence(template.getFilterFormTemplate(), locale));
+        notExistence.addAll(TableModeCheckUtils.checkI18nExistence(template.getSaveFormTemplate(), locale));
+        notExistence.addAll(TableModeCheckUtils.checkI18nExistence(template.getUpdateFormTemplate(), locale));
         return notExistence;
     }
 
@@ -81,21 +81,21 @@ public class TableModeCheckUtils {
         return new ArrayList<>();
     }
 
-    private static List<String> checkI18nExistence(FormTemplate template, MessageSource messageSource, Locale locale) {
+    private static List<String> checkI18nExistence(FormTemplate template, Locale locale) {
         if (null == template) {
             return Collections.emptyList();
         }
         List<String> notExistence = new ArrayList<>();
-        if (TableModeCheckUtils.isNotExist(template.getTitle(), messageSource, locale)) {
+        if (TableModeCheckUtils.isNotExist(template.getTitle(), template.getMessageSource(), locale)) {
             notExistence.add(template.getTitle());
         }
-        if (TableModeCheckUtils.isNotExist(template.getConfirmMessage(), messageSource, locale)) {
+        if (TableModeCheckUtils.isNotExist(template.getConfirmMessage(), template.getMessageSource(), locale)) {
             notExistence.add(template.getConfirmMessage());
         }
-        if (TableModeCheckUtils.isNotExist(template.getSubmitLabel(), messageSource, locale)) {
+        if (TableModeCheckUtils.isNotExist(template.getSubmitLabel(), template.getMessageSource(), locale)) {
             notExistence.add(template.getSubmitLabel());
         }
-        template.getFieldTemplates().forEach(field -> notExistence.addAll(TableModeCheckUtils.checkI18nExistence(field, messageSource, locale)));
+        template.getFieldTemplates().forEach(field -> notExistence.addAll(TableModeCheckUtils.checkI18nExistence(field, template.getMessageSource(), locale)));
         return notExistence;
     }
 
