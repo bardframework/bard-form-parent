@@ -21,6 +21,7 @@ public class FormTemplate extends Form {
 
     protected final MessageSource messageSource;
     private final List<FieldTemplate<?>> fieldTemplates;
+    private Class<?> dtoClass;
     private List<FormProcessor> preProcessors;
     private List<FormProcessor> postProcessors;
     private Map<String, List<FormProcessor>> actionProcessors = new HashMap<>();
@@ -104,6 +105,14 @@ public class FormTemplate extends Form {
 
     public FieldTemplate<?> getField(String name) {
         return this.getFieldTemplates().stream().filter(field -> field.getName().equals(name)).findFirst().orElse(null);
+    }
+
+    public Class<?> getDtoClass() {
+        return dtoClass;
+    }
+
+    public void setDtoClass(Class<?> dtoClass) {
+        this.dtoClass = dtoClass;
     }
 
     public MessageSource getMessageSource() {

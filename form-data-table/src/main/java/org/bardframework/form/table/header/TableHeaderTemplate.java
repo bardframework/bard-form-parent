@@ -3,7 +3,7 @@ package org.bardframework.form.table.header;
 import org.bardframework.commons.utils.ReflectionUtils;
 import org.bardframework.form.common.table.TableHeader;
 import org.bardframework.form.table.TableTemplate;
-import org.bardframework.form.table.TableUtils;
+import org.bardframework.form.table.utils.TableUtils;
 
 import java.util.Locale;
 import java.util.Map;
@@ -24,11 +24,11 @@ public abstract class TableHeaderTemplate<H extends TableHeader, T> extends Tabl
     }
 
     protected void fill(TableTemplate tableTemplate, H header, Map<String, String> args, Locale locale) throws Exception {
-        header.setTitle(TableUtils.getHeaderStringValue(tableTemplate, this.getName(), "title", locale, args, this.getName()));
-        header.setHidden(TableUtils.getHeaderBooleanValue(tableTemplate, this.getName(), "hidden", locale, args, this.getHidden()));
-        header.setSortable(TableUtils.getHeaderBooleanValue(tableTemplate, this.getName(), "sortable", locale, args, this.getSortable()));
-        header.setMovable(TableUtils.getHeaderBooleanValue(tableTemplate, this.getName(), "movable", locale, args, this.getMovable()));
-        header.setSticky(TableUtils.getHeaderBooleanValue(tableTemplate, this.getName(), "sticky", locale, args, this.getSticky()));
+        header.setTitle(TableUtils.getHeaderStringValue(tableTemplate, this, "title", locale, args, this.getName()));
+        header.setHidden(TableUtils.getHeaderBooleanValue(tableTemplate, this, "hidden", locale, args, this.getHidden()));
+        header.setSortable(TableUtils.getHeaderBooleanValue(tableTemplate, this, "sortable", locale, args, this.getSortable()));
+        header.setMovable(TableUtils.getHeaderBooleanValue(tableTemplate, this, "movable", locale, args, this.getMovable()));
+        header.setSticky(TableUtils.getHeaderBooleanValue(tableTemplate, this, "sticky", locale, args, this.getSticky()));
     }
 
     public H getEmptyHeader() {
