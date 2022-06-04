@@ -92,7 +92,7 @@ public class ExcelUtils {
         for (List<Object> rowData : tableData.getData()) {
             Row row = sheet.createRow(rowIndex++);
             for (int index = 0; index < tableTemplate.getHeaderTemplates().size(); index++) {
-                Cell cell = row.createCell(index++);
+                Cell cell = row.createCell(index);
                 Object cellValue = rowData.get(index);
                 TableHeaderTemplate<?, ?> headerTemplate = tableTemplate.getHeaderTemplates().get(index);
                 if (null == cellValue) {
@@ -109,6 +109,7 @@ public class ExcelUtils {
                 } else {
                     cell.setCellStyle(dataStyle);
                 }
+                index++;
             }
         }
         for (int i = 0; i < headerRow.getPhysicalNumberOfCells(); i++) {
