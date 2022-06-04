@@ -5,6 +5,7 @@ import org.bardframework.form.common.table.TableHeader;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class LocalDateTimeHeaderTemplate extends TableHeaderTemplate<TableHeader, LocalDateTime> {
 
@@ -15,7 +16,7 @@ public class LocalDateTimeHeaderTemplate extends TableHeaderTemplate<TableHeader
     }
 
     @Override
-    public LocalDateTime toValue(String value) {
+    public LocalDateTime parse(String value, Locale locale) {
         if (StringUtils.isBlank(value)) {
             return null;
         }
@@ -23,7 +24,7 @@ public class LocalDateTimeHeaderTemplate extends TableHeaderTemplate<TableHeader
     }
 
     @Override
-    public Object format(LocalDateTime value) {
+    public Object format(LocalDateTime value, Locale locale) {
         if (null == value) {
             return null;
         }

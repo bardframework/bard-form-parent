@@ -43,15 +43,15 @@ public interface TableModelRestController<M extends BaseModel<?>, C extends Base
     }
 
     @PostMapping(path = TABLE_FILTER_URL, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    default TableData getTableData(@RequestBody @Validated C criteria, Pageable page) {
+    default TableData getTableData(@RequestBody @Validated C criteria, Pageable page, Locale locale) {
         PagedData<M> pagedData = this.getService().get(criteria, page, this.getUser());
-        return TableUtils.toTableData(pagedData, this.getTableTemplate());
+        return TableUtils.toTableData(pagedData, this.getTableTemplate(), locale);
     }
 
     @PostMapping(path = TABLE_EXPORT_URL, consumes = MediaType.APPLICATION_JSON_VALUE, produces = APPLICATION_OOXML_SHEET)
     default void exportTable(@RequestBody @Validated C criteria, Locale locale, HttpServletResponse httpResponse) throws Exception {
         PagedData<M> pagedData = this.getService().get(criteria, Pageable.ofSize(Integer.MAX_VALUE), this.getUser());
-        TableData tableData = TableUtils.toTableData(pagedData, this.getTableTemplate());
+        TableData tableData = TableUtils.toTableData(pagedData, this.getTableTemplate(), locale);
         try (OutputStream outputStream = httpResponse.getOutputStream()) {
             httpResponse.setContentType(APPLICATION_OOXML_SHEET);
             httpResponse.addHeader("Content-Disposition", "attachment;filename=\"" + this.getExportFileName(APPLICATION_OOXML_SHEET, locale, this.getUser()) + " \"");

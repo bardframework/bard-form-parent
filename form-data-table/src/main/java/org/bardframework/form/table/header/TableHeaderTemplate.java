@@ -35,9 +35,9 @@ public abstract class TableHeaderTemplate<H extends TableHeader, T> extends Tabl
         return ReflectionUtils.newInstance(headerClazz);
     }
 
-    public abstract T toValue(String value);
+    public abstract T parse(String value, Locale locale);
 
-    public abstract Object format(T value);
+    public abstract Object format(T value, Locale locale);
 
     public String getExcelFormat() {
         return excelFormat;

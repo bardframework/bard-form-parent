@@ -29,7 +29,7 @@ public class TableUtils {
          */
     }
 
-    public static TableData toTableData(PagedData<?> pagedData, TableTemplate tableTemplate) {
+    public static TableData toTableData(PagedData<?> pagedData, TableTemplate tableTemplate, Locale locale) {
         TableData tableData = new TableData();
         tableData.setTotal(pagedData.getTotal());
         tableData.setHeaders(tableTemplate.getHeaderTemplates().stream().map(TableHeader::getName).collect(Collectors.toList()));
@@ -38,7 +38,7 @@ public class TableUtils {
             for (TableHeaderTemplate headerTemplate : tableTemplate.getHeaderTemplates()) {
                 try {
                     Object value = ReflectionUtils.getPropertyValue(model, headerTemplate.getName());
-                    values.add(headerTemplate.format(value));
+                    values.add(headerTemplate.format(value, locale));
                 } catch (Exception e) {
                     throw new IllegalStateException(String.format("can't read property [%s] of [%s] instance and convert it, table [%s]", headerTemplate.getName(), model.getClass(), tableTemplate.getName()), e);
                 }
