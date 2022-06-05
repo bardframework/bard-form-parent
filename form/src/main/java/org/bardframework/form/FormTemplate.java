@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 
 import javax.annotation.PostConstruct;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class FormTemplate extends Form {
 
@@ -44,6 +41,43 @@ public class FormTemplate extends Form {
         if (CollectionUtils.isNotEmpty(preProcessors)) {
             this.preProcessors.forEach(processor -> processor.configurationValidate(this));
         }
+        /*
+            merge all pre processors
+         */
+        List<FormProcessor> processors = new ArrayList<>();
+        for (FieldTemplate<?> fieldTemplate : this.getFieldTemplates()) {
+            if (!(fieldTemplate instanceof FormFieldTemplate<?, ?>)) {
+                continue;
+            }
+            FormFieldTemplate<?, ?> formFieldTemplate = (FormFieldTemplate<?, ?>) fieldTemplate;
+            if (null != formFieldTemplate.getPreProcessors()) {
+                processors.addAll(formFieldTemplate.getPreProcessors());
+            }
+        }
+        if (null != this.preProcessors) {
+            processors.addAll(this.preProcessors);
+        }
+        processors.sort(FormProcessor::compareTo);
+        this.preProcessors = processors;
+
+        /*
+            merge all post processors
+         */
+        processors = new ArrayList<>();
+        for (FieldTemplate<?> fieldTemplate : this.getFieldTemplates()) {
+            if (!(fieldTemplate instanceof FormFieldTemplate<?, ?>)) {
+                continue;
+            }
+            FormFieldTemplate<?, ?> formFieldTemplate = (FormFieldTemplate<?, ?>) fieldTemplate;
+            if (null != formFieldTemplate.getPostProcessors()) {
+                processors.addAll(formFieldTemplate.getPostProcessors());
+            }
+        }
+        if (null != this.postProcessors) {
+            processors.addAll(this.postProcessors);
+        }
+        processors.sort(FormProcessor::compareTo);
+        this.postProcessors = processors;
     }
 
     public <F extends FormField<T>, T> void validate(Map<String, String> values, Map<String, String> args, Locale locale) throws Exception {

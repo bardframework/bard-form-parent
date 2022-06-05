@@ -64,13 +64,6 @@ public class FlowHandler {
         }
         FlowResponse<String> response = null;
         try {
-            for (FieldTemplate<?> fieldTemplate : currentFormTemplate.getFieldTemplates()) {
-                if (!(fieldTemplate instanceof FormFieldTemplate<?, ?>)) {
-                    continue;
-                }
-                FormFieldTemplate<?, ?> formFieldTemplate = (FormFieldTemplate<?, ?>) fieldTemplate;
-                this.process(formFieldTemplate.getPostProcessors(), flowToken, flowData, formData, httpRequest, httpResponse);
-            }
             this.process(currentFormTemplate.getPostProcessors(), flowToken, flowData, formData, httpRequest, httpResponse);
 
             FormTemplate nextFormTemplate = this.getNextFormTemplate(flowData);
@@ -152,13 +145,6 @@ public class FlowHandler {
     }
 
     protected FlowResponse<String> prepareForSend(FormTemplate formTemplate, String flowToken, FlowData flowData, Map<String, String> formData, String responseData, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
-        for (FieldTemplate<?> fieldTemplate : formTemplate.getFieldTemplates()) {
-            if (!(fieldTemplate instanceof FormFieldTemplate<?, ?>)) {
-                continue;
-            }
-            FormFieldTemplate<?, ?> formFieldTemplate = (FormFieldTemplate<?, ?>) fieldTemplate;
-            this.process(formFieldTemplate.getPreProcessors(), flowToken, flowData, formData, httpRequest, httpResponse);
-        }
         this.process(formTemplate.getPreProcessors(), flowToken, flowData, formData, httpRequest, httpResponse);
         /*
             convert and fill form

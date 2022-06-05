@@ -127,5 +127,10 @@ public class CaptchaFieldTemplate extends FormFieldTemplate<CaptchaField, String
              */
             flowData.remove(GENERATE_COUNT_KEY);
         }
+
+        @Override
+        public int order() {
+            return -2;
+        }
     }
 }
