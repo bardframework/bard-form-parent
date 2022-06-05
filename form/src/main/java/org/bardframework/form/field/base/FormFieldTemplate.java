@@ -30,8 +30,10 @@ public abstract class FormFieldTemplate<F extends FormField<T>, T> extends Field
 
     public abstract boolean isValid(F field, T value);
 
+    @Override
     public abstract T toValue(String value);
 
+    @Override
     public void fill(FormTemplate formTemplate, F field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
         field.setName(this.getName());

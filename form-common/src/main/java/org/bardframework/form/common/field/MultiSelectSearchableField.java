@@ -1,11 +1,13 @@
 package org.bardframework.form.common.field;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import org.bardframework.form.common.FieldType;
 import org.bardframework.form.common.FieldTypeBase;
 import org.bardframework.form.common.field.common.SelectOption;
 
 import java.util.List;
 
+@JsonTypeName("MULTI_SELECT_SEARCHABLE")
 public class MultiSelectSearchableField extends MultiSelectField {
 
     public MultiSelectSearchableField() {

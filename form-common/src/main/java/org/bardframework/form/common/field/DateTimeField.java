@@ -1,11 +1,13 @@
 package org.bardframework.form.common.field;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import org.bardframework.form.common.FieldType;
 import org.bardframework.form.common.FieldTypeBase;
 import org.bardframework.form.common.field.base.FormField;
 
 import java.time.LocalDateTime;
 
+@JsonTypeName("DATE_TIME")
 public class DateTimeField extends FormField<LocalDateTime> {
     private LocalDateTime minValue;
     private LocalDateTime maxValue;

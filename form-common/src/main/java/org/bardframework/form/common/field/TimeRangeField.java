@@ -1,5 +1,6 @@
 package org.bardframework.form.common.field;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import org.bardframework.form.common.FieldType;
 import org.bardframework.form.common.FieldTypeBase;
 import org.bardframework.form.common.field.base.FormField;
@@ -8,6 +9,7 @@ import org.bardframework.form.common.field.common.RangeValue;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 
+@JsonTypeName("TIME_RANGE")
 public class TimeRangeField extends FormField<RangeValue<LocalTime>> {
     private Long minLength;
     private Long maxLength;

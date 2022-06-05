@@ -1,9 +1,11 @@
 package org.bardframework.form.common.field;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import org.bardframework.form.common.FieldType;
 import org.bardframework.form.common.FieldTypeBase;
 import org.bardframework.form.common.field.base.FormField;
 
+@JsonTypeName("TEXT")
 public class TextField extends FormField<String> {
     private String regex;
     private String mask;

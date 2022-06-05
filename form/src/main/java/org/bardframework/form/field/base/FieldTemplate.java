@@ -22,13 +22,17 @@ public abstract class FieldTemplate<F extends Field> {
     }
 
     public F toField(FormTemplate formTemplate, Map<String, String> args, Locale locale) throws Exception {
-        F field = ReflectionUtils.newInstance(this.fieldClazz);
+        F field = this.getEmptyField();
         this.fill(formTemplate, field, args, locale);
         return field;
     }
 
     protected void fill(FormTemplate formTemplate, F field, Map<String, String> args, Locale locale) throws Exception {
         field.setLabel(FormUtils.getFieldStringProperty(formTemplate, this.getName(), "label", locale, args, null));
+    }
+
+    protected F getEmptyField() {
+        return ReflectionUtils.newInstance(this.fieldClazz);
     }
 
     public String getName() {

@@ -18,6 +18,7 @@ public class ReadOnlyFieldTemplate extends FieldTemplate<ReadonlyField> implemen
         super(name);
     }
 
+    @Override
     public void fill(FormTemplate formTemplate, ReadonlyField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
         field.setTooltip(FormUtils.getFieldStringProperty(formTemplate, this.getName(), "tooltip", locale, args, null));
