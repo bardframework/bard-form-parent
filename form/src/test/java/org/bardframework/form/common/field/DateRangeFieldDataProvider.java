@@ -45,7 +45,7 @@ public class DateRangeFieldDataProvider implements FieldDataProvider<DateRangeFi
         if (null != field.getMaxLength()) {
             return new RangeValue<>(LocalDate.now(), LocalDate.now().plusDays(field.getMaxLength() + RandomUtils.nextInt(1, 100)));
         }
-        throw new IllegalStateException("can't generate invalid value for filed: " + field.getName());
+        throw new IllegalStateException("can't generate invalid value for field: " + field.getName());
     }
 
     @Override

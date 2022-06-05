@@ -1,12 +1,10 @@
 package org.bardframework.form.common.field;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import org.bardframework.form.common.FieldType;
 import org.bardframework.form.common.FieldTypeBase;
 import org.bardframework.form.common.field.base.FormField;
 import org.bardframework.form.common.field.common.RangeValue;
 
-@JsonTypeName("NUMBER_RANGE")
 public class NumberRangeField extends FormField<RangeValue<Long>> {
     private Long minValue;
     private Long maxValue;

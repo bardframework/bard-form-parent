@@ -1,11 +1,9 @@
 package org.bardframework.form.common.field;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import org.bardframework.form.common.FieldType;
 import org.bardframework.form.common.FieldTypeBase;
 import org.bardframework.form.common.field.base.FormField;
 
-@JsonTypeName("SINGLE_CHECKBOX")
 public class SingleCheckBoxField extends FormField<Boolean> {
 
     public SingleCheckBoxField() {

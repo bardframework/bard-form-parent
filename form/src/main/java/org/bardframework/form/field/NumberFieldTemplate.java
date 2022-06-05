@@ -18,15 +18,15 @@ public class NumberFieldTemplate extends FormFieldTemplate<NumberField, Long> {
     @Override
     public boolean isValid(NumberField field, Long value) {
         if (null == value && Boolean.TRUE.equals(field.getDisable())) {
-            LOGGER.debug("filed [{}] is required, but it's value is empty", field.getName());
+            LOGGER.debug("field [{}] is required, but it's value is empty", field.getName());
             return false;
         }
         if (null != field.getMinValue() && (value == null || value < field.getMinValue())) {
-            LOGGER.debug("filed [{}] min value is [{}], but it's value is less than minimum", field.getName(), field.getMinValue());
+            LOGGER.debug("field [{}] min value is [{}], but it's value is less than minimum", field.getName(), field.getMinValue());
             return false;
         }
         if (null != field.getMaxValue() && (value == null || value > field.getMaxValue())) {
-            LOGGER.debug("filed [{}] max value is [{}], but it's value is greater than maximum", field.getName(), field.getMaxValue());
+            LOGGER.debug("field [{}] max value is [{}], but it's value is greater than maximum", field.getName(), field.getMaxValue());
             return false;
         }
         return true;

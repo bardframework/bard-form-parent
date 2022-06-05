@@ -4,20 +4,20 @@ import org.bardframework.form.common.FieldType;
 import org.bardframework.form.common.FieldTypeBase;
 import org.bardframework.form.common.field.base.Field;
 
-public class MessageField extends Field {
+public class HtmlViewField extends Field {
 
-    private String message;
+    private String html;
 
     @Override
     public FieldType<?> getType() {
-        return FieldTypeBase.MESSAGE;
+        return FieldTypeBase.HTML_VIEW;
     }
 
-    public String getMessage() {
-        return message;
+    public String getHtml() {
+        return html;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setHtml(String html) {
+        this.html = html;
     }
 }

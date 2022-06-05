@@ -19,19 +19,19 @@ public class TextFieldTemplate extends FormFieldTemplate<TextField, String> {
     @Override
     public boolean isValid(TextField field, String value) {
         if (StringUtils.isBlank(value) && Boolean.TRUE.equals(field.getDisable())) {
-            LOGGER.debug("filed [{}] is required, but it's value is empty", field.getName());
+            LOGGER.debug("field [{}] is required, but it's value is empty", field.getName());
             return false;
         }
         if (null != field.getMinLength() && (null == value ? 0 : value.length()) < field.getMinLength()) {
-            LOGGER.debug("filed [{}] min length is [{}], but it's value[{}] length is smaller than minimum", field.getName(), field.getMinLength(), value);
+            LOGGER.debug("field [{}] min length is [{}], but it's value[{}] length is smaller than minimum", field.getName(), field.getMinLength(), value);
             return false;
         }
         if (null != field.getMaxLength() && (null == value ? 0 : value.length()) > field.getMaxLength()) {
-            LOGGER.debug("filed [{}] max length is [{}], but it's value[{}] length is greater than maximum", field.getName(), field.getMaxLength(), value);
+            LOGGER.debug("field [{}] max length is [{}], but it's value[{}] length is greater than maximum", field.getName(), field.getMaxLength(), value);
             return false;
         }
         if (StringUtils.isNotBlank(field.getRegex()) && (StringUtils.isBlank(value) || !Pattern.matches(field.getRegex(), value))) {
-            LOGGER.debug("filed [{}] regex is [{}], but it's value[{}] not match with it", field.getName(), field.getRegex(), value);
+            LOGGER.debug("field [{}] regex is [{}], but it's value[{}] not match with it", field.getName(), field.getRegex(), value);
             return false;
         }
         return true;

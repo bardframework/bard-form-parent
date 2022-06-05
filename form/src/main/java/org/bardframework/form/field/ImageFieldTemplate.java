@@ -1,6 +1,6 @@
 package org.bardframework.form.field;
 
-import org.bardframework.form.common.field.ImageField;
+import org.bardframework.form.common.field.ImageViewField;
 
 public class ImageFieldTemplate extends FileFieldTemplate {
 
@@ -9,8 +9,8 @@ public class ImageFieldTemplate extends FileFieldTemplate {
     }
 
     @Override
-    protected ImageField getEmptyField() {
-        return new ImageField();
+    protected ImageViewField getEmptyField() {
+        return new ImageViewField();
     }
 
 }

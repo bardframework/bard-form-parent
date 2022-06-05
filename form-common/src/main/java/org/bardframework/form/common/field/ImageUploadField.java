@@ -1,10 +1,8 @@
 package org.bardframework.form.common.field;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import org.bardframework.form.common.FieldType;
 import org.bardframework.form.common.FieldTypeBase;
 
-@JsonTypeName("IMAGE_UPLOAD")
 public class ImageUploadField extends FileUploadField {
 
     private Double aspectRatio;

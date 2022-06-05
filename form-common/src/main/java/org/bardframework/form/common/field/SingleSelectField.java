@@ -1,6 +1,5 @@
 package org.bardframework.form.common.field;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import org.bardframework.form.common.FieldType;
 import org.bardframework.form.common.FieldTypeBase;
 import org.bardframework.form.common.field.base.FormField;
@@ -8,7 +7,6 @@ import org.bardframework.form.common.field.common.SelectOption;
 
 import java.util.List;
 
-@JsonTypeName("SINGLE_SELECT")
 public class SingleSelectField extends FormField<String> {
     private List<SelectOption> options;
 

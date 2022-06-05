@@ -1,6 +1,6 @@
 package org.bardframework.form.field;
 
-import org.bardframework.form.common.field.AvatarField;
+import org.bardframework.form.common.field.AvatarViewField;
 
 public class AvatarFieldTemplate extends FileFieldTemplate {
 
@@ -9,7 +9,7 @@ public class AvatarFieldTemplate extends FileFieldTemplate {
     }
 
     @Override
-    protected AvatarField getEmptyField() {
-        return new AvatarField();
+    protected AvatarViewField getEmptyField() {
+        return new AvatarViewField();
     }
 }

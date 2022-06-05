@@ -54,11 +54,11 @@ public class CaptchaFieldTemplate extends FormFieldTemplate<CaptchaField, String
     @Override
     public boolean isValid(CaptchaField field, String value) {
         if (StringUtils.isBlank(value) && Boolean.TRUE.equals(field.getDisable())) {
-            LOGGER.debug("filed [{}] is required, but it's value is empty", field.getName());
+            LOGGER.debug("field [{}] is required, but it's value is empty", field.getName());
             return false;
         }
         if (null != value && value.trim().length() != field.getLength()) {
-            LOGGER.debug("filed [{}] length [{}] is not equal with [{}]", field.getName(), value.trim().length(), field.getLength());
+            LOGGER.debug("field [{}] length [{}] is not equal with [{}]", field.getName(), value.trim().length(), field.getLength());
             return false;
         }
         return true;
@@ -130,7 +130,7 @@ public class CaptchaFieldTemplate extends FormFieldTemplate<CaptchaField, String
 
         @Override
         public int order() {
-            return -2;
+            return -100;
         }
     }
 }

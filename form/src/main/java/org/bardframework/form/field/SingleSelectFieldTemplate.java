@@ -28,11 +28,11 @@ public class SingleSelectFieldTemplate extends FormFieldTemplate<SingleSelectFie
     @Override
     public boolean isValid(SingleSelectField field, String value) {
         if (StringUtils.isBlank(value) && Boolean.TRUE.equals(field.getDisable())) {
-            LOGGER.debug("filed [{}] is required, but it's value is empty", field.getName());
+            LOGGER.debug("field [{}] is required, but it's value is empty", field.getName());
             return false;
         }
         if (StringUtils.isNotBlank(value) && field.getOptions().stream().filter(option -> !Boolean.TRUE.equals(option.getDisable())).noneMatch(option -> option.getId().equals(value.trim()))) {
-            LOGGER.debug("filed [{}] is select type, but it's value[{}] dose not equal with select options", field.getName(), value);
+            LOGGER.debug("field [{}] is select type, but it's value[{}] dose not equal with select options", field.getName(), value);
             return false;
         }
         return true;
