@@ -5,6 +5,7 @@ import org.bardframework.commons.web.WebTestHelper;
 import org.bardframework.crud.api.base.BaseCriteria;
 import org.bardframework.crud.api.base.BaseModel;
 import org.bardframework.crud.api.base.DataProviderService;
+import org.bardframework.crud.api.utils.TestUtils;
 import org.bardframework.form.common.table.TableData;
 import org.bardframework.form.common.table.TableModel;
 import org.bardframework.form.table.utils.TableModeCheckUtils;
@@ -65,8 +66,7 @@ public interface TableModelRestControllerTest<CL extends TableModelRestControlle
         this.getDataProvider().getModel(user);
         C criteria = this.getDataProvider().getFilterCriteria();
         Pageable pageable = this.getDataProvider().getPageable();
-        //FIXME set pageable
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post(this.TABLE_FILTER_URL()).content(this.getObjectMapper().writeValueAsBytes(criteria)).contentType(MediaType.APPLICATION_JSON);
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post(TestUtils.setPage(this.TABLE_FILTER_URL(), pageable)).content(this.getObjectMapper().writeValueAsBytes(criteria)).contentType(MediaType.APPLICATION_JSON);
         TableData tableData = this.execute(request, HttpStatus.OK, TableData.class);
         assertThat(tableData.getHeaders()).isNotNull().isNotEmpty();
         assertThat(tableData.getData()).isNotNull().isNotEmpty();
@@ -82,9 +82,8 @@ public interface TableModelRestControllerTest<CL extends TableModelRestControlle
         this.getDataProvider().getModel(user);
         C criteria = this.getDataProvider().getFilterCriteria();
         Pageable pageable = this.getDataProvider().getPageable();
-        //FIXME set pageable
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
-                .post(this.TABLE_EXPORT_URL())
+                .post(TestUtils.setPage(this.TABLE_EXPORT_URL(), pageable))
                 .content(this.getObjectMapper().writeValueAsBytes(criteria))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(APPLICATION_OOXML_SHEET);
