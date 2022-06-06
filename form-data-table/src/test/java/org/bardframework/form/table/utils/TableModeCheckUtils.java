@@ -23,7 +23,7 @@ public class TableModeCheckUtils {
         for (TableHeaderTemplate<?, ?> headerTemplate : template.getHeaderTemplates()) {
             Assertions.assertThat(headerTemplate.getName()).withFailMessage("some headers name of table [%s] is empty.", template.getName()).isNotEmpty();
             try {
-                ReflectionUtils.getGetter(template.getModelClass(), headerTemplate.getName());
+                ReflectionUtils.getGetterMethod(template.getModelClass(), headerTemplate.getName());
                 //TODO check getter return type with header dataType
             } catch (NoSuchMethodException e) {
                 LOGGER.error("error get getter of [{}.{}]", template.getModelClass(), headerTemplate.getName(), e);
