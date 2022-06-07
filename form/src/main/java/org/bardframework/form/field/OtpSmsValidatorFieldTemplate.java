@@ -41,7 +41,7 @@ public class OtpSmsValidatorFieldTemplate extends TextFieldTemplate {
         this.maxResendOtpCount = maxResendOtpCount;
         this.resendIntervalSeconds = resendIntervalSeconds;
         this.generex = new Generex(otpRegex);
-        this.otpSmsSenderProcessor = new OtpSmsSenderProcessor(messageTemplateKey, errorMessageCode, mobileNumberFieldTemplate, smsSender, messageSource);
+        this.otpSmsSenderProcessor = new OtpSmsSenderProcessor(messageTemplateKey, errorMessageCode, true, mobileNumberFieldTemplate, smsSender, messageSource);
         this.setResendAction("otp-resend");
         this.setGeneratedOtpKey("X_G_OTP");
         this.setPreProcessors(List.of(otpSmsSenderProcessor));
@@ -91,15 +91,13 @@ public class OtpSmsValidatorFieldTemplate extends TextFieldTemplate {
     }
 
     private class OtpSmsSenderProcessor extends NotificationSmsSenderProcessor {
-        public OtpSmsSenderProcessor(String messageTemplateKey, String errorMessageCode, FieldTemplate<?> mobileNumberFieldTemplate, SmsSender smsSender, @Autowired MessageSource messageSource) {
-            super(messageTemplateKey, errorMessageCode, mobileNumberFieldTemplate, smsSender, messageSource);
+        public OtpSmsSenderProcessor(String messageTemplateKey, String errorMessageCode, boolean failOnError, FieldTemplate<?> mobileNumberFieldTemplate, SmsSender smsSender, @Autowired MessageSource messageSource) {
+            super(messageTemplateKey, errorMessageCode, failOnError, mobileNumberFieldTemplate, smsSender, messageSource);
         }
 
         @Override
-        protected Map<String, String> addExtraArgs(Map<String, String> flowData) {
-            String otp = this.generateOtp();
-            flowData.put(generatedOtpKey, otp);
-            return super.addExtraArgs(flowData);
+        protected void beforeSend(Map<String, String> flowData) {
+            flowData.put(generatedOtpKey, this.generateOtp());
         }
 
         @Override

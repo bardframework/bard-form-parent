@@ -15,44 +15,73 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public abstract class NotificationSenderProcessor implements FormProcessor {
     protected final static Logger LOGGER = LoggerFactory.getLogger(NotificationSenderProcessor.class);
 
     protected final String messageTemplateKey;
     protected final String errorMessageCode;
+    protected final boolean failOnError;
     protected final MessageSource messageSource;
+    protected final Executor executor = Executors.newFixedThreadPool(100);
+    protected boolean executeInNewThread;
     protected DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd");
     protected DateTimeFormatter jalaliDateFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd");
     protected DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("H:mm:ss");
 
-    public NotificationSenderProcessor(String messageTemplateKey, String errorMessageCode, @Autowired MessageSource messageSource) {
+    public NotificationSenderProcessor(String messageTemplateKey, String errorMessageCode, boolean failOnError, @Autowired MessageSource messageSource) {
         this.messageTemplateKey = messageTemplateKey;
         this.errorMessageCode = errorMessageCode;
+        this.failOnError = failOnError;
         this.messageSource = messageSource;
     }
 
-    protected abstract void send(Map<String, String> flowData, String message) throws IOException;
+    protected abstract void send(String message, Map<String, String> args) throws IOException;
 
     @Override
     public final void process(String flowToken, Map<String, String> flowData, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
-        String message = this.prepareMessage(flowData, locale);
+        String message = this.getMessageSource().getMessage(this.getMessageTemplateKey(), new Object[]{}, locale);
         LOGGER.debug("sending message [{}]", message);
-        this.send(this.addExtraArgs(flowData), message);
+        if (executeInNewThread) {
+            executor.execute(() -> this.sendInternal(message, flowData));
+        } else {
+            this.sendInternal(message, flowData);
+        }
     }
 
-    protected String prepareMessage(Map<String, String> flowData, Locale locale) {
-        return this.getMessageSource().getMessage(this.getMessageTemplateKey(), new Object[]{}, locale);
+    private void sendInternal(String message, Map<String, String> flowData) {
+        Map<String, String> args = this.getArgs(flowData);
+        try {
+            this.beforeSend(flowData);
+            this.send(message, args);
+            this.afterSend(flowData);
+        } catch (Exception e) {
+            if (!failOnError) {
+                LOGGER.error("error calling notification sender, failOnError is false, catching exception.", e);
+                return;
+            }
+            throw new IllegalStateException(e);
+        }
     }
 
-    protected Map<String, String> addExtraArgs(Map<String, String> flowData) {
+    protected Map<String, String> getArgs(Map<String, String> flowData) {
+        Map<String, String> args = new HashMap<>(flowData);
         LocalDateTimeJalali dateTimeJalali = LocalDateTimeJalali.now();
         LocalDateTime dateTime = LocalDateTime.now();
-        Map<String, String> newArgs = new HashMap<>(flowData);
-        newArgs.put("date", dateTime.format(this.getDateFormat()));
-        newArgs.put("jalali_date", dateTimeJalali.format(this.getJalaliDateFormat()));
-        newArgs.put("time", dateTime.format(this.getTimeFormat()));
-        return newArgs;
+        args.put("date", dateTime.format(this.getDateFormat()));
+        args.put("jalali_date", dateTimeJalali.format(this.getJalaliDateFormat()));
+        args.put("time", dateTime.format(this.getTimeFormat()));
+        return args;
+    }
+
+    protected void beforeSend(Map<String, String> flowData) {
+
+    }
+
+    protected void afterSend(Map<String, String> flowData) {
+
     }
 
     public String getMessageTemplateKey() {
@@ -89,5 +118,13 @@ public abstract class NotificationSenderProcessor implements FormProcessor {
 
     public void setTimeFormat(DateTimeFormatter timeFormat) {
         this.timeFormat = timeFormat;
+    }
+
+    public boolean isExecuteInNewThread() {
+        return executeInNewThread;
+    }
+
+    public void setExecuteInNewThread(boolean executeInNewThread) {
+        this.executeInNewThread = executeInNewThread;
     }
 }

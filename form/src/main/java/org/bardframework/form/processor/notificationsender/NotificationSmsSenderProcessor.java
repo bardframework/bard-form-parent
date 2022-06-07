@@ -16,32 +16,27 @@ public class NotificationSmsSenderProcessor extends NotificationSenderProcessor 
     protected final FieldTemplate<?> mobileNumberFieldTemplate;
     protected final SmsSender smsSender;
 
-    public NotificationSmsSenderProcessor(String messageTemplateKey, String errorMessageCode, FieldTemplate<?> mobileNumberFieldTemplate, SmsSender smsSender, @Autowired MessageSource messageSource) {
-        super(messageTemplateKey, errorMessageCode, messageSource);
+    public NotificationSmsSenderProcessor(String messageTemplateKey, String errorMessageCode, boolean failOnError, FieldTemplate<?> mobileNumberFieldTemplate, SmsSender smsSender, @Autowired MessageSource messageSource) {
+        super(messageTemplateKey, errorMessageCode, failOnError, messageSource);
         this.mobileNumberFieldTemplate = mobileNumberFieldTemplate;
         this.smsSender = smsSender;
     }
 
     @Override
-    protected void send(Map<String, String> flowData, String message) throws IOException {
-        String mobileNumber = this.getMobileNumber(flowData);
+    protected void send(String message, Map<String, String> args) throws IOException {
+        String mobileNumber = this.getMobileNumber(args);
         LOGGER.debug("sending message [{}]", message);
-        boolean sendResult = this.getSmsSender().send(mobileNumber, message, flowData);
+        boolean sendResult = this.getSmsSender().send(mobileNumber, message, args);
         if (!sendResult) {
             LOGGER.error("error sending sms to [{}]", mobileNumber);
             throw new FlowExecutionException(List.of(this.getErrorMessageCode()));
         }
-        this.afterSend(flowData);
     }
 
-    protected void afterSend(Map<String, String> flowData) {
-
-    }
-
-    protected String getMobileNumber(Map<String, String> flowData) {
-        String mobileNumber = flowData.get(this.getMobileNumberFieldTemplate().getName());
+    protected String getMobileNumber(Map<String, String> args) {
+        String mobileNumber = args.get(this.getMobileNumberFieldTemplate().getName());
         if (StringUtils.isBlank(mobileNumber)) {
-            LOGGER.warn("mobile number not exist for [{}], can't send sms", flowData);
+            LOGGER.warn("mobile number not exist for [{}], can't send sms", args);
             throw new FlowExecutionException(List.of(this.getErrorMessageCode()));
         }
         return mobileNumber;
