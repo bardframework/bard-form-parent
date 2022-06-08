@@ -32,15 +32,18 @@ public class MultiSelectFieldTemplate extends FormFieldTemplate<MultiSelectField
 
     @Override
     public boolean isValid(MultiSelectField field, List<String> values) {
-        if (CollectionUtils.isEmpty(values) && Boolean.TRUE.equals(field.getDisable())) {
-            LOGGER.debug("field [{}] is required, but it's value is empty", field.getName());
-            return false;
+        if (CollectionUtils.isEmpty(values)) {
+            if (Boolean.TRUE.equals(field.getRequired())) {
+                LOGGER.debug("field [{}] is required, but it's value is empty", field.getName());
+                return false;
+            }
+            return true;
         }
         if (values.size() > field.getMaxCount()) {
             LOGGER.debug("selected option count[{}] of field[{}] is greater than maximum[{}]", values.size(), field.getName(), field.getMaxCount());
             return false;
         }
-        if (CollectionUtils.isNotEmpty(values) && !values.stream().allMatch(value -> field.getOptions().stream().filter(option -> !Boolean.TRUE.equals(option.getDisable())).anyMatch(option -> option.getId().equals(value)))) {
+        if (!values.stream().allMatch(value -> field.getOptions().stream().filter(option -> !Boolean.TRUE.equals(option.getDisable())).anyMatch(option -> option.getId().equals(value)))) {
             LOGGER.debug("field [{}] is select type, but it's value[{}] dose not equal with select options", field.getName(), values);
             return false;
         }

@@ -18,34 +18,37 @@ public class NumberFilterFieldTemplate extends FormFieldTemplate<NumberFilterFie
     }
 
     @Override
-    public boolean isValid(NumberFilterField field, LongFilter value) {
-        if ((null == value || null == value.getFrom() || null == value.getTo()) && Boolean.TRUE.equals(field.getDisable())) {
-            LOGGER.debug("field [{}] is required, but it's value is empty", field.getName());
-            return false;
+    public boolean isValid(NumberFilterField field, LongFilter filter) {
+        if (null == filter || (null == filter.getFrom() && null == filter.getTo())) {
+            if (Boolean.TRUE.equals(field.getRequired())) {
+                LOGGER.debug("filterField [{}] is required, but it's value is empty", field.getName());
+                return false;
+            }
+            return true;
         }
         if (null != field.getMinValue()) {
-            if (null != value.getFrom() && value.getFrom() < field.getMinValue()) {
+            if (null != filter.getFrom() && filter.getFrom() < field.getMinValue()) {
                 LOGGER.debug("field [{}] min value is [{}], but it's value is less than minimum", field.getName(), field.getMinValue());
                 return false;
             }
-            if (null != value.getTo() && value.getTo() < field.getMinValue()) {
+            if (null != filter.getTo() && filter.getTo() < field.getMinValue()) {
                 LOGGER.debug("field [{}] min value is [{}], but it's value is less than minimum", field.getName(), field.getMinValue());
                 return false;
             }
         }
         if (null != field.getMaxValue()) {
-            if (null != value.getFrom() && value.getFrom() > field.getMaxValue()) {
+            if (null != filter.getFrom() && filter.getFrom() > field.getMaxValue()) {
                 LOGGER.debug("field [{}] max value is [{}], but it's value is greater than maximum", field.getName(), field.getMaxValue());
                 return false;
             }
-            if (null != value.getTo() && value.getTo() > field.getMaxValue()) {
+            if (null != filter.getTo() && filter.getTo() > field.getMaxValue()) {
                 LOGGER.debug("field [{}] max value is [{}], but it's value is greater than maximum", field.getName(), field.getMaxValue());
                 return false;
             }
         }
-        long length = (null == value.getFrom() || null == value.getTo()) ? Long.MAX_VALUE : value.getTo() - value.getFrom();
+        long length = (null == filter.getFrom() || null == filter.getTo()) ? Long.MAX_VALUE : filter.getTo() - filter.getFrom();
         if (length < 0) {
-            LOGGER.debug("values[{}] of range field[{}] is invalid, from is greater than to", value, field.getName());
+            LOGGER.debug("values[{}] of range field[{}] is invalid, from is greater than to", filter, field.getName());
             /*
                 from > to
              */

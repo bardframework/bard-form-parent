@@ -59,34 +59,37 @@ public class TimeFilterFieldTemplate extends FormFieldTemplate<TimeFilterField, 
     }
 
     @Override
-    public boolean isValid(TimeFilterField field, TimeFilter value) {
-        if ((null == value || null == value.getFrom() || null == value.getTo()) && Boolean.TRUE.equals(field.getDisable())) {
-            LOGGER.debug("field [{}] is required, but it's value is empty", field.getName());
-            return false;
+    public boolean isValid(TimeFilterField field, TimeFilter filter) {
+        if (null == filter || (null == filter.getFrom() && null == filter.getTo())) {
+            if (Boolean.TRUE.equals(field.getRequired())) {
+                LOGGER.debug("filterField [{}] is required, but it's value is empty", field.getName());
+                return false;
+            }
+            return true;
         }
         if (null != field.getMinValue()) {
-            if (null != value && null != value.getFrom() && value.getFrom().isBefore(this.getMinValue())) {
+            if (null != filter.getFrom() && filter.getFrom().isBefore(this.getMinValue())) {
                 LOGGER.debug("field [{}] min value is [{}], but it's value is less than minimum", field.getName(), field.getMinValue());
                 return false;
             }
-            if (null != value && null != value.getTo() && value.getTo().isBefore(this.getMinValue())) {
+            if (null != filter.getTo() && filter.getTo().isBefore(this.getMinValue())) {
                 LOGGER.debug("field [{}] min value is [{}], but it's value is less than minimum", field.getName(), field.getMinValue());
                 return false;
             }
         }
         if (null != field.getMaxValue()) {
-            if (null != value && null != value.getFrom() && value.getFrom().isAfter(this.getMaxValue())) {
+            if (null != filter.getFrom() && filter.getFrom().isAfter(this.getMaxValue())) {
                 LOGGER.debug("field [{}] max value is [{}], but it's value is greater than maximum", field.getName(), field.getMaxValue());
                 return false;
             }
-            if (null != value && null != value.getTo() && value.getTo().isAfter(this.getMaxValue())) {
+            if (null != filter.getTo() && filter.getTo().isAfter(this.getMaxValue())) {
                 LOGGER.debug("field [{}] max value is [{}], but it's value is greater than maximum", field.getName(), field.getMaxValue());
                 return false;
             }
         }
-        long length = (null == value || null == value.getFrom() || null == value.getTo()) ? Long.MAX_VALUE : Duration.between(value.getFrom(), value.getTo()).get(this.getLengthUnit()) + 1;
+        long length = null == filter.getFrom() || null == filter.getTo() ? Long.MAX_VALUE : Duration.between(filter.getFrom(), filter.getTo()).get(this.getLengthUnit()) + 1;
         if (length < 0) {
-            LOGGER.debug("values[{}] of range field[{}] is invalid, from is greater than to", value, field.getName());
+            LOGGER.debug("values[{}] of range field[{}] is invalid, from is greater than to", filter, field.getName());
             /*
                 from > to
              */

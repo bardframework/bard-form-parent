@@ -52,11 +52,14 @@ public class CaptchaFieldTemplate extends FormFieldTemplate<CaptchaField, String
 
     @Override
     public boolean isValid(CaptchaField field, String value) {
-        if (StringUtils.isBlank(value) && Boolean.TRUE.equals(field.getDisable())) {
-            LOGGER.debug("field [{}] is required, but it's value is empty", field.getName());
-            return false;
+        if (null == value) {
+            if (Boolean.TRUE.equals(field.getRequired())) {
+                LOGGER.debug("field [{}] is required, but it's value is empty", field.getName());
+                return false;
+            }
+            return true;
         }
-        if (null != value && value.trim().length() != field.getLength()) {
+        if (value.trim().length() != field.getLength()) {
             LOGGER.debug("field [{}] length [{}] is not equal with [{}]", field.getName(), value.trim().length(), field.getLength());
             return false;
         }

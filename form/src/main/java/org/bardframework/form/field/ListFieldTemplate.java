@@ -19,9 +19,12 @@ public class ListFieldTemplate extends FormFieldTemplate<ListField, List<String>
 
     @Override
     public boolean isValid(ListField field, List<String> values) {
-        if (CollectionUtils.isEmpty(values) && Boolean.TRUE.equals(field.getDisable())) {
-            LOGGER.debug("field [{}] is required, but it's value is empty", field.getName());
-            return false;
+        if (CollectionUtils.isEmpty(values)) {
+            if (Boolean.TRUE.equals(field.getRequired())) {
+                LOGGER.debug("field [{}] is required, but it's value is empty", field.getName());
+                return false;
+            }
+            return true;
         }
         if (values.size() > field.getMaxCount()) {
             LOGGER.debug("data count[{}] of field[{}] is greater than maximum[{}]", values.size(), field.getName(), field.getMaxCount());
