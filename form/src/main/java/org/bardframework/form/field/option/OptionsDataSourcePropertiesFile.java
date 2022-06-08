@@ -1,7 +1,7 @@
 package org.bardframework.form.field.option;
 
 import org.bardframework.commons.web.WildcardReloadableMessageSource;
-import org.bardframework.form.common.SelectOption;
+import org.bardframework.form.model.SelectOption;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;

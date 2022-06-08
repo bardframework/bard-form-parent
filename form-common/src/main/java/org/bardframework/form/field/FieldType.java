@@ -1,30 +1,5 @@
 package org.bardframework.form.field;
 
-public enum FieldType implements org.bardframework.form.common.FieldType<FieldType> {
-    AVATAR_VIEW,
-    CAPTCHA,
-    DATE,
-    DATE_TIME,
-    DIVIDER,
-    FILE_DOWNLOAD,
-    FILE_UPLOAD,
-    HTML_EDITOR,
-    HTML_VIEW,
-    IMAGE_VIEW,
-    IMAGE_UPLOAD,
-    LIST,
-    MESSAGE,
-    MULTI_SELECT,
-    MULTI_SELECT_SEARCHABLE,
-    NEW_PASSWORD,
-    NUMBER,
-    PASSWORD,
-    PAYMENT,
-    READONLY,
-    SINGLE_CHECKBOX,
-    SINGLE_SELECT,
-    SINGLE_SELECT_SEARCHABLE,
-    TEXT_AREA,
-    TEXT,
-    TIME,
+public interface FieldType<T extends Enum<T>> {
+    String name();
 }

@@ -3,10 +3,11 @@ package org.bardframework.form;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.commons.utils.AssertionUtils;
 import org.bardframework.commons.utils.StringTemplateUtils;
-import org.bardframework.form.common.Field;
-import org.bardframework.form.common.WithValueField;
-import org.bardframework.form.field.base.FieldTemplate;
-import org.bardframework.form.field.base.WithValueFieldTemplate;
+import org.bardframework.form.field.Field;
+import org.bardframework.form.field.FieldTemplate;
+import org.bardframework.form.field.FormFieldTemplate;
+import org.bardframework.form.field.InputField;
+import org.bardframework.form.field.view.ReadonlyField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
@@ -44,10 +45,12 @@ public class FormUtils {
         for (FieldTemplate<?> fieldTemplate : formTemplate.getFieldTemplates()) {
             Field field = fieldTemplate.toField(formTemplate, args, locale);
             String valueString = values.get(fieldTemplate.getName());
-            if (field instanceof WithValueField && fieldTemplate instanceof WithValueFieldTemplate) {
-                WithValueFieldTemplate<T> withValueFieldTemplate = (WithValueFieldTemplate<T>) fieldTemplate;
-                WithValueField<T> withValueField = (WithValueField<T>) field;
-                withValueField.setValue(withValueFieldTemplate.toValue(valueString));
+            if (field instanceof InputField<?>) {
+                FormFieldTemplate<?, T> formFieldTemplate = (FormFieldTemplate<?, T>) fieldTemplate;
+                InputField<T> inputField = (InputField<T>) field;
+                inputField.setValue(formFieldTemplate.toValue(valueString));
+            } else if (field instanceof ReadonlyField) {
+                ((ReadonlyField) field).setMask(valueString);
             }
             form.addField(field);
         }

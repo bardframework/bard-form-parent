@@ -2,10 +2,10 @@ package org.bardframework.form;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
-import org.bardframework.form.common.FormField;
 import org.bardframework.form.exception.FormDataValidationException;
-import org.bardframework.form.field.base.FieldTemplate;
-import org.bardframework.form.field.base.FormFieldTemplate;
+import org.bardframework.form.field.FieldTemplate;
+import org.bardframework.form.field.FormFieldTemplate;
+import org.bardframework.form.field.InputField;
 import org.bardframework.form.processor.FormProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -79,7 +79,7 @@ public class FormTemplate extends Form {
         this.postProcessors = processors;
     }
 
-    public <F extends FormField<T>, T> void validate(Map<String, String> values, Map<String, String> args, Locale locale) throws Exception {
+    public <F extends InputField<T>, T> void validate(Map<String, String> values, Map<String, String> args, Locale locale) throws Exception {
         FormDataValidationException ex = new FormDataValidationException();
         for (FieldTemplate<?> fieldTemplate : this.getFieldTemplates()) {
             if (!(fieldTemplate instanceof FormFieldTemplate<?, ?>)) {

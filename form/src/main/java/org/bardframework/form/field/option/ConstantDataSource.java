@@ -1,6 +1,6 @@
 package org.bardframework.form.field.option;
 
-import org.bardframework.form.common.SelectOption;
+import org.bardframework.form.model.SelectOption;
 
 import java.util.List;
 import java.util.Locale;

@@ -4,9 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
-import org.bardframework.form.common.Field;
-import org.bardframework.form.common.FormField;
-import org.bardframework.form.common.field.FieldDataProvider;
+import org.bardframework.form.field.Field;
+import org.bardframework.form.field.InputField;
+import org.bardframework.form.field.input.InputFieldDataProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestComponent;
 
@@ -18,19 +18,19 @@ import java.util.Map;
 public class FormDataProvider {
 
     @Autowired
-    private List<FieldDataProvider<? extends FormField<?>, ?>> fieldDataProviders;
+    private List<InputFieldDataProvider<? extends InputField<?>, ?>> fieldDataProviders;
     @Autowired
     private ObjectMapper objectMapper;
 
     public Map<String, String> getValidData(Form form) throws Exception {
         Map<String, String> map = new HashMap<>();
         for (Field field : form.getFields()) {
-            if (!(field instanceof FormField<?>)) {
+            if (!(field instanceof InputField<?>)) {
                 continue;
             }
-            FormField<?> formField = (FormField<?>) field;
-            FieldDataProvider dataProvider = this.getDataProvider(formField);
-            map.put(formField.getName(), dataProvider.getValidValueString(formField));
+            InputField<?> inputField = (InputField<?>) field;
+            InputFieldDataProvider dataProvider = this.getDataProvider(inputField);
+            map.put(inputField.getName(), dataProvider.getValidValueString(inputField));
         }
         return map;
     }
@@ -39,16 +39,16 @@ public class FormDataProvider {
         Map<String, String> map = new HashMap<>();
         boolean invalidate = false;
         for (Field field : form.getFields()) {
-            if (!(field instanceof FormField<?>)) {
+            if (!(field instanceof InputField<?>)) {
                 continue;
             }
-            FormField<?> formField = (FormField<?>) field;
-            FieldDataProvider dataProvider = this.getDataProvider(formField);
+            InputField<?> inputField = (InputField<?>) field;
+            InputFieldDataProvider dataProvider = this.getDataProvider(inputField);
             if (RandomUtils.nextBoolean()) {
                 invalidate = true;
-                map.put(formField.getName(), dataProvider.getInvalidValueString(formField));
+                map.put(inputField.getName(), dataProvider.getInvalidValueString(inputField));
             } else {
-                map.put(formField.getName(), dataProvider.getValidValueString(formField));
+                map.put(inputField.getName(), dataProvider.getValidValueString(inputField));
             }
         }
         if (!invalidate) {
@@ -57,46 +57,46 @@ public class FormDataProvider {
         return map;
     }
 
-    public String getWithExtraProperty(List<? extends FormField<?>> fields) throws Exception {
+    public String getWithExtraProperty(List<? extends InputField<?>> fields) throws Exception {
         ObjectNode objectNode = this.getValidObjectNode(fields);
         objectNode.put(RandomStringUtils.randomAlphabetic(5, 10), RandomStringUtils.randomAlphabetic(5, 10));
         return objectMapper.writeValueAsString(objectNode);
     }
 
-    public String getValid(List<? extends FormField<?>> fields) throws Exception {
+    public String getValid(List<? extends InputField<?>> fields) throws Exception {
         return objectMapper.writeValueAsString(this.getValidObjectNode(fields));
     }
 
-    public <T> T getValid(List<? extends FormField<?>> fields, Class<T> clazz) throws Exception {
+    public <T> T getValid(List<? extends InputField<?>> fields, Class<T> clazz) throws Exception {
         String validJson = this.getValid(fields);
         return objectMapper.readValue(validJson, clazz);
     }
 
-    public String getInvalid(List<? extends FormField<?>> fields) throws Exception {
+    public String getInvalid(List<? extends InputField<?>> fields) throws Exception {
         ObjectNode objectNode = this.getValidObjectNode(fields);
         this.add(objectNode, fields.get(RandomUtils.nextInt(0, fields.size())), false);
         return objectMapper.writeValueAsString(objectNode);
     }
 
-    public ObjectNode getValidObjectNode(List<? extends FormField<?>> fields) throws Exception {
+    public ObjectNode getValidObjectNode(List<? extends InputField<?>> fields) throws Exception {
         ObjectNode node = objectMapper.createObjectNode();
-        for (FormField<?> field : fields) {
+        for (InputField<?> field : fields) {
             this.add(node, field, true);
         }
         return node;
     }
 
-    private FieldDataProvider getDataProvider(FormField<?> formField) {
-        for (FieldDataProvider<?, ?> dataProvider : fieldDataProviders) {
-            if (dataProvider.supports(formField)) {
+    private InputFieldDataProvider getDataProvider(InputField<?> inputField) {
+        for (InputFieldDataProvider<?, ?> dataProvider : fieldDataProviders) {
+            if (dataProvider.supports(inputField)) {
                 return dataProvider;
             }
         }
-        throw new IllegalStateException("data provider not found that supports " + formField.getClass().getSimpleName());
+        throw new IllegalStateException("data provider not found that supports " + inputField.getClass().getSimpleName());
     }
 
-    private void add(ObjectNode criteria, FormField<?> field, boolean valid) throws Exception {
-        for (FieldDataProvider fieldDataProvider : fieldDataProviders) {
+    private void add(ObjectNode criteria, InputField<?> field, boolean valid) throws Exception {
+        for (InputFieldDataProvider fieldDataProvider : fieldDataProviders) {
             if (fieldDataProvider.supports(field)) {
                 if (valid) {
                     fieldDataProvider.setValidValue(criteria, field);

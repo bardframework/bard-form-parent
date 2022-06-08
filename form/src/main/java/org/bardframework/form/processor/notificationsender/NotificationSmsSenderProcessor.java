@@ -3,7 +3,7 @@ package org.bardframework.form.processor.notificationsender;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.commons.sms.SmsSender;
 import org.bardframework.form.exception.FlowExecutionException;
-import org.bardframework.form.field.base.FieldTemplate;
+import org.bardframework.form.field.FieldTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 

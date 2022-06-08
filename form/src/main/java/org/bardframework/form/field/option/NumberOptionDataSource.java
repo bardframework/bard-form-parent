@@ -1,6 +1,6 @@
 package org.bardframework.form.field.option;
 
-import org.bardframework.form.common.SelectOption;
+import org.bardframework.form.model.SelectOption;
 
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;

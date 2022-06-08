@@ -2,15 +2,16 @@ package org.bardframework.form.filter.field;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.lang3.RandomUtils;
-import org.bardframework.form.common.FormField;
-import org.bardframework.form.common.field.FieldDataProvider;
-import org.bardframework.form.filter.LocalDateFilter;
+import org.bardframework.form.field.InputField;
+import org.bardframework.form.field.filter.DateFilterField;
+import org.bardframework.form.field.input.InputFieldDataProvider;
+import org.bardframework.form.model.filter.LocalDateFilter;
 import org.springframework.boot.test.context.TestComponent;
 
 import java.time.LocalDate;
 
 @TestComponent
-public class DateFilterFieldDataProvider implements FieldDataProvider<DateFilterField, LocalDateFilter> {
+public class DateFilterFieldDataProvider implements InputFieldDataProvider<DateFilterField, LocalDateFilter> {
 
     @Override
     public LocalDateFilter getValidValue(DateFilterField field) {
@@ -64,7 +65,7 @@ public class DateFilterFieldDataProvider implements FieldDataProvider<DateFilter
     }
 
     @Override
-    public boolean supports(FormField<?> field) {
+    public boolean supports(InputField<?> field) {
         return DateFilterField.class.equals(field.getClass());
     }
 }

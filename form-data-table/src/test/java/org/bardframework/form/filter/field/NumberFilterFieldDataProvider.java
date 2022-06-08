@@ -2,13 +2,14 @@ package org.bardframework.form.filter.field;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.lang3.RandomUtils;
-import org.bardframework.form.common.FormField;
-import org.bardframework.form.common.field.FieldDataProvider;
-import org.bardframework.form.filter.LongFilter;
+import org.bardframework.form.field.InputField;
+import org.bardframework.form.field.filter.NumberFilterField;
+import org.bardframework.form.field.input.InputFieldDataProvider;
+import org.bardframework.form.model.filter.LongFilter;
 import org.springframework.boot.test.context.TestComponent;
 
 @TestComponent
-public class NumberFilterFieldDataProvider implements FieldDataProvider<NumberFilterField, LongFilter> {
+public class NumberFilterFieldDataProvider implements InputFieldDataProvider<NumberFilterField, LongFilter> {
 
     @Override
     public LongFilter getValidValue(NumberFilterField field) {
@@ -75,7 +76,7 @@ public class NumberFilterFieldDataProvider implements FieldDataProvider<NumberFi
     }
 
     @Override
-    public boolean supports(FormField<?> field) {
+    public boolean supports(InputField<?> field) {
         return NumberFilterField.class.equals(field.getClass());
     }
 }

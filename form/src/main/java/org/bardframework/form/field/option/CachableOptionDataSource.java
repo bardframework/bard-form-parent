@@ -2,7 +2,7 @@ package org.bardframework.form.field.option;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import org.bardframework.form.common.SelectOption;
+import org.bardframework.form.model.SelectOption;
 
 import java.text.Collator;
 import java.util.List;

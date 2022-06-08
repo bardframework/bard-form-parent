@@ -35,8 +35,11 @@
                 </executions>
                 <configuration>
                     <jsonLibrary>jackson2</jsonLibrary>
-                    <classPatterns>org.bardframework.form.common.**</classPatterns>
+                    <classPatterns>org.bardframework.form.**</classPatterns>
                     <outputKind>module</outputKind>
+                    <mapClasses>asClasses</mapClasses>
+                    <mapEnum>asEnum</mapEnum>
+                    <outputFileType>implementationFile</outputFileType>
                 </configuration>
             </plugin>
         </plugins>

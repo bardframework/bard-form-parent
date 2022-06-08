@@ -1,7 +1,7 @@
 package org.bardframework.form.field.option;
 
 import org.apache.commons.lang3.StringUtils;
-import org.bardframework.form.common.SelectOption;
+import org.bardframework.form.model.SelectOption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 

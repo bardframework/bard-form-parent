@@ -1,6 +1,6 @@
 package org.bardframework.form;
 
-import org.bardframework.form.common.Field;
+import org.bardframework.form.field.Field;
 
 import java.util.ArrayList;
 import java.util.List;

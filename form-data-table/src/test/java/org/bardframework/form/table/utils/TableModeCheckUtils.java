@@ -4,7 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.api.Assertions;
 import org.bardframework.commons.utils.ReflectionUtils;
 import org.bardframework.form.FormTemplate;
-import org.bardframework.form.field.base.FieldTemplate;
+import org.bardframework.form.field.FieldTemplate;
 import org.bardframework.form.table.TableTemplate;
 import org.bardframework.form.table.header.TableHeaderTemplate;
 import org.slf4j.Logger;
