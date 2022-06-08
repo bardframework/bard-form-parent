@@ -11,9 +11,9 @@ import org.bardframework.form.filter.field.NumberFilterField;
 import java.util.Locale;
 import java.util.Map;
 
-public class NumberRangeFieldTemplate extends FormFieldTemplate<NumberFilterField, LongFilter> {
+public class NumberFilterFieldTemplate extends FormFieldTemplate<NumberFilterField, LongFilter> {
 
-    protected NumberRangeFieldTemplate(String name) {
+    protected NumberFilterFieldTemplate(String name) {
         super(name);
     }
 
