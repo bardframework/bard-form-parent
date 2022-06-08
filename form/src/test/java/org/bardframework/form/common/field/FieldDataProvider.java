@@ -1,7 +1,7 @@
 package org.bardframework.form.common.field;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.bardframework.form.common.field.base.FormField;
+import org.bardframework.form.common.FormField;
 import org.slf4j.LoggerFactory;
 
 public interface FieldDataProvider<F extends FormField<T>, T> {

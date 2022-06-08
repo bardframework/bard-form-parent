@@ -1,7 +1,6 @@
 package org.bardframework.form.field;
 
 import org.apache.commons.lang3.StringUtils;
-import org.bardframework.form.common.field.SingleCheckBoxField;
 import org.bardframework.form.field.base.FormFieldTemplate;
 
 public class SingleCheckboxFieldTemplate extends FormFieldTemplate<SingleCheckBoxField, Boolean> {

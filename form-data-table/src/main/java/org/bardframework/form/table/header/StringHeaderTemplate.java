@@ -1,6 +1,6 @@
 package org.bardframework.form.table.header;
 
-import org.bardframework.form.common.table.TableHeader;
+import org.bardframework.form.table.TableHeader;
 
 import java.util.Locale;
 

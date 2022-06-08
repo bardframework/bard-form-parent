@@ -1,7 +1,5 @@
 package org.bardframework.form.field;
 
-import org.bardframework.form.common.field.AvatarViewField;
-
 public class AvatarFieldTemplate extends FileFieldTemplate {
 
     public AvatarFieldTemplate(String name) {

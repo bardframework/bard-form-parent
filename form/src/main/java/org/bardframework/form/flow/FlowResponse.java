@@ -1,6 +1,6 @@
 package org.bardframework.form.flow;
 
-import org.bardframework.form.common.Form;
+import org.bardframework.form.Form;
 
 public class FlowResponse<D> {
     private final D data;

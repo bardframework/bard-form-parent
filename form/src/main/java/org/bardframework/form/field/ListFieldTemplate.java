@@ -4,8 +4,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
-import org.bardframework.form.common.field.ListField;
-import org.bardframework.form.common.field.base.FormField;
+import org.bardframework.form.common.FormField;
 import org.bardframework.form.field.base.FormFieldTemplate;
 
 import java.util.List;

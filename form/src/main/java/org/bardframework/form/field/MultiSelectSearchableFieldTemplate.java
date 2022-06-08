@@ -1,6 +1,5 @@
 package org.bardframework.form.field;
 
-import org.bardframework.form.common.field.MultiSelectSearchableField;
 import org.bardframework.form.field.option.OptionDataSource;
 
 public class MultiSelectSearchableFieldTemplate extends MultiSelectFieldTemplate {

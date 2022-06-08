@@ -4,7 +4,6 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.commons.captcha.CaptchaService;
 import org.bardframework.form.FormTemplate;
-import org.bardframework.form.common.field.CaptchaField;
 import org.bardframework.form.exception.FlowDataValidationException;
 import org.bardframework.form.exception.InvalidateFlowException;
 import org.bardframework.form.field.base.FormFieldTemplate;

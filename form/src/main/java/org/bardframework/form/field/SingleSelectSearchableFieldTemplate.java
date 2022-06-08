@@ -1,7 +1,5 @@
 package org.bardframework.form.field;
 
-import org.bardframework.form.common.field.SingleSelectField;
-import org.bardframework.form.common.field.SingleSelectSearchableField;
 import org.bardframework.form.field.option.OptionDataSource;
 
 public class SingleSelectSearchableFieldTemplate extends SingleSelectFieldTemplate {

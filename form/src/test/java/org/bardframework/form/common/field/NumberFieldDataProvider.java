@@ -2,7 +2,8 @@ package org.bardframework.form.common.field;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.lang3.RandomUtils;
-import org.bardframework.form.common.field.base.FormField;
+import org.bardframework.form.common.FormField;
+import org.bardframework.form.field.NumberField;
 import org.springframework.boot.test.context.TestComponent;
 
 @TestComponent

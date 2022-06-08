@@ -4,10 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
-import org.bardframework.form.common.Form;
+import org.bardframework.form.common.Field;
+import org.bardframework.form.common.FormField;
 import org.bardframework.form.common.field.FieldDataProvider;
-import org.bardframework.form.common.field.base.Field;
-import org.bardframework.form.common.field.base.FormField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestComponent;
 

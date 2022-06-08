@@ -2,7 +2,6 @@ package org.bardframework.form.field;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
-import org.bardframework.form.common.field.SingleSelectField;
 import org.bardframework.form.field.base.FormFieldTemplate;
 import org.bardframework.form.field.option.OptionDataSource;
 

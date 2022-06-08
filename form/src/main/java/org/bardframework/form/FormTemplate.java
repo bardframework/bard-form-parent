@@ -2,8 +2,7 @@ package org.bardframework.form;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
-import org.bardframework.form.common.Form;
-import org.bardframework.form.common.field.base.FormField;
+import org.bardframework.form.common.FormField;
 import org.bardframework.form.exception.FormDataValidationException;
 import org.bardframework.form.field.base.FieldTemplate;
 import org.bardframework.form.field.base.FormFieldTemplate;

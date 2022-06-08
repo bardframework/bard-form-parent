@@ -41,6 +41,13 @@
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>org.bardframework.form</groupId>
+            <artifactId>form</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+            <type>test-jar</type>
+        </dependency>
+        <dependency>
             <groupId>org.bardframework.commons</groupId>
             <artifactId>common-web</artifactId>
             <version>${bardframework.commons.version}</version>

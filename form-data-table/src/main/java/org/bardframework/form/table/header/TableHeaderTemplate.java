@@ -1,7 +1,7 @@
 package org.bardframework.form.table.header;
 
 import org.bardframework.commons.utils.ReflectionUtils;
-import org.bardframework.form.common.table.TableHeader;
+import org.bardframework.form.table.TableHeader;
 import org.bardframework.form.table.TableTemplate;
 import org.bardframework.form.table.utils.TableUtils;
 

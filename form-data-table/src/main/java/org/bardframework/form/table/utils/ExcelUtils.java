@@ -4,9 +4,9 @@ import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
-import org.bardframework.form.common.table.TableData;
-import org.bardframework.form.common.table.TableHeader;
-import org.bardframework.form.common.table.TableModel;
+import org.bardframework.form.table.TableData;
+import org.bardframework.form.table.TableHeader;
+import org.bardframework.form.table.TableModel;
 import org.bardframework.form.table.TableTemplate;
 import org.bardframework.form.table.header.TableHeaderTemplate;
 import org.slf4j.Logger;
@@ -89,7 +89,8 @@ public class ExcelUtils {
         /*
             write data
         */
-        for (List<Object> rowData : tableData.getData()) {
+        for (Map<String, List<Object>> rowDataMap : tableData.getData()) {
+            List<Object> rowData = null;
             Row row = sheet.createRow(rowIndex++);
             for (int index = 0; index < tableTemplate.getHeaderTemplates().size(); index++) {
                 Cell cell = row.createCell(index);

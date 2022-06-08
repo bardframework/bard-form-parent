@@ -1,7 +1,7 @@
 package org.bardframework.form.field.option;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.bardframework.form.common.field.common.SelectOption;
+import org.bardframework.form.common.SelectOption;
 
 import java.util.List;
 import java.util.Locale;

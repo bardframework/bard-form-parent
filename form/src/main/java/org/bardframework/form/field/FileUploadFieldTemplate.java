@@ -2,7 +2,6 @@ package org.bardframework.form.field;
 
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
-import org.bardframework.form.common.field.FileUploadField;
 import org.bardframework.form.field.base.FormFieldTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

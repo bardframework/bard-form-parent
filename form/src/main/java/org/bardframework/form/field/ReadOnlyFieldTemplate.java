@@ -2,7 +2,6 @@ package org.bardframework.form.field;
 
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
-import org.bardframework.form.common.field.ReadonlyField;
 import org.bardframework.form.field.base.FieldTemplate;
 import org.bardframework.form.field.base.WithValueFieldTemplate;
 

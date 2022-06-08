@@ -3,7 +3,7 @@ package org.bardframework.form.field.base;
 import org.bardframework.commons.utils.ReflectionUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
-import org.bardframework.form.common.field.base.Field;
+import org.bardframework.form.common.Field;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

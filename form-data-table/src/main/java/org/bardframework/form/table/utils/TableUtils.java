@@ -2,11 +2,12 @@ package org.bardframework.form.table.utils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.commons.utils.ReflectionUtils;
+import org.bardframework.crud.api.base.BaseModel;
 import org.bardframework.crud.api.base.PagedData;
 import org.bardframework.form.FormUtils;
-import org.bardframework.form.common.table.TableData;
-import org.bardframework.form.common.table.TableHeader;
-import org.bardframework.form.common.table.TableModel;
+import org.bardframework.form.table.TableData;
+import org.bardframework.form.table.TableHeader;
+import org.bardframework.form.table.TableModel;
 import org.bardframework.form.table.TableTemplate;
 import org.bardframework.form.table.header.TableHeaderTemplate;
 import org.slf4j.Logger;
@@ -29,11 +30,11 @@ public class TableUtils {
          */
     }
 
-    public static TableData toTableData(PagedData<?> pagedData, TableTemplate tableTemplate, Locale locale) {
+    public static <M extends BaseModel<?>> TableData toTableData(PagedData<M> pagedData, TableTemplate tableTemplate, Locale locale) {
         TableData tableData = new TableData();
         tableData.setTotal(pagedData.getTotal());
         tableData.setHeaders(tableTemplate.getHeaderTemplates().stream().map(TableHeader::getName).collect(Collectors.toList()));
-        for (Object model : pagedData.getData()) {
+        for (M model : pagedData.getData()) {
             List<Object> values = new ArrayList<>();
             for (TableHeaderTemplate headerTemplate : tableTemplate.getHeaderTemplates()) {
                 try {
@@ -43,7 +44,7 @@ public class TableUtils {
                     throw new IllegalStateException(String.format("can't read property [%s] of [%s] instance and convert it, table [%s]", headerTemplate.getName(), model.getClass(), tableTemplate.getName()), e);
                 }
             }
-            tableData.addData(values);
+            tableData.addData(model.getId().toString(), values);
         }
         return tableData;
     }
