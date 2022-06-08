@@ -90,7 +90,7 @@ public class ExcelUtils {
             write data
         */
         for (Map<String, List<Object>> rowDataMap : tableData.getData()) {
-            List<Object> rowData = null;
+            List<Object> rowData = rowDataMap.values().iterator().next();
             Row row = sheet.createRow(rowIndex++);
             for (int index = 0; index < tableTemplate.getHeaderTemplates().size(); index++) {
                 Cell cell = row.createCell(index);
