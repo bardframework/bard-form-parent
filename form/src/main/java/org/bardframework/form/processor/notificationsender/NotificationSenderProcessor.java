@@ -52,10 +52,9 @@ public abstract class NotificationSenderProcessor implements FormProcessor {
     }
 
     private void sendInternal(String message, Map<String, String> flowData) {
-        Map<String, String> args = this.getArgs(flowData);
         try {
             this.beforeSend(flowData);
-            this.send(message, args);
+            this.send(message, this.getArgs(flowData));
             this.afterSend(flowData);
         } catch (Exception e) {
             if (!failOnError) {
