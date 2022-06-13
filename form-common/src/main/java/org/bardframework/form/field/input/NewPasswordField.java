@@ -1,6 +1,6 @@
 package org.bardframework.form.field.input;
 
-public class NewPasswordField extends PasswordField {
+public class NewPasswordField extends TextField {
 
     @Override
     public InputFieldType getType() {

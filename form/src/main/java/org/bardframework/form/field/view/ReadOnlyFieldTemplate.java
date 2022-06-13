@@ -21,7 +21,6 @@ public class ReadOnlyFieldTemplate extends FieldTemplate<ReadonlyField> {
         super.fill(formTemplate, field, args, locale);
         field.setTooltip(FormUtils.getFieldStringProperty(formTemplate, this.getName(), "tooltip", locale, args, null));
         field.setMask(FormUtils.getFieldStringProperty(formTemplate, this.getName(), "mask", locale, args, null));
-        field.setPlaceholder(FormUtils.getFieldStringProperty(formTemplate, this.getName(), "placeholder", locale, args, null));
     }
 
     public String getTooltip() {

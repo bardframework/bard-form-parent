@@ -5,6 +5,7 @@ import org.bardframework.form.field.Field;
 public class HtmlViewField extends Field {
 
     private String html;
+    private String description;
 
     @Override
     public ViewFieldType getType() {
@@ -17,5 +18,13 @@ public class HtmlViewField extends Field {
 
     public void setHtml(String html) {
         this.html = html;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -1,12 +1,19 @@
 package org.bardframework.form.field.input;
 
-public class PasswordField extends TextField {
+import org.bardframework.form.field.InputField;
+
+public class PasswordField extends InputField<String> {
 
     public PasswordField() {
     }
 
     protected PasswordField(String name) {
         super(name);
+    }
+
+    @Override
+    public String toString(String value) {
+        return value;
     }
 
     @Override

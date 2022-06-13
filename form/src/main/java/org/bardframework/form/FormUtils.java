@@ -50,7 +50,7 @@ public class FormUtils {
                 InputField<T> inputField = (InputField<T>) field;
                 inputField.setValue(formFieldTemplate.toValue(valueString));
             } else if (field instanceof ReadonlyField) {
-                ((ReadonlyField) field).setMask(valueString);
+                ((ReadonlyField) field).setValue(valueString);
             }
             form.addField(field);
         }

@@ -6,7 +6,6 @@ public class ReadonlyField extends Field {
 
     private String tooltip;
     private String mask;
-    private String placeholder;
     private String value;
 
     @Override
@@ -28,14 +27,6 @@ public class ReadonlyField extends Field {
 
     public void setMask(String mask) {
         this.mask = mask;
-    }
-
-    public String getPlaceholder() {
-        return placeholder;
-    }
-
-    public void setPlaceholder(String placeholder) {
-        this.placeholder = placeholder;
     }
 
     public String getValue() {

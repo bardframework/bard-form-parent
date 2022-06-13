@@ -16,9 +16,11 @@ public class FileDownloadFieldTemplate extends FieldTemplate<FileDownloadField> 
     @Override
     public void fill(FormTemplate formTemplate, FileDownloadField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
+        field.setUrl(FormUtils.getFieldStringProperty(formTemplate, this.getName(), "url", locale, args, null));
+        field.setFileName(FormUtils.getFieldStringProperty(formTemplate, this.getName(), "fileName", locale, args, null));
         field.setContentType(FormUtils.getFieldStringProperty(formTemplate, this.getName(), "contentType", locale, args, null));
         field.setSize(FormUtils.getFieldIntegerProperty(formTemplate, this.getName(), "size", locale, args, null));
-        field.setUrl(FormUtils.getFieldStringProperty(formTemplate, this.getName(), "url", locale, args, null));
+        field.setDescription(FormUtils.getFieldStringProperty(formTemplate, this.getName(), "description", locale, args, null));
     }
 
 }
