@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * map: http request cookie name -> fieldName
+ * map: http request cookie name to fieldName
  */
 public class DataProviderHttpRequestCookieProcessor extends DataProviderHttpRequestProcessorAbstract {
 

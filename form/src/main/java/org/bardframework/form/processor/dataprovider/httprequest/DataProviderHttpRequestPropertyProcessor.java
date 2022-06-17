@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * mapL: http request property -> fieldName
+ * mapL: http request property to fieldName
  */
 public class DataProviderHttpRequestPropertyProcessor extends DataProviderHttpRequestProcessorAbstract {
 
