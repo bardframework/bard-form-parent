@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * map: http request header name to fieldName
+ * map http request header name to fieldName
  */
 public class DataProviderHttpRequestHeaderProcessor extends DataProviderHttpRequestProcessorAbstract {
 

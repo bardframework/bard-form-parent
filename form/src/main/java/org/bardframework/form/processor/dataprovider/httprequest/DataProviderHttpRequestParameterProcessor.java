@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * map: http request parameter name to fieldName
+ * map http request parameter name to fieldName
  * join values with ',' separator if more than one value exist for a parameter.
  */
 public class DataProviderHttpRequestParameterProcessor extends DataProviderHttpRequestProcessorAbstract {
