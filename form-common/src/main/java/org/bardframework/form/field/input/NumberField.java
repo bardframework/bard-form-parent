@@ -1,6 +1,6 @@
 package org.bardframework.form.field.input;
 
-import org.bardframework.form.field.InputField;
+import org.bardframework.form.field.FieldType;
 
 public class NumberField extends InputField<Long> {
     private Long minValue;
@@ -15,7 +15,7 @@ public class NumberField extends InputField<Long> {
     }
 
     @Override
-    public InputFieldType getType() {
+    public FieldType getType() {
         return InputFieldType.NUMBER;
     }
 

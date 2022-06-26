@@ -3,13 +3,12 @@ package org.bardframework.form.field.input;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
-import org.bardframework.form.field.FormFieldTemplate;
 
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class TextFieldTemplate extends FormFieldTemplate<TextField, String> {
+public class TextFieldTemplate extends InputFieldTemplate<TextField, String> {
 
     protected TextFieldTemplate(String name) {
         super(name);

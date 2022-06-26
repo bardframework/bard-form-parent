@@ -3,13 +3,12 @@ package org.bardframework.form.field.input;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
-import org.bardframework.form.field.FormFieldTemplate;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.Map;
 
-public class HtmlEditorFieldTemplate extends FormFieldTemplate<HtmlEditorField, String> {
+public class HtmlEditorFieldTemplate extends InputFieldTemplate<HtmlEditorField, String> {
 
     protected HtmlEditorFieldTemplate(String name) {
         super(name);

@@ -1,4 +1,6 @@
-package org.bardframework.form.field;
+package org.bardframework.form.field.input;
+
+import org.bardframework.form.field.Field;
 
 public abstract class InputField<T> extends Field {
     public final static String SEPARATOR = ",";

@@ -2,13 +2,12 @@ package org.bardframework.form.field.input;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
-import org.bardframework.form.field.FormFieldTemplate;
 import org.bardframework.form.field.option.OptionDataSource;
 
 import java.util.Locale;
 import java.util.Map;
 
-public class SingleSelectFieldTemplate extends FormFieldTemplate<SingleSelectField, String> {
+public class SingleSelectFieldTemplate extends InputFieldTemplate<SingleSelectField, String> {
 
     protected final OptionDataSource optionDataSource;
 

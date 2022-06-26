@@ -1,5 +1,7 @@
 package org.bardframework.form.field.input;
 
+import org.bardframework.form.field.FieldType;
+
 public class TextAreaField extends TextField {
     public TextAreaField() {
     }
@@ -9,7 +11,7 @@ public class TextAreaField extends TextField {
     }
 
     @Override
-    public InputFieldType getType() {
+    public FieldType getType() {
         return InputFieldType.TEXT_AREA;
     }
 

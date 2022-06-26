@@ -1,6 +1,6 @@
 package org.bardframework.form.field.input;
 
-import org.bardframework.form.field.InputField;
+import org.bardframework.form.field.FieldType;
 
 import java.time.LocalDateTime;
 
@@ -16,7 +16,7 @@ public class DateTimeField extends InputField<LocalDateTime> {
     }
 
     @Override
-    public InputFieldType getType() {
+    public FieldType getType() {
         return InputFieldType.DATE_TIME;
     }
 

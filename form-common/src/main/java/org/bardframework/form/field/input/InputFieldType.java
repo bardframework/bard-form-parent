@@ -1,6 +1,8 @@
 package org.bardframework.form.field.input;
 
-public enum InputFieldType implements org.bardframework.form.field.FieldType<InputFieldType> {
+import org.bardframework.form.field.FieldType;
+
+public enum InputFieldType implements FieldType {
     CAPTCHA,
     DATE,
     DATE_TIME,

@@ -5,8 +5,8 @@ import org.bardframework.commons.utils.AssertionUtils;
 import org.bardframework.commons.utils.StringTemplateUtils;
 import org.bardframework.form.field.Field;
 import org.bardframework.form.field.FieldTemplate;
-import org.bardframework.form.field.FormFieldTemplate;
-import org.bardframework.form.field.InputField;
+import org.bardframework.form.field.input.InputField;
+import org.bardframework.form.field.input.InputFieldTemplate;
 import org.bardframework.form.field.view.ReadonlyField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,9 +46,9 @@ public class FormUtils {
             Field field = fieldTemplate.toField(formTemplate, args, locale);
             String valueString = values.get(fieldTemplate.getName());
             if (field instanceof InputField<?>) {
-                FormFieldTemplate<?, T> formFieldTemplate = (FormFieldTemplate<?, T>) fieldTemplate;
+                InputFieldTemplate<?, T> inputFieldTemplate = (InputFieldTemplate<?, T>) fieldTemplate;
                 InputField<T> inputField = (InputField<T>) field;
-                inputField.setValue(formFieldTemplate.toValue(valueString));
+                inputField.setValue(inputFieldTemplate.toValue(valueString));
             } else if (field instanceof ReadonlyField) {
                 ((ReadonlyField) field).setValue(valueString);
             }

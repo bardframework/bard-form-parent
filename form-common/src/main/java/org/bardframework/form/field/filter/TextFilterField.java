@@ -1,6 +1,7 @@
 package org.bardframework.form.field.filter;
 
-import org.bardframework.form.field.InputField;
+import org.bardframework.form.field.FieldType;
+import org.bardframework.form.field.input.InputField;
 import org.bardframework.form.model.filter.StringFilter;
 
 public class TextFilterField extends InputField<StringFilter> {
@@ -21,7 +22,7 @@ public class TextFilterField extends InputField<StringFilter> {
     }
 
     @Override
-    public FilterFieldType getType() {
+    public FieldType getType() {
         return FilterFieldType.TEXT_FILTER;
     }
 

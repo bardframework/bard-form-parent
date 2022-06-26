@@ -1,6 +1,7 @@
 package org.bardframework.form.field.filter;
 
-import org.bardframework.form.field.InputField;
+import org.bardframework.form.field.FieldType;
+import org.bardframework.form.field.input.InputField;
 import org.bardframework.form.model.filter.LocalDateFilter;
 
 import java.time.LocalDate;
@@ -19,7 +20,7 @@ public class DateFilterField extends InputField<LocalDateFilter> {
     }
 
     @Override
-    public FilterFieldType getType() {
+    public FieldType getType() {
         return FilterFieldType.DATE_FILTER;
     }
 

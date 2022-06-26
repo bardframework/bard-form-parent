@@ -1,5 +1,6 @@
 package org.bardframework.form.field.filter;
 
+import org.bardframework.form.field.FieldType;
 import org.bardframework.form.model.SelectOption;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class SingleSelectSearchableFilterField extends SingleSelectFilterField {
     }
 
     @Override
-    public FilterFieldType getType() {
+    public FieldType getType() {
         return FilterFieldType.SINGLE_SELECT_SEARCHABLE_FILTER;
     }
 

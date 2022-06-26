@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.node.TextNode;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
-import org.bardframework.form.field.InputField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.TestComponent;

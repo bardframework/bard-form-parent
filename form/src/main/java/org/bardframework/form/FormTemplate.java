@@ -4,8 +4,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.bardframework.form.exception.FormDataValidationException;
 import org.bardframework.form.field.FieldTemplate;
-import org.bardframework.form.field.FormFieldTemplate;
-import org.bardframework.form.field.InputField;
+import org.bardframework.form.field.input.InputField;
+import org.bardframework.form.field.input.InputFieldTemplate;
 import org.bardframework.form.processor.FormProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -45,12 +45,12 @@ public class FormTemplate extends Form {
          */
         List<FormProcessor> processors = new ArrayList<>();
         for (FieldTemplate<?> fieldTemplate : this.getFieldTemplates()) {
-            if (!(fieldTemplate instanceof FormFieldTemplate<?, ?>)) {
+            if (!(fieldTemplate instanceof InputFieldTemplate<?, ?>)) {
                 continue;
             }
-            FormFieldTemplate<?, ?> formFieldTemplate = (FormFieldTemplate<?, ?>) fieldTemplate;
-            if (null != formFieldTemplate.getPreProcessors()) {
-                processors.addAll(formFieldTemplate.getPreProcessors());
+            InputFieldTemplate<?, ?> inputFieldTemplate = (InputFieldTemplate<?, ?>) fieldTemplate;
+            if (null != inputFieldTemplate.getPreProcessors()) {
+                processors.addAll(inputFieldTemplate.getPreProcessors());
             }
         }
         if (null != this.preProcessors) {
@@ -64,12 +64,12 @@ public class FormTemplate extends Form {
          */
         processors = new ArrayList<>();
         for (FieldTemplate<?> fieldTemplate : this.getFieldTemplates()) {
-            if (!(fieldTemplate instanceof FormFieldTemplate<?, ?>)) {
+            if (!(fieldTemplate instanceof InputFieldTemplate<?, ?>)) {
                 continue;
             }
-            FormFieldTemplate<?, ?> formFieldTemplate = (FormFieldTemplate<?, ?>) fieldTemplate;
-            if (null != formFieldTemplate.getPostProcessors()) {
-                processors.addAll(formFieldTemplate.getPostProcessors());
+            InputFieldTemplate<?, ?> inputFieldTemplate = (InputFieldTemplate<?, ?>) fieldTemplate;
+            if (null != inputFieldTemplate.getPostProcessors()) {
+                processors.addAll(inputFieldTemplate.getPostProcessors());
             }
         }
         if (null != this.postProcessors) {
@@ -82,17 +82,17 @@ public class FormTemplate extends Form {
     public <F extends InputField<T>, T> void validate(Map<String, String> values, Map<String, String> args, Locale locale) throws Exception {
         FormDataValidationException ex = new FormDataValidationException();
         for (FieldTemplate<?> fieldTemplate : this.getFieldTemplates()) {
-            if (!(fieldTemplate instanceof FormFieldTemplate<?, ?>)) {
+            if (!(fieldTemplate instanceof InputFieldTemplate<?, ?>)) {
                 continue;
             }
-            FormFieldTemplate<F, T> formFieldTemplate = (FormFieldTemplate<F, T>) fieldTemplate;
-            F formField = formFieldTemplate.toField(this, args, locale);
+            InputFieldTemplate<F, T> inputFieldTemplate = (InputFieldTemplate<F, T>) fieldTemplate;
+            F formField = inputFieldTemplate.toField(this, args, locale);
             if (Boolean.TRUE.equals(formField.getDisable())) {
                 continue;
             }
-            String stringValue = values.get(formFieldTemplate.getName());
-            if (!formFieldTemplate.isValid(formField, formFieldTemplate.toValue(stringValue))) {
-                ex.addFiledError(formFieldTemplate.getName(), formField.getErrorMessage());
+            String stringValue = values.get(inputFieldTemplate.getName());
+            if (!inputFieldTemplate.isValid(formField, inputFieldTemplate.toValue(stringValue))) {
+                ex.addFiledError(inputFieldTemplate.getName(), formField.getErrorMessage());
             }
         }
         if (!MapUtils.isEmpty(ex.getInvalidFields())) {

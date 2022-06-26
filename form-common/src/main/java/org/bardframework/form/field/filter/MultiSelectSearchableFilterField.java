@@ -1,5 +1,6 @@
 package org.bardframework.form.field.filter;
 
+import org.bardframework.form.field.FieldType;
 import org.bardframework.form.model.SelectOption;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class MultiSelectSearchableFilterField extends MultiSelectFilterField {
     }
 
     @Override
-    public FilterFieldType getType() {
+    public FieldType getType() {
         return FilterFieldType.MULTI_SELECT_SEARCHABLE_FILTER;
     }
 

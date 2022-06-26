@@ -6,7 +6,6 @@ import org.bardframework.commons.captcha.CaptchaService;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.exception.FlowDataValidationException;
 import org.bardframework.form.exception.InvalidateFlowException;
-import org.bardframework.form.field.FormFieldTemplate;
 import org.bardframework.form.processor.FormProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +20,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class CaptchaFieldTemplate extends FormFieldTemplate<CaptchaField, String> {
+public class CaptchaFieldTemplate extends InputFieldTemplate<CaptchaField, String> {
     private static final Logger LOGGER = LoggerFactory.getLogger(CaptchaFieldTemplate.class);
     private static final String ANSWER_KEY = "S_captcha_answer";
     private static final String GENERATE_COUNT_KEY = "S_captcha_generate_count";

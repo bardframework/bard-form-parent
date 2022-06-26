@@ -1,6 +1,6 @@
 package org.bardframework.form.field.input;
 
-import org.bardframework.form.field.InputField;
+import org.bardframework.form.field.FieldType;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class ListField extends InputField<List<String>> {
     }
 
     @Override
-    public InputFieldType getType() {
+    public FieldType getType() {
         return InputFieldType.LIST;
     }
 

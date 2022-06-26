@@ -1,7 +1,8 @@
-package org.bardframework.form.field;
+package org.bardframework.form.field.input;
 
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
+import org.bardframework.form.field.FieldTemplate;
 import org.bardframework.form.field.value.FieldValueProvider;
 import org.bardframework.form.processor.FormProcessor;
 
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public abstract class FormFieldTemplate<F extends InputField<T>, T> extends FieldTemplate<F> {
+public abstract class InputFieldTemplate<F extends InputField<T>, T> extends FieldTemplate<F> {
 
     protected boolean persistentValue = true;
     protected FieldValueProvider<F, T> valueProvider;
@@ -18,11 +19,11 @@ public abstract class FormFieldTemplate<F extends InputField<T>, T> extends Fiel
     protected List<FormProcessor> postProcessors;
     protected Map<String, List<FormProcessor>> actionProcessors = new HashMap<>();
 
-    protected FormFieldTemplate(String name) {
+    protected InputFieldTemplate(String name) {
         super(name);
     }
 
-    public FormFieldTemplate(String name, boolean persistentValue) {
+    public InputFieldTemplate(String name, boolean persistentValue) {
         this(name);
         this.persistentValue = persistentValue;
     }

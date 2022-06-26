@@ -2,14 +2,14 @@ package org.bardframework.form.field.filter;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
-import org.bardframework.form.field.FormFieldTemplate;
+import org.bardframework.form.field.input.InputFieldTemplate;
 import org.bardframework.form.field.option.OptionDataSource;
 import org.bardframework.form.model.filter.IdFilter;
 
 import java.util.Locale;
 import java.util.Map;
 
-public class SingleSelectFilterFieldTemplate extends FormFieldTemplate<SingleSelectFilterField, IdFilter<String>> {
+public class SingleSelectFilterFieldTemplate extends InputFieldTemplate<SingleSelectFilterField, IdFilter<String>> {
 
     protected final OptionDataSource optionDataSource;
 

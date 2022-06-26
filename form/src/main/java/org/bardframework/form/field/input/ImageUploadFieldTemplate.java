@@ -2,13 +2,12 @@ package org.bardframework.form.field.input;
 
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
-import org.bardframework.form.field.FormFieldTemplate;
 
 import java.util.Locale;
 import java.util.Map;
 
 //TODO inherit from FileUploadFieldTemplate
-public class ImageUploadFieldTemplate extends FormFieldTemplate<ImageUploadField, String> {
+public class ImageUploadFieldTemplate extends InputFieldTemplate<ImageUploadField, String> {
     private final String uploadAction;
     private final String downloadAction;
 

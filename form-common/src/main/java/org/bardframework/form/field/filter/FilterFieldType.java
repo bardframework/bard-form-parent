@@ -2,7 +2,7 @@ package org.bardframework.form.field.filter;
 
 import org.bardframework.form.field.FieldType;
 
-public enum FilterFieldType implements FieldType<FilterFieldType> {
+public enum FilterFieldType implements FieldType {
     DATE_FILTER,
     DATE_TIME_FILTER,
     MULTI_SELECT_FILTER,

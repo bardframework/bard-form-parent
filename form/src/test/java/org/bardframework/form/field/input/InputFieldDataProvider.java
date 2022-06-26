@@ -1,7 +1,6 @@
 package org.bardframework.form.field.input;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.bardframework.form.field.InputField;
 import org.slf4j.LoggerFactory;
 
 public interface InputFieldDataProvider<F extends InputField<T>, T> {

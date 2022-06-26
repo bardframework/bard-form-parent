@@ -1,6 +1,6 @@
 package org.bardframework.form.field.input;
 
-import org.bardframework.form.field.InputField;
+import org.bardframework.form.field.FieldType;
 
 public class PasswordField extends InputField<String> {
 
@@ -17,7 +17,7 @@ public class PasswordField extends InputField<String> {
     }
 
     @Override
-    public InputFieldType getType() {
+    public FieldType getType() {
         return InputFieldType.PASSWORD;
     }
 }

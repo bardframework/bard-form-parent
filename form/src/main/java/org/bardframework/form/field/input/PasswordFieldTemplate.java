@@ -1,9 +1,8 @@
 package org.bardframework.form.field.input;
 
 import org.apache.commons.lang3.StringUtils;
-import org.bardframework.form.field.FormFieldTemplate;
 
-public class PasswordFieldTemplate extends FormFieldTemplate<PasswordField, String> {
+public class PasswordFieldTemplate extends InputFieldTemplate<PasswordField, String> {
 
     public PasswordFieldTemplate(String name) {
         super(name);

@@ -2,14 +2,13 @@ package org.bardframework.form.field.input;
 
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
-import org.bardframework.form.field.FormFieldTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Locale;
 import java.util.Map;
 
-public class FileUploadFieldTemplate extends FormFieldTemplate<FileUploadField, String> {
+public class FileUploadFieldTemplate extends InputFieldTemplate<FileUploadField, String> {
     protected static final Logger LOGGER = LoggerFactory.getLogger(FileUploadFieldTemplate.class);
 
     private final String uploadAction;

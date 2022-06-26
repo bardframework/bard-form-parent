@@ -14,7 +14,7 @@ public abstract class Field {
         this.label = label;
     }
 
-    public abstract FieldType<?> getType();
+    public abstract FieldType getType();
 
     /**
      * TODO remove after resolve polymorphic deserialization in tests

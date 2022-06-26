@@ -3,14 +3,14 @@ package org.bardframework.form.field.filter;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
-import org.bardframework.form.field.FormFieldTemplate;
+import org.bardframework.form.field.input.InputFieldTemplate;
 import org.bardframework.form.model.filter.StringFilter;
 
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class TextFilterFieldTemplate extends FormFieldTemplate<TextFilterField, StringFilter> {
+public class TextFilterFieldTemplate extends InputFieldTemplate<TextFilterField, StringFilter> {
 
     protected TextFilterFieldTemplate(String name) {
         super(name);

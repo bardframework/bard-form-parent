@@ -3,7 +3,6 @@ package org.bardframework.form.field.input;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
-import org.bardframework.form.field.InputField;
 import org.springframework.boot.test.context.TestComponent;
 
 @TestComponent

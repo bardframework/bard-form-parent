@@ -4,14 +4,12 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
-import org.bardframework.form.field.FormFieldTemplate;
-import org.bardframework.form.field.InputField;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class ListFieldTemplate extends FormFieldTemplate<ListField, List<String>> {
+public class ListFieldTemplate extends InputFieldTemplate<ListField, List<String>> {
 
     protected ListFieldTemplate(String name) {
         super(name);

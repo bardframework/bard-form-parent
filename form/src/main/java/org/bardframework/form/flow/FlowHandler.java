@@ -8,7 +8,7 @@ import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
 import org.bardframework.form.exception.InvalidateFlowException;
 import org.bardframework.form.field.FieldTemplate;
-import org.bardframework.form.field.FormFieldTemplate;
+import org.bardframework.form.field.input.InputFieldTemplate;
 import org.bardframework.form.flow.repository.FlowDataRepository;
 import org.bardframework.form.processor.FormProcessor;
 import org.slf4j.Logger;
@@ -50,11 +50,11 @@ public class FlowHandler {
         FormTemplate currentFormTemplate = forms.get(flowData.getCurrentStepIndex());
         currentFormTemplate.validate(formData, flowData.getData(), flowData.getLocale());
         for (FieldTemplate<?> fieldTemplate : currentFormTemplate.getFieldTemplates()) {
-            if (!(fieldTemplate instanceof FormFieldTemplate<?, ?>)) {
+            if (!(fieldTemplate instanceof InputFieldTemplate<?, ?>)) {
                 continue;
             }
-            FormFieldTemplate<?, ?> formFieldTemplate = (FormFieldTemplate<?, ?>) fieldTemplate;
-            if (!formFieldTemplate.isPersistentValue()) {
+            InputFieldTemplate<?, ?> inputFieldTemplate = (InputFieldTemplate<?, ?>) fieldTemplate;
+            if (!inputFieldTemplate.isPersistentValue()) {
                 continue;
             }
             String value = formData.remove(fieldTemplate.getName());
@@ -101,11 +101,11 @@ public class FlowHandler {
         try {
             boolean process = false;
             for (FieldTemplate<?> fieldTemplate : currentFormTemplate.getFieldTemplates()) {
-                if (process || !(fieldTemplate instanceof FormFieldTemplate<?, ?>)) {
+                if (process || !(fieldTemplate instanceof InputFieldTemplate<?, ?>)) {
                     continue;
                 }
-                FormFieldTemplate<?, ?> formFieldTemplate = (FormFieldTemplate<?, ?>) fieldTemplate;
-                process = this.process(formFieldTemplate.getActionProcessors().get(action), flowToken, flowData, formData, httpRequest, httpResponse);
+                InputFieldTemplate<?, ?> inputFieldTemplate = (InputFieldTemplate<?, ?>) fieldTemplate;
+                process = this.process(inputFieldTemplate.getActionProcessors().get(action), flowToken, flowData, formData, httpRequest, httpResponse);
             }
             if (!process) {
                 process = this.process(currentFormTemplate.getActionProcessors().get(action), flowToken, flowData, formData, httpRequest, httpResponse);

@@ -3,8 +3,8 @@ package org.bardframework.form.field.filter;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
-import org.bardframework.form.field.FormFieldTemplate;
-import org.bardframework.form.field.InputField;
+import org.bardframework.form.field.input.InputField;
+import org.bardframework.form.field.input.InputFieldTemplate;
 import org.bardframework.form.model.filter.LocalDateTimeFilter;
 
 import java.time.Duration;
@@ -13,7 +13,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 import java.util.Map;
 
-public class DateTimeFilterFieldTemplate extends FormFieldTemplate<DateTimeFilterField, LocalDateTimeFilter> {
+public class DateTimeFilterFieldTemplate extends InputFieldTemplate<DateTimeFilterField, LocalDateTimeFilter> {
     private boolean minIsNow;
     private boolean maxIsNow;
     private ChronoUnit lengthUnit = ChronoUnit.SECONDS;

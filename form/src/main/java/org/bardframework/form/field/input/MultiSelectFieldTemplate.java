@@ -4,8 +4,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
-import org.bardframework.form.field.FormFieldTemplate;
-import org.bardframework.form.field.InputField;
 import org.bardframework.form.field.option.OptionDataSource;
 
 import java.util.Arrays;
@@ -14,7 +12,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class MultiSelectFieldTemplate extends FormFieldTemplate<MultiSelectField, List<String>> {
+public class MultiSelectFieldTemplate extends InputFieldTemplate<MultiSelectField, List<String>> {
 
     protected final OptionDataSource optionDataSource;
 

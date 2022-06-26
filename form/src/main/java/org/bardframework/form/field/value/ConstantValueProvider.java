@@ -1,6 +1,6 @@
 package org.bardframework.form.field.value;
 
-import org.bardframework.form.field.InputField;
+import org.bardframework.form.field.input.InputField;
 
 public abstract class ConstantValueProvider<T, F extends InputField<T>> implements FieldValueProvider<F, T> {
 

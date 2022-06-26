@@ -1,6 +1,7 @@
 package org.bardframework.form.field.view;
 
 import org.bardframework.form.field.Field;
+import org.bardframework.form.field.FieldType;
 
 public class HtmlViewField extends Field {
 
@@ -8,7 +9,7 @@ public class HtmlViewField extends Field {
     private String description;
 
     @Override
-    public ViewFieldType getType() {
+    public FieldType getType() {
         return ViewFieldType.HTML_VIEW;
     }
 

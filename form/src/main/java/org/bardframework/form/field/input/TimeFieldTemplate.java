@@ -3,13 +3,12 @@ package org.bardframework.form.field.input;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
-import org.bardframework.form.field.FormFieldTemplate;
 
 import java.time.LocalTime;
 import java.util.Locale;
 import java.util.Map;
 
-public class TimeFieldTemplate extends FormFieldTemplate<TimeField, LocalTime> {
+public class TimeFieldTemplate extends InputFieldTemplate<TimeField, LocalTime> {
     private boolean minIsNow;
     private boolean maxIsNow;
 

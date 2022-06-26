@@ -3,12 +3,11 @@ package org.bardframework.form.field.input;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
-import org.bardframework.form.field.FormFieldTemplate;
 
 import java.util.Locale;
 import java.util.Map;
 
-public class NumberFieldTemplate extends FormFieldTemplate<NumberField, Long> {
+public class NumberFieldTemplate extends InputFieldTemplate<NumberField, Long> {
 
     protected NumberFieldTemplate(String name) {
         super(name);

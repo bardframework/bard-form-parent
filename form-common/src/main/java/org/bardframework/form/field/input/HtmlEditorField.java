@@ -1,6 +1,6 @@
 package org.bardframework.form.field.input;
 
-import org.bardframework.form.field.InputField;
+import org.bardframework.form.field.FieldType;
 
 public class HtmlEditorField extends InputField<String> {
     private Integer maxSize;
@@ -13,7 +13,7 @@ public class HtmlEditorField extends InputField<String> {
     }
 
     @Override
-    public InputFieldType getType() {
+    public FieldType getType() {
         return InputFieldType.HTML_EDITOR;
     }
 

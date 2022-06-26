@@ -1,6 +1,7 @@
 package org.bardframework.form.field.view;
 
 import org.bardframework.form.field.Field;
+import org.bardframework.form.field.FieldType;
 
 public class ReadonlyField extends Field {
 
@@ -9,7 +10,7 @@ public class ReadonlyField extends Field {
     private String value;
 
     @Override
-    public ViewFieldType getType() {
+    public FieldType getType() {
         return ViewFieldType.READONLY;
     }
 

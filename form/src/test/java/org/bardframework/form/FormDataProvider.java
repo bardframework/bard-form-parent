@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.bardframework.form.field.Field;
-import org.bardframework.form.field.InputField;
+import org.bardframework.form.field.input.InputField;
 import org.bardframework.form.field.input.InputFieldDataProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestComponent;

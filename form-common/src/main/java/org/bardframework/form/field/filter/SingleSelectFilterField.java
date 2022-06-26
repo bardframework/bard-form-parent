@@ -1,6 +1,7 @@
 package org.bardframework.form.field.filter;
 
-import org.bardframework.form.field.InputField;
+import org.bardframework.form.field.FieldType;
+import org.bardframework.form.field.input.InputField;
 import org.bardframework.form.model.SelectOption;
 import org.bardframework.form.model.filter.IdFilter;
 
@@ -23,7 +24,7 @@ public class SingleSelectFilterField extends InputField<IdFilter<String>> {
     }
 
     @Override
-    public FilterFieldType getType() {
+    public FieldType getType() {
         return FilterFieldType.SINGLE_SELECT_FILTER;
     }
 
