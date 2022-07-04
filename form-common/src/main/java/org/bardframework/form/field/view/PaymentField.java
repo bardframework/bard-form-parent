@@ -6,7 +6,6 @@ import org.bardframework.form.field.FieldType;
 public class PaymentField extends Field {
 
     private Long amount;
-    private String description;
 
     public PaymentField() {
     }
@@ -22,13 +21,5 @@ public class PaymentField extends Field {
 
     public void setAmount(Long amount) {
         this.amount = amount;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 }

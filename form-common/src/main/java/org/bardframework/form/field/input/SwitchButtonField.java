@@ -2,12 +2,12 @@ package org.bardframework.form.field.input;
 
 import org.bardframework.form.field.FieldType;
 
-public class SingleCheckBoxField extends InputField<Boolean> {
+public class SwitchButtonField extends InputField<Boolean> {
 
-    public SingleCheckBoxField() {
+    public SwitchButtonField() {
     }
 
-    public SingleCheckBoxField(String name) {
+    public SwitchButtonField(String name) {
         super(name);
     }
 
@@ -17,7 +17,7 @@ public class SingleCheckBoxField extends InputField<Boolean> {
 
     @Override
     public FieldType getType() {
-        return InputFieldType.SINGLE_CHECKBOX;
+        return InputFieldType.SWITCH_BUTTON;
     }
 
     @Override

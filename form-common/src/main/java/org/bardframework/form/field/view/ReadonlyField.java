@@ -5,21 +5,12 @@ import org.bardframework.form.field.FieldType;
 
 public class ReadonlyField extends Field {
 
-    private String tooltip;
     private String mask;
     private String value;
 
     @Override
     public FieldType getType() {
         return ViewFieldType.READONLY;
-    }
-
-    public String getTooltip() {
-        return tooltip;
-    }
-
-    public void setTooltip(String tooltip) {
-        this.tooltip = tooltip;
     }
 
     public String getMask() {

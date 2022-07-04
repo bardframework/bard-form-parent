@@ -3,7 +3,7 @@ package org.bardframework.form.table.header;
 import org.bardframework.commons.utils.ReflectionUtils;
 import org.bardframework.form.table.TableHeader;
 import org.bardframework.form.table.TableTemplate;
-import org.bardframework.form.table.utils.TableUtils;
+import org.bardframework.form.table.TableUtils;
 
 import java.util.Locale;
 import java.util.Map;

@@ -17,6 +17,5 @@ public class PaymentFieldTemplate extends FieldTemplate<PaymentField> {
     public void fill(FormTemplate formTemplate, PaymentField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
         field.setAmount(FormUtils.getFieldLongProperty(formTemplate, this.getName(), "amount", locale, args, null));
-        field.setDescription(FormUtils.getFieldStringProperty(formTemplate, this.getName(), "description", locale, args, null));
     }
 }

@@ -17,7 +17,6 @@ public class HtmlViewFieldTemplate extends FieldTemplate<HtmlViewField> {
     public void fill(FormTemplate formTemplate, HtmlViewField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
         field.setHtml(FormUtils.getFieldStringProperty(formTemplate, this.getName(), "html", locale, args, null));
-        field.setDescription(FormUtils.getFieldStringProperty(formTemplate, this.getName(), "description", locale, args, null));
     }
 
 }

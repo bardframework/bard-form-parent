@@ -7,7 +7,6 @@ public abstract class InputField<T> extends Field {
 
     private String name;
     private String placeholder;
-    private String tooltip;
     private String errorMessage;
     private Boolean required;
     private Boolean disable;
@@ -38,14 +37,6 @@ public abstract class InputField<T> extends Field {
 
     public void setPlaceholder(String placeholder) {
         this.placeholder = placeholder;
-    }
-
-    public String getTooltip() {
-        return tooltip;
-    }
-
-    public void setTooltip(String tooltip) {
-        this.tooltip = tooltip;
     }
 
     public String getErrorMessage() {

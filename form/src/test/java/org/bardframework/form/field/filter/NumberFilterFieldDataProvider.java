@@ -1,8 +1,7 @@
-package org.bardframework.form.filter.field;
+package org.bardframework.form.field.filter;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.lang3.RandomUtils;
-import org.bardframework.form.field.filter.NumberFilterField;
 import org.bardframework.form.field.input.InputField;
 import org.bardframework.form.field.input.InputFieldDataProvider;
 import org.bardframework.form.model.filter.LongFilter;

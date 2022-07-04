@@ -27,7 +27,8 @@ public abstract class FieldTemplate<F extends Field> {
     }
 
     protected void fill(FormTemplate formTemplate, F field, Map<String, String> args, Locale locale) throws Exception {
-        field.setLabel(FormUtils.getFieldStringProperty(formTemplate, this.getName(), "label", locale, args, null));
+        field.setTitle(FormUtils.getFieldStringProperty(formTemplate, this.getName(), "title", locale, args, null));
+        field.setDescription(FormUtils.getFieldStringProperty(formTemplate, this.getName(), "description", locale, args, null));
     }
 
     protected F getEmptyField() {

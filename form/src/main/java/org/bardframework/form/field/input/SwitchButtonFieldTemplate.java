@@ -2,14 +2,14 @@ package org.bardframework.form.field.input;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class SingleCheckboxFieldTemplate extends InputFieldTemplate<SingleCheckBoxField, Boolean> {
+public class SwitchButtonFieldTemplate extends InputFieldTemplate<SwitchButtonField, Boolean> {
 
-    protected SingleCheckboxFieldTemplate(String name) {
+    protected SwitchButtonFieldTemplate(String name) {
         super(name);
     }
 
     @Override
-    public boolean isValid(SingleCheckBoxField field, Boolean value) {
+    public boolean isValid(SwitchButtonField field, Boolean value) {
         return true;
     }
 

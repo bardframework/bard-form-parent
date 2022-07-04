@@ -9,7 +9,6 @@ public class FileDownloadField extends Field {
     private String fileName;
     private String contentType;
     private Integer size;
-    private String description;
 
     @Override
     public FieldType getType() {
@@ -46,13 +45,5 @@ public class FileDownloadField extends Field {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 }

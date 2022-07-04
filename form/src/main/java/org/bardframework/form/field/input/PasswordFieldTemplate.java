@@ -22,7 +22,7 @@ public class PasswordFieldTemplate extends InputFieldTemplate<PasswordField, Str
 
     @Override
     public String toValue(String value) {
-        return null;
+        return value;
     }
 
     @Override

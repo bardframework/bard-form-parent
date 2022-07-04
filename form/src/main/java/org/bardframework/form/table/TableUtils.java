@@ -1,14 +1,7 @@
-package org.bardframework.form.table.utils;
+package org.bardframework.form.table;
 
 import org.apache.commons.lang3.StringUtils;
-import org.bardframework.commons.utils.ReflectionUtils;
-import org.bardframework.crud.api.base.BaseModel;
-import org.bardframework.crud.api.base.PagedData;
 import org.bardframework.form.FormUtils;
-import org.bardframework.form.table.TableData;
-import org.bardframework.form.table.TableHeader;
-import org.bardframework.form.table.TableModel;
-import org.bardframework.form.table.TableTemplate;
 import org.bardframework.form.table.header.TableHeaderTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +10,10 @@ import org.springframework.context.MessageSource;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class TableUtils {
@@ -28,25 +24,6 @@ public class TableUtils {
         /*
             prevent instantiation
          */
-    }
-
-    public static <M extends BaseModel<?>> TableData toTableData(PagedData<M> pagedData, TableTemplate tableTemplate, Locale locale) {
-        TableData tableData = new TableData();
-        tableData.setTotal(pagedData.getTotal());
-        tableData.setHeaders(tableTemplate.getHeaderTemplates().stream().map(TableHeader::getName).collect(Collectors.toList()));
-        for (M model : pagedData.getData()) {
-            List<Object> values = new ArrayList<>();
-            for (TableHeaderTemplate headerTemplate : tableTemplate.getHeaderTemplates()) {
-                try {
-                    Object value = ReflectionUtils.getPropertyValue(model, headerTemplate.getName());
-                    values.add(headerTemplate.format(value, locale));
-                } catch (Exception e) {
-                    throw new IllegalStateException(String.format("can't read property [%s] of [%s] instance and convert it, table [%s]", headerTemplate.getName(), model.getClass(), tableTemplate.getName()), e);
-                }
-            }
-            tableData.addData(model.getId().toString(), values);
-        }
-        return tableData;
     }
 
     public static TableModel toTable(TableTemplate tableTemplate, Locale locale, Map<String, String> args) throws Exception {
