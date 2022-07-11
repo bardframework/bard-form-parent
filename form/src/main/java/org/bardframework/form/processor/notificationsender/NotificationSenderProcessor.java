@@ -28,7 +28,7 @@ public abstract class NotificationSenderProcessor implements FormProcessor {
     protected final Executor executor = Executors.newFixedThreadPool(100);
     protected boolean executeInNewThread;
     protected DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-    protected DateTimeFormatter jalaliDateFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+    protected DateTimeFormatter dateFormatterJalali = DateTimeFormatter.ofPattern("yyyy/MM/dd");
     protected DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("H:mm:ss");
 
     public NotificationSenderProcessor(String messageTemplateKey, String errorMessageCode, boolean failOnError, @Autowired MessageSource messageSource) {
@@ -70,7 +70,7 @@ public abstract class NotificationSenderProcessor implements FormProcessor {
         LocalDateTimeJalali dateTimeJalali = LocalDateTimeJalali.now();
         LocalDateTime dateTime = LocalDateTime.now();
         args.put("date", dateTime.format(this.getDateFormat()));
-        args.put("jalali_date", dateTimeJalali.format(this.getJalaliDateFormat()));
+        args.put("jalali_date", dateTimeJalali.format(this.getDateFormatterJalali()));
         args.put("time", dateTime.format(this.getTimeFormat()));
         return args;
     }
@@ -103,12 +103,12 @@ public abstract class NotificationSenderProcessor implements FormProcessor {
         this.dateFormat = dateFormat;
     }
 
-    public DateTimeFormatter getJalaliDateFormat() {
-        return jalaliDateFormat;
+    public DateTimeFormatter getDateFormatterJalali() {
+        return dateFormatterJalali;
     }
 
-    public void setJalaliDateFormat(DateTimeFormatter jalaliDateFormat) {
-        this.jalaliDateFormat = jalaliDateFormat;
+    public void setDateFormatterJalali(DateTimeFormatter dateFormatterJalali) {
+        this.dateFormatterJalali = dateFormatterJalali;
     }
 
     public DateTimeFormatter getTimeFormat() {
