@@ -23,10 +23,10 @@ public class DateFilterFieldTemplate extends InputFieldTemplate<DateFilterField,
     @Override
     public void fill(FormTemplate formTemplate, DateFilterField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
-        field.setMinLength(FormUtils.getFieldLongProperty(formTemplate, this.getName(), "minLength", locale, args, null));
-        field.setMaxLength(FormUtils.getFieldLongProperty(formTemplate, this.getName(), "maxLength", locale, args, null));
-        field.setMinValue(FormUtils.getFieldLocalDateProperty(formTemplate, this.getName(), "minValue", locale, args, null));
-        field.setMaxValue(FormUtils.getFieldLocalDateProperty(formTemplate, this.getName(), "maxValue", locale, args, null));
+        field.setMinLength(FormUtils.getFieldLongProperty(formTemplate, this, "minLength", locale, args, null));
+        field.setMaxLength(FormUtils.getFieldLongProperty(formTemplate, this, "maxLength", locale, args, null));
+        field.setMinValue(FormUtils.getFieldLocalDateProperty(formTemplate, this, "minValue", locale, args, null));
+        field.setMaxValue(FormUtils.getFieldLocalDateProperty(formTemplate, this, "maxValue", locale, args, null));
         if (null == field.getMinValue()) {
             field.setMinValue(this.getMinValue());
         }

@@ -82,6 +82,10 @@ public class FormUtils {
         return FormUtils.getString("form", property, List.of(formName), locale, args, defaultValue, messageSource);
     }
 
+    public static Boolean getFieldBooleanProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Locale locale, Map<String, String> args, Boolean defaultValue) {
+        return FormUtils.getFieldBooleanProperty(formTemplate, fieldTemplate.getName(), property, locale, args, defaultValue);
+    }
+
     /**
      * @return null if we can't read property value
      */
@@ -98,6 +102,10 @@ public class FormUtils {
         }
     }
 
+    public static List<String> getFieldListProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Locale locale, Map<String, String> args, List<String> defaultValue) {
+        return FormUtils.getFieldListProperty(formTemplate, fieldTemplate.getName(), property, locale, args, defaultValue);
+    }
+
     /**
      * @return false if we can't read property value
      */
@@ -107,6 +115,10 @@ public class FormUtils {
             return defaultValue;
         }
         return Arrays.stream(value.split(",")).map(String::trim).collect(Collectors.toList());
+    }
+
+    public static Integer getFieldIntegerProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Locale locale, Map<String, String> args, Integer defaultValue) {
+        return FormUtils.getFieldIntegerProperty(formTemplate, fieldTemplate.getName(), property, locale, args, defaultValue);
     }
 
     /**
@@ -125,6 +137,10 @@ public class FormUtils {
         }
     }
 
+    public static Double getFieldDoubleProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Locale locale, Map<String, String> args, Double defaultValue) {
+        return FormUtils.getFieldDoubleProperty(formTemplate, fieldTemplate.getName(), property, locale, args, defaultValue);
+    }
+
     /**
      * @return null if we can't read property value
      */
@@ -139,6 +155,10 @@ public class FormUtils {
             LOGGER.error("error reading [{}] of [{}.{}] as Double", property, formTemplate, fieldName, e);
             return null;
         }
+    }
+
+    public static Long getFieldLongProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Locale locale, Map<String, String> args, Long defaultValue) {
+        return FormUtils.getFieldLongProperty(formTemplate, fieldTemplate.getName(), property, locale, args, defaultValue);
     }
 
     /**
@@ -157,6 +177,10 @@ public class FormUtils {
         }
     }
 
+    public static LocalDate getFieldLocalDateProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Locale locale, Map<String, String> args, LocalDate defaultValue) {
+        return FormUtils.getFieldLocalDateProperty(formTemplate, fieldTemplate.getName(), property, locale, args, defaultValue);
+    }
+
     /**
      * @return null if we can't read property value
      */
@@ -173,6 +197,10 @@ public class FormUtils {
         }
     }
 
+    public static LocalDateTime getFieldLocalDateTimeProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Locale locale, Map<String, String> args, LocalDateTime defaultValue) {
+        return FormUtils.getFieldLocalDateTimeProperty(formTemplate, fieldTemplate.getName(), property, locale, args, defaultValue);
+    }
+
     public static LocalDateTime getFieldLocalDateTimeProperty(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, String> args, LocalDateTime defaultValue) {
         String value = FormUtils.getFieldStringProperty(formTemplate, fieldName, property, locale, args, null);
         if (StringUtils.isBlank(value)) {
@@ -186,6 +214,10 @@ public class FormUtils {
         }
     }
 
+    public static LocalTime getFieldLocalTimeProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Locale locale, Map<String, String> args, LocalTime defaultValue) {
+        return FormUtils.getFieldLocalTimeProperty(formTemplate, fieldTemplate.getName(), property, locale, args, defaultValue);
+    }
+
     public static LocalTime getFieldLocalTimeProperty(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, String> args, LocalTime defaultValue) {
         String value = FormUtils.getFieldStringProperty(formTemplate, fieldName, property, locale, args, null);
         if (StringUtils.isBlank(value)) {
@@ -197,6 +229,10 @@ public class FormUtils {
             LOGGER.error("error reading [{}] of [{}.{}] as LocalTime", property, formTemplate, fieldName, e);
             return null;
         }
+    }
+
+    public static String getFieldStringProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Locale locale, Map<String, String> args, String defaultValue) {
+        return FormUtils.getFieldStringProperty(formTemplate, fieldTemplate.getName(), property, locale, args, defaultValue);
     }
 
     /**

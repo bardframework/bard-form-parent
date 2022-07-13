@@ -36,9 +36,9 @@ public class NumberFieldTemplate extends InputFieldTemplate<NumberField, Long> {
     @Override
     public void fill(FormTemplate formTemplate, NumberField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
-        field.setMinValue(FormUtils.getFieldLongProperty(formTemplate, this.getName(), "minValue", locale, args, null));
-        field.setMaxValue(FormUtils.getFieldLongProperty(formTemplate, this.getName(), "maxValue", locale, args, null));
-        field.setMask(FormUtils.getFieldStringProperty(formTemplate, this.getName(), "mask", locale, args, null));
+        field.setMinValue(FormUtils.getFieldLongProperty(formTemplate, this, "minValue", locale, args, null));
+        field.setMaxValue(FormUtils.getFieldLongProperty(formTemplate, this, "maxValue", locale, args, null));
+        field.setMask(FormUtils.getFieldStringProperty(formTemplate, this, "mask", locale, args, null));
     }
 
     @Override

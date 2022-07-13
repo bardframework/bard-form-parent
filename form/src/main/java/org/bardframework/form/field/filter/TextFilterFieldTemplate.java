@@ -43,10 +43,10 @@ public class TextFilterFieldTemplate extends InputFieldTemplate<TextFilterField,
     @Override
     public void fill(FormTemplate formTemplate, TextFilterField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
-        field.setRegex(FormUtils.getFieldStringProperty(formTemplate, this.getName(), "regex", locale, args, null));
-        field.setMask(FormUtils.getFieldStringProperty(formTemplate, this.getName(), "mask", locale, args, null));
-        field.setMinLength(FormUtils.getFieldIntegerProperty(formTemplate, this.getName(), "minLength", locale, args, null));
-        field.setMaxLength(FormUtils.getFieldIntegerProperty(formTemplate, this.getName(), "maxLength", locale, args, null));
+        field.setRegex(FormUtils.getFieldStringProperty(formTemplate, this, "regex", locale, args, null));
+        field.setMask(FormUtils.getFieldStringProperty(formTemplate, this, "mask", locale, args, null));
+        field.setMinLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "minLength", locale, args, null));
+        field.setMaxLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxLength", locale, args, null));
     }
 
     @Override

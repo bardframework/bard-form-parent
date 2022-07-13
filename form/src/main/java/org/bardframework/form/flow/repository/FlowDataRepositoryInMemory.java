@@ -30,7 +30,7 @@ public class FlowDataRepositoryInMemory<D> implements FlowDataRepository<D> {
     public D get(String token) throws InvalidateFlowException {
         D data = this.cache.getIfPresent(token);
         if (null == data) {
-            throw new InvalidateFlowException("no data exist for token", token);
+            throw new InvalidateFlowException(token, "no data exist for token");
         }
         return data;
     }

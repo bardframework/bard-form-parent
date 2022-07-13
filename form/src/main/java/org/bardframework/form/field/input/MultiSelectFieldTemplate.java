@@ -24,7 +24,7 @@ public class MultiSelectFieldTemplate extends InputFieldTemplate<MultiSelectFiel
     @Override
     public void fill(FormTemplate formTemplate, MultiSelectField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
-        field.setMaxCount(FormUtils.getFieldIntegerProperty(formTemplate, this.getName(), "maxCount", locale, args, null));
+        field.setMaxCount(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxCount", locale, args, null));
         field.setOptions(optionDataSource.getOptions(locale));
     }
 
