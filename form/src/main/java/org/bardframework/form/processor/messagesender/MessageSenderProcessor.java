@@ -1,15 +1,14 @@
-package org.bardframework.form.processor.notificationsender;
+package org.bardframework.form.processor.messagesender;
 
 import org.bardframework.form.processor.FormProcessor;
+import org.bardframework.form.processor.messagesender.creator.MessageCreator;
+import org.bardframework.form.processor.messagesender.sender.MessageSender;
 import org.bardframework.time.LocalDateTimeJalali;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -18,46 +17,43 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public abstract class NotificationSenderProcessor implements FormProcessor {
-    protected final static Logger LOGGER = LoggerFactory.getLogger(NotificationSenderProcessor.class);
+public class MessageSenderProcessor implements FormProcessor {
+    protected final static Logger LOGGER = LoggerFactory.getLogger(MessageSenderProcessor.class);
 
-    protected final String messageTemplateKey;
+    protected final MessageCreator messageCreator;
+    protected final MessageSender messageSender;
     protected final String errorMessageCode;
-    protected final boolean failOnError;
-    protected final MessageSource messageSource;
     protected final Executor executor = Executors.newFixedThreadPool(100);
-    protected boolean executeInNewThread;
+    protected boolean failOnError = true;
+    protected boolean executeInNewThread = false;
     protected DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd");
     protected DateTimeFormatter dateFormatterJalali = DateTimeFormatter.ofPattern("yyyy/MM/dd");
     protected DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("H:mm:ss");
 
-    public NotificationSenderProcessor(String messageTemplateKey, String errorMessageCode, boolean failOnError, @Autowired MessageSource messageSource) {
-        this.messageTemplateKey = messageTemplateKey;
+    public MessageSenderProcessor(MessageCreator messageCreator, MessageSender messageSender, String errorMessageCode) {
+        this.messageCreator = messageCreator;
+        this.messageSender = messageSender;
         this.errorMessageCode = errorMessageCode;
-        this.failOnError = failOnError;
-        this.messageSource = messageSource;
     }
-
-    protected abstract void send(String message, Map<String, String> args) throws IOException;
 
     @Override
     public final void process(String flowToken, Map<String, String> flowData, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
-        String message = this.getMessageSource().getMessage(this.getMessageTemplateKey(), new Object[]{}, locale);
+        String message = this.getMessageCreator().create(flowData, locale);
         LOGGER.debug("sending message [{}]", message);
-        if (executeInNewThread) {
-            executor.execute(() -> this.sendInternal(message, flowData));
+        if (this.isExecuteInNewThread()) {
+            this.getExecutor().execute(() -> this.sendInternal(message, flowData, locale));
         } else {
-            this.sendInternal(message, flowData);
+            this.sendInternal(message, flowData, locale);
         }
     }
 
-    private void sendInternal(String message, Map<String, String> flowData) {
+    private void sendInternal(String message, Map<String, String> flowData, Locale locale) {
         try {
             this.beforeSend(flowData);
-            this.send(message, this.getArgs(flowData));
+            this.getMessageSender().send(message, this.getArgs(flowData), locale);
             this.afterSend(flowData);
         } catch (Exception e) {
-            if (!failOnError) {
+            if (!this.isFailOnError()) {
                 LOGGER.error("error calling notification sender, failOnError is false, catching exception.", e);
                 return;
             }
@@ -76,23 +72,33 @@ public abstract class NotificationSenderProcessor implements FormProcessor {
     }
 
     protected void beforeSend(Map<String, String> flowData) {
-
     }
 
     protected void afterSend(Map<String, String> flowData) {
-
     }
 
-    public String getMessageTemplateKey() {
-        return messageTemplateKey;
+    public MessageCreator getMessageCreator() {
+        return messageCreator;
+    }
+
+    public MessageSender getMessageSender() {
+        return messageSender;
+    }
+
+    public Executor getExecutor() {
+        return executor;
+    }
+
+    public boolean isFailOnError() {
+        return failOnError;
+    }
+
+    public void setFailOnError(boolean failOnError) {
+        this.failOnError = failOnError;
     }
 
     public String getErrorMessageCode() {
         return errorMessageCode;
-    }
-
-    public MessageSource getMessageSource() {
-        return messageSource;
     }
 
     public DateTimeFormatter getDateFormat() {

@@ -1,16 +1,15 @@
 package org.bardframework.form.field.input;
 
-import com.mifmif.common.regex.Generex;
 import org.apache.commons.lang3.StringUtils;
-import org.bardframework.commons.sms.SmsSender;
 import org.bardframework.form.exception.FlowDataValidationException;
 import org.bardframework.form.exception.InvalidateFlowException;
-import org.bardframework.form.field.FieldTemplate;
 import org.bardframework.form.processor.FormProcessor;
-import org.bardframework.form.processor.notificationsender.NotificationSmsSenderProcessor;
+import org.bardframework.form.processor.messagesender.MessageSenderProcessor;
+import org.bardframework.form.processor.messagesender.creator.MessageCreator;
+import org.bardframework.form.processor.messagesender.otp.OtpGenerator;
+import org.bardframework.form.processor.messagesender.sender.MessageSenderSms;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 
@@ -35,13 +34,13 @@ public class OtpSmsValidatorFieldTemplate extends TextFieldTemplate {
     private String generatedOtpKey;
     private String resendAction;
 
-    public OtpSmsValidatorFieldTemplate(String name, String messageTemplateKey, String errorMessageCode, FieldTemplate<?> mobileNumberFieldTemplate, OtpGenerator otpGenerator, int maxTryToResolveCount, int maxResendOtpCount, int resendIntervalSeconds, SmsSender smsSender, @Autowired MessageSource messageSource) {
+    public OtpSmsValidatorFieldTemplate(String name, MessageCreator messageCreator, MessageSenderSms messageSender, String errorMessageCode, OtpGenerator otpGenerator, int maxTryToResolveCount, int maxResendOtpCount, int resendIntervalSeconds) {
         super(name);
         this.maxTryToResolveCount = maxTryToResolveCount;
         this.maxResendOtpCount = maxResendOtpCount;
         this.resendIntervalSeconds = resendIntervalSeconds;
         this.otpGenerator = otpGenerator;
-        this.otpSmsSenderProcessor = new OtpSmsSenderProcessor(messageTemplateKey, errorMessageCode, true, mobileNumberFieldTemplate, smsSender, messageSource);
+        this.otpSmsSenderProcessor = new OtpSmsSenderProcessor(messageCreator, messageSender, errorMessageCode);
         this.setResendAction("otp-resend");
         this.setGeneratedOtpKey("X_G_OTP");
         this.setPreProcessors(List.of(otpSmsSenderProcessor));
@@ -86,40 +85,9 @@ public class OtpSmsValidatorFieldTemplate extends TextFieldTemplate {
         this.messageSource = messageSource;
     }
 
-    public interface OtpGenerator {
-
-        String generateOtp();
-    }
-
-    public static class OtpGeneratorRegex implements OtpGenerator {
-        private final Generex generex;
-
-        public OtpGeneratorRegex(String otpRegex) {
-            this.generex = new Generex(otpRegex);
-        }
-
-        @Override
-        public String generateOtp() {
-            return generex.random();
-        }
-    }
-
-    public static class OtpGeneratorMock implements OtpGenerator {
-        private final String fixedOtp;
-
-        public OtpGeneratorMock(String fixedOtp) {
-            this.fixedOtp = fixedOtp;
-        }
-
-        @Override
-        public String generateOtp() {
-            return fixedOtp;
-        }
-    }
-
-    private class OtpSmsSenderProcessor extends NotificationSmsSenderProcessor {
-        public OtpSmsSenderProcessor(String messageTemplateKey, String errorMessageCode, boolean failOnError, FieldTemplate<?> mobileNumberFieldTemplate, SmsSender smsSender, @Autowired MessageSource messageSource) {
-            super(messageTemplateKey, errorMessageCode, failOnError, mobileNumberFieldTemplate, smsSender, messageSource);
+    private class OtpSmsSenderProcessor extends MessageSenderProcessor {
+        public OtpSmsSenderProcessor(MessageCreator messageCreator, MessageSenderSms messageSender, String errorMessageCode) {
+            super(messageCreator, messageSender, errorMessageCode);
         }
 
         @Override

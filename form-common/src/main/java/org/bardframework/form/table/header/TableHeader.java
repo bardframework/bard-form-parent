@@ -1,6 +1,6 @@
-package org.bardframework.form.table;
+package org.bardframework.form.table.header;
 
-public class TableHeader {
+public abstract class TableHeader {
     private String name;
     private String title;
     private Boolean hidden;
@@ -54,5 +54,14 @@ public class TableHeader {
 
     public void setSticky(Boolean sticky) {
         this.sticky = sticky;
+    }
+
+    public abstract HeaderType getType();
+
+    /**
+     * TODO remove after resolve polymorphic deserialization in tests
+     */
+    @Deprecated
+    public void setType(String type) {
     }
 }

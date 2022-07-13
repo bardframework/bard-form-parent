@@ -2,7 +2,7 @@ package org.bardframework.form.table.header;
 
 import java.util.Locale;
 
-public class StringHeaderTemplate extends TableHeaderTemplate<StringHeader, String> {
+public class NumberHeaderTemplate extends TableHeaderTemplate<NumberHeader, String> {
     @Override
     public String parse(String value, Locale locale) {
         return value;

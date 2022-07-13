@@ -1,11 +1,10 @@
 package org.bardframework.form.table.header;
 
 import org.apache.commons.lang3.EnumUtils;
-import org.bardframework.form.table.TableHeader;
 
 import java.util.Locale;
 
-public class EnumHeaderTemplate<T extends Enum<T>> extends TableHeaderTemplate<TableHeader, T> {
+public class EnumHeaderTemplate<T extends Enum<T>> extends TableHeaderTemplate<StringHeader, T> {
     private final Class<T> enumClass;
 
     public EnumHeaderTemplate(Class<T> enumClass) {

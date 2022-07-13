@@ -1,7 +1,6 @@
 package org.bardframework.form.table.header;
 
 import org.bardframework.commons.utils.ReflectionUtils;
-import org.bardframework.form.table.TableHeader;
 import org.bardframework.form.table.TableTemplate;
 import org.bardframework.form.table.TableUtils;
 
@@ -33,6 +32,11 @@ public abstract class TableHeaderTemplate<H extends TableHeader, T> extends Tabl
 
     public H getEmptyHeader() {
         return ReflectionUtils.newInstance(headerClazz);
+    }
+
+    @Override
+    public HeaderType getType() {
+        return null;
     }
 
     public abstract T parse(String value, Locale locale);

@@ -1,6 +1,7 @@
 package org.bardframework.form.table;
 
 import org.bardframework.form.Form;
+import org.bardframework.form.table.header.TableHeader;
 
 import java.util.ArrayList;
 import java.util.List;

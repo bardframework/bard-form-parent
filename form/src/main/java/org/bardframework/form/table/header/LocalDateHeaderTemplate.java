@@ -1,13 +1,12 @@
 package org.bardframework.form.table.header;
 
 import org.apache.commons.lang3.StringUtils;
-import org.bardframework.form.table.TableHeader;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-public class LocalDateHeaderTemplate extends TableHeaderTemplate<TableHeader, LocalDate> {
+public class LocalDateHeaderTemplate extends TableHeaderTemplate<DateHeader, LocalDate> {
 
     private final DateTimeFormatter formatter;
 
