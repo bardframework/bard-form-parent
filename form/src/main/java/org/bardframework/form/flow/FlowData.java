@@ -10,7 +10,7 @@ public class FlowData {
 
     public static final String LANGUAGE_FIELD_NAME = "S_LANG_TAG";
     protected Map<String, String> data = new HashMap<>();
-    protected int currentStepIndex;
+    protected int nextStepIndex;
 
     @JsonIgnore
     public Locale getLocale() {
@@ -30,11 +30,11 @@ public class FlowData {
         this.data = data;
     }
 
-    public int getCurrentStepIndex() {
-        return currentStepIndex;
+    public int getNextStepIndex() {
+        return nextStepIndex;
     }
 
-    public void setCurrentStepIndex(int currentStepIndex) {
-        this.currentStepIndex = currentStepIndex;
+    public void setNextStepIndex(int nextStepIndex) {
+        this.nextStepIndex = nextStepIndex;
     }
 }

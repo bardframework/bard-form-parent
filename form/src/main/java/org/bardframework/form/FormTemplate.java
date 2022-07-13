@@ -44,11 +44,7 @@ public class FormTemplate extends Form {
             merge all pre processors
          */
         List<FormProcessor> processors = new ArrayList<>();
-        for (FieldTemplate<?> fieldTemplate : this.getFieldTemplates()) {
-            if (!(fieldTemplate instanceof InputFieldTemplate<?, ?>)) {
-                continue;
-            }
-            InputFieldTemplate<?, ?> inputFieldTemplate = (InputFieldTemplate<?, ?>) fieldTemplate;
+        for (InputFieldTemplate<?, ?> inputFieldTemplate : this.getInputFieldTemplates()) {
             if (null != inputFieldTemplate.getPreProcessors()) {
                 processors.addAll(inputFieldTemplate.getPreProcessors());
             }
@@ -63,11 +59,7 @@ public class FormTemplate extends Form {
             merge all post processors
          */
         processors = new ArrayList<>();
-        for (FieldTemplate<?> fieldTemplate : this.getFieldTemplates()) {
-            if (!(fieldTemplate instanceof InputFieldTemplate<?, ?>)) {
-                continue;
-            }
-            InputFieldTemplate<?, ?> inputFieldTemplate = (InputFieldTemplate<?, ?>) fieldTemplate;
+        for (InputFieldTemplate<?, ?> inputFieldTemplate : this.getInputFieldTemplates()) {
             if (null != inputFieldTemplate.getPostProcessors()) {
                 processors.addAll(inputFieldTemplate.getPostProcessors());
             }
@@ -81,23 +73,47 @@ public class FormTemplate extends Form {
 
     public <F extends InputField<T>, T> void validate(Map<String, String> values, Map<String, String> args, Locale locale) throws Exception {
         FormDataValidationException ex = new FormDataValidationException();
-        for (FieldTemplate<?> fieldTemplate : this.getFieldTemplates()) {
-            if (!(fieldTemplate instanceof InputFieldTemplate<?, ?>)) {
-                continue;
-            }
-            InputFieldTemplate<F, T> inputFieldTemplate = (InputFieldTemplate<F, T>) fieldTemplate;
-            F formField = inputFieldTemplate.toField(this, args, locale);
+        for (InputFieldTemplate<?, ?> inputFieldTemplate : this.getInputFieldTemplates()) {
+            InputFieldTemplate<F, T> template = (InputFieldTemplate<F, T>) inputFieldTemplate;
+            F formField = template.toField(this, args, locale);
             if (Boolean.TRUE.equals(formField.getDisable())) {
                 continue;
             }
-            String stringValue = values.get(inputFieldTemplate.getName());
-            if (!inputFieldTemplate.isValid(formField, inputFieldTemplate.toValue(stringValue))) {
-                ex.addFiledError(inputFieldTemplate.getName(), formField.getErrorMessage());
+            String stringValue = values.get(template.getName());
+            if (!template.isValid(formField, template.toValue(stringValue))) {
+                ex.addFiledError(template.getName(), formField.getErrorMessage());
             }
         }
         if (!MapUtils.isEmpty(ex.getInvalidFields())) {
             throw ex;
         }
+    }
+
+    public List<InputFieldTemplate<?, ?>> getInputFieldTemplates() {
+        List<InputFieldTemplate<?, ?>> inputFieldTemplates = new ArrayList<>();
+        for (FieldTemplate<?> fieldTemplate : this.getFieldTemplates()) {
+            if (!(fieldTemplate instanceof InputFieldTemplate<?, ?>)) {
+                continue;
+            }
+            inputFieldTemplates.add((InputFieldTemplate<?, ?>) fieldTemplate);
+        }
+        return inputFieldTemplates;
+    }
+
+    /**
+     * محاسبه لیست فیلدهایی که استفاده کننده مجاز به ارسال دیتا برای آن هاست
+     * این فیلدها شامل تمامی اینپوت فیلدهایی است که فعال باشند
+     */
+    public Set<String> getAllowedInputFields(Map<String, String> args, Locale locale) throws Exception {
+        List<InputFieldTemplate<?, ?>> inputFieldTemplates = this.getInputFieldTemplates();
+        Set<String> allowedFieldNames = new HashSet<>();
+        for (InputFieldTemplate<?, ?> inputFieldTemplate : inputFieldTemplates) {
+            Boolean disable = FormUtils.getFieldBooleanProperty(this, inputFieldTemplate, "disable", locale, args, null);
+            if (!Boolean.TRUE.equals(disable)) {
+                allowedFieldNames.add(inputFieldTemplate.getName());
+            }
+        }
+        return allowedFieldNames;
     }
 
     public List<FormProcessor> getPreProcessors() {

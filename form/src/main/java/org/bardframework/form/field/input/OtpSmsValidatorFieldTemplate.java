@@ -29,18 +29,18 @@ public class OtpSmsValidatorFieldTemplate extends TextFieldTemplate {
     private final int maxTryToResolveCount;
     private final int maxResendOtpCount;
     private final int resendIntervalSeconds;
-    private final Generex generex;
+    private final OtpGenerator otpGenerator;
     private final OtpSmsSenderProcessor otpSmsSenderProcessor;
     protected MessageSource messageSource;
     private String generatedOtpKey;
     private String resendAction;
 
-    public OtpSmsValidatorFieldTemplate(String name, String messageTemplateKey, String errorMessageCode, FieldTemplate<?> mobileNumberFieldTemplate, String otpRegex, int maxTryToResolveCount, int maxResendOtpCount, int resendIntervalSeconds, SmsSender smsSender, @Autowired MessageSource messageSource) {
+    public OtpSmsValidatorFieldTemplate(String name, String messageTemplateKey, String errorMessageCode, FieldTemplate<?> mobileNumberFieldTemplate, OtpGenerator otpGenerator, int maxTryToResolveCount, int maxResendOtpCount, int resendIntervalSeconds, SmsSender smsSender, @Autowired MessageSource messageSource) {
         super(name);
         this.maxTryToResolveCount = maxTryToResolveCount;
         this.maxResendOtpCount = maxResendOtpCount;
         this.resendIntervalSeconds = resendIntervalSeconds;
-        this.generex = new Generex(otpRegex);
+        this.otpGenerator = otpGenerator;
         this.otpSmsSenderProcessor = new OtpSmsSenderProcessor(messageTemplateKey, errorMessageCode, true, mobileNumberFieldTemplate, smsSender, messageSource);
         this.setResendAction("otp-resend");
         this.setGeneratedOtpKey("X_G_OTP");
@@ -78,16 +78,43 @@ public class OtpSmsValidatorFieldTemplate extends TextFieldTemplate {
         return resendIntervalSeconds;
     }
 
-    public Generex getGenerex() {
-        return generex;
-    }
-
     public MessageSource getMessageSource() {
         return messageSource;
     }
 
     public void setMessageSource(MessageSource messageSource) {
         this.messageSource = messageSource;
+    }
+
+    public interface OtpGenerator {
+
+        String generateOtp();
+    }
+
+    public static class OtpGeneratorRegex implements OtpGenerator {
+        private final Generex generex;
+
+        public OtpGeneratorRegex(String otpRegex) {
+            this.generex = new Generex(otpRegex);
+        }
+
+        @Override
+        public String generateOtp() {
+            return generex.random();
+        }
+    }
+
+    public static class OtpGeneratorMock implements OtpGenerator {
+        private final String fixedOtp;
+
+        public OtpGeneratorMock(String fixedOtp) {
+            this.fixedOtp = fixedOtp;
+        }
+
+        @Override
+        public String generateOtp() {
+            return fixedOtp;
+        }
     }
 
     private class OtpSmsSenderProcessor extends NotificationSmsSenderProcessor {
@@ -97,16 +124,12 @@ public class OtpSmsValidatorFieldTemplate extends TextFieldTemplate {
 
         @Override
         protected void beforeSend(Map<String, String> flowData) {
-            flowData.put(generatedOtpKey, this.generateOtp());
+            flowData.put(generatedOtpKey, otpGenerator.generateOtp());
         }
 
         @Override
         protected void afterSend(Map<String, String> flowData) {
             flowData.put(SEND_TIME_KEY, String.valueOf(System.currentTimeMillis()));
-        }
-
-        protected String generateOtp() {
-            return generex.random();
         }
     }
 
