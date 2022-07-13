@@ -34,7 +34,7 @@ public class OtpSmsValidatorFieldTemplate extends TextFieldTemplate {
     private String generatedOtpKey;
     private String resendAction;
 
-    public OtpSmsValidatorFieldTemplate(String name, MessageCreator messageCreator, MessageSenderSms messageSender, String errorMessageCode, OtpGenerator otpGenerator, int maxTryToResolveCount, int maxResendOtpCount, int resendIntervalSeconds) {
+    public OtpSmsValidatorFieldTemplate(String name, MessageCreator messageCreator, MessageSenderSms messageSender, OtpGenerator otpGenerator, int maxTryToResolveCount, int maxResendOtpCount, int resendIntervalSeconds, String errorMessageCode) {
         super(name);
         this.maxTryToResolveCount = maxTryToResolveCount;
         this.maxResendOtpCount = maxResendOtpCount;
