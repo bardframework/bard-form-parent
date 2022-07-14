@@ -1,4 +1,4 @@
-package org.bardframework.form.table;
+package org.bardframework.table;
 
 import java.util.ArrayList;
 import java.util.List;

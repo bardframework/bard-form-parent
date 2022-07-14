@@ -1,7 +1,6 @@
 package org.bardframework.table;
 
 import org.bardframework.form.FormTemplate;
-import org.bardframework.form.table.TableModel;
 import org.bardframework.table.header.TableHeaderTemplate;
 import org.springframework.context.MessageSource;
 

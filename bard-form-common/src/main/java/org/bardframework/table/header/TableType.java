@@ -1,4 +1,4 @@
-package org.bardframework.form.table.header;
+package org.bardframework.table.header;
 
 public enum TableType implements HeaderType {
     TEXT,

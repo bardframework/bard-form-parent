@@ -1,7 +1,6 @@
 package org.bardframework.table.header;
 
 import org.apache.commons.lang3.EnumUtils;
-import org.bardframework.form.table.header.StringHeader;
 
 import java.util.Locale;
 

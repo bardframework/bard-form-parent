@@ -1,4 +1,4 @@
-package org.bardframework.form.table.header;
+package org.bardframework.table.header;
 
 public interface HeaderType {
     String name();

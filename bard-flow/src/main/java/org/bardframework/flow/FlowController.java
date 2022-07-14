@@ -1,6 +1,5 @@
 package org.bardframework.flow;
 
-import org.bardframework.form.flow.FlowResponse;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;

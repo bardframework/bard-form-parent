@@ -4,6 +4,7 @@ public class SelectOption implements Comparable<SelectOption> {
     private String id;
     private String title;
     private String type;
+    private String icon;
     private Boolean disable;
 
     public SelectOption() {
@@ -50,6 +51,14 @@ public class SelectOption implements Comparable<SelectOption> {
 
     public void setDisable(Boolean disable) {
         this.disable = disable;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     @Override

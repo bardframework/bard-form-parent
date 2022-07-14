@@ -1,7 +1,5 @@
 package org.bardframework.table.header;
 
-import org.bardframework.form.table.header.ImageHeader;
-
 import java.util.Locale;
 
 public class ImageHeaderTemplate extends TableHeaderTemplate<ImageHeader, String> {

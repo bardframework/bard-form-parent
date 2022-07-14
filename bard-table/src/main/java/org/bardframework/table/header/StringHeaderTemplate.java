@@ -1,7 +1,5 @@
 package org.bardframework.table.header;
 
-import org.bardframework.form.table.header.StringHeader;
-
 import java.util.Locale;
 
 public class StringHeaderTemplate extends TableHeaderTemplate<StringHeader, String> {

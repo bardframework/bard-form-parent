@@ -1,7 +1,6 @@
 package org.bardframework.table.header;
 
 import org.apache.commons.lang3.StringUtils;
-import org.bardframework.form.table.header.TimeHeader;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;

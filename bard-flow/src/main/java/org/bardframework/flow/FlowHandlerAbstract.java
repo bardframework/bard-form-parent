@@ -10,7 +10,6 @@ import org.bardframework.form.Form;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
 import org.bardframework.form.field.input.InputFieldTemplate;
-import org.bardframework.form.flow.FlowResponse;
 import org.bardframework.form.processor.FormProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

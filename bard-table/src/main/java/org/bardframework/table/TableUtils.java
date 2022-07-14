@@ -2,7 +2,6 @@ package org.bardframework.table;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormUtils;
-import org.bardframework.form.table.TableModel;
 import org.bardframework.table.header.TableHeaderTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

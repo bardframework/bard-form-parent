@@ -1,4 +1,4 @@
-package org.bardframework.form.flow;
+package org.bardframework.flow;
 
 import org.bardframework.form.Form;
 

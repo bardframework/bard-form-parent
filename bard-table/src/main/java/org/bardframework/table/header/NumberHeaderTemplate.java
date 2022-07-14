@@ -1,7 +1,5 @@
 package org.bardframework.table.header;
 
-import org.bardframework.form.table.header.NumberHeader;
-
 import java.util.Locale;
 
 public class NumberHeaderTemplate extends TableHeaderTemplate<NumberHeader, String> {
