@@ -17,6 +17,7 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -83,11 +84,11 @@ public class FormTemplate extends Form {
         this.postProcessors = processors;
     }
 
-    public <F extends InputField<T>, T> void validate(FlowData flowData, Map<String, String> values) throws Exception {
+    public <F extends InputField<T>, T> void validate(FlowData flowData, Map<String, String> values, HttpServletRequest httpRequest) throws Exception {
         FormDataValidationException ex = new FormDataValidationException();
         for (InputFieldTemplate<?, ?> inputFieldTemplate : this.getInputFieldTemplates(flowData)) {
             InputFieldTemplate<F, T> template = (InputFieldTemplate<F, T>) inputFieldTemplate;
-            F formField = template.toField(this, flowData.getFlowData(), flowData.getLocale());
+            F formField = template.toField(this, flowData.getFlowData(), flowData.getLocale(), httpRequest);
             if (Boolean.TRUE.equals(formField.getDisable())) {
                 continue;
             }

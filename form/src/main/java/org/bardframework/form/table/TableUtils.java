@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -27,14 +28,14 @@ public class TableUtils {
          */
     }
 
-    public static TableModel toTable(TableTemplate tableTemplate, Locale locale, Map<String, String> args) throws Exception {
+    public static TableModel toTable(TableTemplate tableTemplate, Locale locale, Map<String, String> args, HttpServletRequest httpRequest) throws Exception {
         if (null == tableTemplate) {
             return null;
         }
-        return TableUtils.toTable(new TableModel(), tableTemplate, locale, args);
+        return TableUtils.toTable(new TableModel(), tableTemplate, locale, args, httpRequest);
     }
 
-    public static <T extends TableModel> T toTable(T table, TableTemplate tableTemplate, Locale locale, Map<String, String> args) throws Exception {
+    public static <T extends TableModel> T toTable(T table, TableTemplate tableTemplate, Locale locale, Map<String, String> args, HttpServletRequest httpRequest) throws Exception {
         FlowData flowData = new FlowData();
         flowData.getFlowData().putAll(args);
         flowData.setLocale(locale);
@@ -48,9 +49,9 @@ public class TableUtils {
         table.setPreload(TableUtils.getTableBooleanValue(tableTemplate, "preload", locale, args, tableTemplate.getPreload()));
         table.setPageable(TableUtils.getTableBooleanValue(tableTemplate, "pageable", locale, args, tableTemplate.getPageable()));
         table.setFetchSize(TableUtils.getTableIntegerValue(tableTemplate, "fetchSize", locale, args, tableTemplate.getFetchSize()));
-        table.setFilterForm(FormUtils.toForm(tableTemplate.getFilterFormTemplate(), flowData, Map.of()));
-        table.setSaveForm(FormUtils.toForm(tableTemplate.getSaveFormTemplate(), flowData, Map.of()));
-        table.setUpdateForm(FormUtils.toForm(tableTemplate.getUpdateFormTemplate(), flowData, Map.of()));
+        table.setFilterForm(FormUtils.toForm(tableTemplate.getFilterFormTemplate(), flowData, Map.of(), httpRequest));
+        table.setSaveForm(FormUtils.toForm(tableTemplate.getSaveFormTemplate(), flowData, Map.of(), httpRequest));
+        table.setUpdateForm(FormUtils.toForm(tableTemplate.getUpdateFormTemplate(), flowData, Map.of(), httpRequest));
 
         for (TableHeaderTemplate<?, ?> headerTemplate : tableTemplate.getHeaderTemplates()) {
             table.addHeader(headerTemplate.toHeader(tableTemplate, args, locale));

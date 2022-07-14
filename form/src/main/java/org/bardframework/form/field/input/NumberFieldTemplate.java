@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
 import java.util.Map;
 
@@ -34,8 +35,8 @@ public class NumberFieldTemplate extends InputFieldTemplate<NumberField, Long> {
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, NumberField field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
+    public void fill(FormTemplate formTemplate, NumberField field, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
+        super.fill(formTemplate, field, args, locale, httpRequest);
         field.setMinValue(FormUtils.getFieldLongProperty(formTemplate, this, "minValue", locale, args, null));
         field.setMaxValue(FormUtils.getFieldLongProperty(formTemplate, this, "maxValue", locale, args, null));
         field.setMask(FormUtils.getFieldStringProperty(formTemplate, this, "mask", locale, args, null));

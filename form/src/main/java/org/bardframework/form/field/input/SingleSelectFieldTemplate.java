@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.field.option.OptionDataSource;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
 import java.util.Map;
 
@@ -17,8 +18,8 @@ public class SingleSelectFieldTemplate extends InputFieldTemplate<SingleSelectFi
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, SingleSelectField field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
+    public void fill(FormTemplate formTemplate, SingleSelectField field, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
+        super.fill(formTemplate, field, args, locale, httpRequest);
         field.setOptions(optionDataSource.getOptions(locale));
     }
 

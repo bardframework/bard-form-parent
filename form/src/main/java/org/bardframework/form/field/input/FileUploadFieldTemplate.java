@@ -5,6 +5,7 @@ import org.bardframework.form.FormUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
 import java.util.Map;
 
@@ -21,8 +22,8 @@ public class FileUploadFieldTemplate extends InputFieldTemplate<FileUploadField,
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, FileUploadField field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
+    public void fill(FormTemplate formTemplate, FileUploadField field, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
+        super.fill(formTemplate, field, args, locale, httpRequest);
         field.setMinSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "minSize", locale, args, null));
         field.setMaxSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxSize", locale, args, null));
         field.setContentTypes(FormUtils.getFieldListProperty(formTemplate, this, "contentTypes", locale, args, null));

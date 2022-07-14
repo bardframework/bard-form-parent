@@ -6,6 +6,7 @@ import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
 import org.bardframework.form.field.option.OptionDataSource;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -22,8 +23,8 @@ public class MultiSelectFieldTemplate extends InputFieldTemplate<MultiSelectFiel
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, MultiSelectField field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
+    public void fill(FormTemplate formTemplate, MultiSelectField field, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
+        super.fill(formTemplate, field, args, locale, httpRequest);
         field.setMaxCount(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxCount", locale, args, null));
         field.setOptions(optionDataSource.getOptions(locale));
     }

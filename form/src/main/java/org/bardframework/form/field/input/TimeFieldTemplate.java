@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalTime;
 import java.util.Locale;
 import java.util.Map;
@@ -37,8 +38,8 @@ public class TimeFieldTemplate extends InputFieldTemplate<TimeField, LocalTime> 
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, TimeField field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
+    public void fill(FormTemplate formTemplate, TimeField field, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
+        super.fill(formTemplate, field, args, locale, httpRequest);
         field.setMinValue(FormUtils.getFieldLocalTimeProperty(formTemplate, this, "minValue", locale, args, null));
         field.setMaxValue(FormUtils.getFieldLocalTimeProperty(formTemplate, this, "maxValue", locale, args, null));
         if (null == field.getMinValue()) {

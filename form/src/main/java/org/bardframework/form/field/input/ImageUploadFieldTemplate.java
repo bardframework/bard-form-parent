@@ -3,6 +3,7 @@ package org.bardframework.form.field.input;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
 import java.util.Map;
 
@@ -18,8 +19,8 @@ public class ImageUploadFieldTemplate extends InputFieldTemplate<ImageUploadFiel
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, ImageUploadField field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
+    public void fill(FormTemplate formTemplate, ImageUploadField field, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
+        super.fill(formTemplate, field, args, locale, httpRequest);
         field.setMinSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "minSize", locale, args, null));
         field.setMaxSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxSize", locale, args, null));
         field.setContentTypes(FormUtils.getFieldListProperty(formTemplate, this, "contentTypes", locale, args, null));

@@ -6,6 +6,7 @@ import org.bardframework.form.field.input.InputFieldTemplate;
 import org.bardframework.form.field.option.OptionDataSource;
 import org.bardframework.form.model.filter.IdFilter;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
 import java.util.Map;
 
@@ -19,8 +20,8 @@ public class SingleSelectFilterFieldTemplate extends InputFieldTemplate<SingleSe
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, SingleSelectFilterField field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
+    public void fill(FormTemplate formTemplate, SingleSelectFilterField field, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
+        super.fill(formTemplate, field, args, locale, httpRequest);
         field.setOptions(optionDataSource.getOptions(locale));
     }
 

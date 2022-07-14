@@ -7,6 +7,7 @@ import org.bardframework.form.field.input.InputField;
 import org.bardframework.form.field.input.InputFieldTemplate;
 import org.bardframework.form.model.filter.LocalDateTimeFilter;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -23,8 +24,8 @@ public class DateTimeFilterFieldTemplate extends InputFieldTemplate<DateTimeFilt
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, DateTimeFilterField field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
+    public void fill(FormTemplate formTemplate, DateTimeFilterField field, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
+        super.fill(formTemplate, field, args, locale, httpRequest);
         field.setMinLength(FormUtils.getFieldLongProperty(formTemplate, this, "minLength", locale, args, null));
         field.setMaxLength(FormUtils.getFieldLongProperty(formTemplate, this, "maxLength", locale, args, null));
         field.setMinValue(FormUtils.getFieldLocalDateTimeProperty(formTemplate, this, "minValue", locale, args, null));

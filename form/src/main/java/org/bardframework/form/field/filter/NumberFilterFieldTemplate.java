@@ -7,6 +7,7 @@ import org.bardframework.form.field.input.InputField;
 import org.bardframework.form.field.input.InputFieldTemplate;
 import org.bardframework.form.model.filter.LongFilter;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
 import java.util.Map;
 
@@ -65,8 +66,8 @@ public class NumberFilterFieldTemplate extends InputFieldTemplate<NumberFilterFi
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, NumberFilterField field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
+    public void fill(FormTemplate formTemplate, NumberFilterField field, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
+        super.fill(formTemplate, field, args, locale, httpRequest);
         field.setMinLength(FormUtils.getFieldLongProperty(formTemplate, this, "minLength", locale, args, null));
         field.setMaxLength(FormUtils.getFieldLongProperty(formTemplate, this, "maxLength", locale, args, null));
         field.setMinValue(FormUtils.getFieldLongProperty(formTemplate, this, "minValue", locale, args, null));

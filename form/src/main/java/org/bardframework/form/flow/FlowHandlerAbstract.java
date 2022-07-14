@@ -50,7 +50,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
             throws Exception {
         D flowData = this.getFlowDataRepository().get(flowToken);
         FormTemplate currentFormTemplate = this.getCurrentFormTemplate(flowData);
-        this.fillFlowData(flowToken, flowData, formData, currentFormTemplate);
+        this.fillFlowData(flowToken, flowData, formData, currentFormTemplate, httpRequest);
         try {
             this.process(currentFormTemplate.getPostProcessors(), flowToken, flowData, formData, httpRequest, httpResponse);
             return this.processNextForm(flowToken, flowData, formData, null, httpRequest, httpResponse);
@@ -104,7 +104,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
             throws Exception {
         D flowData = this.getFlowDataRepository().get(flowToken);
         FormTemplate currentFormTemplate = this.getCurrentFormTemplate(flowData);
-        return this.toResponse(currentFormTemplate, flowData, null);
+        return this.toResponse(currentFormTemplate, flowData, null, httpRequest);
     }
 
     protected boolean processAction(String flowToken, String action, D flowData, Map<String, String> formData, FormTemplate currentFormTemplate, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
@@ -131,7 +131,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
     /**
      * اعتبارسنجی داده های ارسالی و افزودن به فلو دیتا
      */
-    protected void fillFlowData(String flowToken, D flowData, Map<String, String> formData, FormTemplate currentFormTemplate) throws Exception {
+    protected void fillFlowData(String flowToken, D flowData, Map<String, String> formData, FormTemplate currentFormTemplate, HttpServletRequest httpRequest) throws Exception {
         Set<String> allowedFieldNames = currentFormTemplate.getAllowedInputFields(flowData);
         Set<String> illegalFields = new HashSet<>(formData.keySet());
         illegalFields.removeAll(allowedFieldNames);
@@ -142,7 +142,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
                 LOGGER.warn("illegal fields[{}] sent to flow[{}].", illegalFields, flowToken);
             }
         }
-        currentFormTemplate.validate(flowData, formData);
+        currentFormTemplate.validate(flowData, formData, httpRequest);
         for (InputFieldTemplate<?, ?> inputFieldTemplate : currentFormTemplate.getInputFieldTemplates(flowData)) {
             if (!inputFieldTemplate.isPersistentValue()) {
                 continue;
@@ -166,7 +166,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
         if (null != nextFormTemplate) {
             this.process(nextFormTemplate.getPreProcessors(), flowToken, flowData, formData, httpRequest, httpResponse);
         }
-        FlowResponse<String> response = this.toResponse(nextFormTemplate, flowData, responseData);
+        FlowResponse<String> response = this.toResponse(nextFormTemplate, flowData, responseData, httpRequest);
         if (Boolean.TRUE.equals(response.getFinished())) {
             this.onFinished(flowToken, flowData, formData, httpRequest, httpResponse);
         }
@@ -205,13 +205,13 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
     /**
      * تبدیل به فرم
      */
-    protected FlowResponse<String> toResponse(FormTemplate formTemplate, D flowData, String responseData) throws Exception {
+    protected FlowResponse<String> toResponse(FormTemplate formTemplate, D flowData, String responseData, HttpServletRequest httpRequest) throws Exception {
         FlowResponse<String> response = new FlowResponse<>(responseData);
         if (null != formTemplate) {
             /*
                 convert and fill form
              */
-            Form nextForm = FormUtils.toForm(formTemplate, flowData, flowData.getFlowData());
+            Form nextForm = FormUtils.toForm(formTemplate, flowData, flowData.getFlowData(), httpRequest);
             response.setForm(nextForm);
             response.setSteps(this.getStepsCounts(flowData));
             response.setCurrent(flowData.getNextStepIndex());

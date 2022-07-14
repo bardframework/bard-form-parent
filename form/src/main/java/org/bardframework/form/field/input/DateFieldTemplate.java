@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.util.Locale;
 import java.util.Map;
@@ -37,8 +38,8 @@ public class DateFieldTemplate extends InputFieldTemplate<DateField, LocalDate> 
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, DateField field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
+    public void fill(FormTemplate formTemplate, DateField field, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
+        super.fill(formTemplate, field, args, locale, httpRequest);
         field.setMinValue(FormUtils.getFieldLocalDateProperty(formTemplate, this, "minValue", locale, args, null));
         field.setMaxValue(FormUtils.getFieldLocalDateProperty(formTemplate, this, "maxValue", locale, args, null));
         if (null == field.getMinValue()) {

@@ -9,6 +9,7 @@ import org.bardframework.form.field.input.InputFieldTemplate;
 import org.bardframework.form.field.option.OptionDataSource;
 import org.bardframework.form.model.filter.IdFilter;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Map;
@@ -24,8 +25,8 @@ public class MultiSelectFilterFieldTemplate extends InputFieldTemplate<MultiSele
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, MultiSelectFilterField filterField, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, filterField, args, locale);
+    public void fill(FormTemplate formTemplate, MultiSelectFilterField filterField, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
+        super.fill(formTemplate, filterField, args, locale, httpRequest);
         filterField.setMaxCount(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxCount", locale, args, null));
         filterField.setOptions(optionDataSource.getOptions(locale));
     }

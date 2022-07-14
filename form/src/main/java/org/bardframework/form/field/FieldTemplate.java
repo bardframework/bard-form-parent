@@ -12,6 +12,7 @@ import org.springframework.expression.spel.SpelParserConfiguration;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
 import java.util.Map;
 
@@ -26,13 +27,13 @@ public abstract class FieldTemplate<F extends Field> {
         this.fieldClazz = ReflectionUtils.getGenericArgType(this.getClass(), 0);
     }
 
-    public F toField(FormTemplate formTemplate, Map<String, String> args, Locale locale) throws Exception {
+    public F toField(FormTemplate formTemplate, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
         F field = this.getEmptyField();
-        this.fill(formTemplate, field, args, locale);
+        this.fill(formTemplate, field, args, locale, httpRequest);
         return field;
     }
 
-    protected void fill(FormTemplate formTemplate, F field, Map<String, String> args, Locale locale) throws Exception {
+    protected void fill(FormTemplate formTemplate, F field, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
         field.setTitle(FormUtils.getFieldStringProperty(formTemplate, this, "title", locale, args, null));
         field.setDescription(FormUtils.getFieldStringProperty(formTemplate, this, "description", locale, args, null));
     }

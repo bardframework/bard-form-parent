@@ -6,6 +6,7 @@ import org.bardframework.form.field.input.InputFieldTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -27,8 +28,8 @@ public class CaptchaFieldTemplate extends InputFieldTemplate<CaptchaField, Strin
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, CaptchaField field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
+    public void fill(FormTemplate formTemplate, CaptchaField field, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
+        super.fill(formTemplate, field, args, locale, httpRequest);
         field.setLength(this.getCaptchaLength());
         field.setRefreshAction(this.getRefreshAction());
     }

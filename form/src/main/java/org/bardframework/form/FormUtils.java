@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -30,21 +31,21 @@ public class FormUtils {
          */
     }
 
-    public static Form toForm(FormTemplate formTemplate, FlowData flowData, Map<String, String> values) throws Exception {
+    public static Form toForm(FormTemplate formTemplate, FlowData flowData, Map<String, String> values, HttpServletRequest httpRequest) throws Exception {
         if (null == formTemplate) {
             return null;
         }
-        return FormUtils.toForm(new Form(), formTemplate, flowData, values);
+        return FormUtils.toForm(new Form(), formTemplate, flowData, values, httpRequest);
     }
 
-    public static <F extends Form, T> F toForm(F form, FormTemplate formTemplate, FlowData flowData, Map<String, String> values) throws Exception {
+    public static <F extends Form, T> F toForm(F form, FormTemplate formTemplate, FlowData flowData, Map<String, String> values, HttpServletRequest httpRequest) throws Exception {
         form.setName(formTemplate.getName());
         form.setTitle(FormUtils.getFormStringProperty(formTemplate, "title", flowData.getLocale(), flowData.getFlowData(), formTemplate.getTitle()));
         form.setHint(FormUtils.getFormStringProperty(formTemplate, "hint", flowData.getLocale(), flowData.getFlowData(), formTemplate.getHint()));
         form.setConfirmMessage(FormUtils.getFormStringProperty(formTemplate, "confirmMessage", flowData.getLocale(), flowData.getFlowData(), formTemplate.getConfirmMessage()));
         form.setSubmitLabel(FormUtils.getFormStringProperty(formTemplate, "submitLabel", flowData.getLocale(), flowData.getFlowData(), formTemplate.getSubmitLabel()));
         for (FieldTemplate<?> fieldTemplate : formTemplate.getFieldTemplates(flowData)) {
-            Field field = fieldTemplate.toField(formTemplate, flowData.getFlowData(), flowData.getLocale());
+            Field field = fieldTemplate.toField(formTemplate, flowData.getFlowData(), flowData.getLocale(), httpRequest);
             String valueString = values.get(fieldTemplate.getName());
             if (field instanceof InputField<?>) {
                 InputFieldTemplate<?, T> inputFieldTemplate = (InputFieldTemplate<?, T>) fieldTemplate;
