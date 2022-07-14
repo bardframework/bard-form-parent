@@ -3,7 +3,6 @@ package org.bardframework.flow.processor.dataprovider;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.commons.web.utils.HttpCallResult;
 import org.bardframework.commons.web.utils.HttpCaller;
-import org.bardframework.flow.FlowData;
 import org.bardframework.flow.exception.FlowExecutionException;
 import org.bardframework.form.processor.FormProcessor;
 import org.slf4j.Logger;
@@ -77,7 +76,7 @@ public class DataProviderHttpCallProcessor extends HttpCaller implements FormPro
     }
 
     @Override
-    public boolean mustExecute(FlowData flowData) {
-        return null == executeExpression || Boolean.TRUE.equals(executeExpression.getValue(new StandardEvaluationContext(flowData), Boolean.class));
+    public boolean mustExecute(Map<String, String> args) {
+        return null == executeExpression || Boolean.TRUE.equals(executeExpression.getValue(new StandardEvaluationContext(args), Boolean.class));
     }
 }

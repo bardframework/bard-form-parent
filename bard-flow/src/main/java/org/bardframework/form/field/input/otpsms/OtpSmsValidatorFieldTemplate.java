@@ -1,9 +1,9 @@
 package org.bardframework.form.field.input.otpsms;
 
+import org.bardframework.flow.processor.messagesender.creator.MessageCreator;
+import org.bardframework.flow.processor.messagesender.otp.OtpGenerator;
+import org.bardframework.flow.processor.messagesender.sender.MessageSenderSms;
 import org.bardframework.form.field.input.TextFieldTemplate;
-import org.bardframework.form.processor.messagesender.creator.MessageCreator;
-import org.bardframework.form.processor.messagesender.otp.OtpGenerator;
-import org.bardframework.form.processor.messagesender.sender.MessageSenderSms;
 import org.springframework.context.MessageSource;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package org.bardframework.form.field.input.otpsms;
 
-import org.bardframework.form.processor.FormProcessorAbstract;
+import org.bardframework.flow.processor.FormProcessorAbstract;
 import org.springframework.http.HttpStatus;
 
 import javax.servlet.http.HttpServletRequest;
