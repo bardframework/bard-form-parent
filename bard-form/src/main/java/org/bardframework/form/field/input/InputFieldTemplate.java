@@ -2,6 +2,7 @@ package org.bardframework.form.field.input;
 
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
+import org.bardframework.form.exception.FormDataValidationException;
 import org.bardframework.form.field.FieldTemplate;
 import org.bardframework.form.field.value.FieldValueProvider;
 
@@ -13,6 +14,7 @@ public abstract class InputFieldTemplate<F extends InputField<T>, T> extends Fie
 
     protected boolean persistentValue = true;
     protected FieldValueProvider<F, T> valueProvider;
+
     protected InputFieldTemplate(String name) {
         super(name);
     }
@@ -20,6 +22,18 @@ public abstract class InputFieldTemplate<F extends InputField<T>, T> extends Fie
     public InputFieldTemplate(String name, boolean persistentValue) {
         this(name);
         this.persistentValue = persistentValue;
+    }
+
+    public void validate(FormTemplate formTemplate, Map<String, String> values, Locale locale, HttpServletRequest httpRequest, FormDataValidationException ex)
+            throws Exception {
+        F formField = this.toField(formTemplate, values, locale, httpRequest);
+        if (Boolean.TRUE.equals(formField.getDisable())) {
+            return;
+        }
+        String stringValue = values.get(this.getName());
+        if (!this.isValid(formField, this.toValue(stringValue))) {
+            ex.addFiledError(this.getName(), formField.getErrorMessage());
+        }
     }
 
     public abstract boolean isValid(F field, T value);

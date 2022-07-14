@@ -50,11 +50,6 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.bardframework.form</groupId>
-                <artifactId>form</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.bardframework.commons</groupId>
                 <artifactId>common-utils</artifactId>
                 <version>${bardframework.commons.version}</version>

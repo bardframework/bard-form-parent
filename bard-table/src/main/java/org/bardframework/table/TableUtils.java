@@ -27,14 +27,14 @@ public class TableUtils {
          */
     }
 
-    public static TableModel toTable(TableTemplate tableTemplate, Locale locale, Map<String, String> args, HttpServletRequest httpRequest) throws Exception {
+    public static TableModel toTable(TableTemplate tableTemplate, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
         if (null == tableTemplate) {
             return null;
         }
-        return TableUtils.toTable(new TableModel(), tableTemplate, locale, args, httpRequest);
+        return TableUtils.toTable(new TableModel(), tableTemplate, args, locale, httpRequest);
     }
 
-    public static <T extends TableModel> T toTable(T table, TableTemplate tableTemplate, Locale locale, Map<String, String> args, HttpServletRequest httpRequest) throws Exception {
+    public static <T extends TableModel> T toTable(T table, TableTemplate tableTemplate, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
         table.setName(tableTemplate.getName());
         table.setTitle(TableUtils.getTableStringValue(tableTemplate, "title", locale, args, tableTemplate.getTitle()));
         table.setHint(TableUtils.getTableStringValue(tableTemplate, "hint", locale, args, tableTemplate.getHint()));

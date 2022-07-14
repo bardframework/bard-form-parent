@@ -49,15 +49,7 @@ public class FormTemplate extends Form {
         }
         FormDataValidationException ex = new FormDataValidationException();
         for (InputFieldTemplate<?, ?> inputFieldTemplate : this.getFieldTemplates(args, InputFieldTemplate.class)) {
-            InputFieldTemplate<F, T> template = (InputFieldTemplate<F, T>) inputFieldTemplate;
-            F formField = template.toField(this, args, locale, httpRequest);
-            if (Boolean.TRUE.equals(formField.getDisable())) {
-                continue;
-            }
-            String stringValue = values.get(template.getName());
-            if (!template.isValid(formField, template.toValue(stringValue))) {
-                ex.addFiledError(template.getName(), formField.getErrorMessage());
-            }
+            inputFieldTemplate.validate(this, values, locale, httpRequest, ex);
         }
         if (!MapUtils.isEmpty(ex.getInvalidFields())) {
             throw ex;
