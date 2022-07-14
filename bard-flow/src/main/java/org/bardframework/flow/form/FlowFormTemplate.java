@@ -1,10 +1,9 @@
 package org.bardframework.flow.form;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.bardframework.flow.form.field.input.FlowInputFieldTemplate;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.field.FieldTemplate;
-import org.bardframework.form.field.input.InputFieldTemplate;
-import org.bardframework.form.processor.FormProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
@@ -39,15 +38,15 @@ public class FlowFormTemplate extends FormTemplate {
         if (CollectionUtils.isNotEmpty(preProcessors)) {
             this.preProcessors.forEach(processor -> processor.configurationValidate(this));
         }
-        List<InputFieldTemplate<?, ?>> inputFieldTemplates = new ArrayList<>();
-        fieldTemplates.stream().filter(fieldTemplate -> fieldTemplate instanceof InputFieldTemplate).forEach(fieldTemplate -> {
-            inputFieldTemplates.add((InputFieldTemplate<?, ?>) fieldTemplate);
+        List<FlowInputFieldTemplate<?, ?>> inputFieldTemplates = new ArrayList<>();
+        fieldTemplates.stream().filter(fieldTemplate -> fieldTemplate instanceof FlowInputFieldTemplate).forEach(fieldTemplate -> {
+            inputFieldTemplates.add((FlowInputFieldTemplate<?, ?>) fieldTemplate);
         });
         /*
             merge all pre processors
          */
         List<FormProcessor> processors = new ArrayList<>();
-        for (InputFieldTemplate<?, ?> inputFieldTemplate : inputFieldTemplates) {
+        for (FlowInputFieldTemplate<?, ?> inputFieldTemplate : inputFieldTemplates) {
             if (null != inputFieldTemplate.getPreProcessors()) {
                 processors.addAll(inputFieldTemplate.getPreProcessors());
             }
@@ -62,7 +61,7 @@ public class FlowFormTemplate extends FormTemplate {
             merge all post processors
          */
         processors = new ArrayList<>();
-        for (InputFieldTemplate<?, ?> inputFieldTemplate : inputFieldTemplates) {
+        for (FlowInputFieldTemplate<?, ?> inputFieldTemplate : inputFieldTemplates) {
             if (null != inputFieldTemplate.getPostProcessors()) {
                 processors.addAll(inputFieldTemplate.getPostProcessors());
             }

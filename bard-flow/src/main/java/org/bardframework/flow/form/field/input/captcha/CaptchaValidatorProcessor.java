@@ -1,4 +1,4 @@
-package org.bardframework.form.field.input.captcha;
+package org.bardframework.flow.form.field.input.captcha;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.flow.exception.FlowDataValidationException;

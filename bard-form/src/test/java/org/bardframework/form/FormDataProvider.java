@@ -86,7 +86,7 @@ public class FormDataProvider {
         return node;
     }
 
-    private InputFieldDataProvider getDataProvider(InputField<?> inputField) {
+    private InputFieldDataProvider<?, ?> getDataProvider(InputField<?> inputField) {
         for (InputFieldDataProvider<?, ?> dataProvider : fieldDataProviders) {
             if (dataProvider.supports(inputField)) {
                 return dataProvider;

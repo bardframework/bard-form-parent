@@ -1,6 +1,6 @@
 package org.bardframework.flow.processor;
 
-import org.bardframework.form.processor.FormProcessor;
+import org.bardframework.flow.form.FormProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.expression.Expression;

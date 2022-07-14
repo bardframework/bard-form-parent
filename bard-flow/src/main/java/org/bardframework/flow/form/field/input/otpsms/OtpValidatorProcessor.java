@@ -1,4 +1,4 @@
-package org.bardframework.form.field.input.otpsms;
+package org.bardframework.flow.form.field.input.otpsms;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.flow.exception.FlowDataValidationException;

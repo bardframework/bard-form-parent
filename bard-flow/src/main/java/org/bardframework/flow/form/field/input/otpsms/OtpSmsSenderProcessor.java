@@ -1,4 +1,4 @@
-package org.bardframework.form.field.input.otpsms;
+package org.bardframework.flow.form.field.input.otpsms;
 
 import org.bardframework.flow.processor.messagesender.MessageSenderProcessor;
 import org.bardframework.flow.processor.messagesender.creator.MessageCreator;

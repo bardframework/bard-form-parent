@@ -48,7 +48,7 @@ public class FormTemplate extends Form {
             }
         }
         FormDataValidationException ex = new FormDataValidationException();
-        for (InputFieldTemplate<?, ?> inputFieldTemplate : this.getInputFieldTemplates(args)) {
+        for (InputFieldTemplate<?, ?> inputFieldTemplate : this.getFieldTemplates(args, InputFieldTemplate.class)) {
             InputFieldTemplate<F, T> template = (InputFieldTemplate<F, T>) inputFieldTemplate;
             F formField = template.toField(this, args, locale, httpRequest);
             if (Boolean.TRUE.equals(formField.getDisable())) {
@@ -64,15 +64,15 @@ public class FormTemplate extends Form {
         }
     }
 
-    public List<InputFieldTemplate<?, ?>> getInputFieldTemplates(Map<String, String> args) {
-        List<InputFieldTemplate<?, ?>> inputFieldTemplates = new ArrayList<>();
+    public <T extends FieldTemplate<?>> List<T> getFieldTemplates(Map<String, String> args, Class<T> superClass) {
+        List<T> fieldTemplates = new ArrayList<>();
         for (FieldTemplate<?> fieldTemplate : this.getFieldTemplates(args)) {
-            if (!(fieldTemplate instanceof InputFieldTemplate<?, ?>)) {
+            if (superClass.isAssignableFrom(fieldTemplate.getClass())) {
                 continue;
             }
-            inputFieldTemplates.add((InputFieldTemplate<?, ?>) fieldTemplate);
+            fieldTemplates.add((T) fieldTemplate);
         }
-        return inputFieldTemplates;
+        return fieldTemplates;
     }
 
     /**
@@ -80,7 +80,7 @@ public class FormTemplate extends Form {
      * این فیلدها شامل تمامی اینپوت فیلدهایی است که فعال باشند
      */
     public Set<String> getAllowedInputFields(Map<String, String> args, Locale locale) throws Exception {
-        List<InputFieldTemplate<?, ?>> inputFieldTemplates = this.getInputFieldTemplates(args);
+        List<InputFieldTemplate> inputFieldTemplates = this.getFieldTemplates(args, InputFieldTemplate.class);
         Set<String> allowedFieldNames = new HashSet<>();
         for (InputFieldTemplate<?, ?> inputFieldTemplate : inputFieldTemplates) {
             Boolean disable = FormUtils.getFieldBooleanProperty(this, inputFieldTemplate, "disable", locale, args, null);

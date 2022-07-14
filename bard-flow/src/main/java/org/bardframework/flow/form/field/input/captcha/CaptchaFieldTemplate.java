@@ -1,8 +1,8 @@
-package org.bardframework.form.field.input.captcha;
+package org.bardframework.flow.form.field.input.captcha;
 
+import org.bardframework.flow.form.field.input.FlowInputFieldTemplate;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.field.input.CaptchaField;
-import org.bardframework.form.field.input.InputFieldTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class CaptchaFieldTemplate extends InputFieldTemplate<CaptchaField, String> {
+public class CaptchaFieldTemplate extends FlowInputFieldTemplate<CaptchaField, String> {
     private static final Logger LOGGER = LoggerFactory.getLogger(CaptchaFieldTemplate.class);
     static final String ANSWER_KEY = "S_captcha_answer";
     static final String GENERATE_COUNT_KEY = "S_captcha_generate_count";

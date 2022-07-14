@@ -4,7 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.bardframework.commons.web.utils.HttpCallResult;
 import org.bardframework.commons.web.utils.HttpCaller;
 import org.bardframework.flow.exception.FlowExecutionException;
-import org.bardframework.form.processor.FormProcessor;
+import org.bardframework.flow.form.FormProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.expression.Expression;
