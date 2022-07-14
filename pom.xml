@@ -10,13 +10,15 @@
     </parent>
 
     <groupId>org.bardframework.form</groupId>
-    <artifactId>bard-form</artifactId>
+    <artifactId>bard-form-parent</artifactId>
     <version>1.4.9</version>
 
     <packaging>pom</packaging>
     <modules>
-        <module>form</module>
-        <module>form-common</module>
+        <module>bard-flow</module>
+        <module>bard-form</module>
+        <module>bard-form-common</module>
+        <module>bard-table</module>
     </modules>
 
     <properties>
@@ -39,7 +41,12 @@
             </dependency>
             <dependency>
                 <groupId>org.bardframework.form</groupId>
-                <artifactId>form-common</artifactId>
+                <artifactId>bard-form-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.bardframework.form</groupId>
+                <artifactId>bard-form</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
