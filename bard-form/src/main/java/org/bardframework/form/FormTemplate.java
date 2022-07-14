@@ -60,9 +60,8 @@ public class FormTemplate extends Form {
         List<T> fieldTemplates = new ArrayList<>();
         for (FieldTemplate<?> fieldTemplate : this.getFieldTemplates(args)) {
             if (superClass.isAssignableFrom(fieldTemplate.getClass())) {
-                continue;
+                fieldTemplates.add((T) fieldTemplate);
             }
-            fieldTemplates.add((T) fieldTemplate);
         }
         return fieldTemplates;
     }
