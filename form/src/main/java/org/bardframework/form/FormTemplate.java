@@ -6,12 +6,19 @@ import org.bardframework.form.exception.FormDataValidationException;
 import org.bardframework.form.field.FieldTemplate;
 import org.bardframework.form.field.input.InputField;
 import org.bardframework.form.field.input.InputFieldTemplate;
+import org.bardframework.form.flow.FlowData;
 import org.bardframework.form.processor.FormProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.expression.Expression;
+import org.springframework.expression.spel.SpelCompilerMode;
+import org.springframework.expression.spel.SpelParserConfiguration;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
+import org.springframework.expression.spel.support.StandardEvaluationContext;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class FormTemplate extends Form {
 
@@ -22,6 +29,7 @@ public class FormTemplate extends Form {
     private List<FormProcessor> postProcessors;
     private Map<String, List<FormProcessor>> actionProcessors = new HashMap<>();
     private boolean finished;
+    protected Expression showExpression = null;
 
     public FormTemplate(String name, List<FieldTemplate<?>> fieldTemplates, @Autowired MessageSource messageSource) {
         this.name = name;
@@ -40,11 +48,15 @@ public class FormTemplate extends Form {
         if (CollectionUtils.isNotEmpty(preProcessors)) {
             this.preProcessors.forEach(processor -> processor.configurationValidate(this));
         }
+        List<InputFieldTemplate<?, ?>> inputFieldTemplates = new ArrayList<>();
+        fieldTemplates.stream().filter(fieldTemplate -> fieldTemplate instanceof InputFieldTemplate).forEach(fieldTemplate -> {
+            inputFieldTemplates.add((InputFieldTemplate<?, ?>) fieldTemplate);
+        });
         /*
             merge all pre processors
          */
         List<FormProcessor> processors = new ArrayList<>();
-        for (InputFieldTemplate<?, ?> inputFieldTemplate : this.getInputFieldTemplates()) {
+        for (InputFieldTemplate<?, ?> inputFieldTemplate : inputFieldTemplates) {
             if (null != inputFieldTemplate.getPreProcessors()) {
                 processors.addAll(inputFieldTemplate.getPreProcessors());
             }
@@ -59,7 +71,7 @@ public class FormTemplate extends Form {
             merge all post processors
          */
         processors = new ArrayList<>();
-        for (InputFieldTemplate<?, ?> inputFieldTemplate : this.getInputFieldTemplates()) {
+        for (InputFieldTemplate<?, ?> inputFieldTemplate : inputFieldTemplates) {
             if (null != inputFieldTemplate.getPostProcessors()) {
                 processors.addAll(inputFieldTemplate.getPostProcessors());
             }
@@ -71,11 +83,11 @@ public class FormTemplate extends Form {
         this.postProcessors = processors;
     }
 
-    public <F extends InputField<T>, T> void validate(Map<String, String> values, Map<String, String> args, Locale locale) throws Exception {
+    public <F extends InputField<T>, T> void validate(FlowData flowData, Map<String, String> values) throws Exception {
         FormDataValidationException ex = new FormDataValidationException();
-        for (InputFieldTemplate<?, ?> inputFieldTemplate : this.getInputFieldTemplates()) {
+        for (InputFieldTemplate<?, ?> inputFieldTemplate : this.getInputFieldTemplates(flowData)) {
             InputFieldTemplate<F, T> template = (InputFieldTemplate<F, T>) inputFieldTemplate;
-            F formField = template.toField(this, args, locale);
+            F formField = template.toField(this, flowData.getFlowData(), flowData.getLocale());
             if (Boolean.TRUE.equals(formField.getDisable())) {
                 continue;
             }
@@ -89,9 +101,9 @@ public class FormTemplate extends Form {
         }
     }
 
-    public List<InputFieldTemplate<?, ?>> getInputFieldTemplates() {
+    public List<InputFieldTemplate<?, ?>> getInputFieldTemplates(FlowData flowData) {
         List<InputFieldTemplate<?, ?>> inputFieldTemplates = new ArrayList<>();
-        for (FieldTemplate<?> fieldTemplate : this.getFieldTemplates()) {
+        for (FieldTemplate<?> fieldTemplate : this.getFieldTemplates(flowData)) {
             if (!(fieldTemplate instanceof InputFieldTemplate<?, ?>)) {
                 continue;
             }
@@ -104,16 +116,24 @@ public class FormTemplate extends Form {
      * محاسبه لیست فیلدهایی که استفاده کننده مجاز به ارسال دیتا برای آن هاست
      * این فیلدها شامل تمامی اینپوت فیلدهایی است که فعال باشند
      */
-    public Set<String> getAllowedInputFields(Map<String, String> args, Locale locale) throws Exception {
-        List<InputFieldTemplate<?, ?>> inputFieldTemplates = this.getInputFieldTemplates();
+    public Set<String> getAllowedInputFields(FlowData flowData) throws Exception {
+        List<InputFieldTemplate<?, ?>> inputFieldTemplates = this.getInputFieldTemplates(flowData);
         Set<String> allowedFieldNames = new HashSet<>();
         for (InputFieldTemplate<?, ?> inputFieldTemplate : inputFieldTemplates) {
-            Boolean disable = FormUtils.getFieldBooleanProperty(this, inputFieldTemplate, "disable", locale, args, null);
+            Boolean disable = FormUtils.getFieldBooleanProperty(this, inputFieldTemplate, "disable", flowData.getLocale(), flowData.getFlowData(), null);
             if (!Boolean.TRUE.equals(disable)) {
                 allowedFieldNames.add(inputFieldTemplate.getName());
             }
         }
         return allowedFieldNames;
+    }
+
+    public void setShowExpression(String showExpression) {
+        this.showExpression = new SpelExpressionParser(new SpelParserConfiguration(SpelCompilerMode.IMMEDIATE, null)).parseExpression(showExpression);
+    }
+
+    public boolean mustShow(FlowData flowData) {
+        return null == showExpression || Boolean.TRUE.equals(showExpression.getValue(new StandardEvaluationContext(flowData), Boolean.class));
     }
 
     public List<FormProcessor> getPreProcessors() {
@@ -140,8 +160,8 @@ public class FormTemplate extends Form {
         this.finished = finished;
     }
 
-    public List<FieldTemplate<?>> getFieldTemplates() {
-        return fieldTemplates;
+    public List<FieldTemplate<?>> getFieldTemplates(FlowData flowData) {
+        return fieldTemplates.stream().filter(fieldTemplate -> fieldTemplate.mustShow(flowData)).collect(Collectors.toList());
     }
 
     public Map<String, List<FormProcessor>> getActionProcessors() {
@@ -152,8 +172,8 @@ public class FormTemplate extends Form {
         this.actionProcessors = actionProcessors;
     }
 
-    public FieldTemplate<?> getField(String name) {
-        return this.getFieldTemplates().stream().filter(field -> field.getName().equals(name)).findFirst().orElse(null);
+    public FieldTemplate<?> getField(String name, FlowData flowData) {
+        return this.getFieldTemplates(flowData).stream().filter(field -> field.getName().equals(name)).findFirst().orElse(null);
     }
 
     public Class<?> getDtoClass() {

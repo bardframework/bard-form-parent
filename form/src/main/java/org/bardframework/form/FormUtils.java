@@ -8,6 +8,7 @@ import org.bardframework.form.field.FieldTemplate;
 import org.bardframework.form.field.input.InputField;
 import org.bardframework.form.field.input.InputFieldTemplate;
 import org.bardframework.form.field.view.ReadonlyField;
+import org.bardframework.form.flow.FlowData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
@@ -29,21 +30,21 @@ public class FormUtils {
          */
     }
 
-    public static Form toForm(FormTemplate formTemplate, Locale locale, Map<String, String> args, Map<String, String> values) throws Exception {
+    public static Form toForm(FormTemplate formTemplate, FlowData flowData, Map<String, String> values) throws Exception {
         if (null == formTemplate) {
             return null;
         }
-        return FormUtils.toForm(new Form(), formTemplate, locale, args, values);
+        return FormUtils.toForm(new Form(), formTemplate, flowData, values);
     }
 
-    public static <F extends Form, T> F toForm(F form, FormTemplate formTemplate, Locale locale, Map<String, String> args, Map<String, String> values) throws Exception {
+    public static <F extends Form, T> F toForm(F form, FormTemplate formTemplate, FlowData flowData, Map<String, String> values) throws Exception {
         form.setName(formTemplate.getName());
-        form.setTitle(FormUtils.getFormStringProperty(formTemplate, "title", locale, args, formTemplate.getTitle()));
-        form.setHint(FormUtils.getFormStringProperty(formTemplate, "hint", locale, args, formTemplate.getHint()));
-        form.setConfirmMessage(FormUtils.getFormStringProperty(formTemplate, "confirmMessage", locale, args, formTemplate.getConfirmMessage()));
-        form.setSubmitLabel(FormUtils.getFormStringProperty(formTemplate, "submitLabel", locale, args, formTemplate.getSubmitLabel()));
-        for (FieldTemplate<?> fieldTemplate : formTemplate.getFieldTemplates()) {
-            Field field = fieldTemplate.toField(formTemplate, args, locale);
+        form.setTitle(FormUtils.getFormStringProperty(formTemplate, "title", flowData.getLocale(), flowData.getFlowData(), formTemplate.getTitle()));
+        form.setHint(FormUtils.getFormStringProperty(formTemplate, "hint", flowData.getLocale(), flowData.getFlowData(), formTemplate.getHint()));
+        form.setConfirmMessage(FormUtils.getFormStringProperty(formTemplate, "confirmMessage", flowData.getLocale(), flowData.getFlowData(), formTemplate.getConfirmMessage()));
+        form.setSubmitLabel(FormUtils.getFormStringProperty(formTemplate, "submitLabel", flowData.getLocale(), flowData.getFlowData(), formTemplate.getSubmitLabel()));
+        for (FieldTemplate<?> fieldTemplate : formTemplate.getFieldTemplates(flowData)) {
+            Field field = fieldTemplate.toField(formTemplate, flowData.getFlowData(), flowData.getLocale());
             String valueString = values.get(fieldTemplate.getName());
             if (field instanceof InputField<?>) {
                 InputFieldTemplate<?, T> inputFieldTemplate = (InputFieldTemplate<?, T>) fieldTemplate;

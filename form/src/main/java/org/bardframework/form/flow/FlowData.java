@@ -8,26 +8,27 @@ import java.util.Map;
 
 public class FlowData {
 
-    public static final String LANGUAGE_FIELD_NAME = "S_LANG_TAG";
-    protected Map<String, String> data = new HashMap<>();
+    protected static final String LANGUAGE_FIELD_NAME = "S_LANG_TAG";
+    protected Map<String, String> flowData = new HashMap<>();
     protected int nextStepIndex;
 
     @JsonIgnore
     public Locale getLocale() {
-        String languageTag = data.get(LANGUAGE_FIELD_NAME);
+        String languageTag = flowData.get(LANGUAGE_FIELD_NAME);
         return null == languageTag ? null : Locale.forLanguageTag(languageTag);
     }
 
-    public void setLocale(Locale locale) {
-        this.data.put(LANGUAGE_FIELD_NAME, locale.getLanguage());
+    public FlowData setLocale(Locale locale) {
+        this.flowData.put(LANGUAGE_FIELD_NAME, locale.getLanguage());
+        return this;
     }
 
-    public Map<String, String> getData() {
-        return data;
+    public Map<String, String> getFlowData() {
+        return flowData;
     }
 
-    public void setData(Map<String, String> data) {
-        this.data = data;
+    public void setFlowData(Map<String, String> flowData) {
+        this.flowData = flowData;
     }
 
     public int getNextStepIndex() {

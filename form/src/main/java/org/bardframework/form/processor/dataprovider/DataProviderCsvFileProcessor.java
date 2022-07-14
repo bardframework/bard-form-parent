@@ -4,7 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.bardframework.commons.web.utils.ResourceUtils;
 import org.bardframework.commons.web.utils.WebUtils;
 import org.bardframework.form.exception.FlowExecutionException;
-import org.bardframework.form.processor.FormProcessor;
+import org.bardframework.form.processor.FormProcessorAbstract;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class DataProviderCsvFileProcessor implements FormProcessor {
+public class DataProviderCsvFileProcessor extends FormProcessorAbstract {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DataProviderCsvFileProcessor.class);
 

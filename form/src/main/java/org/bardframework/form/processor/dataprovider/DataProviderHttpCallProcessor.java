@@ -4,9 +4,15 @@ import org.apache.commons.lang3.StringUtils;
 import org.bardframework.commons.web.utils.HttpCallResult;
 import org.bardframework.commons.web.utils.HttpCaller;
 import org.bardframework.form.exception.FlowExecutionException;
+import org.bardframework.form.flow.FlowData;
 import org.bardframework.form.processor.FormProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.expression.Expression;
+import org.springframework.expression.spel.SpelCompilerMode;
+import org.springframework.expression.spel.SpelParserConfiguration;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
+import org.springframework.expression.spel.support.StandardEvaluationContext;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,6 +31,7 @@ public class DataProviderHttpCallProcessor extends HttpCaller implements FormPro
     protected final Map<String, Pattern> fieldsFetcher = new HashMap<>();
     private final Pattern fetchPattern;
     private final String errorMessageCode;
+    private Expression executeExpression = null;
 
     public DataProviderHttpCallProcessor(String httpMethod, String urlTemplate, String successPattern, Map<String, String> fieldsFetcher, String errorMessageCode) {
         super(httpMethod, urlTemplate);
@@ -63,5 +70,14 @@ public class DataProviderHttpCallProcessor extends HttpCaller implements FormPro
 
     public String getErrorMessageCode() {
         return errorMessageCode;
+    }
+
+    public void setExecuteExpression(String executeExpression) {
+        this.executeExpression = new SpelExpressionParser(new SpelParserConfiguration(SpelCompilerMode.IMMEDIATE, null)).parseExpression(executeExpression);
+    }
+
+    @Override
+    public boolean mustExecute(FlowData flowData) {
+        return null == executeExpression || Boolean.TRUE.equals(executeExpression.getValue(new StandardEvaluationContext(flowData), Boolean.class));
     }
 }

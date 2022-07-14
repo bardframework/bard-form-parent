@@ -1,11 +1,9 @@
 package org.bardframework.form.processor.messagesender;
 
-import org.bardframework.form.processor.FormProcessor;
+import org.bardframework.form.processor.FormProcessorAbstract;
 import org.bardframework.form.processor.messagesender.creator.MessageCreator;
 import org.bardframework.form.processor.messagesender.sender.MessageSender;
 import org.bardframework.time.LocalDateTimeJalali;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,8 +15,7 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public class MessageSenderProcessor implements FormProcessor {
-    protected final static Logger LOGGER = LoggerFactory.getLogger(MessageSenderProcessor.class);
+public class MessageSenderProcessor extends FormProcessorAbstract {
 
     protected final MessageCreator messageCreator;
     protected final MessageSender messageSender;

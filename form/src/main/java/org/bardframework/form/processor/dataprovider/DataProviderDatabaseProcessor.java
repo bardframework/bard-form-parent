@@ -3,9 +3,7 @@ package org.bardframework.form.processor.dataprovider;
 import org.bardframework.commons.utils.StringTemplateUtils;
 import org.bardframework.commons.utils.persian.PersianStringUtils;
 import org.bardframework.form.exception.FlowExecutionException;
-import org.bardframework.form.processor.FormProcessor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.bardframework.form.processor.FormProcessorAbstract;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,9 +15,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class DataProviderDatabaseProcessor implements FormProcessor {
+public class DataProviderDatabaseProcessor extends FormProcessorAbstract {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DataProviderDatabaseProcessor.class);
     private final DataSource dataSource;
     private final String fetchDataQuery;
     private final String errorMessageCode;

@@ -27,6 +27,7 @@ public class MessageSenderEmail implements MessageSender {
         this.subjectCreator = subjectCreator;
         this.receiverEmailFieldTemplate = receiverEmailFieldTemplate;
         this.authenticator = new javax.mail.Authenticator() {
+            @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(senderUsername, senderPassword);
             }

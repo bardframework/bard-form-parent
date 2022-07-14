@@ -1,32 +1,24 @@
 package org.bardframework.form.flow;
 
-import org.bardframework.form.FormTemplate;
-import org.bardframework.form.processor.FormProcessor;
-
 import javax.annotation.PostConstruct;
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
-public class FlowHandlerChain extends FlowHandlerAbstract {
-    private final List<FlowHandlerAbstract> flowHandlers;
-    private final List<FormTemplate> forms;
+public class FlowHandlerChain extends FlowHandlerAbstract<FlowData> {
+    private final List<FlowHandlerAbstract<FlowData>> flowHandlers;
     private final PreProcessorExecutionStrategy preProcessorExecutionStrategy;
     private final PostProcessorExecutionStrategy postProcessorExecutionStrategy;
-    private List<FormProcessor> preProcessors = new ArrayList<>();
-    private List<FormProcessor> postProcessors = new ArrayList<>();
-    private Map<String, List<FormProcessor>> actionProcessors = new HashMap<>();
 
-    public FlowHandlerChain(List<FlowHandlerAbstract> flowHandlers) {
+    public FlowHandlerChain(List<FlowHandlerAbstract<FlowData>> flowHandlers) {
         this(flowHandlers, PreProcessorExecutionStrategy.EXECUTE_FIRST, PostProcessorExecutionStrategy.EXECUTE_LAST);
     }
 
-    public FlowHandlerChain(List<FlowHandlerAbstract> flowHandlers, PreProcessorExecutionStrategy preProcessorExecutionStrategy, PostProcessorExecutionStrategy postProcessorExecutionStrategy) {
-        super(flowHandlers.get(0).getFlowDataRepository());
+    public FlowHandlerChain(List<FlowHandlerAbstract<FlowData>> flowHandlers, PreProcessorExecutionStrategy preProcessorExecutionStrategy, PostProcessorExecutionStrategy postProcessorExecutionStrategy) {
+        super(flowHandlers.get(0).getFlowDataRepository(), flowHandlers.stream().map(handler -> handler.forms).flatMap(Collection::stream).collect(Collectors.toList()));
         this.flowHandlers = flowHandlers;
         this.preProcessorExecutionStrategy = preProcessorExecutionStrategy;
         this.postProcessorExecutionStrategy = postProcessorExecutionStrategy;
-        this.forms = flowHandlers.stream().map(FlowHandlerAbstract::getForms).flatMap(Collection::stream).collect(Collectors.toList());
-        this.actionProcessors = new HashMap<>();
         this.getFlowHandlers().stream().map(FlowHandlerAbstract::getActionProcessors).forEach(this.actionProcessors::putAll);
     }
 
@@ -44,38 +36,6 @@ public class FlowHandlerChain extends FlowHandlerAbstract {
         }
     }
 
-    @Override
-    protected List<FormTemplate> getForms() {
-        return forms;
-    }
-
-    @Override
-    protected List<FormProcessor> getPreProcessors() {
-        return preProcessors;
-    }
-
-    public void setPreProcessors(List<FormProcessor> preProcessors) {
-        this.preProcessors = preProcessors;
-    }
-
-    @Override
-    protected List<FormProcessor> getPostProcessors() {
-        return postProcessors;
-    }
-
-    public void setPostProcessors(List<FormProcessor> postProcessors) {
-        this.postProcessors = postProcessors;
-    }
-
-    @Override
-    protected Map<String, List<FormProcessor>> getActionProcessors() {
-        return actionProcessors;
-    }
-
-    public void setActionProcessors(Map<String, List<FormProcessor>> actionProcessors) {
-        this.actionProcessors = actionProcessors;
-    }
-
     public PreProcessorExecutionStrategy getPreProcessorExecutionStrategy() {
         return preProcessorExecutionStrategy;
     }
@@ -84,7 +44,7 @@ public class FlowHandlerChain extends FlowHandlerAbstract {
         return postProcessorExecutionStrategy;
     }
 
-    public List<FlowHandlerAbstract> getFlowHandlers() {
+    public List<FlowHandlerAbstract<FlowData>> getFlowHandlers() {
         return flowHandlers;
     }
 

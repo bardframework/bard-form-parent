@@ -2,9 +2,7 @@ package org.bardframework.form.processor.dataprovider.httprequest;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.bardframework.form.processor.FormProcessor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.bardframework.form.processor.FormProcessorAbstract;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,9 +11,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public abstract class DataProviderHttpRequestProcessorAbstract implements FormProcessor {
+public abstract class DataProviderHttpRequestProcessorAbstract extends FormProcessorAbstract {
 
-    protected final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     protected final Map<String, String> mapper;
 
     public DataProviderHttpRequestProcessorAbstract(Map<String, String> mapper) {
