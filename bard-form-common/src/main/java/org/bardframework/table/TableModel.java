@@ -9,7 +9,7 @@ import java.util.List;
 public class TableModel {
     private String name;
     private String title;
-    private String hint;
+    private String description;
     private List<TableHeader> headers;
     private Form filterForm;
     private Form saveForm;
@@ -44,12 +44,12 @@ public class TableModel {
         this.title = title;
     }
 
-    public String getHint() {
-        return hint;
+    public String getDescription() {
+        return description;
     }
 
-    public void setHint(String hint) {
-        this.hint = hint;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public List<TableHeader> getHeaders() {

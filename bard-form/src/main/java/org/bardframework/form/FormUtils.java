@@ -39,10 +39,10 @@ public class FormUtils {
 
     public static <F extends Form, T> F toForm(F form, FormTemplate formTemplate, Map<String, String> args, Map<String, String> values, Locale locale, HttpServletRequest httpRequest) throws Exception {
         form.setName(formTemplate.getName());
-        form.setTitle(FormUtils.getFormStringProperty(formTemplate, "title", locale, args, formTemplate.getTitle()));
-        form.setHint(FormUtils.getFormStringProperty(formTemplate, "hint", locale, args, formTemplate.getHint()));
-        form.setConfirmMessage(FormUtils.getFormStringProperty(formTemplate, "confirmMessage", locale, args, formTemplate.getConfirmMessage()));
-        form.setSubmitLabel(FormUtils.getFormStringProperty(formTemplate, "submitLabel", locale, args, formTemplate.getSubmitLabel()));
+        form.setTitle(FormUtils.getFormStringProperty(formTemplate, "title", locale, args, null));
+        form.setDescription(FormUtils.getFormStringProperty(formTemplate, "description", locale, args, null));
+        form.setConfirmMessage(FormUtils.getFormStringProperty(formTemplate, "confirmMessage", locale, args, null));
+        form.setSubmitLabel(FormUtils.getFormStringProperty(formTemplate, "submitLabel", locale, args, null));
         for (FieldTemplate<?> fieldTemplate : formTemplate.getFieldTemplates(args)) {
             Field field = fieldTemplate.toField(formTemplate, args, locale, httpRequest);
             String valueString = values.get(fieldTemplate.getName());

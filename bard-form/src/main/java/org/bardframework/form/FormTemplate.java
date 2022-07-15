@@ -18,10 +18,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class FormTemplate extends Form {
+public class FormTemplate {
 
     protected final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
+    protected final String name;
     protected final MessageSource messageSource;
     protected final List<FieldTemplate<?>> fieldTemplates;
     protected Class<?> dtoClass;
@@ -96,6 +97,10 @@ public class FormTemplate extends Form {
 
     public FieldTemplate<?> getField(String name, Map<String, String> args) {
         return this.getFieldTemplates(args).stream().filter(field -> field.getName().equals(name)).findFirst().orElse(null);
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Class<?> getDtoClass() {

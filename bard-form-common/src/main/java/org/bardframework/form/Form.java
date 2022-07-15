@@ -9,7 +9,7 @@ public class Form {
 
     protected String name;
     protected String title;
-    protected String hint;
+    protected String description;
     protected String confirmMessage;
     protected String submitLabel;
     protected List<Field> fields = new ArrayList<>();
@@ -30,12 +30,12 @@ public class Form {
         this.title = title;
     }
 
-    public String getHint() {
-        return hint;
+    public String getDescription() {
+        return description;
     }
 
-    public void setHint(String hint) {
-        this.hint = hint;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getConfirmMessage() {

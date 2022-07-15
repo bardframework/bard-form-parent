@@ -37,7 +37,7 @@ public class TableUtils {
     public static <T extends TableModel> T toTable(T table, TableTemplate tableTemplate, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
         table.setName(tableTemplate.getName());
         table.setTitle(TableUtils.getTableStringValue(tableTemplate, "title", locale, args, tableTemplate.getTitle()));
-        table.setHint(TableUtils.getTableStringValue(tableTemplate, "hint", locale, args, tableTemplate.getHint()));
+        table.setDescription(TableUtils.getTableStringValue(tableTemplate, "description", locale, args, tableTemplate.getDescription()));
         table.setDelete(TableUtils.getTableBooleanValue(tableTemplate, "delete", locale, args, tableTemplate.getDelete()));
         table.setPrint(TableUtils.getTableBooleanValue(tableTemplate, "print", locale, args, tableTemplate.getPrint()));
         table.setExport(TableUtils.getTableBooleanValue(tableTemplate, "export", locale, args, tableTemplate.getExport()));
