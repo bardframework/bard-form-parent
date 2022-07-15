@@ -100,9 +100,13 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
      * این متد فقط فرم جاری را برمیگرداند و پیش پردازش های آن را اجرا نمی کند
      */
     @Override
-    public FlowResponse<String> getCurrent(String flowToken, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
+    public FlowResponse<String> getCurrent(String flowToken, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
             throws Exception {
         D flowData = this.getFlowDataRepository().get(flowToken);
+        if (flowData.getNextStepIndex() == 1) {
+            flowData.setLocale(locale);
+            this.getFlowDataRepository().put(flowToken, flowData);
+        }
         FlowFormTemplate currentFormTemplate = this.getCurrentFormTemplate(flowData);
         return this.toResponse(currentFormTemplate, flowData, null, httpRequest);
     }

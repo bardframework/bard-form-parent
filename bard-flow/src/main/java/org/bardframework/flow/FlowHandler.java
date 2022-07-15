@@ -23,7 +23,7 @@ public interface FlowHandler {
     void action(String flowToken, String action, Map<String, String> formData, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
             throws Exception;
 
-    FlowResponse<String> getCurrent(String flowToken, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
+    FlowResponse<String> getCurrent(String flowToken, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
             throws Exception;
 
     default String generateFlowToken() {
