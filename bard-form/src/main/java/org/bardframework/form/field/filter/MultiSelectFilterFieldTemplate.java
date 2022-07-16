@@ -27,7 +27,7 @@ public class MultiSelectFilterFieldTemplate extends InputFieldTemplate<MultiSele
     @Override
     public void fill(FormTemplate formTemplate, MultiSelectFilterField filterField, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
         super.fill(formTemplate, filterField, args, locale, httpRequest);
-        filterField.setMaxCount(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxCount", locale, args, this.getDefaultValue().getMaxCount()));
+        filterField.setMaxCount(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxCount", locale, args, this.getDefaultValues().getMaxCount()));
         filterField.setOptions(optionDataSource.getOptions(locale));
     }
 

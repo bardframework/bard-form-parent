@@ -20,12 +20,12 @@ public abstract class FieldTemplate<F extends Field> {
     protected final Class<F> fieldClazz;
     protected Expression showExpression = null;
     protected final String name;
-    protected F defaultValue;
+    protected F defaultValues;
 
     protected FieldTemplate(String name) {
         this.name = name;
         this.fieldClazz = ReflectionUtils.getGenericArgType(this.getClass(), 0);
-        this.defaultValue = ReflectionUtils.newInstance(this.fieldClazz);
+        this.defaultValues = ReflectionUtils.newInstance(this.fieldClazz);
     }
 
     public F toField(FormTemplate formTemplate, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
@@ -35,8 +35,8 @@ public abstract class FieldTemplate<F extends Field> {
     }
 
     protected void fill(FormTemplate formTemplate, F field, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
-        field.setTitle(FormUtils.getFieldStringProperty(formTemplate, this, "title", locale, args, this.getDefaultValue().getTitle()));
-        field.setDescription(FormUtils.getFieldStringProperty(formTemplate, this, "description", locale, args, this.getDefaultValue().getDescription()));
+        field.setTitle(FormUtils.getFieldStringProperty(formTemplate, this, "title", locale, args, this.getDefaultValues().getTitle()));
+        field.setDescription(FormUtils.getFieldStringProperty(formTemplate, this, "description", locale, args, this.getDefaultValues().getDescription()));
     }
 
     protected F getEmptyField() {
@@ -55,11 +55,11 @@ public abstract class FieldTemplate<F extends Field> {
         return null == showExpression || Boolean.TRUE.equals(showExpression.getValue(new StandardEvaluationContext(args), Boolean.class));
     }
 
-    public F getDefaultValue() {
-        return defaultValue;
+    public F getDefaultValues() {
+        return defaultValues;
     }
 
-    public void setDefaultValue(F defaultValue) {
-        this.defaultValue = defaultValue;
+    public void setDefaultValues(F defaultValues) {
+        this.defaultValues = defaultValues;
     }
 }

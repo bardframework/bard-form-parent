@@ -44,13 +44,13 @@ public abstract class InputFieldTemplate<F extends InputField<T>, T> extends Fie
     public void fill(FormTemplate formTemplate, F field, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
         super.fill(formTemplate, field, args, locale, httpRequest);
         field.setName(this.getName());
-        field.setPlaceholder(FormUtils.getFieldStringProperty(formTemplate, this, "placeholder", locale, args, this.getDefaultValue().getPlaceholder()));
-        field.setRequired(FormUtils.getFieldBooleanProperty(formTemplate, this, "required", locale, args, this.getDefaultValue().getRequired()));
-        field.setFocused(FormUtils.getFieldBooleanProperty(formTemplate, this, "focused", locale, args, this.getDefaultValue().getFocused()));
-        field.setDisable(FormUtils.getFieldBooleanProperty(formTemplate, this, "disable", locale, args, this.getDefaultValue().getDisable()));
-        field.setErrorMessage(FormUtils.getFieldStringProperty(formTemplate, this, "errorMessage", locale, args, this.getDefaultValue().getErrorMessage()));
+        field.setPlaceholder(FormUtils.getFieldStringProperty(formTemplate, this, "placeholder", locale, args, this.getDefaultValues().getPlaceholder()));
+        field.setRequired(FormUtils.getFieldBooleanProperty(formTemplate, this, "required", locale, args, this.getDefaultValues().getRequired()));
+        field.setFocused(FormUtils.getFieldBooleanProperty(formTemplate, this, "focused", locale, args, this.getDefaultValues().getFocused()));
+        field.setDisable(FormUtils.getFieldBooleanProperty(formTemplate, this, "disable", locale, args, this.getDefaultValues().getDisable()));
+        field.setErrorMessage(FormUtils.getFieldStringProperty(formTemplate, this, "errorMessage", locale, args, this.getDefaultValues().getErrorMessage()));
         if (null != valueProvider) {
-            field.setValue(valueProvider.getValue(field));
+            field.setValue(valueProvider.getValue(field, httpRequest));
         }
     }
 

@@ -40,8 +40,8 @@ public class DateFieldTemplate extends InputFieldTemplate<DateField, LocalDate> 
     @Override
     public void fill(FormTemplate formTemplate, DateField field, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
         super.fill(formTemplate, field, args, locale, httpRequest);
-        field.setMinValue(FormUtils.getFieldLocalDateProperty(formTemplate, this, "minValue", locale, args, this.getDefaultValue().getMinValue()));
-        field.setMaxValue(FormUtils.getFieldLocalDateProperty(formTemplate, this, "maxValue", locale, args, this.getDefaultValue().getMaxValue()));
+        field.setMinValue(FormUtils.getFieldLocalDateProperty(formTemplate, this, "minValue", locale, args, this.getDefaultValues().getMinValue()));
+        field.setMaxValue(FormUtils.getFieldLocalDateProperty(formTemplate, this, "maxValue", locale, args, this.getDefaultValues().getMaxValue()));
         if (null == field.getMinValue()) {
             field.setMinValue(this.getMinValue());
         }
