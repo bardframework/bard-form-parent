@@ -1,7 +1,7 @@
 
 package org.bardframework.form.model.filter;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Base class for the various attribute filters. It can be added to a criteria class as a member, to support the
@@ -19,8 +19,8 @@ public class Filter<T, F> {
     private T equals;
     private T notEquals;
     private Boolean specified;
-    private List<T> in;
-    private List<T> notIn;
+    private Collection<T> in;
+    private Collection<T> notIn;
 
     /**
      * <p>Constructor for Filter.</p>
@@ -91,19 +91,19 @@ public class Filter<T, F> {
     /**
      * <p>Getter for the field <code>in</code>.</p>
      *
-     * @return a {@link List} object.
+     * @return a {@link Collection} object.
      */
-    public List<T> getIn() {
+    public Collection<T> getIn() {
         return in;
     }
 
     /**
      * <p>Setter for the field <code>in</code>.</p>
      *
-     * @param in a {@link List} object.
+     * @param in a {@link Collection} object.
      * @return a {@link Filter} object.
      */
-    public F setIn(List<T> in) {
+    public F setIn(Collection<T> in) {
         this.in = in;
         return (F) this;
     }
@@ -111,19 +111,19 @@ public class Filter<T, F> {
     /**
      * <p>Getter for the field <code>notIn</code>.</p>
      *
-     * @return a {@link List} object.
+     * @return a {@link Collection} object.
      */
-    public List<T> getNotIn() {
+    public Collection<T> getNotIn() {
         return notIn;
     }
 
     /**
      * <p>Setter for the field <code>notIn</code>.</p>
      *
-     * @param notIn a {@link List} object.
+     * @param notIn a {@link Collection} object.
      * @return a {@link Filter} object.
      */
-    public F setNotIn(List<T> notIn) {
+    public F setNotIn(Collection<T> notIn) {
         this.notIn = notIn;
         return (F) this;
     }
