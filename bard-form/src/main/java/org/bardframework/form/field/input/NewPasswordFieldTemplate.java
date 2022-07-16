@@ -42,9 +42,9 @@ public class NewPasswordFieldTemplate extends PasswordFieldTemplate {
     @Override
     public void fill(FormTemplate formTemplate, PasswordField field, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
         super.fill(formTemplate, field, args, locale, httpRequest);
-        field.setRegex(FormUtils.getFieldStringProperty(formTemplate, this, "regex", locale, args, null));
-        field.setMinLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "minLength", locale, args, null));
-        field.setMaxLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxLength", locale, args, null));
+        field.setRegex(FormUtils.getFieldStringProperty(formTemplate, this, "regex", locale, args, this.getDefaultValue().getRegex()));
+        field.setMinLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "minLength", locale, args, this.getDefaultValue().getMinLength()));
+        field.setMaxLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxLength", locale, args, this.getDefaultValue().getMaxLength()));
     }
 
     @Override

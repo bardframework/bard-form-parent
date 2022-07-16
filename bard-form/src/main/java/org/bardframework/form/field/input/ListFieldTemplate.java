@@ -43,9 +43,9 @@ public class ListFieldTemplate extends InputFieldTemplate<ListField, List<String
     @Override
     public void fill(FormTemplate formTemplate, ListField field, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
         super.fill(formTemplate, field, args, locale, httpRequest);
-        field.setMinLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "minLength", locale, args, null));
-        field.setMaxLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxLength", locale, args, null));
-        field.setMaxCount(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxCount", locale, args, null));
+        field.setMinLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "minLength", locale, args, this.getDefaultValue().getMinLength()));
+        field.setMaxLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxLength", locale, args, this.getDefaultValue().getMaxLength()));
+        field.setMaxCount(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxCount", locale, args, this.getDefaultValue().getMaxCount()));
     }
 
     @Override

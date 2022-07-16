@@ -34,7 +34,7 @@ public class HtmlEditorFieldTemplate extends InputFieldTemplate<HtmlEditorField,
     @Override
     public void fill(FormTemplate formTemplate, HtmlEditorField field, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
         super.fill(formTemplate, field, args, locale, httpRequest);
-        field.setMaxSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxSize", locale, args, null));
+        field.setMaxSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxSize", locale, args, this.getDefaultValue().getMaxSize()));
     }
 
     @Override

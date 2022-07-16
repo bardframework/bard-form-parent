@@ -26,10 +26,10 @@ public class DateTimeFilterFieldTemplate extends InputFieldTemplate<DateTimeFilt
     @Override
     public void fill(FormTemplate formTemplate, DateTimeFilterField field, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
         super.fill(formTemplate, field, args, locale, httpRequest);
-        field.setMinLength(FormUtils.getFieldLongProperty(formTemplate, this, "minLength", locale, args, null));
-        field.setMaxLength(FormUtils.getFieldLongProperty(formTemplate, this, "maxLength", locale, args, null));
-        field.setMinValue(FormUtils.getFieldLocalDateTimeProperty(formTemplate, this, "minValue", locale, args, null));
-        field.setMaxValue(FormUtils.getFieldLocalDateTimeProperty(formTemplate, this, "maxValue", locale, args, null));
+        field.setMinLength(FormUtils.getFieldLongProperty(formTemplate, this, "minLength", locale, args, this.getDefaultValue().getMinLength()));
+        field.setMaxLength(FormUtils.getFieldLongProperty(formTemplate, this, "maxLength", locale, args, this.getDefaultValue().getMaxLength()));
+        field.setMinValue(FormUtils.getFieldLocalDateTimeProperty(formTemplate, this, "minValue", locale, args, this.getDefaultValue().getMinValue()));
+        field.setMaxValue(FormUtils.getFieldLocalDateTimeProperty(formTemplate, this, "maxValue", locale, args, this.getDefaultValue().getMaxValue()));
         field.setLengthUnit(field.getLengthUnit());
         if (null == field.getMinValue()) {
             field.setMinValue(this.getMinValue());

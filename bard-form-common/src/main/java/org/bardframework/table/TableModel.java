@@ -1,6 +1,6 @@
 package org.bardframework.table;
 
-import org.bardframework.form.Form;
+import org.bardframework.form.BardForm;
 import org.bardframework.table.header.TableHeader;
 
 import java.util.ArrayList;
@@ -11,9 +11,9 @@ public class TableModel {
     private String title;
     private String description;
     private List<TableHeader> headers;
-    private Form filterForm;
-    private Form saveForm;
-    private Form updateForm;
+    private BardForm filterForm;
+    private BardForm saveForm;
+    private BardForm updateForm;
     private Boolean delete;
     private Boolean print;
     private Boolean export;
@@ -60,27 +60,27 @@ public class TableModel {
         this.headers = headers;
     }
 
-    public Form getFilterForm() {
+    public BardForm getFilterForm() {
         return filterForm;
     }
 
-    public void setFilterForm(Form filterForm) {
+    public void setFilterForm(BardForm filterForm) {
         this.filterForm = filterForm;
     }
 
-    public Form getSaveForm() {
+    public BardForm getSaveForm() {
         return saveForm;
     }
 
-    public void setSaveForm(Form saveForm) {
+    public void setSaveForm(BardForm saveForm) {
         this.saveForm = saveForm;
     }
 
-    public Form getUpdateForm() {
+    public BardForm getUpdateForm() {
         return updateForm;
     }
 
-    public void setUpdateForm(Form updateForm) {
+    public void setUpdateForm(BardForm updateForm) {
         this.updateForm = updateForm;
     }
 

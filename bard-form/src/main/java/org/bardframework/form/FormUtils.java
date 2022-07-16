@@ -30,14 +30,14 @@ public class FormUtils {
          */
     }
 
-    public static Form toForm(FormTemplate formTemplate, Map<String, String> args, Map<String, String> values, Locale locale, HttpServletRequest httpRequest) throws Exception {
+    public static BardForm toForm(FormTemplate formTemplate, Map<String, String> args, Map<String, String> values, Locale locale, HttpServletRequest httpRequest) throws Exception {
         if (null == formTemplate) {
             return null;
         }
-        return FormUtils.toForm(new Form(), formTemplate, args, values, locale, httpRequest);
+        return FormUtils.toForm(new BardForm(), formTemplate, args, values, locale, httpRequest);
     }
 
-    public static <F extends Form, T> F toForm(F form, FormTemplate formTemplate, Map<String, String> args, Map<String, String> values, Locale locale, HttpServletRequest httpRequest) throws Exception {
+    public static <F extends BardForm, T> F toForm(F form, FormTemplate formTemplate, Map<String, String> args, Map<String, String> values, Locale locale, HttpServletRequest httpRequest) throws Exception {
         form.setName(formTemplate.getName());
         form.setTitle(FormUtils.getFormStringProperty(formTemplate, "title", locale, args, null));
         form.setDescription(FormUtils.getFormStringProperty(formTemplate, "description", locale, args, null));

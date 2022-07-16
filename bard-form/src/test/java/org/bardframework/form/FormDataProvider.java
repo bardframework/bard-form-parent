@@ -22,7 +22,7 @@ public class FormDataProvider {
     @Autowired
     private ObjectMapper objectMapper;
 
-    public Map<String, String> getValidData(Form form) throws Exception {
+    public Map<String, String> getValidData(BardForm form) throws Exception {
         Map<String, String> map = new HashMap<>();
         for (Field field : form.getFields()) {
             if (!(field instanceof InputField<?>)) {
@@ -35,7 +35,7 @@ public class FormDataProvider {
         return map;
     }
 
-    public Map<String, String> getInvalidData(Form form) throws Exception {
+    public Map<String, String> getInvalidData(BardForm form) throws Exception {
         Map<String, String> map = new HashMap<>();
         boolean invalidate = false;
         for (Field field : form.getFields()) {

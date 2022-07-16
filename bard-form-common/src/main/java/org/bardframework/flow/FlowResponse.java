@@ -1,10 +1,10 @@
 package org.bardframework.flow;
 
-import org.bardframework.form.Form;
+import org.bardframework.form.BardForm;
 
 public class FlowResponse<D> {
     private final D data;
-    private Form form;
+    private BardForm form;
     private Boolean finished;
     private int steps;
     private int current;
@@ -26,11 +26,11 @@ public class FlowResponse<D> {
         return data;
     }
 
-    public Form getForm() {
+    public BardForm getForm() {
         return form;
     }
 
-    public FlowResponse<D> setForm(Form form) {
+    public FlowResponse<D> setForm(BardForm form) {
         this.form = form;
         return this;
     }

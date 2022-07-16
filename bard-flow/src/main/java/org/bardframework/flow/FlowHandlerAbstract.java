@@ -9,7 +9,7 @@ import org.bardframework.flow.form.FlowFormTemplate;
 import org.bardframework.flow.form.FormProcessor;
 import org.bardframework.flow.form.field.input.FlowInputFieldTemplate;
 import org.bardframework.flow.repository.FlowDataRepository;
-import org.bardframework.form.Form;
+import org.bardframework.form.BardForm;
 import org.bardframework.form.FormUtils;
 import org.bardframework.form.field.input.InputFieldTemplate;
 import org.slf4j.Logger;
@@ -205,7 +205,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
             /*
                 convert and fill form
              */
-            Form nextForm = FormUtils.toForm(formTemplate, flowData.getData(), flowData.getData(), flowData.getLocale(), httpRequest);
+            BardForm nextForm = FormUtils.toForm(formTemplate, flowData.getData(), flowData.getData(), flowData.getLocale(), httpRequest);
             response.setForm(nextForm);
             response.setSteps(this.getStepsCounts(flowData));
             response.setCurrent(flowData.getNextStepIndex());

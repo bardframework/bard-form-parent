@@ -5,7 +5,7 @@ import org.bardframework.form.field.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Form {
+public class BardForm {
 
     protected String name;
     protected String title;
@@ -74,7 +74,7 @@ public class Form {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Form that = (Form) o;
+        BardForm that = (BardForm) o;
 
         return name.equals(that.name);
     }
