@@ -1,5 +1,6 @@
 package org.bardframework.flow.processor.messagesender;
 
+import org.bardframework.flow.exception.FlowExecutionException;
 import org.bardframework.flow.processor.FormProcessorAbstract;
 import org.bardframework.flow.processor.messagesender.creator.MessageCreator;
 import org.bardframework.flow.processor.messagesender.sender.MessageSender;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.Executor;
@@ -50,11 +52,11 @@ public class MessageSenderProcessor extends FormProcessorAbstract {
             this.getMessageSender().send(message, this.getArgs(flowData), locale);
             this.afterSend(flowData);
         } catch (Exception e) {
+            LOGGER.error("error sending message, catching exception.", e);
             if (!this.isFailOnError()) {
-                LOGGER.error("error calling notification sender, failOnError is false, catching exception.", e);
                 return;
             }
-            throw new IllegalStateException(e);
+            throw new FlowExecutionException(List.of(errorMessageCode));
         }
     }
 

@@ -4,6 +4,8 @@ import org.bardframework.flow.exception.InvalidateFlowException;
 
 public interface FlowDataRepository<D> {
 
+    boolean contains(String token);
+
     void put(String token, D data);
 
     /**

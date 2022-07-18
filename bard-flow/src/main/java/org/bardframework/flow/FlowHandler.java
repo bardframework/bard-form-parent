@@ -9,12 +9,7 @@ import java.util.Map;
 
 public interface FlowHandler {
 
-    default FlowResponse<String> start(Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
-            throws Exception {
-        return this.start(this.generateFlowToken(), locale, httpRequest, httpResponse);
-    }
-
-    FlowResponse<String> start(String flowToken, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
+    FlowResponse<String> start(Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
             throws Exception;
 
     FlowResponse<String> submit(String flowToken, Map<String, String> formData, HttpServletRequest httpRequest, HttpServletResponse httpResponse)

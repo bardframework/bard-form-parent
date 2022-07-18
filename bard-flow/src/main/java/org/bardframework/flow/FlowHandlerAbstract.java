@@ -34,15 +34,30 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
         this.forms = forms;
     }
 
-    @Override
-    public FlowResponse<String> start(String flowToken, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
+    public FlowResponse<String> start(Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
+            throws Exception {
         D flowData = ReflectionUtils.newInstance(ReflectionUtils.getGenericArgType(this.getClass(), 0));
+        String flowToken = this.generateFlowToken();
         flowData.setLocale(locale);
-        /*
-            اجرای پیش پردازش های فلو
-         */
-        this.process(this.getPreProcessors(), flowToken, flowData, Map.of(), httpRequest, httpResponse);
-        return this.processNextForm(flowToken, flowData, Map.of(), flowToken, httpRequest, httpResponse);
+        this.getFlowDataRepository().put(flowToken, flowData);
+
+        try {
+            /*
+                اجرای پیش پردازش های فلو
+             */
+            this.process(this.getPreProcessors(), flowToken, flowData, Map.of(), httpRequest, httpResponse);
+            FlowResponse<String> response = this.processNextForm(flowToken, flowData, Map.of(), flowToken, httpRequest, httpResponse);
+            flowData.setNextStepIndex(flowData.getNextStepIndex() + 1);
+            return response;
+        } finally {
+            /*
+                در تمامی حالات (حالاتی که استثنا رخ دهد یا خیر) باید دیتای تغیر یافته را ذخیره کنیم؛
+                برخی کنترل های امنیتی مانند غیر معتبر کردن کپچای استفاده شده، با پاک کردن از دیتا انجام می شود
+                در مثال ذکر شده و در حالتی که یک مرحله پس از کنترل کپچا استثنایی رخ دهد باید دیتا را ذخیره کنیم تا ناسازگاری در فرایند ایجاد نشود.
+                توضیحات فوق، بیانگر اهمیت و دلیل ذخیره ی دیتا در بلاک finally است
+             */
+            this.updateFlowData(flowToken, flowData);
+        }
     }
 
     @Override
@@ -53,19 +68,14 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
         this.fillFlowData(flowData.getData(), formData, currentFormTemplate, flowData.getLocale(), httpRequest);
         try {
             this.process(currentFormTemplate.getPostProcessors(), flowToken, flowData, formData, httpRequest, httpResponse);
-            return this.processNextForm(flowToken, flowData, formData, null, httpRequest, httpResponse);
+            FlowResponse<String> response = this.processNextForm(flowToken, flowData, formData, null, httpRequest, httpResponse);
+            flowData.setNextStepIndex(flowData.getNextStepIndex() + 1);
+            return response;
         } catch (InvalidateFlowException ex) {
-            this.onException(ex);
+            this.invalidateFlow(ex);
             throw ex;
-        } catch (Exception ex) {
-            /*
-                در تمامی حالات (حالاتی که استثنا رخ دهد یا خیر) باید دیتای تغیر یافته را ذخیره کنیم؛
-                برخی کنترل های امنیتی مانند غیر معتبر کردن کپچای استفاده شده، با پاک کردن از دیتا انجام می شود
-                در مثال ذکر شده و در حالتی که یک مرحله پس از کنترل کپچا استثنایی رخ دهد باید دیتا را ذخیره کنیم تا ناسازگاری در فرایند ایجاد نشود.
-                توضیحات فوق، بیانگر اهمیت و دلیل ذخیره ی دیتا در بلاک finally است
-             */
-            this.getFlowDataRepository().put(flowToken, flowData);
-            throw ex;
+        } finally {
+            this.updateFlowData(flowToken, flowData);
         }
     }
 
@@ -89,10 +99,10 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
                 throw new InvalidateFlowException(flowToken, "invalid action");
             }
         } catch (InvalidateFlowException ex) {
-            this.onException(ex);
+            this.invalidateFlow(ex);
             throw ex;
         } finally {
-            this.getFlowDataRepository().put(flowToken, flowData);
+            this.updateFlowData(flowToken, flowData);
         }
     }
 
@@ -105,7 +115,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
         D flowData = this.getFlowDataRepository().get(flowToken);
         if (flowData.getNextStepIndex() == 1) {
             flowData.setLocale(locale);
-            this.getFlowDataRepository().put(flowToken, flowData);
+            this.updateFlowData(flowToken, flowData);
         }
         FlowFormTemplate currentFormTemplate = this.getCurrentFormTemplate(flowData);
         return this.toResponse(currentFormTemplate, flowData, null, httpRequest);
@@ -164,7 +174,6 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
         if (Boolean.TRUE.equals(response.getFinished())) {
             this.onFinished(flowToken, flowData, formData, httpRequest, httpResponse);
         }
-        this.getFlowDataRepository().put(flowToken, flowData);
         return response;
     }
 
@@ -172,12 +181,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
         if (this.getForms(flowData).size() <= flowData.getNextStepIndex()) {
             return null;
         }
-        FlowFormTemplate formTemplate = this.getForms(flowData).get(flowData.getNextStepIndex());
-        /*
-            increase index after fetch form, because step index start from 1, and form list index start from 0
-         */
-        flowData.setNextStepIndex(flowData.getNextStepIndex() + 1);
-        return formTemplate;
+        return this.getForms(flowData).get(flowData.getNextStepIndex());
     }
 
     protected FlowFormTemplate getCurrentFormTemplate(D flowData) throws Exception {
@@ -189,7 +193,16 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
         this.cleanFlowData(flowToken);
     }
 
-    protected void onException(InvalidateFlowException ex) {
+    protected void updateFlowData(String flowToken, D flowData) {
+        /*
+            در صورتی که توکن معتبر باشد (قبلا بر اثر خطا یا ... داده ی آن پاک نشده باشد) دیتای مربوط به آن را بروز می کنیم
+         */
+        if (this.getFlowDataRepository().contains(flowToken)) {
+            this.getFlowDataRepository().put(flowToken, flowData);
+        }
+    }
+
+    protected void invalidateFlow(InvalidateFlowException ex) {
         /*
             در برخی موارد مانند تلاش زیاد برای تولید کپچا و ... خطای InvalidateFlowException تولید می شود و باید داده های مربوط به فلو پاک شوند
          */

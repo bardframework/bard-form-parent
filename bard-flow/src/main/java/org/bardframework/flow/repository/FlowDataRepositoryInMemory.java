@@ -22,6 +22,11 @@ public class FlowDataRepositoryInMemory<D> implements FlowDataRepository<D> {
     }
 
     @Override
+    public boolean contains(String token) {
+        return cache.getIfPresent(token) != null;
+    }
+
+    @Override
     public void put(String token, D data) {
         cache.put(token, data);
     }
