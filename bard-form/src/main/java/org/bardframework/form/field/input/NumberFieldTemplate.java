@@ -15,7 +15,7 @@ public class NumberFieldTemplate extends InputFieldTemplate<NumberField, Long> {
     }
 
     @Override
-    public boolean isValid(NumberField field, Long value) {
+    public boolean isValid(NumberField field, Long value, Map<String, String> args) {
         if (null == value) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 LOGGER.debug("field [{}] is required, but it's value is empty", field.getName());

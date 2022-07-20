@@ -2,6 +2,8 @@ package org.bardframework.form.field.input;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Map;
+
 public class PasswordFieldTemplate extends InputFieldTemplate<PasswordField, String> {
 
     public PasswordFieldTemplate(String name) {
@@ -9,7 +11,7 @@ public class PasswordFieldTemplate extends InputFieldTemplate<PasswordField, Str
     }
 
     @Override
-    public boolean isValid(PasswordField field, String value) {
+    public boolean isValid(PasswordField field, String value, Map<String, String> args) {
         if (StringUtils.isBlank(value)) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 LOGGER.debug("field [{}] is required, but it's value is empty", field.getName());

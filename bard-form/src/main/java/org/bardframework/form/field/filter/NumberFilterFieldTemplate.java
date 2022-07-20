@@ -18,7 +18,7 @@ public class NumberFilterFieldTemplate extends InputFieldTemplate<NumberFilterFi
     }
 
     @Override
-    public boolean isValid(NumberFilterField field, LongFilter filter) {
+    public boolean isValid(NumberFilterField field, LongFilter filter, Map<String, String> args) {
         if (null == filter || (null == filter.getFrom() && null == filter.getTo())) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 LOGGER.debug("filterField [{}] is required, but it's value is empty", field.getName());

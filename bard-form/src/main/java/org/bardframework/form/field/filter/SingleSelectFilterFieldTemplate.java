@@ -27,7 +27,7 @@ public class SingleSelectFilterFieldTemplate extends InputFieldTemplate<SingleSe
 
 
     @Override
-    public boolean isValid(SingleSelectFilterField field, IdFilter<String> filter) {
+    public boolean isValid(SingleSelectFilterField field, IdFilter<String> filter, Map<String, String> args) {
         if (null == filter || StringUtils.isBlank(filter.getEquals())) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 LOGGER.debug("filterField [{}] is required, but it's value is empty", field.getName());

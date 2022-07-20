@@ -18,7 +18,7 @@ public class TextFilterFieldTemplate extends InputFieldTemplate<TextFilterField,
     }
 
     @Override
-    public boolean isValid(TextFilterField field, StringFilter filter) {
+    public boolean isValid(TextFilterField field, StringFilter filter, Map<String, String> args) {
         if (null == filter || StringUtils.isBlank(filter.getContains())) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 LOGGER.debug("StringFilter [{}] is required, but it's value is empty", field.getName());

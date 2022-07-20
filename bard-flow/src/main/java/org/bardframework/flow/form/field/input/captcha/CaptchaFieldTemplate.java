@@ -35,7 +35,7 @@ public class CaptchaFieldTemplate extends FlowInputFieldTemplate<CaptchaField, S
     }
 
     @Override
-    public boolean isValid(CaptchaField field, String value) {
+    public boolean isValid(CaptchaField field, String value, Map<String, String> args) {
         if (null == value) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 LOGGER.debug("field [{}] is required, but it's value is empty", field.getName());

@@ -18,7 +18,7 @@ public class DateFieldTemplate extends InputFieldTemplate<DateField, LocalDate> 
     }
 
     @Override
-    public boolean isValid(DateField field, LocalDate value) {
+    public boolean isValid(DateField field, LocalDate value, Map<String, String> args) {
         if (null == value) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 LOGGER.debug("field [{}] is required, but it's value is empty", field.getName());

@@ -31,12 +31,12 @@ public abstract class InputFieldTemplate<F extends InputField<T>, T> extends Fie
             return;
         }
         String stringValue = values.get(this.getName());
-        if (!this.isValid(formField, this.toValue(stringValue))) {
+        if (!this.isValid(formField, this.toValue(stringValue), values)) {
             ex.addFiledError(this.getName(), formField.getErrorMessage());
         }
     }
 
-    public abstract boolean isValid(F field, T value);
+    public abstract boolean isValid(F field, T value, Map<String, String> args);
 
     public abstract T toValue(String value);
 

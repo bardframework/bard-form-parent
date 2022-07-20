@@ -2,6 +2,8 @@ package org.bardframework.form.field.input;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Map;
+
 public class SwitchButtonFieldTemplate extends InputFieldTemplate<SwitchButtonField, Boolean> {
 
     protected SwitchButtonFieldTemplate(String name) {
@@ -9,7 +11,7 @@ public class SwitchButtonFieldTemplate extends InputFieldTemplate<SwitchButtonFi
     }
 
     @Override
-    public boolean isValid(SwitchButtonField field, Boolean value) {
+    public boolean isValid(SwitchButtonField field, Boolean value, Map<String, String> args) {
         return true;
     }
 

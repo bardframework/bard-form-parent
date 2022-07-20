@@ -59,7 +59,7 @@ public class DateTimeFilterFieldTemplate extends InputFieldTemplate<DateTimeFilt
     }
 
     @Override
-    public boolean isValid(DateTimeFilterField field, LocalDateTimeFilter filter) {
+    public boolean isValid(DateTimeFilterField field, LocalDateTimeFilter filter, Map<String, String> args) {
         if (null == filter || (null == filter.getFrom() && null == filter.getTo())) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 LOGGER.debug("filterField [{}] is required, but it's value is empty", field.getName());
