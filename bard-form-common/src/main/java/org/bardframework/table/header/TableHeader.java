@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 public abstract class TableHeader {
     private String name;
     private String title;
+    private String description;
     private Boolean hidden;
     private Boolean sortable;
     private Boolean movable;
@@ -25,6 +26,14 @@ public abstract class TableHeader {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Boolean getHidden() {

@@ -24,6 +24,7 @@ public abstract class TableHeaderTemplate<H extends TableHeader, T> extends Tabl
 
     protected void fill(TableTemplate tableTemplate, H header, Map<String, String> args, Locale locale) throws Exception {
         header.setTitle(TableUtils.getHeaderStringValue(tableTemplate, this, "title", locale, args, this.getName()));
+        header.setDescription(TableUtils.getHeaderStringValue(tableTemplate, this, "description", locale, args, this.getName()));
         header.setHidden(TableUtils.getHeaderBooleanValue(tableTemplate, this, "hidden", locale, args, this.getHidden()));
         header.setSortable(TableUtils.getHeaderBooleanValue(tableTemplate, this, "sortable", locale, args, this.getSortable()));
         header.setMovable(TableUtils.getHeaderBooleanValue(tableTemplate, this, "movable", locale, args, this.getMovable()));
