@@ -46,7 +46,6 @@ public abstract class InputFieldTemplate<F extends InputField<T>, T> extends Fie
         field.setName(this.getName());
         field.setPlaceholder(FormUtils.getFieldStringProperty(formTemplate, this, "placeholder", locale, args, this.getDefaultValues().getPlaceholder()));
         field.setRequired(FormUtils.getFieldBooleanProperty(formTemplate, this, "required", locale, args, this.getDefaultValues().getRequired()));
-        field.setFocused(FormUtils.getFieldBooleanProperty(formTemplate, this, "focused", locale, args, this.getDefaultValues().getFocused()));
         field.setDisable(FormUtils.getFieldBooleanProperty(formTemplate, this, "disable", locale, args, this.getDefaultValues().getDisable()));
         field.setErrorMessage(FormUtils.getFieldStringProperty(formTemplate, this, "errorMessage", locale, args, this.getDefaultValues().getErrorMessage()));
         if (null != valueProvider) {

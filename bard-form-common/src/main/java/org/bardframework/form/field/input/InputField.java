@@ -10,8 +10,6 @@ public abstract class InputField<T> extends Field {
     private String errorMessage;
     private Boolean required;
     private Boolean disable;
-    private Boolean focused;
-    private Boolean invalid;
     private T value;
 
     public InputField() {
@@ -69,21 +67,5 @@ public abstract class InputField<T> extends Field {
 
     public void setRequired(Boolean required) {
         this.required = required;
-    }
-
-    public Boolean getInvalid() {
-        return invalid;
-    }
-
-    public void setInvalid(Boolean invalid) {
-        this.invalid = invalid;
-    }
-
-    public Boolean getFocused() {
-        return focused;
-    }
-
-    public void setFocused(Boolean focused) {
-        this.focused = focused;
     }
 }
