@@ -18,7 +18,7 @@ public class DateFieldTemplate extends InputFieldTemplate<DateField, LocalDate> 
     }
 
     @Override
-    public boolean isValid(DateField field, LocalDate value, Map<String, String> args) {
+    public boolean isValid(DateField field, LocalDate value, Map<String, String> flowData) {
         if (null == value) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 LOGGER.debug("field [{}] is required, but it's value is empty", field.getName());
@@ -38,10 +38,10 @@ public class DateFieldTemplate extends InputFieldTemplate<DateField, LocalDate> 
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, DateField field, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
-        super.fill(formTemplate, field, args, locale, httpRequest);
-        field.setMinValue(FormUtils.getFieldLocalDateProperty(formTemplate, this, "minValue", locale, args, this.getDefaultValues().getMinValue()));
-        field.setMaxValue(FormUtils.getFieldLocalDateProperty(formTemplate, this, "maxValue", locale, args, this.getDefaultValues().getMaxValue()));
+    public void fill(FormTemplate formTemplate, DateField field, Map<String, String> values, Locale locale, HttpServletRequest httpRequest) throws Exception {
+        super.fill(formTemplate, field, values, locale, httpRequest);
+        field.setMinValue(FormUtils.getFieldLocalDateProperty(formTemplate, this, "minValue", locale, values, this.getDefaultValues().getMinValue()));
+        field.setMaxValue(FormUtils.getFieldLocalDateProperty(formTemplate, this, "maxValue", locale, values, this.getDefaultValues().getMaxValue()));
         if (null == field.getMinValue()) {
             field.setMinValue(this.getMinValue());
         }

@@ -17,7 +17,7 @@ public class ListFieldTemplate extends InputFieldTemplate<ListField, List<String
     }
 
     @Override
-    public boolean isValid(ListField field, List<String> values, Map<String, String> args) {
+    public boolean isValid(ListField field, List<String> values, Map<String, String> flowData) {
         if (CollectionUtils.isEmpty(values)) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 LOGGER.debug("field [{}] is required, but it's value is empty", field.getName());
@@ -41,11 +41,11 @@ public class ListFieldTemplate extends InputFieldTemplate<ListField, List<String
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, ListField field, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
-        super.fill(formTemplate, field, args, locale, httpRequest);
-        field.setMinLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "minLength", locale, args, this.getDefaultValues().getMinLength()));
-        field.setMaxLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxLength", locale, args, this.getDefaultValues().getMaxLength()));
-        field.setMaxCount(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxCount", locale, args, this.getDefaultValues().getMaxCount()));
+    public void fill(FormTemplate formTemplate, ListField field, Map<String, String> values, Locale locale, HttpServletRequest httpRequest) throws Exception {
+        super.fill(formTemplate, field, values, locale, httpRequest);
+        field.setMinLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "minLength", locale, values, this.getDefaultValues().getMinLength()));
+        field.setMaxLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxLength", locale, values, this.getDefaultValues().getMaxLength()));
+        field.setMaxCount(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxCount", locale, values, this.getDefaultValues().getMaxCount()));
     }
 
     @Override

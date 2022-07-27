@@ -28,14 +28,14 @@ public class CaptchaFieldTemplate extends FlowInputFieldTemplate<CaptchaField, S
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, CaptchaField field, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
-        super.fill(formTemplate, field, args, locale, httpRequest);
+    public void fill(FormTemplate formTemplate, CaptchaField field, Map<String, String> values, Locale locale, HttpServletRequest httpRequest) throws Exception {
+        super.fill(formTemplate, field, values, locale, httpRequest);
         field.setLength(this.getCaptchaLength());
         field.setRefreshAction(this.getRefreshAction());
     }
 
     @Override
-    public boolean isValid(CaptchaField field, String value, Map<String, String> args) {
+    public boolean isValid(CaptchaField field, String value, Map<String, String> flowData) {
         if (null == value) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 LOGGER.debug("field [{}] is required, but it's value is empty", field.getName());

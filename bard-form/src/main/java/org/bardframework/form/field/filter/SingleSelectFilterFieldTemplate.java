@@ -20,14 +20,14 @@ public class SingleSelectFilterFieldTemplate extends InputFieldTemplate<SingleSe
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, SingleSelectFilterField field, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
-        super.fill(formTemplate, field, args, locale, httpRequest);
+    public void fill(FormTemplate formTemplate, SingleSelectFilterField field, Map<String, String> values, Locale locale, HttpServletRequest httpRequest) throws Exception {
+        super.fill(formTemplate, field, values, locale, httpRequest);
         field.setOptions(optionDataSource.getOptions(locale));
     }
 
 
     @Override
-    public boolean isValid(SingleSelectFilterField field, IdFilter<String> filter, Map<String, String> args) {
+    public boolean isValid(SingleSelectFilterField field, IdFilter<String> filter, Map<String, String> flowData) {
         if (null == filter || StringUtils.isBlank(filter.getEquals())) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 LOGGER.debug("filterField [{}] is required, but it's value is empty", field.getName());

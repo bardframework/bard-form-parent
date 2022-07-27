@@ -11,7 +11,7 @@
 
     <groupId>org.bardframework.form</groupId>
     <artifactId>bard-form-parent</artifactId>
-    <version>1.4.19</version>
+    <version>1.4.29</version>
 
     <packaging>pom</packaging>
     <modules>

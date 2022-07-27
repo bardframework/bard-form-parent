@@ -5,7 +5,7 @@ import org.bardframework.form.field.FieldType;
 
 public class FileDownloadField extends Field {
 
-    private String url;
+    private String src;
     private String fileName;
     private String contentType;
     private Integer size;
@@ -31,12 +31,12 @@ public class FileDownloadField extends Field {
         this.contentType = contentType;
     }
 
-    public String getUrl() {
-        return url;
+    public String getSrc() {
+        return src;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setSrc(String src) {
+        this.src = src;
     }
 
     public String getFileName() {

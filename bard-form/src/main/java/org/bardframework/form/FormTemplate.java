@@ -3,7 +3,6 @@ package org.bardframework.form;
 import org.apache.commons.collections4.MapUtils;
 import org.bardframework.form.exception.FormDataValidationException;
 import org.bardframework.form.field.FieldTemplate;
-import org.bardframework.form.field.input.InputField;
 import org.bardframework.form.field.input.InputFieldTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,9 +34,9 @@ public class FormTemplate {
         this.messageSource = messageSource;
     }
 
-    public <F extends InputField<T>, T> void validate(Map<String, String> args, Map<String, String> values, Locale locale, HttpServletRequest httpRequest) throws Exception {
-        Set<String> allowedFieldNames = this.getAllowedInputFields(args, locale);
-        Set<String> illegalFields = new HashSet<>(values.keySet());
+    public void validate(Map<String, String> flowData, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest) throws Exception {
+        Set<String> allowedFieldNames = this.getAllowedInputFields(flowData, locale);
+        Set<String> illegalFields = new HashSet<>(formData.keySet());
         illegalFields.removeAll(allowedFieldNames);
         if (!illegalFields.isEmpty()) {
             if (this.isFailOnUnknownSubmitFields()) {
@@ -49,8 +48,8 @@ public class FormTemplate {
             }
         }
         FormDataValidationException ex = new FormDataValidationException();
-        for (InputFieldTemplate<?, ?> inputFieldTemplate : this.getFieldTemplates(args, InputFieldTemplate.class)) {
-            inputFieldTemplate.validate(this, values, locale, httpRequest, ex);
+        for (InputFieldTemplate<?, ?> inputFieldTemplate : this.getFieldTemplates(flowData, InputFieldTemplate.class)) {
+            inputFieldTemplate.validate(this, flowData, formData, locale, httpRequest, ex);
         }
         if (!MapUtils.isEmpty(ex.getInvalidFields())) {
             throw ex;

@@ -24,33 +24,36 @@ public abstract class InputFieldTemplate<F extends InputField<T>, T> extends Fie
         this.persistentValue = persistentValue;
     }
 
-    public void validate(FormTemplate formTemplate, Map<String, String> values, Locale locale, HttpServletRequest httpRequest, FormDataValidationException ex)
+    public void validate(FormTemplate formTemplate, Map<String, String> flowData, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest, FormDataValidationException ex)
             throws Exception {
-        F formField = this.toField(formTemplate, values, locale, httpRequest);
+        F formField = this.toField(formTemplate, formData, locale, httpRequest);
         if (Boolean.TRUE.equals(formField.getDisable())) {
             return;
         }
-        String stringValue = values.get(this.getName());
-        if (!this.isValid(formField, this.toValue(stringValue), values)) {
-            ex.addFiledError(this.getName(), formField.getErrorMessage());
+        String stringValue = formData.get(this.getName());
+        if (!this.isValid(formField, this.toValue(stringValue), flowData)) {
+            ex.addFiledError(this.getName(), this.getErrorMessage(formTemplate, formData, locale));
         }
     }
 
-    public abstract boolean isValid(F field, T value, Map<String, String> args);
+    public abstract boolean isValid(F field, T value, Map<String, String> flowData) throws Exception;
 
     public abstract T toValue(String value);
 
     @Override
-    public void fill(FormTemplate formTemplate, F field, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
-        super.fill(formTemplate, field, args, locale, httpRequest);
+    public void fill(FormTemplate formTemplate, F field, Map<String, String> values, Locale locale, HttpServletRequest httpRequest) throws Exception {
+        super.fill(formTemplate, field, values, locale, httpRequest);
         field.setName(this.getName());
-        field.setPlaceholder(FormUtils.getFieldStringProperty(formTemplate, this, "placeholder", locale, args, this.getDefaultValues().getPlaceholder()));
-        field.setRequired(FormUtils.getFieldBooleanProperty(formTemplate, this, "required", locale, args, this.getDefaultValues().getRequired()));
-        field.setDisable(FormUtils.getFieldBooleanProperty(formTemplate, this, "disable", locale, args, this.getDefaultValues().getDisable()));
-        field.setErrorMessage(FormUtils.getFieldStringProperty(formTemplate, this, "errorMessage", locale, args, this.getDefaultValues().getErrorMessage()));
+        field.setPlaceholder(FormUtils.getFieldStringProperty(formTemplate, this, "placeholder", locale, values, this.getDefaultValues().getPlaceholder()));
+        field.setRequired(FormUtils.getFieldBooleanProperty(formTemplate, this, "required", locale, values, this.getDefaultValues().getRequired()));
+        field.setDisable(FormUtils.getFieldBooleanProperty(formTemplate, this, "disable", locale, values, this.getDefaultValues().getDisable()));
         if (null != valueProvider) {
             field.setValue(valueProvider.getValue(field, httpRequest));
         }
+    }
+
+    private String getErrorMessage(FormTemplate formTemplate, Map<String, String> formData, Locale locale) {
+        return FormUtils.getFieldStringProperty(formTemplate, this, "errorMessage", locale, formData, this.getDefaultValues().getErrorMessage());
     }
 
     public boolean isPersistentValue() {

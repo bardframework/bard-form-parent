@@ -1,4 +1,4 @@
-package org.bardframework.flow.form.field.input.otpsms;
+package org.bardframework.flow.form.field.input.otp.sms;
 
 import org.bardframework.flow.processor.FormProcessorAbstract;
 import org.springframework.http.HttpStatus;

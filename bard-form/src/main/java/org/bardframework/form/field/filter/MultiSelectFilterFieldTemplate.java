@@ -25,14 +25,14 @@ public class MultiSelectFilterFieldTemplate extends InputFieldTemplate<MultiSele
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, MultiSelectFilterField filterField, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
-        super.fill(formTemplate, filterField, args, locale, httpRequest);
-        filterField.setMaxCount(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxCount", locale, args, this.getDefaultValues().getMaxCount()));
+    public void fill(FormTemplate formTemplate, MultiSelectFilterField filterField, Map<String, String> values, Locale locale, HttpServletRequest httpRequest) throws Exception {
+        super.fill(formTemplate, filterField, values, locale, httpRequest);
+        filterField.setMaxCount(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxCount", locale, values, this.getDefaultValues().getMaxCount()));
         filterField.setOptions(optionDataSource.getOptions(locale));
     }
 
     @Override
-    public boolean isValid(MultiSelectFilterField filterField, IdFilter<String> idFilter, Map<String, String> args) {
+    public boolean isValid(MultiSelectFilterField filterField, IdFilter<String> idFilter, Map<String, String> flowData) {
         if (null == idFilter || CollectionUtils.isEmpty(idFilter.getIn())) {
             if (Boolean.TRUE.equals(filterField.getRequired())) {
                 LOGGER.debug("filterField [{}] is required, but it's value is empty", filterField.getName());

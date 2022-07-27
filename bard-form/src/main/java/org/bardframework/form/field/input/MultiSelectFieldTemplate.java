@@ -23,14 +23,14 @@ public class MultiSelectFieldTemplate extends InputFieldTemplate<MultiSelectFiel
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, MultiSelectField field, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
-        super.fill(formTemplate, field, args, locale, httpRequest);
-        field.setMaxCount(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxCount", locale, args, this.getDefaultValues().getMaxCount()));
+    public void fill(FormTemplate formTemplate, MultiSelectField field, Map<String, String> values, Locale locale, HttpServletRequest httpRequest) throws Exception {
+        super.fill(formTemplate, field, values, locale, httpRequest);
+        field.setMaxCount(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxCount", locale, values, this.getDefaultValues().getMaxCount()));
         field.setOptions(optionDataSource.getOptions(locale));
     }
 
     @Override
-    public boolean isValid(MultiSelectField field, List<String> values, Map<String, String> args) {
+    public boolean isValid(MultiSelectField field, List<String> values, Map<String, String> flowData) {
         if (CollectionUtils.isEmpty(values)) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 LOGGER.debug("field [{}] is required, but it's value is empty", field.getName());

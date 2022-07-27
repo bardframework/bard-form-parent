@@ -11,7 +11,7 @@ public class SwitchButtonFieldTemplate extends InputFieldTemplate<SwitchButtonFi
     }
 
     @Override
-    public boolean isValid(SwitchButtonField field, Boolean value, Map<String, String> args) {
+    public boolean isValid(SwitchButtonField field, Boolean value, Map<String, String> flowData) {
         return true;
     }
 

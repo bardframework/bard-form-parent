@@ -22,17 +22,17 @@ public class FileUploadFieldTemplate extends InputFieldTemplate<FileUploadField,
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, FileUploadField field, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
-        super.fill(formTemplate, field, args, locale, httpRequest);
-        field.setMinSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "minSize", locale, args, this.getDefaultValues().getMinSize()));
-        field.setMaxSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxSize", locale, args, this.getDefaultValues().getMaxSize()));
-        field.setContentTypes(FormUtils.getFieldListProperty(formTemplate, this, "contentTypes", locale, args, this.getDefaultValues().getContentTypes()));
+    public void fill(FormTemplate formTemplate, FileUploadField field, Map<String, String> values, Locale locale, HttpServletRequest httpRequest) throws Exception {
+        super.fill(formTemplate, field, values, locale, httpRequest);
+        field.setMinSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "minSize", locale, values, this.getDefaultValues().getMinSize()));
+        field.setMaxSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxSize", locale, values, this.getDefaultValues().getMaxSize()));
+        field.setContentTypes(FormUtils.getFieldListProperty(formTemplate, this, "contentTypes", locale, values, this.getDefaultValues().getContentTypes()));
         field.setUploadAction(this.getUploadAction());
         field.setDownloadAction(this.getDownloadAction());
     }
 
     @Override
-    public boolean isValid(FileUploadField field, String value, Map<String, String> args) {
+    public boolean isValid(FileUploadField field, String value, Map<String, String> flowData) {
         //TODO not implement
         return true;
     }
