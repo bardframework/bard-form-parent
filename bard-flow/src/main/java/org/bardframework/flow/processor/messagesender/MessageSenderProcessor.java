@@ -9,6 +9,7 @@ import org.bardframework.time.LocalDateTimeJalali;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
+import java.time.chrono.HijrahDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
@@ -25,8 +26,9 @@ public class MessageSenderProcessor extends FormProcessorAbstract {
     protected final Executor executor = Executors.newFixedThreadPool(100);
     protected boolean failOnError = true;
     protected boolean executeInNewThread = false;
-    protected DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+    protected DateTimeFormatter dateFormatGregorian = DateTimeFormatter.ofPattern("yyyy/dd/MM");
     protected DateTimeFormatter dateFormatterJalali = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+    protected DateTimeFormatter dateFormatterHijrah = DateTimeFormatter.ofPattern("yyyy/MM/dd");
     protected DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("H:mm:ss");
 
     public MessageSenderProcessor(MessageCreator messageCreator, MessageSender messageSender, String errorMessageCode) {
@@ -62,10 +64,10 @@ public class MessageSenderProcessor extends FormProcessorAbstract {
 
     protected Map<String, String> getArgs(Map<String, String> flowData) {
         Map<String, String> args = new HashMap<>(flowData);
-        LocalDateTimeJalali dateTimeJalali = LocalDateTimeJalali.now();
         LocalDateTime dateTime = LocalDateTime.now();
-        args.put("date", dateTime.format(this.getDateFormat()));
-        args.put("jalali_date", dateTimeJalali.format(this.getDateFormatterJalali()));
+        args.put("date", dateTime.format(this.getDateFormatGregorian()));
+        args.put("jalali_date", LocalDateTimeJalali.now().format(this.getDateFormatterJalali()));
+        args.put("hijrah_date", HijrahDate.now().format(this.getDateFormatterHijrah()));
         args.put("time", dateTime.format(this.getTimeFormat()));
         return args;
     }
@@ -100,12 +102,12 @@ public class MessageSenderProcessor extends FormProcessorAbstract {
         return errorMessageCode;
     }
 
-    public DateTimeFormatter getDateFormat() {
-        return dateFormat;
+    public DateTimeFormatter getDateFormatGregorian() {
+        return dateFormatGregorian;
     }
 
-    public void setDateFormat(DateTimeFormatter dateFormat) {
-        this.dateFormat = dateFormat;
+    public void setDateFormatGregorian(DateTimeFormatter dateFormatGregorian) {
+        this.dateFormatGregorian = dateFormatGregorian;
     }
 
     public DateTimeFormatter getDateFormatterJalali() {
@@ -114,6 +116,14 @@ public class MessageSenderProcessor extends FormProcessorAbstract {
 
     public void setDateFormatterJalali(DateTimeFormatter dateFormatterJalali) {
         this.dateFormatterJalali = dateFormatterJalali;
+    }
+
+    public DateTimeFormatter getDateFormatterHijrah() {
+        return dateFormatterHijrah;
+    }
+
+    public void setDateFormatterHijrah(DateTimeFormatter dateFormatterHijrah) {
+        this.dateFormatterHijrah = dateFormatterHijrah;
     }
 
     public DateTimeFormatter getTimeFormat() {
