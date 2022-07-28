@@ -1,4 +1,4 @@
-package org.bardframework.flow.processor.messagesender.creator;
+package org.bardframework.flow.processor.message.creator;
 
 import org.apache.commons.io.IOUtils;
 import org.bardframework.commons.utils.StringTemplateUtils;
@@ -11,12 +11,12 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class MessageCreatorResource implements MessageCreator {
+public class MessageProviderResource implements MessageProvider {
 
     protected final String resourcePathTemplate;
     protected String localeArgKey = "locale";
 
-    public MessageCreatorResource(String resourcePathTemplate) {
+    public MessageProviderResource(String resourcePathTemplate) {
         this.resourcePathTemplate = resourcePathTemplate;
     }
 

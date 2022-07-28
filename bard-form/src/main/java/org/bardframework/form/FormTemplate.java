@@ -34,6 +34,9 @@ public class FormTemplate {
         this.messageSource = messageSource;
     }
 
+    /**
+     * اعتبارسنجی داده های ارسالی
+     */
     public void validate(String flowToken, Map<String, String> flowData, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest) throws Exception {
         Set<String> allowedFieldNames = this.getAllowedInputFields(flowData, locale);
         Set<String> illegalFields = new HashSet<>(formData.keySet());
@@ -48,7 +51,11 @@ public class FormTemplate {
             }
         }
         FormDataValidationException ex = new FormDataValidationException();
-        for (InputFieldTemplate<?, ?> inputFieldTemplate : this.getFieldTemplates(flowData, InputFieldTemplate.class)) {
+        /*
+            در بخش اعتبارسنچی ابتدا فیلدها براساس براساس اولیت اعتبارسنجی مرتب می شوند
+            مرتب سازی برای کنترل سناریوهایی است که ترتیب اعتبارسنجی فیلدها مهم است (مانند فیلد کپچا که باید پیش از همه اعتبارسنجی شود)
+         */
+        for (InputFieldTemplate<?, ?> inputFieldTemplate : this.getFieldTemplates(flowData, InputFieldTemplate.class).stream().sorted(Comparator.comparingInt(InputFieldTemplate::getValidationOrder)).collect(Collectors.toList())) {
             inputFieldTemplate.validate(flowToken, this, flowData, formData, locale, httpRequest, ex);
         }
         if (!MapUtils.isEmpty(ex.getInvalidFields())) {

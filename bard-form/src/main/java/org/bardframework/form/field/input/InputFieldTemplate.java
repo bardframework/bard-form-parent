@@ -71,4 +71,8 @@ public abstract class InputFieldTemplate<F extends InputField<T>, T> extends Fie
     public void setValueProvider(FieldValueProvider<F, T> valueProvider) {
         this.valueProvider = valueProvider;
     }
+
+    public int getValidationOrder() {
+        return 0;
+    }
 }

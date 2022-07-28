@@ -1,8 +1,8 @@
-package org.bardframework.flow.processor.messagesender.otp;
+package org.bardframework.flow.form.field.input.otp;
 
 import com.mifmif.common.regex.Generex;
 
-public class OtpGeneratorRegex implements OtpGenerator {
+public class OtpGeneratorRegex implements OtpGenerator<String> {
     private final Generex generex;
     private final int length;
 
@@ -12,12 +12,17 @@ public class OtpGeneratorRegex implements OtpGenerator {
     }
 
     @Override
-    public String generateOtp() {
+    public String generate() {
         return generex.random();
     }
 
     @Override
-    public int length() {
+    public int getLength() {
         return length;
+    }
+
+    @Override
+    public Boolean isNumber() {
+        return false;
     }
 }

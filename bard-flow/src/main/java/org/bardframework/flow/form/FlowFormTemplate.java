@@ -1,11 +1,8 @@
 package org.bardframework.flow.form;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.bardframework.flow.form.field.input.FlowInputFieldTemplate;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.field.FieldTemplate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 
 import javax.annotation.PostConstruct;
@@ -16,10 +13,8 @@ import java.util.Map;
 
 public class FlowFormTemplate extends FormTemplate {
 
-    protected final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
-
-    private List<FormProcessor> preProcessors;
-    private List<FormProcessor> postProcessors;
+    private List<FormProcessor> preProcessors = new ArrayList<>();
+    private List<FormProcessor> postProcessors = new ArrayList<>();
     private Map<String, List<FormProcessor>> actionProcessors = new HashMap<>();
     private boolean finished;
 
@@ -29,48 +24,11 @@ public class FlowFormTemplate extends FormTemplate {
 
     @PostConstruct
     protected void configurationValidate() {
-        if (CollectionUtils.isNotEmpty(postProcessors)) {
-            if (finished) {
-                throw new IllegalStateException("when finished is true, can't set postProcessors");
-            }
-            this.postProcessors.forEach(processor -> processor.configurationValidate(this));
+        if (CollectionUtils.isNotEmpty(this.getPostProcessors()) && this.isFinished()) {
+            throw new IllegalStateException("when finished is true, can't set postProcessors");
         }
-        if (CollectionUtils.isNotEmpty(preProcessors)) {
-            this.preProcessors.forEach(processor -> processor.configurationValidate(this));
-        }
-        List<FlowInputFieldTemplate<?, ?>> inputFieldTemplates = new ArrayList<>();
-        fieldTemplates.stream().filter(fieldTemplate -> fieldTemplate instanceof FlowInputFieldTemplate).forEach(fieldTemplate -> {
-            inputFieldTemplates.add((FlowInputFieldTemplate<?, ?>) fieldTemplate);
-        });
-        /*
-            merge all pre processors
-         */
-        List<FormProcessor> processors = new ArrayList<>();
-        for (FlowInputFieldTemplate<?, ?> inputFieldTemplate : inputFieldTemplates) {
-            if (null != inputFieldTemplate.getPreProcessors()) {
-                processors.addAll(inputFieldTemplate.getPreProcessors());
-            }
-        }
-        if (null != this.preProcessors) {
-            processors.addAll(this.preProcessors);
-        }
-        processors.sort(FormProcessor::compareTo);
-        this.preProcessors = processors;
-
-        /*
-            merge all post processors
-         */
-        processors = new ArrayList<>();
-        for (FlowInputFieldTemplate<?, ?> inputFieldTemplate : inputFieldTemplates) {
-            if (null != inputFieldTemplate.getPostProcessors()) {
-                processors.addAll(inputFieldTemplate.getPostProcessors());
-            }
-        }
-        if (null != this.postProcessors) {
-            processors.addAll(this.postProcessors);
-        }
-        processors.sort(FormProcessor::compareTo);
-        this.postProcessors = processors;
+        this.getPreProcessors().forEach(processor -> processor.configurationValidate(this));
+        this.getPostProcessors().forEach(processor -> processor.configurationValidate(this));
     }
 
     public List<FormProcessor> getPreProcessors() {

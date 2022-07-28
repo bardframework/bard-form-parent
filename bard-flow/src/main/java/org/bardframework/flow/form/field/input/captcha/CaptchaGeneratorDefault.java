@@ -3,8 +3,9 @@ package org.bardframework.flow.form.field.input.captcha;
 import org.bardframework.commons.captcha.CaptchaService;
 import org.bardframework.commons.captcha.CaptchaType;
 import org.bardframework.commons.captcha.GeneratedCaptcha;
+import org.bardframework.flow.form.field.input.otp.OtpGenerator;
 
-public class CaptchaGeneratorDefault implements CaptchaGenerator {
+public class CaptchaGeneratorDefault implements OtpGenerator<GeneratedCaptcha> {
 
     private final CaptchaService captchaService;
     private final CaptchaType type;
@@ -32,5 +33,10 @@ public class CaptchaGeneratorDefault implements CaptchaGenerator {
     @Override
     public int getLength() {
         return length;
+    }
+
+    @Override
+    public Boolean isNumber() {
+        return type == CaptchaType.ENGLISH_NUMBER;
     }
 }

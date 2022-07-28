@@ -1,4 +1,4 @@
-package org.bardframework.flow.processor.messagesender.creator;
+package org.bardframework.flow.processor.message.creator;
 
 import org.springframework.context.MessageSource;
 
@@ -6,12 +6,12 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.Map;
 
-public class MessageCreatorMessageSource implements MessageCreator {
+public class MessageProviderMessageSource implements MessageProvider {
 
     protected final String messageTemplateKey;
     protected final MessageSource messageSource;
 
-    public MessageCreatorMessageSource(String messageTemplateKey, MessageSource messageSource) {
+    public MessageProviderMessageSource(String messageTemplateKey, MessageSource messageSource) {
         this.messageTemplateKey = messageTemplateKey;
         this.messageSource = messageSource;
     }

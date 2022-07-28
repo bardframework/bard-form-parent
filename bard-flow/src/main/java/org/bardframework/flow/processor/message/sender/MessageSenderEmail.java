@@ -1,7 +1,7 @@
-package org.bardframework.flow.processor.messagesender.sender;
+package org.bardframework.flow.processor.message.sender;
 
 import org.apache.commons.lang3.StringUtils;
-import org.bardframework.flow.processor.messagesender.creator.MessageCreator;
+import org.bardframework.flow.processor.message.creator.MessageProvider;
 import org.bardframework.form.field.FieldTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,16 +12,17 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
-public class MessageSenderEmail implements MessageSender {
+public class MessageSenderEmail extends MessageSenderAbstract {
     protected static final Logger LOGGER = LoggerFactory.getLogger(MessageSenderEmail.class);
 
     private final InternetAddress senderEmail;
     private final Properties configs;
-    private final MessageCreator subjectCreator;
+    private final MessageProvider subjectCreator;
     private final FieldTemplate<?> receiverEmailFieldTemplate;
     private final Authenticator authenticator;
 
-    public MessageSenderEmail(String senderEmail, String senderUsername, String senderPassword, Properties configs, MessageCreator subjectCreator, FieldTemplate<?> receiverEmailFieldTemplate) throws AddressException {
+    public MessageSenderEmail(String senderEmail, String senderUsername, String senderPassword, Properties configs, MessageProvider subjectCreator, MessageProvider emailBodyProvider, FieldTemplate<?> receiverEmailFieldTemplate) throws AddressException {
+        super(emailBodyProvider);
         this.senderEmail = InternetAddress.parse(senderEmail)[0];
         this.configs = configs;
         this.subjectCreator = subjectCreator;

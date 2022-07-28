@@ -1,19 +1,35 @@
 package org.bardframework.flow.form.field.input.otp.time;
 
 import org.bardframework.flow.form.field.input.otp.OtpFieldTemplate;
+import org.bardframework.flow.form.field.input.otp.OtpGenerator;
+import org.bardframework.form.field.input.OtpField;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Base64;
+import java.util.Locale;
 import java.util.Map;
 
-public class TotpFieldTemplate extends OtpFieldTemplate {
-    public static final String TOTP_SECRET_KEY = "totp_secret";
+public class TotpFieldTemplate extends OtpFieldTemplate<OtpField, Void> {
+    public static final String TOTP_SECRET_KEY = "X_TOTP_SECRET";
 
     private final OtpServiceAbstract otpService;
 
-    protected TotpFieldTemplate(String name, OtpServiceAbstract otpService) {
-        super(name, otpService.getLength());
+    public TotpFieldTemplate(String name, OtpGenerator<Void> otpGenerator, int maxTryToResolveCount, OtpServiceAbstract otpService) {
+        super(name, otpGenerator, maxTryToResolveCount);
         this.otpService = otpService;
-        this.isNumber = true;
+    }
+
+    @Override
+    protected String getResendAction() {
+        return null;
+    }
+
+    @Override
+    protected void send(String flowToken, Map<String, String> flowData, Void otp, Locale locale, HttpServletResponse httpResponse) throws Exception {
+        /*
+            do nothing
+         */
+
     }
 
     @Override

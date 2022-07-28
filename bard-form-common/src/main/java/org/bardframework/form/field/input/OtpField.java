@@ -4,9 +4,10 @@ import org.bardframework.form.field.FieldType;
 
 public class OtpField extends InputField<String> {
     private int length;
+    private String resendAction;
     private Integer resendIntervalSeconds;
     private Boolean canEditIdentifier;
-    private Boolean isNumber;
+    private Boolean number;
 
     @Override
     public String toString(String value) {
@@ -34,19 +35,27 @@ public class OtpField extends InputField<String> {
         this.resendIntervalSeconds = resendIntervalSeconds;
     }
 
+    public String getResendAction() {
+        return resendAction;
+    }
+
+    public void setResendAction(String resendAction) {
+        this.resendAction = resendAction;
+    }
+
+    public Boolean getNumber() {
+        return number;
+    }
+
+    public void setNumber(Boolean number) {
+        this.number = number;
+    }
+
     public Boolean getCanEditIdentifier() {
         return canEditIdentifier;
     }
 
     public void setCanEditIdentifier(Boolean canEditIdentifier) {
         this.canEditIdentifier = canEditIdentifier;
-    }
-
-    public Boolean getIsNumber() {
-        return isNumber;
-    }
-
-    public void setIsNumber(Boolean isNumber) {
-        this.isNumber = isNumber;
     }
 }

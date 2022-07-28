@@ -1,7 +1,8 @@
-package org.bardframework.flow.processor.messagesender.sender;
+package org.bardframework.flow.processor.message.sender;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.commons.sms.SmsSender;
+import org.bardframework.flow.processor.message.creator.MessageProvider;
 import org.bardframework.form.field.FieldTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,13 +11,14 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.Map;
 
-public class MessageSenderSms implements MessageSender {
+public class MessageSenderSms extends MessageSenderAbstract {
     protected static final Logger LOGGER = LoggerFactory.getLogger(MessageSenderSms.class);
 
     protected final SmsSender smsSender;
     protected final FieldTemplate<?> mobileNumberFieldTemplate;
 
-    public MessageSenderSms(SmsSender smsSender, FieldTemplate<?> mobileNumberFieldTemplate) {
+    public MessageSenderSms(SmsSender smsSender, MessageProvider messageProvider, FieldTemplate<?> mobileNumberFieldTemplate) {
+        super(messageProvider);
         this.smsSender = smsSender;
         this.mobileNumberFieldTemplate = mobileNumberFieldTemplate;
     }

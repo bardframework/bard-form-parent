@@ -1,28 +1,25 @@
-package org.bardframework.flow.processor.messagesender;
+package org.bardframework.flow.processor.message.sender;
 
-import org.bardframework.flow.exception.FlowExecutionException;
-import org.bardframework.flow.processor.FormProcessorAbstract;
-import org.bardframework.flow.processor.messagesender.creator.MessageCreator;
-import org.bardframework.flow.processor.messagesender.sender.MessageSender;
+import org.bardframework.flow.processor.message.creator.MessageProvider;
 import org.bardframework.time.LocalDateTimeJalali;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.time.chrono.HijrahDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public class MessageSenderProcessor extends FormProcessorAbstract {
+public abstract class MessageSenderAbstract implements MessageSender {
 
-    protected final MessageCreator messageCreator;
-    protected final MessageSender messageSender;
-    protected final String errorMessageCode;
+    private static final Logger LOGGER = LoggerFactory.getLogger(MessageSenderAbstract.class);
+
+    protected final MessageProvider messageProvider;
     protected final Executor executor = Executors.newFixedThreadPool(100);
     protected boolean failOnError = true;
     protected boolean executeInNewThread = false;
@@ -31,59 +28,47 @@ public class MessageSenderProcessor extends FormProcessorAbstract {
     protected DateTimeFormatter dateFormatterHijrah = DateTimeFormatter.ofPattern("yyyy/MM/dd");
     protected DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("H:mm:ss");
 
-    public MessageSenderProcessor(MessageCreator messageCreator, MessageSender messageSender, String errorMessageCode) {
-        this.messageCreator = messageCreator;
-        this.messageSender = messageSender;
-        this.errorMessageCode = errorMessageCode;
+    public MessageSenderAbstract(MessageProvider messageProvider) {
+        this.messageProvider = messageProvider;
     }
 
+    abstract void send(String message, Map<String, String> args, Locale locale) throws Exception;
+
     @Override
-    public final void process(String flowToken, Map<String, String> flowData, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
-        String message = this.getMessageCreator().create(flowData, locale);
+    public final void send(Map<String, String> data, Locale locale, HttpServletResponse httpResponse) throws Exception {
+        Map<String, String> args = new HashMap<>(data);
+        String message = this.getMessageProvider().create(args, locale);
         LOGGER.debug("sending message [{}]", message);
         if (this.isExecuteInNewThread()) {
-            this.getExecutor().execute(() -> this.sendInternal(message, flowData, locale));
+            this.getExecutor().execute(() -> this.sendInternal(message, args, locale));
         } else {
-            this.sendInternal(message, flowData, locale);
+            this.sendInternal(message, args, locale);
         }
     }
 
-    private void sendInternal(String message, Map<String, String> flowData, Locale locale) {
+    private void sendInternal(String message, Map<String, String> args, Locale locale) {
         try {
-            this.beforeSend(flowData);
-            this.getMessageSender().send(message, this.getArgs(flowData), locale);
-            this.afterSend(flowData);
+            this.addExtraArgs(args);
+            this.send(message, args, locale);
         } catch (Exception e) {
             LOGGER.error("error sending message, catching exception.", e);
             if (!this.isFailOnError()) {
                 return;
             }
-            throw new FlowExecutionException(List.of(errorMessageCode));
+            throw new IllegalStateException(e);
         }
     }
 
-    protected Map<String, String> getArgs(Map<String, String> flowData) {
-        Map<String, String> args = new HashMap<>(flowData);
+    protected void addExtraArgs(Map<String, String> args) {
         LocalDateTime dateTime = LocalDateTime.now();
         args.put("date", dateTime.format(this.getDateFormatGregorian()));
         args.put("jalali_date", LocalDateTimeJalali.now().format(this.getDateFormatterJalali()));
         args.put("hijrah_date", HijrahDate.now().format(this.getDateFormatterHijrah()));
         args.put("time", dateTime.format(this.getTimeFormat()));
-        return args;
     }
 
-    protected void beforeSend(Map<String, String> flowData) {
-    }
-
-    protected void afterSend(Map<String, String> flowData) {
-    }
-
-    public MessageCreator getMessageCreator() {
-        return messageCreator;
-    }
-
-    public MessageSender getMessageSender() {
-        return messageSender;
+    public MessageProvider getMessageProvider() {
+        return messageProvider;
     }
 
     public Executor getExecutor() {
@@ -96,10 +81,6 @@ public class MessageSenderProcessor extends FormProcessorAbstract {
 
     public void setFailOnError(boolean failOnError) {
         this.failOnError = failOnError;
-    }
-
-    public String getErrorMessageCode() {
-        return errorMessageCode;
     }
 
     public DateTimeFormatter getDateFormatGregorian() {

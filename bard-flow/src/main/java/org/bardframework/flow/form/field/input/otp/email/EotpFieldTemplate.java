@@ -1,12 +1,43 @@
 package org.bardframework.flow.form.field.input.otp.email;
 
-import org.bardframework.flow.form.field.input.otp.GeneratedOtpFieldTemplate;
-import org.bardframework.flow.processor.messagesender.creator.MessageCreator;
-import org.bardframework.flow.processor.messagesender.otp.OtpGenerator;
-import org.bardframework.flow.processor.messagesender.sender.MessageSenderEmail;
+import org.apache.commons.lang3.StringUtils;
+import org.bardframework.flow.form.field.input.otp.OtpFieldTemplate;
+import org.bardframework.flow.form.field.input.otp.OtpGenerator;
+import org.bardframework.flow.processor.message.sender.MessageSenderEmail;
+import org.bardframework.form.field.input.OtpField;
 
-public class EotpFieldTemplate extends GeneratedOtpFieldTemplate {
-    public EotpFieldTemplate(String name, MessageCreator messageCreator, MessageSenderEmail messageSender, OtpGenerator otpGenerator, int maxTryToResolveCount, int maxResendOtpCount, int resendIntervalSeconds, String errorMessageCode) {
-        super(name, messageCreator, messageSender, otpGenerator, maxTryToResolveCount, maxResendOtpCount, resendIntervalSeconds, errorMessageCode);
+import javax.servlet.http.HttpServletResponse;
+import java.util.Locale;
+import java.util.Map;
+
+public class EotpFieldTemplate extends OtpFieldTemplate<OtpField, String> {
+
+    private static final String ANSWER_KEY = "X_GENERATED_EOTP";
+    private final MessageSenderEmail messageSender;
+
+    public EotpFieldTemplate(String name, OtpGenerator<String> otpGenerator, int maxTryToResolveCount, MessageSenderEmail messageSender) {
+        super(name, otpGenerator, maxTryToResolveCount);
+        this.messageSender = messageSender;
+    }
+
+    @Override
+    protected void send(String flowToken, Map<String, String> flowData, String otp, Locale locale, HttpServletResponse httpResponse) throws Exception {
+        flowData.put(ANSWER_KEY, otp);
+        this.messageSender.send(flowData, locale, httpResponse);
+    }
+
+    @Override
+    protected boolean isValidOtp(String flowToken, String otp, Map<String, String> flowData) throws Exception {
+        String expectedAnswer = flowData.remove(ANSWER_KEY);
+        if (StringUtils.isBlank(expectedAnswer)) {
+            LOGGER.debug("eotp answer in flow data is blank, flow token: [{}]", flowToken);
+            return false;
+        }
+        return expectedAnswer.equalsIgnoreCase(otp);
+    }
+
+    @Override
+    protected String getResendAction() {
+        return "eotp-resend";
     }
 }
