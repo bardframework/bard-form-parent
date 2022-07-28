@@ -1,5 +1,7 @@
 package org.bardframework.flow.form.field.input.otp.time;
 
+import org.bardframework.flow.form.field.input.otp.OtpGenerator;
+
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.GeneralSecurityException;
@@ -8,7 +10,7 @@ import java.security.SecureRandom;
 /*
     https://github.com/google/google-authenticator/wiki/Key-Uri-Format
  */
-public abstract class OtpServiceAbstract {
+public abstract class OtpServiceAbstract implements OtpGenerator<Void> {
     /*
         SHA1 (Default)
         SHA256
@@ -40,6 +42,16 @@ public abstract class OtpServiceAbstract {
         SecureRandom random = SecureRandom.getInstance(this.getRngAlgorithm(), this.getRngProvider());
         random.nextBytes(secret);
         return secret;
+    }
+
+    @Override
+    public Void generate() throws Exception {
+        return null;
+    }
+
+    @Override
+    public Boolean isNumber() {
+        return true;
     }
 
     public String getAlgorithm() {
@@ -82,6 +94,7 @@ public abstract class OtpServiceAbstract {
         this.rngProvider = rngProvider;
     }
 
+    @Override
     public int getLength() {
         return length;
     }

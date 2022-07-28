@@ -1,7 +1,6 @@
 package org.bardframework.flow.form.field.input.otp.time;
 
 import org.bardframework.flow.form.field.input.otp.OtpFieldTemplate;
-import org.bardframework.flow.form.field.input.otp.OtpGenerator;
 import org.bardframework.form.field.input.OtpField;
 
 import javax.servlet.http.HttpServletResponse;
@@ -14,8 +13,8 @@ public class TotpFieldTemplate extends OtpFieldTemplate<OtpField, Void> {
 
     private final OtpServiceAbstract otpService;
 
-    public TotpFieldTemplate(String name, OtpGenerator<Void> otpGenerator, int maxTryToResolveCount, OtpServiceAbstract otpService) {
-        super(name, otpGenerator, maxTryToResolveCount);
+    public TotpFieldTemplate(String name, int maxTryToResolveCount, OtpServiceAbstract otpService) {
+        super(name, otpService, maxTryToResolveCount);
         this.otpService = otpService;
     }
 
