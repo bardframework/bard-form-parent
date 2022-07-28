@@ -56,7 +56,7 @@ public class DateFilterFieldTemplate extends InputFieldTemplate<DateFilterField,
     }
 
     @Override
-    public boolean isValid(DateFilterField field, LocalDateFilter filter, Map<String, String> flowData) {
+    public boolean isValid(String flowToken, DateFilterField field, LocalDateFilter filter, Map<String, String> flowData) {
         if (null == filter || (null == filter.getFrom() && null == filter.getTo())) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 LOGGER.debug("filterField [{}] is required, but it's value is empty", field.getName());

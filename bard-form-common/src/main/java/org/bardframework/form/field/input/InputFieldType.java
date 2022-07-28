@@ -4,6 +4,7 @@ import org.bardframework.form.field.FieldType;
 
 public enum InputFieldType implements FieldType {
     CAPTCHA,
+    COUNTRY_SELECT,
     DATE,
     DATE_TIME,
     FILE_UPLOAD,
@@ -14,6 +15,7 @@ public enum InputFieldType implements FieldType {
     MULTI_SELECT_SEARCHABLE,
     NEW_PASSWORD,
     NUMBER,
+    OTP,
     PASSWORD,
     CHECKBOX,
     SWITCH_BUTTON,

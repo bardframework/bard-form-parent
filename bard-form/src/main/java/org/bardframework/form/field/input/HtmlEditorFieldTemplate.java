@@ -16,7 +16,7 @@ public class HtmlEditorFieldTemplate extends InputFieldTemplate<HtmlEditorField,
     }
 
     @Override
-    public boolean isValid(HtmlEditorField field, String value, Map<String, String> flowData) {
+    public boolean isValid(String flowToken, HtmlEditorField field, String value, Map<String, String> flowData) {
         if (StringUtils.isBlank(value)) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 LOGGER.debug("field [{}] is required, but it's value is empty", field.getName());

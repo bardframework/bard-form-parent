@@ -32,7 +32,7 @@ public class FileUploadFieldTemplate extends InputFieldTemplate<FileUploadField,
     }
 
     @Override
-    public boolean isValid(FileUploadField field, String value, Map<String, String> flowData) {
+    public boolean isValid(String flowToken, FileUploadField field, String value, Map<String, String> flowData) {
         //TODO not implement
         return true;
     }

@@ -17,7 +17,7 @@ public class ListFieldTemplate extends InputFieldTemplate<ListField, List<String
     }
 
     @Override
-    public boolean isValid(ListField field, List<String> values, Map<String, String> flowData) {
+    public boolean isValid(String flowToken, ListField field, List<String> values, Map<String, String> flowData) {
         if (CollectionUtils.isEmpty(values)) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 LOGGER.debug("field [{}] is required, but it's value is empty", field.getName());

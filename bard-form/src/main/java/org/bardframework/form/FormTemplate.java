@@ -34,7 +34,7 @@ public class FormTemplate {
         this.messageSource = messageSource;
     }
 
-    public void validate(Map<String, String> flowData, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest) throws Exception {
+    public void validate(String flowToken, Map<String, String> flowData, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest) throws Exception {
         Set<String> allowedFieldNames = this.getAllowedInputFields(flowData, locale);
         Set<String> illegalFields = new HashSet<>(formData.keySet());
         illegalFields.removeAll(allowedFieldNames);
@@ -49,7 +49,7 @@ public class FormTemplate {
         }
         FormDataValidationException ex = new FormDataValidationException();
         for (InputFieldTemplate<?, ?> inputFieldTemplate : this.getFieldTemplates(flowData, InputFieldTemplate.class)) {
-            inputFieldTemplate.validate(this, flowData, formData, locale, httpRequest, ex);
+            inputFieldTemplate.validate(flowToken, this, flowData, formData, locale, httpRequest, ex);
         }
         if (!MapUtils.isEmpty(ex.getInvalidFields())) {
             throw ex;

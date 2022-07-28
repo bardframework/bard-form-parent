@@ -32,7 +32,7 @@ public class MultiSelectFilterFieldTemplate extends InputFieldTemplate<MultiSele
     }
 
     @Override
-    public boolean isValid(MultiSelectFilterField filterField, IdFilter<String> idFilter, Map<String, String> flowData) {
+    public boolean isValid(String flowToken, MultiSelectFilterField filterField, IdFilter<String> idFilter, Map<String, String> flowData) {
         if (null == idFilter || CollectionUtils.isEmpty(idFilter.getIn())) {
             if (Boolean.TRUE.equals(filterField.getRequired())) {
                 LOGGER.debug("filterField [{}] is required, but it's value is empty", filterField.getName());

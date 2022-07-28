@@ -59,7 +59,7 @@ public class TimeFilterFieldTemplate extends InputFieldTemplate<TimeFilterField,
     }
 
     @Override
-    public boolean isValid(TimeFilterField field, TimeFilter filter, Map<String, String> flowData) {
+    public boolean isValid(String flowToken, TimeFilterField field, TimeFilter filter, Map<String, String> flowData) {
         if (null == filter || (null == filter.getFrom() && null == filter.getTo())) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 LOGGER.debug("filterField [{}] is required, but it's value is empty", field.getName());

@@ -11,4 +11,9 @@ public class OtpGeneratorMock implements OtpGenerator {
     public String generateOtp() {
         return fixedOtp;
     }
+
+    @Override
+    public int length() {
+        return fixedOtp.length();
+    }
 }

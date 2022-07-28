@@ -30,7 +30,7 @@ public class MultiSelectFieldTemplate extends InputFieldTemplate<MultiSelectFiel
     }
 
     @Override
-    public boolean isValid(MultiSelectField field, List<String> values, Map<String, String> flowData) {
+    public boolean isValid(String flowToken, MultiSelectField field, List<String> values, Map<String, String> flowData) {
         if (CollectionUtils.isEmpty(values)) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 LOGGER.debug("field [{}] is required, but it's value is empty", field.getName());

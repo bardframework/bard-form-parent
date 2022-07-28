@@ -65,7 +65,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
             throws Exception {
         D flowData = this.getFlowDataRepository().get(flowToken);
         FlowFormTemplate currentFormTemplate = this.getCurrentFormTemplate(flowData);
-        this.fillFlowData(flowData.getData(), formData, currentFormTemplate, flowData.getLocale(), httpRequest);
+        this.fillFlowData(flowToken, flowData.getData(), formData, currentFormTemplate, flowData.getLocale(), httpRequest);
         try {
             this.process(currentFormTemplate.getPostProcessors(), flowToken, flowData, formData, httpRequest, httpResponse);
             FlowResponse<String> response = this.processNextForm(flowToken, flowData, formData, null, httpRequest, httpResponse);
@@ -145,8 +145,8 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
     /**
      * اعتبارسنجی داده های ارسالی و افزودن به فلو دیتا
      */
-    protected void fillFlowData(Map<String, String> flowData, Map<String, String> formData, FlowFormTemplate currentFormTemplate, Locale locale, HttpServletRequest httpRequest) throws Exception {
-        currentFormTemplate.validate(flowData, formData, locale, httpRequest);
+    protected void fillFlowData(String flowToken, Map<String, String> flowData, Map<String, String> formData, FlowFormTemplate currentFormTemplate, Locale locale, HttpServletRequest httpRequest) throws Exception {
+        currentFormTemplate.validate(flowToken, flowData, formData, locale, httpRequest);
         for (InputFieldTemplate<?, ?> inputFieldTemplate : currentFormTemplate.getFieldTemplates(flowData, InputFieldTemplate.class)) {
             if (!inputFieldTemplate.isPersistentValue()) {
                 continue;
