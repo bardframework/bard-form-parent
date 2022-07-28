@@ -24,6 +24,7 @@
     <properties>
         <bardframework.commons.version>1.4.16</bardframework.commons.version>
         <generex.version>1.0.2</generex.version>
+        <google.zxing.version>3.5.0</google.zxing.version>
         <guava.version>31.1-jre</guava.version>
         <spring-boot-dependencies.version>2.7.1</spring-boot-dependencies.version>
         <!-- plugin versions -->
