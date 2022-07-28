@@ -17,8 +17,8 @@ public class MessageSenderSms extends MessageSenderAbstract {
     protected final SmsSender smsSender;
     protected final FieldTemplate<?> mobileNumberFieldTemplate;
 
-    public MessageSenderSms(SmsSender smsSender, MessageProvider messageProvider, FieldTemplate<?> mobileNumberFieldTemplate) {
-        super(messageProvider);
+    public MessageSenderSms(SmsSender smsSender, MessageProvider messageProvider, String errorMessageKey, FieldTemplate<?> mobileNumberFieldTemplate) {
+        super(messageProvider, errorMessageKey);
         this.smsSender = smsSender;
         this.mobileNumberFieldTemplate = mobileNumberFieldTemplate;
     }

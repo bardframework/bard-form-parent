@@ -21,6 +21,11 @@ public class EotpFieldTemplate extends OtpFieldTemplate<OtpField, String> {
     }
 
     @Override
+    public void preProcess(String flowToken, Map<String, String> flowData, Locale locale, HttpServletResponse httpResponse) throws Exception {
+        this.sendInternal(flowToken, flowData, locale, httpResponse);
+    }
+
+    @Override
     protected void send(String flowToken, Map<String, String> flowData, String otp, Locale locale, HttpServletResponse httpResponse) throws Exception {
         flowData.put(ANSWER_KEY, otp);
         this.messageSender.send(flowData, locale, httpResponse);

@@ -1,15 +1,18 @@
 package org.bardframework.flow.processor.message.sender;
 
+import org.bardframework.flow.exception.FlowExecutionException;
 import org.bardframework.flow.processor.message.creator.MessageProvider;
 import org.bardframework.time.LocalDateTimeJalali;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.time.chrono.HijrahDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.Executor;
@@ -20,7 +23,9 @@ public abstract class MessageSenderAbstract implements MessageSender {
     private static final Logger LOGGER = LoggerFactory.getLogger(MessageSenderAbstract.class);
 
     protected final MessageProvider messageProvider;
-    protected final Executor executor = Executors.newFixedThreadPool(100);
+    protected final String errorMessageKey;
+    protected Executor executor;
+    protected int threadPoolSize = 100;
     protected boolean failOnError = true;
     protected boolean executeInNewThread = false;
     protected DateTimeFormatter dateFormatGregorian = DateTimeFormatter.ofPattern("yyyy/dd/MM");
@@ -28,11 +33,19 @@ public abstract class MessageSenderAbstract implements MessageSender {
     protected DateTimeFormatter dateFormatterHijrah = DateTimeFormatter.ofPattern("yyyy/MM/dd");
     protected DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("H:mm:ss");
 
-    public MessageSenderAbstract(MessageProvider messageProvider) {
+    public MessageSenderAbstract(MessageProvider messageProvider, String errorMessageKey) {
         this.messageProvider = messageProvider;
+        this.errorMessageKey = errorMessageKey;
     }
 
     abstract void send(String message, Map<String, String> args, Locale locale) throws Exception;
+
+    @PostConstruct
+    void init() {
+        if (this.isExecuteInNewThread()) {
+            this.executor = Executors.newFixedThreadPool(this.getThreadPoolSize());
+        }
+    }
 
     @Override
     public final void send(Map<String, String> data, Locale locale, HttpServletResponse httpResponse) throws Exception {
@@ -55,7 +68,7 @@ public abstract class MessageSenderAbstract implements MessageSender {
             if (!this.isFailOnError()) {
                 return;
             }
-            throw new IllegalStateException(e);
+            throw new FlowExecutionException(List.of(errorMessageKey));
         }
     }
 
@@ -121,5 +134,13 @@ public abstract class MessageSenderAbstract implements MessageSender {
 
     public void setExecuteInNewThread(boolean executeInNewThread) {
         this.executeInNewThread = executeInNewThread;
+    }
+
+    public int getThreadPoolSize() {
+        return threadPoolSize;
+    }
+
+    public void setThreadPoolSize(int threadPoolSize) {
+        this.threadPoolSize = threadPoolSize;
     }
 }

@@ -4,8 +4,10 @@ import org.bardframework.flow.form.FormProcessor;
 import org.bardframework.form.field.input.InputField;
 import org.bardframework.form.field.input.InputFieldTemplate;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public abstract class FlowInputFieldTemplate<F extends InputField<T>, T> extends InputFieldTemplate<F, T> {
@@ -26,5 +28,9 @@ public abstract class FlowInputFieldTemplate<F extends InputField<T>, T> extends
 
     public void setActionProcessors(Map<String, List<FormProcessor>> actionProcessors) {
         this.actionProcessors = actionProcessors;
+    }
+
+    public void preProcess(String flowToken, Map<String, String> flowData, Locale locale, HttpServletResponse httpResponse) throws Exception {
+
     }
 }

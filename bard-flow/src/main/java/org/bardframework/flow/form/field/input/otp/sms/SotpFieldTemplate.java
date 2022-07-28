@@ -27,6 +27,11 @@ public class SotpFieldTemplate extends OtpFieldTemplate<OtpField, String> {
     }
 
     @Override
+    public void preProcess(String flowToken, Map<String, String> flowData, Locale locale, HttpServletResponse httpResponse) throws Exception {
+        this.sendInternal(flowToken, flowData, locale, httpResponse);
+    }
+
+    @Override
     protected boolean isValidOtp(String flowToken, String otp, Map<String, String> flowData) throws Exception {
         String expectedAnswer = flowData.remove(ANSWER_KEY);
         if (StringUtils.isBlank(expectedAnswer)) {

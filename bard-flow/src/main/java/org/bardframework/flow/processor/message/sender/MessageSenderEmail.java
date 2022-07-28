@@ -21,8 +21,8 @@ public class MessageSenderEmail extends MessageSenderAbstract {
     private final FieldTemplate<?> receiverEmailFieldTemplate;
     private final Authenticator authenticator;
 
-    public MessageSenderEmail(String senderEmail, String senderUsername, String senderPassword, Properties configs, MessageProvider subjectCreator, MessageProvider emailBodyProvider, FieldTemplate<?> receiverEmailFieldTemplate) throws AddressException {
-        super(emailBodyProvider);
+    public MessageSenderEmail(String senderEmail, String senderUsername, String senderPassword, Properties configs, MessageProvider subjectCreator, MessageProvider emailBodyProvider, String errorMessageKey, FieldTemplate<?> receiverEmailFieldTemplate) throws AddressException {
+        super(emailBodyProvider, errorMessageKey);
         this.senderEmail = InternetAddress.parse(senderEmail)[0];
         this.configs = configs;
         this.subjectCreator = subjectCreator;

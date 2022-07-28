@@ -169,6 +169,12 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
         FlowFormTemplate nextFormTemplate = this.getNextFormTemplate(flowData);
         if (null != nextFormTemplate) {
             this.process(nextFormTemplate.getPreProcessors(), flowToken, flowData, formData, httpRequest, httpResponse);
+            /*
+                فراخوانی پیش پردازش های فیلد ها (مانند ارسال پیامک یا ...)
+             */
+            for (FlowInputFieldTemplate<?, ?> flowInputFieldTemplate : nextFormTemplate.getFieldTemplates(formData, FlowInputFieldTemplate.class)) {
+                flowInputFieldTemplate.preProcess(flowToken, flowData.getData(), flowData.getLocale(), httpResponse);
+            }
         }
         FlowResponse<String> response = this.toResponse(nextFormTemplate, flowData, responseData, httpRequest);
         if (Boolean.TRUE.equals(response.getFinished())) {

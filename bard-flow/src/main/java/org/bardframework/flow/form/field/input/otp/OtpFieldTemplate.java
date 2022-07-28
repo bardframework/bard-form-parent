@@ -92,7 +92,7 @@ public abstract class OtpFieldTemplate<F extends OtpField, O> extends FlowInputF
         field.setRequired(true);
     }
 
-    private void sendInternal(String flowToken, Map<String, String> flowData, Locale locale, HttpServletResponse httpResponse) throws Exception {
+    protected void sendInternal(String flowToken, Map<String, String> flowData, Locale locale, HttpServletResponse httpResponse) throws Exception {
         int generateCount = flowData.containsKey(GENERATE_COUNT_KEY) ? Integer.parseInt(flowData.get(GENERATE_COUNT_KEY)) : 0;
         if (generateCount > this.getMaxSendCount()) {
             throw new InvalidateFlowException(flowToken, "max otp send (generate) count exceed");
