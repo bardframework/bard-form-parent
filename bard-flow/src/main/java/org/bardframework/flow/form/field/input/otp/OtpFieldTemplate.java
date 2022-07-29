@@ -42,7 +42,7 @@ public abstract class OtpFieldTemplate<F extends OtpField, O> extends FlowInputF
 
     @PostConstruct
     void init() {
-        if (StringUtils.isNoneBlank(this.getResendAction()) && null != this.getResendIntervalSeconds()) {
+        if (StringUtils.isNoneBlank(this.getResendAction())) {
             this.setActionProcessors(Map.of(this.getResendAction(), List.of(new FormProcessorAbstract() {
                 @Override
                 public void process(String flowToken, Map<String, String> flowData, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
