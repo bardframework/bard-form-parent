@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @TestComponent
 public class MultiSelectFieldDataProvider implements InputFieldDataProvider<MultiSelectField, List<String>> {
-    private final static Logger LOGGER = LoggerFactory.getLogger(MultiSelectFieldDataProvider.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MultiSelectFieldDataProvider.class);
 
     @Override
     public List<String> getValidValue(MultiSelectField field) throws Exception {

@@ -1,5 +1,6 @@
 package org.bardframework.form.field.input;
 
+import org.bardframework.form.DescriptionShowType;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
 import org.bardframework.form.exception.FormDataValidationException;
@@ -14,6 +15,7 @@ public abstract class InputFieldTemplate<F extends InputField<T>, T> extends Fie
 
     protected boolean persistentValue = true;
     protected FieldValueProvider<F, T> valueProvider;
+    protected DescriptionShowType descriptionShowType;
 
     protected InputFieldTemplate(String name) {
         super(name);
@@ -44,6 +46,7 @@ public abstract class InputFieldTemplate<F extends InputField<T>, T> extends Fie
     public void fill(FormTemplate formTemplate, F field, Map<String, String> values, Locale locale, HttpServletRequest httpRequest) throws Exception {
         super.fill(formTemplate, field, values, locale, httpRequest);
         field.setName(this.getName());
+        field.setDescriptionShowType(FormUtils.getFieldEnumProperty(formTemplate, this, "descriptionShowType", DescriptionShowType.class, locale, values, this.getDefaultValues().getDescriptionShowType()));
         field.setPlaceholder(FormUtils.getFieldStringProperty(formTemplate, this, "placeholder", locale, values, this.getDefaultValues().getPlaceholder()));
         field.setRequired(FormUtils.getFieldBooleanProperty(formTemplate, this, "required", locale, values, this.getDefaultValues().getRequired()));
         field.setDisable(FormUtils.getFieldBooleanProperty(formTemplate, this, "disable", locale, values, this.getDefaultValues().getDisable()));
@@ -74,5 +77,13 @@ public abstract class InputFieldTemplate<F extends InputField<T>, T> extends Fie
 
     public int getValidationOrder() {
         return 0;
+    }
+
+    public DescriptionShowType getDescriptionShowType() {
+        return descriptionShowType;
+    }
+
+    public void setDescriptionShowType(DescriptionShowType descriptionShowType) {
+        this.descriptionShowType = descriptionShowType;
     }
 }

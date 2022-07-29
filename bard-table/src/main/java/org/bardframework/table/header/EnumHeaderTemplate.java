@@ -1,10 +1,11 @@
 package org.bardframework.table.header;
 
 import org.apache.commons.lang3.EnumUtils;
+import org.springframework.context.MessageSource;
 
 import java.util.Locale;
 
-public class EnumHeaderTemplate<T extends Enum<T>> extends TableHeaderTemplate<StringHeader, T> {
+public class EnumHeaderTemplate<T extends Enum<T>> extends HeaderTemplate<StringHeader, T> {
     private final Class<T> enumClass;
 
     public EnumHeaderTemplate(Class<T> enumClass) {
@@ -17,7 +18,11 @@ public class EnumHeaderTemplate<T extends Enum<T>> extends TableHeaderTemplate<S
     }
 
     @Override
-    public Object format(T value, Locale locale) {
-        return null == value ? null : value.name();
+    public Object format(T value, Locale locale, MessageSource messageSource) {
+        if (null == value) {
+            return null;
+        }
+        String titleMessageKey = value.getClass().getSimpleName() + "." + value.name();
+        return messageSource.getMessage(titleMessageKey, new Object[0], titleMessageKey, locale);
     }
 }

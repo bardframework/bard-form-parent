@@ -3,15 +3,16 @@ package org.bardframework.table.header;
 import org.bardframework.commons.utils.ReflectionUtils;
 import org.bardframework.table.TableTemplate;
 import org.bardframework.table.TableUtils;
+import org.springframework.context.MessageSource;
 
 import java.util.Locale;
 import java.util.Map;
 
-public abstract class TableHeaderTemplate<H extends TableHeader, T> extends TableHeader {
+public abstract class HeaderTemplate<H extends TableHeader, T> extends TableHeader {
     private final Class<H> headerClazz;
     private String excelFormat;
 
-    protected TableHeaderTemplate() {
+    protected HeaderTemplate() {
         this.headerClazz = ReflectionUtils.getGenericArgType(this.getClass(), 0);
     }
 
@@ -42,7 +43,7 @@ public abstract class TableHeaderTemplate<H extends TableHeader, T> extends Tabl
 
     public abstract T parse(String value, Locale locale);
 
-    public abstract Object format(T value, Locale locale);
+    public abstract Object format(T value, Locale locale, MessageSource messageSource);
 
     public String getExcelFormat() {
         return excelFormat;

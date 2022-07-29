@@ -1,9 +1,10 @@
 package org.bardframework.form.field.input;
 
+import org.bardframework.form.DescriptionShowType;
 import org.bardframework.form.field.Field;
 
 public abstract class InputField<T> extends Field {
-    public final static String SEPARATOR = ",";
+    public static final String SEPARATOR = ",";
 
     private String name;
     private String placeholder;
@@ -11,9 +12,7 @@ public abstract class InputField<T> extends Field {
     private Boolean required;
     private Boolean disable;
     private T value;
-
-    public InputField() {
-    }
+    protected DescriptionShowType descriptionShowType;
 
     protected InputField(String name) {
         this.name = name;
@@ -67,5 +66,13 @@ public abstract class InputField<T> extends Field {
 
     public void setRequired(Boolean required) {
         this.required = required;
+    }
+
+    public DescriptionShowType getDescriptionShowType() {
+        return descriptionShowType;
+    }
+
+    public void setDescriptionShowType(DescriptionShowType descriptionShowType) {
+        this.descriptionShowType = descriptionShowType;
     }
 }

@@ -12,6 +12,7 @@ public class BardForm {
     protected String description;
     protected String confirmMessage;
     protected String submitLabel;
+    protected DescriptionShowType descriptionShowType;
     protected List<Field> fields = new ArrayList<>();
 
     public String getName() {
@@ -60,6 +61,14 @@ public class BardForm {
 
     public void setSubmitLabel(String submitLabel) {
         this.submitLabel = submitLabel;
+    }
+
+    public DescriptionShowType getDescriptionShowType() {
+        return descriptionShowType;
+    }
+
+    public void setDescriptionShowType(DescriptionShowType descriptionShowType) {
+        this.descriptionShowType = descriptionShowType;
     }
 
     public void addField(Field field) {

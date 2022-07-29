@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @TestComponent
 public class SingleSelectFieldDataProvider implements InputFieldDataProvider<SingleSelectField, String> {
-    private final static Logger LOGGER = LoggerFactory.getLogger(SingleSelectFieldDataProvider.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SingleSelectFieldDataProvider.class);
 
     @Override
     public String getValidValue(SingleSelectField field) throws Exception {

@@ -43,6 +43,7 @@ public class FormUtils {
         form.setDescription(FormUtils.getFormStringProperty(formTemplate, "description", locale, args, null));
         form.setConfirmMessage(FormUtils.getFormStringProperty(formTemplate, "confirmMessage", locale, args, null));
         form.setSubmitLabel(FormUtils.getFormStringProperty(formTemplate, "submitLabel", locale, args, null));
+        form.setDescriptionShowType(FormUtils.getFormEnumProperty(formTemplate, "descriptionShowType", DescriptionShowType.class, locale, args, formTemplate.getDescriptionShowType()));
         for (FieldTemplate<?> fieldTemplate : formTemplate.getFieldTemplates(args)) {
             Field field = fieldTemplate.toField(formTemplate, args, locale, httpRequest);
             String valueString = values.get(fieldTemplate.getName());
@@ -69,9 +70,23 @@ public class FormUtils {
         try {
             return Boolean.parseBoolean(value);
         } catch (Exception e) {
-            LOGGER.error("error reading [{}] of [{}] as boolean", property, formTemplate.getName(), e);
+            LOGGER.error("error reading [{}] of form [{}] as boolean", property, formTemplate.getName(), e);
             return null;
         }
+    }
+
+    public static <T extends Enum<T>> T getFormEnumProperty(FormTemplate formTemplate, String property, Class<T> enumClass, Locale locale, Map<String, String> args, T defaultValue) {
+        String enumName = FormUtils.getFormStringProperty(formTemplate, property, locale, args, null);
+        if (StringUtils.isBlank(enumName)) {
+            return defaultValue;
+        }
+        for (final T each : enumClass.getEnumConstants()) {
+            if (each.name().equalsIgnoreCase(enumName)) {
+                return each;
+            }
+        }
+        LOGGER.error("error reading [{}] of form[{}] as Enum[{}]", property, formTemplate, enumClass);
+        return null;
     }
 
 
@@ -213,6 +228,24 @@ public class FormUtils {
             LOGGER.error("error reading [{}] of [{}.{}] as LocalDateTime", property, formTemplate, fieldName, e);
             return null;
         }
+    }
+
+    public static <T extends Enum<T>> T getFieldEnumProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Class<T> enumClass, Locale locale, Map<String, String> args, T defaultValue) {
+        return FormUtils.getFieldEnumProperty(formTemplate, fieldTemplate.getName(), property, enumClass, locale, args, defaultValue);
+    }
+
+    public static <T extends Enum<T>> T getFieldEnumProperty(FormTemplate formTemplate, String fieldName, String property, Class<T> enumClass, Locale locale, Map<String, String> args, T defaultValue) {
+        String enumName = FormUtils.getFieldStringProperty(formTemplate, fieldName, property, locale, args, null);
+        if (StringUtils.isBlank(enumName)) {
+            return defaultValue;
+        }
+        for (final T each : enumClass.getEnumConstants()) {
+            if (each.name().equalsIgnoreCase(enumName)) {
+                return each;
+            }
+        }
+        LOGGER.error("error reading [{}] of [{}.{}] as Enum[{}]", property, formTemplate, fieldName, enumClass);
+        return null;
     }
 
     public static LocalTime getFieldLocalTimeProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Locale locale, Map<String, String> args, LocalTime defaultValue) {

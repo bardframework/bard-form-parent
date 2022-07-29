@@ -2,7 +2,7 @@ package org.bardframework.table;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormUtils;
-import org.bardframework.table.header.TableHeaderTemplate;
+import org.bardframework.table.header.HeaderTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
@@ -48,7 +48,7 @@ public class TableUtils {
         table.setSaveForm(FormUtils.toForm(tableTemplate.getSaveFormTemplate(), args, Map.of(), locale, httpRequest));
         table.setUpdateForm(FormUtils.toForm(tableTemplate.getUpdateFormTemplate(), args, Map.of(), locale, httpRequest));
 
-        for (TableHeaderTemplate<?, ?> headerTemplate : tableTemplate.getHeaderTemplates()) {
+        for (HeaderTemplate<?, ?> headerTemplate : tableTemplate.getHeaderTemplates()) {
             table.addHeader(headerTemplate.toHeader(tableTemplate, args, locale));
         }
         return table;
@@ -97,7 +97,7 @@ public class TableUtils {
     /**
      * @return false if we can't read property value
      */
-    public static Boolean getHeaderBooleanValue(TableTemplate TableTemplate, TableHeaderTemplate<?, ?> headerTemplate, String property, Locale locale, Map<String, String> args, Boolean defaultValue) {
+    public static Boolean getHeaderBooleanValue(TableTemplate TableTemplate, HeaderTemplate<?, ?> headerTemplate, String property, Locale locale, Map<String, String> args, Boolean defaultValue) {
         String value = TableUtils.getHeaderStringValue(TableTemplate, headerTemplate, property, locale, args, null);
         if (StringUtils.isBlank(value)) {
             return defaultValue;
@@ -113,7 +113,7 @@ public class TableUtils {
     /**
      * @return false if we can't read property value
      */
-    public static List<String> getHeaderListValue(TableTemplate tableTemplate, TableHeaderTemplate<?, ?> headerTemplate, String property, Locale locale, Map<String, String> args, List<String> defaultValue) {
+    public static List<String> getHeaderListValue(TableTemplate tableTemplate, HeaderTemplate<?, ?> headerTemplate, String property, Locale locale, Map<String, String> args, List<String> defaultValue) {
         String value = TableUtils.getHeaderStringValue(tableTemplate, headerTemplate, property, locale, args, null);
         if (StringUtils.isBlank(value)) {
             return defaultValue;
@@ -124,7 +124,7 @@ public class TableUtils {
     /**
      * @return null if we can't read property value
      */
-    public static Double getHeaderDoubleValue(TableTemplate tableTemplate, TableHeaderTemplate<?, ?> headerTemplate, String property, Locale locale, Map<String, String> args, Double defaultValue) {
+    public static Double getHeaderDoubleValue(TableTemplate tableTemplate, HeaderTemplate<?, ?> headerTemplate, String property, Locale locale, Map<String, String> args, Double defaultValue) {
         String value = TableUtils.getHeaderStringValue(tableTemplate, headerTemplate, property, locale, args, null);
         if (StringUtils.isBlank(value)) {
             return defaultValue;
@@ -140,7 +140,7 @@ public class TableUtils {
     /**
      * @return null if we can't read property value
      */
-    public static Long getHeaderLongValue(TableTemplate tableTemplate, TableHeaderTemplate<?, ?> headerTemplate, String property, Locale locale, Map<String, String> args, Long defaultValue) {
+    public static Long getHeaderLongValue(TableTemplate tableTemplate, HeaderTemplate<?, ?> headerTemplate, String property, Locale locale, Map<String, String> args, Long defaultValue) {
         String value = TableUtils.getHeaderStringValue(tableTemplate, headerTemplate, property, locale, args, null);
         if (StringUtils.isBlank(value)) {
             return defaultValue;
@@ -156,7 +156,7 @@ public class TableUtils {
     /**
      * @return null if we can't read property value
      */
-    public static LocalDate getHeaderLocalDateValue(TableTemplate tableTemplate, TableHeaderTemplate<?, ?> headerTemplate, String property, Locale locale, Map<String, String> args, LocalDate defaultValue) {
+    public static LocalDate getHeaderLocalDateValue(TableTemplate tableTemplate, HeaderTemplate<?, ?> headerTemplate, String property, Locale locale, Map<String, String> args, LocalDate defaultValue) {
         String value = TableUtils.getHeaderStringValue(tableTemplate, headerTemplate, property, locale, args, null);
         if (StringUtils.isBlank(value)) {
             return defaultValue;
@@ -169,7 +169,7 @@ public class TableUtils {
         }
     }
 
-    public static LocalDateTime getHeaderLocalDateTimeValue(TableTemplate tableTemplate, TableHeaderTemplate<?, ?> headerTemplate, String property, Locale locale, Map<String, String> args, LocalDateTime defaultValue) {
+    public static LocalDateTime getHeaderLocalDateTimeValue(TableTemplate tableTemplate, HeaderTemplate<?, ?> headerTemplate, String property, Locale locale, Map<String, String> args, LocalDateTime defaultValue) {
         String value = TableUtils.getHeaderStringValue(tableTemplate, headerTemplate, property, locale, args, null);
         if (StringUtils.isBlank(value)) {
             return defaultValue;
@@ -182,7 +182,7 @@ public class TableUtils {
         }
     }
 
-    public static LocalTime getHeaderLocalTimeValue(TableTemplate tableTemplate, TableHeaderTemplate<?, ?> headerTemplate, String property, Locale locale, Map<String, String> args, LocalTime defaultValue) {
+    public static LocalTime getHeaderLocalTimeValue(TableTemplate tableTemplate, HeaderTemplate<?, ?> headerTemplate, String property, Locale locale, Map<String, String> args, LocalTime defaultValue) {
         String value = TableUtils.getHeaderStringValue(tableTemplate, headerTemplate, property, locale, args, null);
         if (StringUtils.isBlank(value)) {
             return defaultValue;
@@ -198,14 +198,14 @@ public class TableUtils {
     /**
      * @return null if we can't read property value
      */
-    public static String getHeaderStringValue(TableTemplate tableTemplate, TableHeaderTemplate<?, ?> headerTemplate, String property, Locale locale, Map<String, String> args, String defaultValue) {
+    public static String getHeaderStringValue(TableTemplate tableTemplate, HeaderTemplate<?, ?> headerTemplate, String property, Locale locale, Map<String, String> args, String defaultValue) {
         return TableUtils.getHeaderStringValue(tableTemplate.getName(), headerTemplate, property, locale, args, defaultValue, tableTemplate.getMessageSource());
     }
 
     /**
      * @return null if we can't read property value
      */
-    public static String getHeaderStringValue(String tableName, TableHeaderTemplate<?, ?> headerTemplate, String property, Locale locale, Map<String, String> args, String defaultValue, MessageSource messageSource) {
+    public static String getHeaderStringValue(String tableName, HeaderTemplate<?, ?> headerTemplate, String property, Locale locale, Map<String, String> args, String defaultValue, MessageSource messageSource) {
         return FormUtils.getString("header", property, List.of(tableName, headerTemplate.getName()), locale, args, defaultValue, messageSource);
     }
 }

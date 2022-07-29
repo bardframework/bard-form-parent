@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class OptionsDataSourcePropertiesFile extends CachableOptionDataSource {
+public class PropertiesFileOptionDataSource extends CachableOptionDataSource {
 
     private final WildcardReloadableMessageSource messageSource;
 
-    public OptionsDataSourcePropertiesFile(String messageBaseName) {
+    public PropertiesFileOptionDataSource(String messageBaseName) {
         this.messageSource = new WildcardReloadableMessageSource();
         this.messageSource.setBasename(messageBaseName);
         this.messageSource.setDefaultEncoding(StandardCharsets.UTF_8.displayName());

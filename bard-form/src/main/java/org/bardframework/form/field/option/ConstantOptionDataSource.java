@@ -5,11 +5,11 @@ import org.bardframework.form.model.SelectOption;
 import java.util.List;
 import java.util.Locale;
 
-public class ConstantDataSource implements OptionDataSource {
+public class ConstantOptionDataSource implements OptionDataSource {
 
     private final List<SelectOption> options;
 
-    public ConstantDataSource(List<SelectOption> options) {
+    public ConstantOptionDataSource(List<SelectOption> options) {
         this.options = options;
     }
 

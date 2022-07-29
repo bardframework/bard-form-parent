@@ -24,6 +24,7 @@ public class FormTemplate {
     protected final String name;
     protected final MessageSource messageSource;
     protected final List<FieldTemplate<?>> fieldTemplates;
+    protected DescriptionShowType descriptionShowType = DescriptionShowType.HINT;
     protected Class<?> dtoClass;
     protected boolean failOnUnknownSubmitFields = true;
     protected Expression showExpression = null;
@@ -127,5 +128,13 @@ public class FormTemplate {
 
     public void setFailOnUnknownSubmitFields(boolean failOnUnknownSubmitFields) {
         this.failOnUnknownSubmitFields = failOnUnknownSubmitFields;
+    }
+
+    public DescriptionShowType getDescriptionShowType() {
+        return descriptionShowType;
+    }
+
+    public void setDescriptionShowType(DescriptionShowType descriptionShowType) {
+        this.descriptionShowType = descriptionShowType;
     }
 }

@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class OptionsDataSourceEnum extends CachableOptionDataSource {
+public class EnumOptionDataSource extends CachableOptionDataSource {
 
     private final MessageSource messageSource;
     private final Class<? extends Enum<?>> enumOptionsClass;
     private String keyPrefix;
 
-    public OptionsDataSourceEnum(Class<? extends Enum<?>> enumOptionsClass, @Autowired MessageSource messageSource) {
+    public EnumOptionDataSource(Class<? extends Enum<?>> enumOptionsClass, @Autowired MessageSource messageSource) {
         this.messageSource = messageSource;
         this.enumOptionsClass = enumOptionsClass;
     }
