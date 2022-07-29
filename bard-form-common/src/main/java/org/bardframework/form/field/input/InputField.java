@@ -14,6 +14,9 @@ public abstract class InputField<T> extends Field {
     private T value;
     protected DescriptionShowType descriptionShowType;
 
+    public InputField() {
+    }
+
     protected InputField(String name) {
         this.name = name;
     }
