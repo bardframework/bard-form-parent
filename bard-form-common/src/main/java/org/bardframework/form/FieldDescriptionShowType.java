@@ -1,6 +1,6 @@
 package org.bardframework.form;
 
-public enum DescriptionShowType {
+public enum FieldDescriptionShowType {
     HINT,
     TOOLTIP
 }

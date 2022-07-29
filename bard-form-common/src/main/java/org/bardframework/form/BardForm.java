@@ -12,7 +12,7 @@ public class BardForm {
     protected String description;
     protected String confirmMessage;
     protected String submitLabel;
-    protected DescriptionShowType descriptionShowType;
+    protected FieldDescriptionShowType fieldDescriptionShowType;
     protected List<Field> fields = new ArrayList<>();
 
     public String getName() {
@@ -63,12 +63,12 @@ public class BardForm {
         this.submitLabel = submitLabel;
     }
 
-    public DescriptionShowType getDescriptionShowType() {
-        return descriptionShowType;
+    public FieldDescriptionShowType getFieldDescriptionShowType() {
+        return fieldDescriptionShowType;
     }
 
-    public void setDescriptionShowType(DescriptionShowType descriptionShowType) {
-        this.descriptionShowType = descriptionShowType;
+    public void setFieldDescriptionShowType(FieldDescriptionShowType fieldDescriptionShowType) {
+        this.fieldDescriptionShowType = fieldDescriptionShowType;
     }
 
     public void addField(Field field) {

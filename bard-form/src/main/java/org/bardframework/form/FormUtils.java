@@ -43,7 +43,7 @@ public class FormUtils {
         form.setDescription(FormUtils.getFormStringProperty(formTemplate, "description", locale, args, null));
         form.setConfirmMessage(FormUtils.getFormStringProperty(formTemplate, "confirmMessage", locale, args, null));
         form.setSubmitLabel(FormUtils.getFormStringProperty(formTemplate, "submitLabel", locale, args, null));
-        form.setDescriptionShowType(FormUtils.getFormEnumProperty(formTemplate, "descriptionShowType", DescriptionShowType.class, locale, args, formTemplate.getDescriptionShowType()));
+        form.setFieldDescriptionShowType(FormUtils.getFormEnumProperty(formTemplate, "fieldDescriptionShowType", FieldDescriptionShowType.class, locale, args, formTemplate.getDescriptionShowType()));
         for (FieldTemplate<?> fieldTemplate : formTemplate.getFieldTemplates(args)) {
             Field field = fieldTemplate.toField(formTemplate, args, locale, httpRequest);
             String valueString = values.get(fieldTemplate.getName());
