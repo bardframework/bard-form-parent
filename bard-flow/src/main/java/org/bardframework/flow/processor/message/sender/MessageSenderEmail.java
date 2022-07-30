@@ -7,7 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.mail.*;
-import javax.mail.internet.*;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
@@ -42,18 +44,22 @@ public class MessageSenderEmail extends MessageSenderAbstract {
             LOGGER.warn("receiver email not exist for [{}], can't send email", args);
             throw new IllegalStateException("receiver email not exist in args");
         }
+
         Session session = Session.getInstance(configs, this.authenticator);
+        if (LOGGER.isDebugEnabled()) {
+            session.setDebug(true);
+        }
 
         MimeMessage mimeMessage = new MimeMessage(session);
         mimeMessage.setFrom(senderEmail);
-        mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receiverEmail));
-        mimeMessage.setSubject(subjectCreator.create(args, locale));
-        MimeBodyPart mimeBodyPart = new MimeBodyPart();
-        mimeBodyPart.setContent(message, "text/html; charset=utf-8");
-        Multipart multipart = new MimeMultipart();
-        multipart.addBodyPart(mimeBodyPart);
-        mimeMessage.setContent(multipart);
+        mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receiverEmail, false));
+        mimeMessage.setSubject(subjectCreator.create(args, locale), "UTF-8");
+        mimeMessage.addHeader("Content-type", "text/HTML; charset=UTF-8");
+        mimeMessage.addHeader("format", "flowed");
+        mimeMessage.addHeader("Content-Transfer-Encoding", "8bit");
+        mimeMessage.setContent(message, "text/html; charset=utf-8");
         Transport.send(mimeMessage);
+        LOGGER.debug("email successfully sent to [{}]", receiverEmail);
     }
 
     public FieldTemplate<?> getReceiverEmailFieldTemplate() {
