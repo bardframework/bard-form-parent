@@ -28,6 +28,10 @@ public class LocalTimeHeaderTemplate extends HeaderTemplate<TimeHeader, LocalTim
         if (null == value) {
             return null;
         }
-        return formatter.format(value);
+        return this.getFormatter().withLocale(locale).format(value);
+    }
+
+    public DateTimeFormatter getFormatter() {
+        return formatter;
     }
 }

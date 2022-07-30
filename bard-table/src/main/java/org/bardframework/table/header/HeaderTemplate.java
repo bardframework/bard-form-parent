@@ -3,12 +3,16 @@ package org.bardframework.table.header;
 import org.bardframework.commons.utils.ReflectionUtils;
 import org.bardframework.table.TableTemplate;
 import org.bardframework.table.TableUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 
 import java.util.Locale;
 import java.util.Map;
 
 public abstract class HeaderTemplate<H extends TableHeader, T> extends TableHeader {
+    protected final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+
     private final Class<H> headerClazz;
     private String excelFormat;
 
