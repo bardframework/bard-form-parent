@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class FlowData {
 
-    protected static final String LANGUAGE_FIELD_NAME = "S_LANG_TAG";
+    public static final String LANGUAGE_FIELD_NAME = "S_LANG_TAG";
     protected Map<String, String> data = new HashMap<>();
     protected int nextStepIndex;
 
