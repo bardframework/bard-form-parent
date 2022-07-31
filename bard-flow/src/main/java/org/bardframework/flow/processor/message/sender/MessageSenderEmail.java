@@ -38,7 +38,7 @@ public class MessageSenderEmail extends MessageSenderAbstract {
     }
 
     @Override
-    public void send(String message, Map<String, String> args, Locale locale) throws Exception {
+    protected void send(String message, Map<String, String> args, Locale locale) throws Exception {
         String receiverEmail = args.get(this.getReceiverEmailFieldTemplate().getName());
         if (StringUtils.isBlank(receiverEmail)) {
             LOGGER.warn("receiver email not exist for [{}], can't send email", args);

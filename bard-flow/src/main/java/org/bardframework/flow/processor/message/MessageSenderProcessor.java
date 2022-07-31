@@ -19,7 +19,7 @@ public class MessageSenderProcessor extends FormProcessorAbstract {
     @Override
     public void process(String flowToken, Map<String, String> flowData, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
         for (MessageSender sender : this.senders) {
-            sender.send(flowData, locale, httpResponse);
+            sender.send(flowData, locale);
         }
     }
 }

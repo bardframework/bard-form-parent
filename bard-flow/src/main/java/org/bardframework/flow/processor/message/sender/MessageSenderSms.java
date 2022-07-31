@@ -24,7 +24,7 @@ public class MessageSenderSms extends MessageSenderAbstract {
     }
 
     @Override
-    public void send(String message, Map<String, String> args, Locale locale) throws IOException {
+    protected void send(String message, Map<String, String> args, Locale locale) throws IOException {
         String mobileNumber = args.get(this.getMobileNumberFieldTemplate().getName());
         if (StringUtils.isBlank(mobileNumber)) {
             LOGGER.warn("mobile number not exist for [{}], can't send sms", args);

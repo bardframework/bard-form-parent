@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.time.chrono.HijrahDate;
 import java.time.format.DateTimeFormatter;
@@ -38,7 +37,7 @@ public abstract class MessageSenderAbstract implements MessageSender {
         this.errorMessageKey = errorMessageKey;
     }
 
-    abstract void send(String message, Map<String, String> args, Locale locale) throws Exception;
+    protected abstract void send(String message, Map<String, String> args, Locale locale) throws Exception;
 
     @PostConstruct
     void init() {
@@ -48,7 +47,7 @@ public abstract class MessageSenderAbstract implements MessageSender {
     }
 
     @Override
-    public final void send(Map<String, String> data, Locale locale, HttpServletResponse httpResponse) throws Exception {
+    public final void send(Map<String, String> data, Locale locale) throws Exception {
         Map<String, String> args = new HashMap<>(data);
         String message = this.getMessageProvider().create(args, locale);
         LOGGER.debug("sending message [{}]", message);
