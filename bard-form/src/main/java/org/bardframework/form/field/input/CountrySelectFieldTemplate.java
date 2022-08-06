@@ -23,15 +23,20 @@ public class CountrySelectFieldTemplate extends InputFieldTemplate<CountrySelect
             }
             return true;
         }
-        if (CollectionUtils.isNotEmpty(field.getAvailableCountries()) && !field.getAvailableCountries().contains(value)) {
-            LOGGER.debug("country code[{}] is not match with specified available countries[{}]", value, field.getAvailableCountries());
+        String countryCode = this.getCountryCode(value);
+        if (CollectionUtils.isNotEmpty(field.getAvailableCountries()) && !field.getAvailableCountries().contains(countryCode)) {
+            LOGGER.debug("country code[{}] is not match with specified available countries[{}]", countryCode, field.getAvailableCountries());
             return false;
         }
-        if (CollectionUtils.isNotEmpty(field.getExcludeCountries()) && field.getExcludeCountries().contains(value)) {
-            LOGGER.debug("country code[{}] is in exclude countries[{}]", value, field.getExcludeCountries());
+        if (CollectionUtils.isNotEmpty(field.getExcludeCountries()) && field.getExcludeCountries().contains(countryCode)) {
+            LOGGER.debug("country code[{}] is in exclude countries[{}]", countryCode, field.getExcludeCountries());
             return false;
         }
         return true;
+    }
+
+    protected String getCountryCode(String value) {
+        return value;
     }
 
     @Override
