@@ -26,6 +26,15 @@ public abstract class InputFieldTemplate<F extends InputField<T>, T> extends Fie
         this.persistentValue = persistentValue;
     }
 
+    public void validate(FormTemplate formTemplate, Object value, Locale locale, HttpServletRequest httpRequest, FormDataValidationException ex)
+            throws Exception {
+        F formField = this.toField(formTemplate, Map.of(), locale, httpRequest);
+        if (Boolean.TRUE.equals(formField.getDisable())) {
+            return;
+        }
+        this.validate(null, formTemplate, formField, (T) value, Map.of(), Map.of(), locale, ex);
+    }
+
     public void validate(String flowToken, FormTemplate formTemplate, Map<String, String> flowData, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest, FormDataValidationException ex)
             throws Exception {
         F formField = this.toField(formTemplate, formData, locale, httpRequest);
@@ -33,7 +42,12 @@ public abstract class InputFieldTemplate<F extends InputField<T>, T> extends Fie
             return;
         }
         String stringValue = formData.get(this.getName());
-        if (!this.isValid(flowToken, formField, this.toValue(stringValue), flowData)) {
+        this.validate(flowToken, formTemplate, formField, this.toValue(stringValue), flowData, formData, locale, ex);
+    }
+
+    private void validate(String flowToken, FormTemplate formTemplate, F formField, T value, Map<String, String> flowData, Map<String, String> formData, Locale locale, FormDataValidationException ex)
+            throws Exception {
+        if (!this.isValid(flowToken, formField, value, flowData)) {
             ex.addFiledError(this.getName(), this.getErrorMessage(formTemplate, formData, locale));
         }
     }

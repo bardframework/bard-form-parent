@@ -25,7 +25,7 @@ public class EnumOptionDataSource extends CachableOptionDataSource {
         List<SelectOption> options = new ArrayList<>();
         for (Enum<?> anEnum : enumOptionsClass.getEnumConstants()) {
             String titleMessageKey = this.getMessageKey(anEnum);
-            options.add(new SelectOption(anEnum.name(), messageSource.getMessage(titleMessageKey, null, titleMessageKey, locale), null));
+            options.add(new SelectOption(anEnum.toString(), messageSource.getMessage(titleMessageKey, null, titleMessageKey, locale), null));
         }
         return options;
     }
