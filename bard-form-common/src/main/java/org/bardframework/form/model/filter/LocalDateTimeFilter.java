@@ -1,4 +1,3 @@
-
 package org.bardframework.form.model.filter;
 
 import java.time.LocalDateTime;

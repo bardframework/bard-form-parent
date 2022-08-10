@@ -18,8 +18,8 @@ import java.util.Map;
 public abstract class FieldTemplate<F extends Field> {
     protected final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     protected final Class<F> fieldClazz;
-    protected Expression showExpression = null;
     protected final String name;
+    protected Expression showExpression = null;
     protected F defaultValues;
 
     protected FieldTemplate(String name) {

@@ -5,14 +5,13 @@ import org.bardframework.form.field.Field;
 
 public abstract class InputField<T> extends Field {
     public static final String SEPARATOR = ",";
-
+    protected FieldDescriptionShowType descriptionShowType;
     private String name;
     private String placeholder;
     private String errorMessage;
     private Boolean required;
     private Boolean disable;
     private T value;
-    protected FieldDescriptionShowType descriptionShowType;
 
     public InputField() {
     }

@@ -1,5 +1,3 @@
-
-
 package org.bardframework.form.model.filter;
 
 /**
