@@ -25,13 +25,13 @@ public class DataProviderCsvFileProcessor extends FormProcessorAbstract {
     protected final String csvFileLocation;
     protected final Map<Integer, String> mapper;
     protected final String identifierFieldName;
-    protected final String errorMessageCode;
+    protected final String identifierNotFoundErrorMessageCode;
     protected String separator = ",";
 
-    public DataProviderCsvFileProcessor(String csvFileLocation, String identifierFieldName, Map<Integer, String> mapper, String errorMessageCode) {
+    public DataProviderCsvFileProcessor(String csvFileLocation, String identifierFieldName, Map<Integer, String> mapper, String identifierNotFoundErrorMessageCode) {
         this.csvFileLocation = csvFileLocation;
         this.identifierFieldName = identifierFieldName;
-        this.errorMessageCode = errorMessageCode;
+        this.identifierNotFoundErrorMessageCode = identifierNotFoundErrorMessageCode;
         this.mapper = mapper;
     }
 
@@ -39,7 +39,7 @@ public class DataProviderCsvFileProcessor extends FormProcessorAbstract {
     public void process(String flowToken, Map<String, String> flowData, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
         String identifier = flowData.get(this.getIdentifierFieldName());
         if (StringUtils.isBlank(identifier)) {
-            LOGGER.warn("identifier not exist for [{}], can't read data from csv file", flowData);
+            LOGGER.warn("identifier not exist for [{}], in csv file", flowData);
             throw new FlowExecutionException(List.of("execution_error"));
         }
         try (InputStream inputStream = ResourceUtils.getResource(this.getCsvFileLocation()).getInputStream()) {
@@ -67,7 +67,7 @@ public class DataProviderCsvFileProcessor extends FormProcessorAbstract {
             }
         }
         LOGGER.warn("can't find record for[{}] in csv file [{}]", identifier, this.getCsvFileLocation());
-        throw new FlowExecutionException(List.of(errorMessageCode));
+        throw new FlowExecutionException(List.of(identifierNotFoundErrorMessageCode));
     }
 
     public String getCsvFileLocation() {
@@ -82,8 +82,8 @@ public class DataProviderCsvFileProcessor extends FormProcessorAbstract {
         return identifierFieldName;
     }
 
-    public String getErrorMessageCode() {
-        return errorMessageCode;
+    public String getIdentifierNotFoundErrorMessageCode() {
+        return identifierNotFoundErrorMessageCode;
     }
 
     public String getSeparator() {
