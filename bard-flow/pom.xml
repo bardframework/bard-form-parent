@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.bardframework.form</groupId>
         <artifactId>bard-form-parent</artifactId>
-        <version>1.4.29</version>
+        <version>1.5.9</version>
     </parent>
 
     <artifactId>bard-flow</artifactId>
@@ -20,7 +20,7 @@
         <dependency>
             <groupId>com.google.zxing</groupId>
             <artifactId>javase</artifactId>
-            <version>${google.zxing.version}</version>
+            <version>${zxing.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
