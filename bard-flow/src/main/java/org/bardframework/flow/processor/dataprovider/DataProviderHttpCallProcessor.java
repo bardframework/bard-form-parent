@@ -30,6 +30,7 @@ public class DataProviderHttpCallProcessor extends HttpCaller implements FormPro
     protected final Map<String, Pattern> fieldsFetcher = new HashMap<>();
     private final Pattern fetchPattern;
     private final String errorMessageCode;
+    protected String responseFieldName;
     private Expression executeExpression = null;
 
     public DataProviderHttpCallProcessor(String httpMethod, String urlTemplate, String successPattern, Map<String, String> fieldsFetcher, String errorMessageCode) {
@@ -46,6 +47,9 @@ public class DataProviderHttpCallProcessor extends HttpCaller implements FormPro
         HttpCallResult result = super.call(flowData);
         String responseString = null == result.getBody() ? null : new String(result.getBody(), StandardCharsets.UTF_8);
         LOGGER.debug("data provider http call result: [{}]", responseString);
+        if (StringUtils.isNotBlank(this.getResponseFieldName())) {
+            flowData.put(this.getResponseFieldName(), responseString);
+        }
         if (StringUtils.isBlank(responseString) || !this.getFetchPattern().matcher(responseString).find()) {
             LOGGER.warn("data not found calling ws[{}], [{}].", this.getUrlTemplate(), flowData);
             throw new FlowExecutionException(List.of(this.getErrorMessageCode()));
@@ -73,6 +77,14 @@ public class DataProviderHttpCallProcessor extends HttpCaller implements FormPro
 
     public void setExecuteExpression(String executeExpression) {
         this.executeExpression = new SpelExpressionParser(new SpelParserConfiguration(SpelCompilerMode.IMMEDIATE, null)).parseExpression(executeExpression);
+    }
+
+    public String getResponseFieldName() {
+        return responseFieldName;
+    }
+
+    public void setResponseFieldName(String responseFieldName) {
+        this.responseFieldName = responseFieldName;
     }
 
     @Override
