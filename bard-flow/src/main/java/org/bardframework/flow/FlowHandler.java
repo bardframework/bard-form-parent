@@ -8,17 +8,18 @@ import java.util.Locale;
 import java.util.Map;
 
 public interface FlowHandler {
+    String TOKEN_HEADER_NAME = "X-Flow-Token";
 
-    FlowResponse<String> start(Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
+    FlowResponse start(Map<String, String> initValues, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
             throws Exception;
 
-    FlowResponse<String> submit(String flowToken, Map<String, String> formData, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
+    FlowResponse submit(String flowToken, Map<String, String> formData, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
             throws Exception;
 
     void action(String flowToken, String action, Map<String, String> formData, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
             throws Exception;
 
-    FlowResponse<String> getCurrent(String flowToken, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
+    FlowResponse getCurrent(String flowToken, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
             throws Exception;
 
     default String generateFlowToken() {
