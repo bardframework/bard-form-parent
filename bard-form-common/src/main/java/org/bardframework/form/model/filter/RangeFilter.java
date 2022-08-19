@@ -17,12 +17,8 @@ package org.bardframework.form.model.filter;
  * is materialized.
  *
  * @param <T> the type of filter.
- * @see IntegerFilter
- * @see DoubleFilter
- * @see FloatFilter
- * @see LongFilter
+ * @see NumberRangeFilter
  * @see LocalDateFilter
- * @see ShortFilter
  */
 public class RangeFilter<T extends Comparable<? super T>, F extends RangeFilter<T, F>> extends Filter<T, F> {
 

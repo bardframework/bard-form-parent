@@ -5,12 +5,6 @@ package org.bardframework.form.model.filter;
  *
  * @see RangeFilter
  */
-public class ShortFilter extends RangeFilter<Short, ShortFilter> {
-
-    /**
-     * <p>Constructor for ShortFilter.</p>
-     */
-    public ShortFilter() {
-    }
+public class ShortFilter extends NumberRangeFilter<Short, ShortFilter> {
 
 }

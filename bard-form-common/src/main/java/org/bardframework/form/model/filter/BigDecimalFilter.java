@@ -5,9 +5,9 @@ import java.math.BigDecimal;
 /**
  * Filter class for {@link BigDecimal} type attributes.
  *
- * @see RangeFilter
+ * @see NumberRangeFilter
  */
-public class BigDecimalFilter extends RangeFilter<BigDecimal, BigDecimalFilter> {
+public class BigDecimalFilter extends NumberRangeFilter<BigDecimal, BigDecimalFilter> {
 
 
 }
