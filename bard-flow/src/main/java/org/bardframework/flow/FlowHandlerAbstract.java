@@ -231,8 +231,12 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
         }
         if (null == formTemplate || formTemplate.isFinished()) {
             response.setFinished(Boolean.TRUE);
+        } else {
+            /*
+                در حالتی که فلو به پایان می رسد؛ نیازی به ست کردن فلو توکن نیست
+             */
+            httpResponse.setHeader(TOKEN_HEADER_NAME, flowToken);
         }
-        httpResponse.setHeader(TOKEN_HEADER_NAME, flowToken);
         return response;
     }
 
