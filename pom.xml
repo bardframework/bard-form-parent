@@ -5,13 +5,13 @@
     <parent>
         <groupId>org.bardframework</groupId>
         <artifactId>bard-parent</artifactId>
-        <version>12</version>
+        <version>13</version>
         <relativePath/>
     </parent>
 
     <groupId>org.bardframework.form</groupId>
     <artifactId>bard-form-parent</artifactId>
-    <version>1.5.19</version>
+    <version>1.5.29</version>
 
     <packaging>pom</packaging>
     <modules>
@@ -22,68 +22,18 @@
     </modules>
 
     <properties>
-        <bardframework.commons.version>1.5.16</bardframework.commons.version>
-        <generex.version>1.0.2</generex.version>
-        <zxing.version>3.5.0</zxing.version>
-        <guava.version>31.1-jre</guava.version>
-        <spring-boot-dependencies.version>2.7.2</spring-boot-dependencies.version>
-        <!-- plugin versions -->
+        <bardframework.version>1.5.25</bardframework.version>
         <typescript-generator-maven-plugin.version>2.36.1070</typescript-generator-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot-dependencies.version}</version>
+                <groupId>org.bardframework</groupId>
+                <artifactId>bard-bom</artifactId>
+                <version>${bardframework.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.bardframework.form</groupId>
-                <artifactId>bard-form-common</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.bardframework.form</groupId>
-                <artifactId>bard-form</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.bardframework.commons</groupId>
-                <artifactId>common-utils</artifactId>
-                <version>${bardframework.commons.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.bardframework.commons</groupId>
-                <artifactId>common-web</artifactId>
-                <version>${bardframework.commons.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.bardframework.commons</groupId>
-                <artifactId>common-sms</artifactId>
-                <version>${bardframework.commons.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.bardframework.commons</groupId>
-                <artifactId>common-utils-persian</artifactId>
-                <version>${bardframework.commons.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.bardframework.commons</groupId>
-                <artifactId>common-captcha</artifactId>
-                <version>${bardframework.commons.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>${guava.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.mifmif</groupId>
-                <artifactId>generex</artifactId>
-                <version>${generex.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

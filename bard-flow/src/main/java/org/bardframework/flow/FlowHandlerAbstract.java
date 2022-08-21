@@ -47,7 +47,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
             /*
                 اجرای پیش پردازش های فلو
              */
-            this.process(this.getPreProcessors(), flowToken, flowData, Map.of(), httpRequest, httpResponse);
+            this.process(this.getPreProcessors(flowData), flowToken, flowData, Map.of(), httpRequest, httpResponse);
             FlowResponse response = this.processNextForm(flowToken, flowData, Map.of(), httpRequest, httpResponse);
             flowData.setNextStepIndex(flowData.getNextStepIndex() + 1);
             return response;
@@ -142,7 +142,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
         /*
             تلاش برای پردازش با پردازشگرهای فلو
          */
-        return this.process(this.getActionProcessors().get(action), flowToken, flowData, formData, httpRequest, httpResponse);
+        return this.process(this.getActionProcessors(flowData).get(action), flowToken, flowData, formData, httpRequest, httpResponse);
     }
 
     /**
@@ -197,7 +197,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
     }
 
     protected void onFinished(String flowToken, D flowData, Map<String, String> formData, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
-        this.process(this.getPostProcessors(), flowToken, flowData, formData, httpRequest, httpResponse);
+        this.process(this.getPostProcessors(flowData), flowToken, flowData, formData, httpRequest, httpResponse);
         this.cleanFlowData(flowToken);
     }
 
@@ -238,7 +238,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
         return response;
     }
 
-    protected int getStepsCounts(FlowData flowData) {
+    protected int getStepsCounts(D flowData) {
         return this.getForms(flowData).size();
     }
 
@@ -269,11 +269,11 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
         return flowDataRepository;
     }
 
-    public List<FlowFormTemplate> getForms(FlowData flowData) {
+    public List<FlowFormTemplate> getForms(D flowData) {
         return forms.stream().filter(formTemplate -> formTemplate.mustShow(flowData.getData())).collect(Collectors.toList());
     }
 
-    public List<FormProcessor> getPreProcessors() {
+    public List<FormProcessor> getPreProcessors(D flowData) {
         return preProcessors;
     }
 
@@ -281,7 +281,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
         this.preProcessors = preProcessors;
     }
 
-    public List<FormProcessor> getPostProcessors() {
+    public List<FormProcessor> getPostProcessors(D flowData) {
         return postProcessors;
     }
 
@@ -289,7 +289,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
         this.postProcessors = postProcessors;
     }
 
-    public Map<String, List<FormProcessor>> getActionProcessors() {
+    public Map<String, List<FormProcessor>> getActionProcessors(D flowData) {
         return actionProcessors;
     }
 
