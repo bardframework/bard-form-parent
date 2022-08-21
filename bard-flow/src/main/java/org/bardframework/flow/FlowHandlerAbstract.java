@@ -227,9 +227,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
                 convert and fill form
              */
             BardForm nextForm = FormUtils.toForm(formTemplate, flowData.getData(), flowData.getData(), flowData.getLocale(), httpRequest);
-            response.setForm(nextForm);
-            response.setSteps(this.getStepsCounts(flowData));
-            response.setCurrent(flowData.getNextStepIndex());
+            response.setForm(nextForm).setSteps(this.getStepsCounts(flowData)).setCurrent(flowData.getNextStepIndex());
         }
         if (null == formTemplate || formTemplate.isFinished()) {
             response.setFinished(Boolean.TRUE);

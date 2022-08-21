@@ -12,8 +12,9 @@ public class FlowResponse {
         return finished;
     }
 
-    public void setFinished(Boolean finished) {
+    public FlowResponse setFinished(Boolean finished) {
         this.finished = finished;
+        return this;
     }
 
     public BardForm getForm() {
@@ -29,15 +30,17 @@ public class FlowResponse {
         return steps;
     }
 
-    public void setSteps(int steps) {
+    public FlowResponse setSteps(int steps) {
         this.steps = steps;
+        return this;
     }
 
     public int getCurrent() {
         return current;
     }
 
-    public void setCurrent(int current) {
+    public FlowResponse setCurrent(int current) {
         this.current = current;
+        return this;
     }
 }
