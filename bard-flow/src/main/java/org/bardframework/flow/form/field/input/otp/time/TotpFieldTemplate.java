@@ -10,6 +10,7 @@ import java.util.Map;
 
 public class TotpFieldTemplate extends OtpFieldTemplate<OtpField, Void> {
     public static final String TOTP_SECRET_KEY = "X_TOTP_SECRET";
+    private String secretAttributeName = TOTP_SECRET_KEY;
 
     private final OtpServiceAbstract otpService;
 
@@ -33,8 +34,16 @@ public class TotpFieldTemplate extends OtpFieldTemplate<OtpField, Void> {
 
     @Override
     protected boolean isValidOtp(String flowToken, String otp, Map<String, String> flowData) throws Exception {
-        String totpSecretBase64 = flowData.get(TOTP_SECRET_KEY);
+        String totpSecretBase64 = flowData.get(this.getSecretAttributeName());
         byte[] totpSecret = Base64.getDecoder().decode(totpSecretBase64);
         return otpService.verify(otp, totpSecret);
+    }
+
+    public String getSecretAttributeName() {
+        return secretAttributeName;
+    }
+
+    public void setSecretAttributeName(String secretAttributeName) {
+        this.secretAttributeName = secretAttributeName;
     }
 }
