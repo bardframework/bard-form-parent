@@ -1,10 +1,9 @@
 package org.bardframework.form.model.filter;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 
 /**
- * Filter class for {@link LocalDate} type attributes.
+ * Filter class for {@link LocalTime} type attributes.
  *
  * @see RangeFilter
  */
