@@ -33,7 +33,7 @@ public class EotpFieldTemplate extends OtpFieldTemplate<OtpField, String> {
 
     @Override
     protected boolean isValidOtp(String flowToken, String otp, Map<String, String> flowData) throws Exception {
-        String expectedAnswer = flowData.remove(ANSWER_KEY);
+        String expectedAnswer = flowData.get(ANSWER_KEY);
         if (StringUtils.isBlank(expectedAnswer)) {
             LOGGER.debug("eotp answer in flow data is blank, flow token: [{}]", flowToken);
             return false;
