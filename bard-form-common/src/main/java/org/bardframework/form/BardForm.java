@@ -12,6 +12,7 @@ public class BardForm {
     protected String description;
     protected String confirmMessage;
     protected String submitLabel;
+    protected Boolean submitPristine;
     protected FieldDescriptionShowType fieldDescriptionShowType;
     protected List<Field> fields = new ArrayList<>();
 
@@ -69,6 +70,14 @@ public class BardForm {
 
     public void setFieldDescriptionShowType(FieldDescriptionShowType fieldDescriptionShowType) {
         this.fieldDescriptionShowType = fieldDescriptionShowType;
+    }
+
+    public Boolean getSubmitPristine() {
+        return submitPristine;
+    }
+
+    public void setSubmitPristine(Boolean submitPristine) {
+        this.submitPristine = submitPristine;
     }
 
     public void addField(Field field) {

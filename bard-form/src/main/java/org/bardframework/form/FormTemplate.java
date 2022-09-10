@@ -28,6 +28,7 @@ public class FormTemplate {
     protected FieldDescriptionShowType descriptionShowType = FieldDescriptionShowType.HINT;
     protected Class<?> dtoClass;
     protected boolean failOnUnknownSubmitFields = true;
+    protected Boolean submitPristine;
     protected Expression showExpression = null;
 
     public FormTemplate(String name, List<FieldTemplate<?>> fieldTemplates, MessageSource messageSource) {
@@ -152,5 +153,17 @@ public class FormTemplate {
 
     public void setDescriptionShowType(FieldDescriptionShowType descriptionShowType) {
         this.descriptionShowType = descriptionShowType;
+    }
+
+    public Boolean getSubmitPristine() {
+        return submitPristine;
+    }
+
+    public void setSubmitPristine(Boolean submitPristine) {
+        this.submitPristine = submitPristine;
+    }
+
+    public Expression getShowExpression() {
+        return showExpression;
     }
 }
