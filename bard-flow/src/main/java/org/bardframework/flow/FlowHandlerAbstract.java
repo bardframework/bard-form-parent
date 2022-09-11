@@ -41,6 +41,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
         String flowToken = this.generateFlowToken();
         flowData.setLocale(locale);
         flowData.getData().putAll(initValues);
+        flowData.setCurrentFormIndex(-1);
         this.getFlowDataRepository().put(flowToken, flowData);
 
         try {
@@ -48,9 +49,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
                 اجرای پیش پردازش های فلو
              */
             this.process(this.getPreProcessors(flowData), flowToken, flowData, Map.of(), httpRequest, httpResponse);
-            FlowResponse response = this.processNextForm(flowToken, flowData, Map.of(), httpRequest, httpResponse);
-            flowData.setNextStepIndex(flowData.getNextStepIndex() + 1);
-            return response;
+            return this.processNextForm(flowToken, flowData, Map.of(), httpRequest, httpResponse);
         } finally {
             /*
                 در تمامی حالات (حالاتی که استثنا رخ دهد یا خیر) باید دیتای تغیر یافته را ذخیره کنیم؛
@@ -71,9 +70,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
         this.fillFlowData(flowData.getData(), formData, currentFormTemplate);
         try {
             this.process(currentFormTemplate.getPostProcessors(), flowToken, flowData, formData, httpRequest, httpResponse);
-            FlowResponse response = this.processNextForm(flowToken, flowData, formData, httpRequest, httpResponse);
-            flowData.setNextStepIndex(flowData.getNextStepIndex() + 1);
-            return response;
+            return this.processNextForm(flowToken, flowData, formData, httpRequest, httpResponse);
         } catch (InvalidateFlowException ex) {
             this.invalidateFlow(ex);
             throw ex;
@@ -116,7 +113,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
     public FlowResponse getCurrent(String flowToken, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
             throws Exception {
         D flowData = this.getFlowDataRepository().get(flowToken);
-        if (flowData.getNextStepIndex() == 1) {
+        if (flowData.getCurrentFormIndex() == 0) {
             flowData.setLocale(locale);
             this.updateFlowData(flowToken, flowData);
         }
@@ -186,14 +183,18 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
     }
 
     protected FlowFormTemplate getNextFormTemplate(D flowData) throws Exception {
-        if (this.getForms(flowData).size() <= flowData.getNextStepIndex()) {
+        List<FlowFormTemplate> formTemplates = forms.subList(flowData.getCurrentFormIndex() + 1, forms.size()).stream()
+                .filter(formTemplate -> formTemplate.mustShow(flowData.getData())).collect(Collectors.toList());
+        if (formTemplates.isEmpty()) {
             return null;
         }
-        return this.getForms(flowData).get(flowData.getNextStepIndex());
+        FlowFormTemplate nextFormTemplate = formTemplates.get(0);
+        flowData.setCurrentFormIndex(this.forms.indexOf(nextFormTemplate));
+        return nextFormTemplate;
     }
 
     protected FlowFormTemplate getCurrentFormTemplate(D flowData) throws Exception {
-        return this.getForms(flowData).get(flowData.getNextStepIndex() - 1);
+        return this.forms.get(flowData.getCurrentFormIndex());
     }
 
     protected void onFinished(String flowToken, D flowData, Map<String, String> formData, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
@@ -227,7 +228,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
                 convert and fill form
              */
             BardForm nextForm = FormUtils.toForm(formTemplate, flowData.getData(), flowData.getData(), flowData.getLocale(), httpRequest);
-            response.setForm(nextForm).setSteps(this.getStepsCounts(flowData)).setCurrent(flowData.getNextStepIndex());
+            response.setForm(nextForm).setSteps(this.getStepsCounts(flowData)).setCurrent(flowData.getCurrentFormIndex());
         }
         if (null == formTemplate || formTemplate.isFinished()) {
             response.setFinished(Boolean.TRUE);
@@ -241,7 +242,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
     }
 
     protected int getStepsCounts(D flowData) {
-        return this.getForms(flowData).size();
+        return this.forms.size();
     }
 
     protected void cleanFlowData(String flowToken) {
@@ -262,17 +263,8 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
         return true;
     }
 
-    protected boolean isStarted(String flowToken) throws InvalidateFlowException {
-        D flowData = this.getFlowDataRepository().get(flowToken);
-        return null != flowData && flowData.getNextStepIndex() > 0;
-    }
-
     public FlowDataRepository<D> getFlowDataRepository() {
         return flowDataRepository;
-    }
-
-    public List<FlowFormTemplate> getForms(D flowData) {
-        return forms.stream().filter(formTemplate -> formTemplate.mustShow(flowData.getData())).collect(Collectors.toList());
     }
 
     public List<FormProcessor> getPreProcessors(D flowData) {
