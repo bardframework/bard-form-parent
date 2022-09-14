@@ -48,10 +48,9 @@ public class FormUtils {
         for (FieldTemplate<?> fieldTemplate : formTemplate.getFieldTemplates(args)) {
             Field field = fieldTemplate.toField(formTemplate, args, locale, httpRequest);
             String valueString = values.get(fieldTemplate.getName());
-            if (field instanceof InputField<?>) {
+            if (field instanceof InputField<?> && null == ((InputField<?>) field).getValue()) {
                 InputFieldTemplate<?, T> inputFieldTemplate = (InputFieldTemplate<?, T>) fieldTemplate;
-                InputField<T> inputField = (InputField<T>) field;
-                inputField.setValue(inputFieldTemplate.toValue(valueString));
+                ((InputField<T>) field).setValue(inputFieldTemplate.toValue(valueString));
             } else if (field instanceof ReadonlyField) {
                 ((ReadonlyField) field).setValue(valueString);
             }
