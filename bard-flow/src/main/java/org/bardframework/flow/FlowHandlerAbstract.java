@@ -165,7 +165,9 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
      * 3. ذخیره داده های فلو
      */
     protected FlowResponse processNextForm(String flowToken, D flowData, Map<String, String> formData, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
-        FlowFormTemplate nextFormTemplate = this.getNextFormTemplate(flowData);
+        FlowFormTemplate nextFormTemplate = forms.subList(flowData.getCurrentFormIndex() + 1, forms.size()).stream()
+                .filter(formTemplate -> formTemplate.mustShow(flowData.getData()))
+                .findFirst().orElse(null);
         if (null != nextFormTemplate) {
             this.process(nextFormTemplate.getPreProcessors(), flowToken, flowData, formData, httpRequest, httpResponse);
             /*
@@ -174,23 +176,16 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
             for (FlowInputFieldTemplate<?, ?> flowInputFieldTemplate : nextFormTemplate.getFieldTemplates(formData, FlowInputFieldTemplate.class)) {
                 flowInputFieldTemplate.preProcess(flowToken, flowData.getData(), flowData.getLocale(), httpResponse);
             }
+            /*
+                تنظیم کردن اندیس فرم جاری باید پس از موفقیت آمیز بودن اجرای preProcessهای آن باشد
+             */
+            flowData.setCurrentFormIndex(this.forms.indexOf(nextFormTemplate));
         }
         FlowResponse response = this.toResponse(flowToken, nextFormTemplate, flowData, httpRequest, httpResponse);
         if (Boolean.TRUE.equals(response.getFinished())) {
             this.onFinished(flowToken, flowData, formData, httpRequest, httpResponse);
         }
         return response;
-    }
-
-    protected FlowFormTemplate getNextFormTemplate(D flowData) throws Exception {
-        List<FlowFormTemplate> formTemplates = forms.subList(flowData.getCurrentFormIndex() + 1, forms.size()).stream()
-                .filter(formTemplate -> formTemplate.mustShow(flowData.getData())).collect(Collectors.toList());
-        if (formTemplates.isEmpty()) {
-            return null;
-        }
-        FlowFormTemplate nextFormTemplate = formTemplates.get(0);
-        flowData.setCurrentFormIndex(this.forms.indexOf(nextFormTemplate));
-        return nextFormTemplate;
     }
 
     protected FlowFormTemplate getCurrentFormTemplate(D flowData) throws Exception {
