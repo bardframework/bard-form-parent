@@ -29,7 +29,7 @@ public class MessageSenderEmail extends MessageSenderAbstract {
         this.configs = configs;
         this.subjectCreator = subjectCreator;
         this.receiverEmailFieldTemplate = receiverEmailFieldTemplate;
-        this.authenticator = new javax.mail.Authenticator() {
+        this.authenticator = new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(senderUsername, senderPassword);
