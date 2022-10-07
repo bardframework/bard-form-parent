@@ -5,6 +5,6 @@ package org.bardframework.form.model.filter;
  *
  * @see RangeFilter
  */
-public class NumberRangeFilter<T extends Number & Comparable<T>, F extends NumberRangeFilter<T, F>> extends RangeFilter<T, F> {
+public abstract class NumberRangeFilter<T extends Number & Comparable<T>, F extends NumberRangeFilter<T, F>> extends RangeFilter<T, F> {
 
 }

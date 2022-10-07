@@ -7,6 +7,6 @@ import java.time.LocalTime;
  *
  * @see RangeFilter
  */
-public class TimeFilter extends RangeFilter<LocalTime, TimeFilter> {
+public class LocalTimeFilter extends RangeFilter<LocalTime, LocalTimeFilter> {
 
 }

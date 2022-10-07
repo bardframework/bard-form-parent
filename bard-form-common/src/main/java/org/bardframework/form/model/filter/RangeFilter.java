@@ -22,7 +22,7 @@ import java.io.Serializable;
  * @see NumberRangeFilter
  * @see LocalDateFilter
  */
-public class RangeFilter<T extends Serializable, F extends RangeFilter<T, F>> extends Filter<T, F> {
+public abstract class RangeFilter<T extends Serializable, F extends RangeFilter<T, F>> extends Filter<T, F> {
 
     private T from;
     private T to;

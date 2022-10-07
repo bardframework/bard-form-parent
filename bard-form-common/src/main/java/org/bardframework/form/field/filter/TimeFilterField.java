@@ -2,12 +2,12 @@ package org.bardframework.form.field.filter;
 
 import org.bardframework.form.field.FieldType;
 import org.bardframework.form.field.input.InputField;
-import org.bardframework.form.model.filter.TimeFilter;
+import org.bardframework.form.model.filter.LocalTimeFilter;
 
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 
-public class TimeFilterField extends InputField<TimeFilter> {
+public class TimeFilterField extends InputField<LocalTimeFilter> {
     private Long minLength;
     private Long maxLength;
     private ChronoUnit lengthUnit;
@@ -27,7 +27,7 @@ public class TimeFilterField extends InputField<TimeFilter> {
     }
 
     @Override
-    public String toString(TimeFilter value) {
+    public String toString(LocalTimeFilter value) {
         return String.join(SEPARATOR, null == value.getFrom() ? "" : value.getFrom().toString(), null == value.getTo() ? "" : value.getTo().toString());
     }
 

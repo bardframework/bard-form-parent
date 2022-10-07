@@ -5,7 +5,7 @@ import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
 import org.bardframework.form.field.input.InputField;
 import org.bardframework.form.field.input.InputFieldTemplate;
-import org.bardframework.form.model.filter.TimeFilter;
+import org.bardframework.form.model.filter.LocalTimeFilter;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
@@ -14,7 +14,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 import java.util.Map;
 
-public class TimeFilterFieldTemplate extends InputFieldTemplate<TimeFilterField, TimeFilter> {
+public class TimeFilterFieldTemplate extends InputFieldTemplate<TimeFilterField, LocalTimeFilter> {
     private boolean minIsNow;
     private boolean maxIsNow;
     private ChronoUnit lengthUnit = ChronoUnit.SECONDS;
@@ -40,7 +40,7 @@ public class TimeFilterFieldTemplate extends InputFieldTemplate<TimeFilterField,
     }
 
     @Override
-    public TimeFilter toValue(String value) {
+    public LocalTimeFilter toValue(String value) {
         if (StringUtils.isBlank(value)) {
             return null;
         }
@@ -48,7 +48,7 @@ public class TimeFilterFieldTemplate extends InputFieldTemplate<TimeFilterField,
         if (parts.length != 2) {
             throw new IllegalStateException(value + " is not valid for range value");
         }
-        TimeFilter filter = new TimeFilter();
+        LocalTimeFilter filter = new LocalTimeFilter();
         if (!parts[0].isBlank()) {
             filter.setFrom(LocalTime.parse(parts[0]));
         }
@@ -59,7 +59,7 @@ public class TimeFilterFieldTemplate extends InputFieldTemplate<TimeFilterField,
     }
 
     @Override
-    public boolean isValid(String flowToken, TimeFilterField field, TimeFilter filter, Map<String, String> flowData) {
+    public boolean isValid(String flowToken, TimeFilterField field, LocalTimeFilter filter, Map<String, String> flowData) {
         if (null == filter || (null == filter.getFrom() && null == filter.getTo())) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 LOGGER.debug("filterField [{}] is required, but it's value is empty", field.getName());

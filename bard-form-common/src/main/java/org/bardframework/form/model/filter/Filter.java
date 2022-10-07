@@ -14,7 +14,7 @@ import java.util.Collection;
  *      fieldName.notIn='something','other'
  * </pre>
  */
-public class Filter<T, F> {
+public abstract class Filter<T, F> {
     private T equals;
     private T notEquals;
     private Boolean specified;
