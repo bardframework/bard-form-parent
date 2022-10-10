@@ -21,7 +21,7 @@ public class EnumOptionDataSource extends CachableOptionDataSource {
     }
 
     @Override
-    protected List<SelectOption> loadOption(Locale locale) {
+    protected List<SelectOption> loadOptions(Locale locale) {
         List<SelectOption> options = new ArrayList<>();
         for (Enum<?> anEnum : enumOptionsClass.getEnumConstants()) {
             String titleMessageKey = this.getMessageKey(anEnum);

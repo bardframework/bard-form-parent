@@ -45,8 +45,6 @@ public abstract class HeaderTemplate<H extends TableHeader, T> extends TableHead
         return null;
     }
 
-    public abstract T parse(String value, Locale locale);
-
     public abstract Object format(T value, Locale locale, MessageSource messageSource);
 
     public String getExcelFormat() {

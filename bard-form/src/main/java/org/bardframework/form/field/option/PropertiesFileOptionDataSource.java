@@ -20,7 +20,7 @@ public class PropertiesFileOptionDataSource extends CachableOptionDataSource {
     }
 
     @Override
-    protected List<SelectOption> loadOption(Locale locale) {
+    protected List<SelectOption> loadOptions(Locale locale) {
         List<SelectOption> options = new ArrayList<>();
         for (Map.Entry<Object, Object> entry : messageSource.getAllProperties(locale).entrySet()) {
             options.add(new SelectOption(entry.getKey().toString().trim(), entry.getValue().toString().trim(), null));

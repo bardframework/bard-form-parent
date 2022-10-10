@@ -1,6 +1,5 @@
 package org.bardframework.table.header;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.MessageSource;
 
 import java.time.LocalTime;
@@ -13,14 +12,6 @@ public class LocalTimeHeaderTemplate extends HeaderTemplate<TimeHeader, LocalTim
 
     public LocalTimeHeaderTemplate(String formatterPattern) {
         this.formatter = DateTimeFormatter.ofPattern(formatterPattern);
-    }
-
-    @Override
-    public LocalTime parse(String value, Locale locale) {
-        if (StringUtils.isBlank(value)) {
-            return null;
-        }
-        return LocalTime.parse(value);
     }
 
     @Override

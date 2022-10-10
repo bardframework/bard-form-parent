@@ -18,10 +18,10 @@ public abstract class CachableOptionDataSource implements OptionDataSource {
         this(Long.MAX_VALUE);
     }
 
-    protected CachableOptionDataSource(long expirationMs) {
+    protected CachableOptionDataSource(long cacheExpirationMs) {
         this.cache = CacheBuilder.newBuilder()
                 .maximumSize(10000)
-                .expireAfterWrite(expirationMs, TimeUnit.MILLISECONDS)
+                .expireAfterWrite(cacheExpirationMs, TimeUnit.MILLISECONDS)
                 .build();
     }
 
@@ -29,9 +29,9 @@ public abstract class CachableOptionDataSource implements OptionDataSource {
     public List<SelectOption> getOptions(Locale locale) {
         List<SelectOption> options = cache.getIfPresent(locale);
         if (null == options) {
-            options = this.loadOption(locale);
+            options = this.loadOptions(locale);
             options.sort((option1, option2) -> {
-                switch (sortBy) {
+                switch (this.getSortBy()) {
                     case TITLE:
                         return Collator.getInstance(locale).compare(option1.getTitle(), option2.getTitle());
                     case NATURAL_ORDER:
@@ -45,7 +45,7 @@ public abstract class CachableOptionDataSource implements OptionDataSource {
         return options;
     }
 
-    protected abstract List<SelectOption> loadOption(Locale locale);
+    protected abstract List<SelectOption> loadOptions(Locale locale);
 
     public SortBy getSortBy() {
         return sortBy;

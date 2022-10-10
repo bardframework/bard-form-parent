@@ -13,6 +13,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.bardframework.crud</groupId>
+            <artifactId>crud-api</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.bardframework.form</groupId>
             <artifactId>bard-form-common</artifactId>
         </dependency>
