@@ -21,10 +21,6 @@
             <artifactId>bard-form-common</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.bardframework.commons</groupId>
             <artifactId>common-utils</artifactId>
         </dependency>
@@ -43,6 +39,10 @@
         <dependency>
             <groupId>org.bardframework.commons</groupId>
             <artifactId>common-captcha</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
         </dependency>
         <dependency>
             <groupId>jakarta.annotation</groupId>
