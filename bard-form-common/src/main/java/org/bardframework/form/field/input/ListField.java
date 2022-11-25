@@ -8,6 +8,7 @@ public class ListField extends InputField<List<String>> {
     private Integer minLength;
     private Integer maxLength;
     private Integer maxCount;
+    private Boolean bulkAdd;
 
     public ListField() {
     }
@@ -48,5 +49,13 @@ public class ListField extends InputField<List<String>> {
 
     public void setMaxCount(Integer maxCount) {
         this.maxCount = maxCount;
+    }
+
+    public Boolean getBulkAdd() {
+        return bulkAdd;
+    }
+
+    public void setBulkAdd(Boolean bulkAdd) {
+        this.bulkAdd = bulkAdd;
     }
 }

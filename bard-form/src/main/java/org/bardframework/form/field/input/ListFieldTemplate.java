@@ -46,6 +46,7 @@ public class ListFieldTemplate extends InputFieldTemplate<ListField, List<String
         field.setMinLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "minLength", locale, values, this.getDefaultValues().getMinLength()));
         field.setMaxLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxLength", locale, values, this.getDefaultValues().getMaxLength()));
         field.setMaxCount(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxCount", locale, values, this.getDefaultValues().getMaxCount()));
+        field.setBulkAdd(FormUtils.getFieldBooleanProperty(formTemplate, this, "bulkAdd", locale, values, this.getDefaultValues().getBulkAdd()));
     }
 
     @Override
