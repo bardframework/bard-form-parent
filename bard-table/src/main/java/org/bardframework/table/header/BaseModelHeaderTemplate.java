@@ -1,7 +1,7 @@
 package org.bardframework.table.header;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import org.bardframework.crud.api.base.BaseModel;
 import org.bardframework.crud.api.base.BaseRepository;
 import org.springframework.context.MessageSource;
@@ -15,7 +15,7 @@ public abstract class BaseModelHeaderTemplate<M extends BaseModel<I>, R extends 
     private final R repository;
 
     protected BaseModelHeaderTemplate(R repository, long cacheExpirationMs) {
-        this.cache = CacheBuilder.newBuilder()
+        this.cache = Caffeine.newBuilder()
                 .maximumSize(10000)
                 .expireAfterWrite(cacheExpirationMs, TimeUnit.MILLISECONDS)
                 .build();
@@ -24,6 +24,9 @@ public abstract class BaseModelHeaderTemplate<M extends BaseModel<I>, R extends 
 
     @Override
     public String format(I value, Locale locale, MessageSource messageSource) {
+        if (null == value) {
+            return null;
+        }
         U user = this.getUser();
         M model = cache.getIfPresent(value);
         if (null == model) {
@@ -34,6 +37,10 @@ public abstract class BaseModelHeaderTemplate<M extends BaseModel<I>, R extends 
             this.cache.put(value, model);
         }
         return this.getTitle(model);
+    }
+
+    public StringHeader getEmptyHeader() {
+        return new StringHeader();
     }
 
     protected abstract U getUser();

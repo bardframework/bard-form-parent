@@ -25,10 +25,9 @@ public class FormDataProvider {
     public Map<String, String> getValidData(BardForm form) throws Exception {
         Map<String, String> map = new HashMap<>();
         for (Field field : form.getFields()) {
-            if (!(field instanceof InputField<?>)) {
+            if (!(field instanceof InputField<?> inputField)) {
                 continue;
             }
-            InputField<?> inputField = (InputField<?>) field;
             InputFieldDataProvider dataProvider = this.getDataProvider(inputField);
             map.put(inputField.getName(), dataProvider.getValidValueString(inputField));
         }
@@ -39,10 +38,9 @@ public class FormDataProvider {
         Map<String, String> map = new HashMap<>();
         boolean invalidate = false;
         for (Field field : form.getFields()) {
-            if (!(field instanceof InputField<?>)) {
+            if (!(field instanceof InputField<?> inputField)) {
                 continue;
             }
-            InputField<?> inputField = (InputField<?>) field;
             InputFieldDataProvider dataProvider = this.getDataProvider(inputField);
             if (RandomUtils.nextBoolean()) {
                 invalidate = true;

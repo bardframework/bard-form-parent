@@ -11,6 +11,9 @@ public class I18nHeaderTemplate extends StringHeaderTemplate {
     }
 
     public Object format(String value, Locale locale, MessageSource messageSource) {
+        if (null == value) {
+            return null;
+        }
         return messageSource.getMessage(keyPrefix + value, new Object[0], value, locale);
     }
 

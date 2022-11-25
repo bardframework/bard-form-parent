@@ -8,6 +8,9 @@ public class ByteHeaderTemplate extends HeaderTemplate<StringHeader, Byte> {
 
     @Override
     public String format(Byte value, Locale locale, MessageSource messageSource) {
-        return null == value ? null : value.toString();
+        if (null == value) {
+            return null;
+        }
+        return value.toString();
     }
 }

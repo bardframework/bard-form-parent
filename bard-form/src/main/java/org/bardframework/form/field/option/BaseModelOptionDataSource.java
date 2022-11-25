@@ -32,7 +32,7 @@ public abstract class BaseModelOptionDataSource<M extends BaseModel<I>, C extend
     }
 
     protected C getCriteria(U user) {
-        return ReflectionUtils.newInstance(ReflectionUtils.getGenericArgType(this.getClass(), 0));
+        return ReflectionUtils.newInstance(ReflectionUtils.getGenericArgType(this.getClass(), 1));
     }
 
     protected SelectOption map(M model) {

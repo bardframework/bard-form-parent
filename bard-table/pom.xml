@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.bardframework.form</groupId>
         <artifactId>bard-form-parent</artifactId>
-        <version>1.7.4</version>
+        <version>1.9.4</version>
     </parent>
 
     <artifactId>bard-table</artifactId>
@@ -15,6 +15,11 @@
         <dependency>
             <groupId>org.bardframework.form</groupId>
             <artifactId>bard-form</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

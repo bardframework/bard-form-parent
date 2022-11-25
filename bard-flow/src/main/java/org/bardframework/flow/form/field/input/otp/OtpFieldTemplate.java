@@ -1,5 +1,8 @@
 package org.bardframework.flow.form.field.input.otp;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.flow.exception.InvalidateFlowException;
 import org.bardframework.flow.form.field.input.FlowInputFieldTemplate;
@@ -8,9 +11,6 @@ import org.bardframework.form.FormTemplate;
 import org.bardframework.form.field.input.OtpField;
 import org.springframework.http.HttpStatus;
 
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;

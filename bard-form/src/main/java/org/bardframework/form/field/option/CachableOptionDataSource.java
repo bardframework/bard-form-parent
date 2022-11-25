@@ -1,7 +1,7 @@
 package org.bardframework.form.field.option;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import org.bardframework.form.model.SelectOption;
 
 import java.text.Collator;
@@ -19,8 +19,8 @@ public abstract class CachableOptionDataSource implements OptionDataSource {
     }
 
     protected CachableOptionDataSource(long cacheExpirationMs) {
-        this.cache = CacheBuilder.newBuilder()
-                .maximumSize(10000)
+        this.cache = Caffeine.newBuilder()
+                .maximumSize(10_000)
                 .expireAfterWrite(cacheExpirationMs, TimeUnit.MILLISECONDS)
                 .build();
     }

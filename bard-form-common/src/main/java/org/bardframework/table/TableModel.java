@@ -10,16 +10,20 @@ public class TableModel {
     private String name;
     private String title;
     private String description;
+    private Integer fetchSize;
+
     private List<TableHeader> headers;
+
     private BardForm filterForm;
     private BardForm saveForm;
     private BardForm updateForm;
+
     private Boolean delete;
     private Boolean print;
     private Boolean export;
     private Boolean preload;
     private Boolean pageable;
-    private Integer fetchSize;
+    private Boolean hideColumn;
 
     public void addHeader(TableHeader header) {
         if (null == this.headers) {
@@ -50,6 +54,14 @@ public class TableModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Integer getFetchSize() {
+        return fetchSize;
+    }
+
+    public void setFetchSize(Integer fetchSize) {
+        this.fetchSize = fetchSize;
     }
 
     public List<TableHeader> getHeaders() {
@@ -124,11 +136,11 @@ public class TableModel {
         this.pageable = pageable;
     }
 
-    public Integer getFetchSize() {
-        return fetchSize;
+    public Boolean getHideColumn() {
+        return hideColumn;
     }
 
-    public void setFetchSize(Integer fetchSize) {
-        this.fetchSize = fetchSize;
+    public void setHideColumn(Boolean hideColumn) {
+        this.hideColumn = hideColumn;
     }
 }

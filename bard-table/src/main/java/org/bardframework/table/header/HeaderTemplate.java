@@ -3,6 +3,7 @@ package org.bardframework.table.header;
 import org.bardframework.commons.utils.ReflectionUtils;
 import org.bardframework.table.TableTemplate;
 import org.bardframework.table.TableUtils;
+import org.bardframework.table.header.type.HeaderType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;

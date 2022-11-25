@@ -1,5 +1,6 @@
 package org.bardframework.table;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormUtils;
 import org.bardframework.table.header.HeaderTemplate;
@@ -7,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -43,6 +43,7 @@ public class TableUtils {
         table.setExport(TableUtils.getTableBooleanValue(tableTemplate, "export", locale, args, tableTemplate.getExport()));
         table.setPreload(TableUtils.getTableBooleanValue(tableTemplate, "preload", locale, args, tableTemplate.getPreload()));
         table.setPageable(TableUtils.getTableBooleanValue(tableTemplate, "pageable", locale, args, tableTemplate.getPageable()));
+        table.setHideColumn(TableUtils.getTableBooleanValue(tableTemplate, "hideColumn", locale, args, tableTemplate.getHideColumn()));
         table.setFetchSize(TableUtils.getTableIntegerValue(tableTemplate, "fetchSize", locale, args, tableTemplate.getFetchSize()));
         table.setFilterForm(FormUtils.toForm(tableTemplate.getFilterFormTemplate(), args, Map.of(), locale, httpRequest));
         table.setSaveForm(FormUtils.toForm(tableTemplate.getSaveFormTemplate(), args, Map.of(), locale, httpRequest));

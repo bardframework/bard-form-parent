@@ -8,6 +8,9 @@ public class ShortHeaderTemplate extends HeaderTemplate<StringHeader, Short> {
 
     @Override
     public String format(Short value, Locale locale, MessageSource messageSource) {
-        return null == value ? null : value.toString();
+        if (null == value) {
+            return null;
+        }
+        return value.toString();
     }
 }

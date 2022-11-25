@@ -1,5 +1,6 @@
 package org.bardframework.form.field.filter;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
@@ -7,7 +8,6 @@ import org.bardframework.form.field.input.InputField;
 import org.bardframework.form.field.input.InputFieldTemplate;
 import org.bardframework.form.model.filter.LocalDateTimeFilter;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;

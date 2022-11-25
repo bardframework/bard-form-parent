@@ -8,6 +8,9 @@ public class IntegerHeaderTemplate extends HeaderTemplate<StringHeader, Integer>
 
     @Override
     public String format(Integer value, Locale locale, MessageSource messageSource) {
-        return null == value ? null : value.toString();
+        if (null == value) {
+            return null;
+        }
+        return value.toString();
     }
 }

@@ -1,7 +1,7 @@
 package org.bardframework.flow.repository;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import org.bardframework.flow.exception.InvalidateFlowException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +15,7 @@ public class FlowDataRepositoryInMemory<D> implements FlowDataRepository<D> {
     private final Cache<String, D> cache;
 
     public FlowDataRepositoryInMemory(long expirationMs) {
-        this.cache = CacheBuilder.newBuilder()
+        this.cache = Caffeine.newBuilder()
                 .maximumSize(10_000)
                 .expireAfterWrite(expirationMs, TimeUnit.MILLISECONDS)
                 .build();

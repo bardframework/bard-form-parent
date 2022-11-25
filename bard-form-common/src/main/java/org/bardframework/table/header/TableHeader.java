@@ -1,6 +1,7 @@
 package org.bardframework.table.header;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import org.bardframework.table.header.type.HeaderType;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.MINIMAL_CLASS, property = "@type")
 public abstract class TableHeader {

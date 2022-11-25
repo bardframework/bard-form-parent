@@ -1,15 +1,15 @@
 package org.bardframework.flow.processor.message.sender;
 
+import jakarta.mail.*;
+import jakarta.mail.internet.AddressException;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.flow.processor.message.creator.MessageProvider;
 import org.bardframework.form.field.FieldTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.mail.*;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;

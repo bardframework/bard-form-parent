@@ -8,6 +8,9 @@ public class LongHeaderTemplate extends HeaderTemplate<StringHeader, Long> {
 
     @Override
     public String format(Long value, Locale locale, MessageSource messageSource) {
-        return null == value ? null : value.toString();
+        if (null == value) {
+            return null;
+        }
+        return value.toString();
     }
 }

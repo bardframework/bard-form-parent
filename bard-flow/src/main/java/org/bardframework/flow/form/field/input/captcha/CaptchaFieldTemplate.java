@@ -1,5 +1,6 @@
 package org.bardframework.flow.form.field.input.captcha;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.commons.captcha.GeneratedCaptcha;
@@ -9,7 +10,6 @@ import org.bardframework.form.field.input.CaptchaField;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
-import javax.servlet.http.HttpServletResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Locale;

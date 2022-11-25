@@ -1,8 +1,11 @@
 package org.bardframework.table.header;
 
+import org.bardframework.table.header.type.HeaderType;
+import org.bardframework.table.header.type.TableHeaderType;
+
 public class DateTimeHeader extends TableHeader {
     @Override
     public HeaderType getType() {
-        return TableType.DATE_TIME;
+        return TableHeaderType.DATE_TIME;
     }
 }

@@ -1,11 +1,11 @@
 package org.bardframework.flow.form.field.input.otp.time;
 
-import com.google.common.io.BaseEncoding;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import org.apache.commons.codec.binary.Base32;
 
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -30,8 +30,9 @@ class TotpServiceTest {
     }
 
     public static void main(String[] args) throws Exception {
-        final byte[] secret = BaseEncoding.base32().decode("4KBGOCGY4D4X2MNWCWK6H37ESILBEZGZWFXNGLGO6S3JWRHOO7TINEMZFEZNL5BW"); //totp.generateSecret();
-        String secretBase32 = BaseEncoding.base32().encode(secret);
+        Base32 base32 = new Base32();
+        final byte[] secret = base32.decode("4KBGOCGY4D4X2MNWCWK6H37ESILBEZGZWFXNGLGO6S3JWRHOO7TINEMZFEZNL5BW"); //totp.generateSecret();
+        String secretBase32 = base32.encodeAsString(secret);
         System.out.println("Secret:\t" + secretBase32);
         System.out.println("QR Code: " + TotpServiceTest.getQRCodeURL("sso.dejh.ir", "Vahid Zafari (va.zafari@gmail.com)", secretBase32));
         try (Scanner scanner = new Scanner(System.in)) {

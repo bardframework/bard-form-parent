@@ -1,8 +1,7 @@
 package org.bardframework.form.field.value;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.bardframework.form.field.input.InputField;
-
-import javax.servlet.http.HttpServletRequest;
 
 public interface FieldValueProvider<F extends InputField<T>, T> {
 

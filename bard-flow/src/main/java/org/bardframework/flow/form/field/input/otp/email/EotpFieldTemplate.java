@@ -1,12 +1,12 @@
 package org.bardframework.flow.form.field.input.otp.email;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.flow.form.field.input.otp.OtpFieldTemplate;
 import org.bardframework.flow.form.field.input.otp.OtpGenerator;
 import org.bardframework.flow.processor.message.sender.MessageSenderEmail;
 import org.bardframework.form.field.input.OtpField;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.Locale;
 import java.util.Map;
 

@@ -1,8 +1,8 @@
 package org.bardframework.form.field.value;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.bardframework.form.field.view.FileDownloadField;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 public interface FileFieldDataProvider {
