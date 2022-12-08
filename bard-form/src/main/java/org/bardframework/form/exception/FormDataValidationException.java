@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FormDataValidationException extends Exception {
+public class FormDataValidationException extends RuntimeException {
     private final Map<String, List<String>> invalidFields = new HashMap<>();
 
     public FormDataValidationException() {

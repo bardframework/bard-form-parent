@@ -23,7 +23,6 @@ public class SingleSelectFieldTemplate extends InputFieldTemplate<SingleSelectFi
         field.setOptions(optionDataSource.getOptions(locale));
     }
 
-
     @Override
     public boolean isValid(String flowToken, SingleSelectField field, String value, Map<String, String> flowData) {
         if (StringUtils.isBlank(value)) {

@@ -48,6 +48,10 @@ public abstract class HeaderTemplate<H extends TableHeader, T> extends TableHead
 
     public abstract Object format(T value, Locale locale, MessageSource messageSource);
 
+    public Object formatForExport(T value, Locale locale, MessageSource messageSource) {
+        return this.format(value, locale, messageSource);
+    }
+
     public String getExcelFormat() {
         return excelFormat;
     }

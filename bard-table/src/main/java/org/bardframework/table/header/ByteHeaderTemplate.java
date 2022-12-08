@@ -4,7 +4,7 @@ import org.springframework.context.MessageSource;
 
 import java.util.Locale;
 
-public class ByteHeaderTemplate extends HeaderTemplate<StringHeader, Byte> {
+public class ByteHeaderTemplate extends HeaderTemplate<NumberHeader, Byte> {
 
     @Override
     public String format(Byte value, Locale locale, MessageSource messageSource) {
