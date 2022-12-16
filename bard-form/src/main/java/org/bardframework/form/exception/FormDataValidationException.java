@@ -12,7 +12,7 @@ public class FormDataValidationException extends RuntimeException {
         super("invalid field value");
     }
 
-    public FormDataValidationException addFiledError(String field, String message) {
+    public FormDataValidationException addFieldError(String field, String message) {
         this.invalidFields.putIfAbsent(field, new ArrayList<>());
         this.invalidFields.get(field).add(message);
         return this;

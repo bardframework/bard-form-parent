@@ -1,9 +1,9 @@
 package org.bardframework.flow.form.field.input.otp;
 
-public class OtpGeneratorMock implements OtpGenerator<String> {
+public class OtpGeneratorFixed implements OtpGenerator<String> {
     private final String fixedOtp;
 
-    public OtpGeneratorMock(String fixedOtp) {
+    public OtpGeneratorFixed(String fixedOtp) {
         this.fixedOtp = fixedOtp;
     }
 

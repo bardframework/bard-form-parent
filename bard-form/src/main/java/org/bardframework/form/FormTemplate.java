@@ -62,7 +62,7 @@ public class FormTemplate {
         if (!illegalFields.isEmpty()) {
             if (this.isFailOnUnknownSubmitFields()) {
                 FormDataValidationException ex = new FormDataValidationException();
-                illegalFields.forEach(illegalField -> ex.addFiledError(illegalField, "illegal field"));
+                illegalFields.forEach(illegalField -> ex.addFieldError(illegalField, "illegal field"));
                 throw ex;
             } else {
                 LOGGER.warn("illegal fields[{}] exist in form [{}].", illegalFields, this.getName());

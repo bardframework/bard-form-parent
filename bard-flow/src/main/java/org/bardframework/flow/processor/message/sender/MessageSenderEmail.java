@@ -4,7 +4,6 @@ import jakarta.mail.*;
 import jakarta.mail.internet.AddressException;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
-import org.apache.commons.lang3.StringUtils;
 import org.bardframework.flow.processor.message.creator.MessageProvider;
 import org.bardframework.form.field.FieldTemplate;
 import org.slf4j.Logger;
@@ -20,15 +19,17 @@ public class MessageSenderEmail extends MessageSenderAbstract {
     private final InternetAddress senderEmail;
     private final Properties configs;
     private final MessageProvider subjectCreator;
-    private final FieldTemplate<?> receiverEmailFieldTemplate;
     private final Authenticator authenticator;
 
-    public MessageSenderEmail(String senderEmail, String senderUsername, String senderPassword, Properties configs, MessageProvider subjectCreator, MessageProvider emailBodyProvider, String errorMessageKey, FieldTemplate<?> receiverEmailFieldTemplate) throws AddressException {
-        super(emailBodyProvider, errorMessageKey);
+    public MessageSenderEmail(String canSendRegex, FieldTemplate<?> receiverFieldTemplate, String senderEmail, String senderUsername, String senderPassword, Properties configs, MessageProvider subjectCreator, MessageProvider emailBodyProvider, String errorMessageKey) throws AddressException {
+        this(canSendRegex, receiverFieldTemplate.getName(), senderEmail, senderUsername, senderPassword, configs, subjectCreator, emailBodyProvider, errorMessageKey);
+    }
+
+    public MessageSenderEmail(String canSendRegex, String receiverFieldName, String senderEmail, String senderUsername, String senderPassword, Properties configs, MessageProvider subjectCreator, MessageProvider emailBodyProvider, String errorMessageKey) throws AddressException {
+        super(canSendRegex, receiverFieldName, emailBodyProvider, errorMessageKey);
         this.senderEmail = InternetAddress.parse(senderEmail)[0];
         this.configs = configs;
         this.subjectCreator = subjectCreator;
-        this.receiverEmailFieldTemplate = receiverEmailFieldTemplate;
         this.authenticator = new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -38,13 +39,7 @@ public class MessageSenderEmail extends MessageSenderAbstract {
     }
 
     @Override
-    protected void send(String message, Map<String, String> args, Locale locale) throws Exception {
-        String receiverEmail = args.get(this.getReceiverEmailFieldTemplate().getName());
-        if (StringUtils.isBlank(receiverEmail)) {
-            LOGGER.warn("receiver email not exist for [{}], can't send email", args);
-            throw new IllegalStateException("receiver email not exist in args");
-        }
-
+    protected void send(String receiver, String message, Map<String, String> args, Locale locale) throws Exception {
         Session session = Session.getInstance(configs, this.authenticator);
         if (LOGGER.isDebugEnabled()) {
             session.setDebug(true);
@@ -52,17 +47,13 @@ public class MessageSenderEmail extends MessageSenderAbstract {
 
         MimeMessage mimeMessage = new MimeMessage(session);
         mimeMessage.setFrom(senderEmail);
-        mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receiverEmail, false));
+        mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receiver, false));
         mimeMessage.setSubject(subjectCreator.create(args, locale), "UTF-8");
         mimeMessage.addHeader("Content-type", "text/HTML; charset=UTF-8");
         mimeMessage.addHeader("format", "flowed");
         mimeMessage.addHeader("Content-Transfer-Encoding", "8bit");
         mimeMessage.setContent(message, "text/html; charset=utf-8");
         Transport.send(mimeMessage);
-        LOGGER.debug("email successfully sent to [{}]", receiverEmail);
-    }
-
-    public FieldTemplate<?> getReceiverEmailFieldTemplate() {
-        return receiverEmailFieldTemplate;
+        LOGGER.debug("email successfully sent to [{}]", receiver);
     }
 }

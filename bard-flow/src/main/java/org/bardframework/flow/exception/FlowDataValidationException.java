@@ -10,12 +10,12 @@ public class FlowDataValidationException extends RuntimeException {
         super("invalid field value");
     }
 
-    public FlowDataValidationException addFiledError(String field, String errorMessage) {
+    public FlowDataValidationException addFieldError(String field, String errorMessage) {
         this.fieldErrors.put(field, errorMessage);
         return this;
     }
 
-    public FlowDataValidationException addFiledError(String field) {
+    public FlowDataValidationException addFieldError(String field) {
         this.fieldErrors.put(field, null);
         return this;
     }

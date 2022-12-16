@@ -1,6 +1,7 @@
 package org.bardframework.flow.processor.message.sender;
 
 import jakarta.annotation.PostConstruct;
+import org.apache.commons.lang3.StringUtils;
 import org.bardframework.flow.exception.FlowExecutionException;
 import org.bardframework.flow.processor.message.creator.MessageProvider;
 import org.bardframework.time.LocalDateTimeJalali;
@@ -16,11 +17,14 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.regex.Pattern;
 
 public abstract class MessageSenderAbstract implements MessageSender {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MessageSenderAbstract.class);
+    protected static final Logger LOGGER = LoggerFactory.getLogger(MessageSenderAbstract.class);
 
+    protected final Pattern canSendRegex;
+    protected final String receiverFieldName;
     protected final MessageProvider messageProvider;
     protected final String errorMessageKey;
     protected Executor executor;
@@ -32,12 +36,14 @@ public abstract class MessageSenderAbstract implements MessageSender {
     protected DateTimeFormatter dateFormatterHijrah = DateTimeFormatter.ofPattern("yyyy/MM/dd");
     protected DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("H:mm:ss");
 
-    public MessageSenderAbstract(MessageProvider messageProvider, String errorMessageKey) {
+    public MessageSenderAbstract(String canSendRegex, String receiverFieldName, MessageProvider messageProvider, String errorMessageKey) {
+        this.canSendRegex = Pattern.compile(canSendRegex);
+        this.receiverFieldName = receiverFieldName;
         this.messageProvider = messageProvider;
         this.errorMessageKey = errorMessageKey;
     }
 
-    protected abstract void send(String message, Map<String, String> args, Locale locale) throws Exception;
+    protected abstract void send(String receiver, String message, Map<String, String> args, Locale locale) throws Exception;
 
     @PostConstruct
     void init() {
@@ -50,18 +56,27 @@ public abstract class MessageSenderAbstract implements MessageSender {
     public final void send(Map<String, String> data, Locale locale) throws Exception {
         Map<String, String> args = new HashMap<>(data);
         String message = this.getMessageProvider().create(args, locale);
+        if (StringUtils.isBlank(message)) {
+            LOGGER.warn("message is empty[{}], can't send it", args);
+            throw new IllegalStateException("message provider generate empty message!");
+        }
+        String receiver = data.get(this.getReceiverFieldName());
+        if (StringUtils.isBlank(receiver)) {
+            LOGGER.warn("receiver not exist for [{}], can't send message", args);
+            throw new IllegalStateException("receiver not exist in args");
+        }
         LOGGER.debug("sending message [{}]", message);
         if (this.isExecuteInNewThread()) {
-            this.getExecutor().execute(() -> this.sendInternal(message, args, locale));
+            this.getExecutor().execute(() -> this.sendInternal(receiver, message, args, locale));
         } else {
-            this.sendInternal(message, args, locale);
+            this.sendInternal(receiver, message, args, locale);
         }
     }
 
-    private void sendInternal(String message, Map<String, String> args, Locale locale) {
+    private void sendInternal(String receiver, String message, Map<String, String> args, Locale locale) {
         try {
             this.addExtraArgs(args);
-            this.send(message, args, locale);
+            this.send(receiver, message, args, locale);
         } catch (Exception e) {
             LOGGER.error("error sending message, catching exception.", e);
             if (!this.isFailOnError()) {
@@ -79,8 +94,17 @@ public abstract class MessageSenderAbstract implements MessageSender {
         args.put("time", dateTime.format(this.getTimeFormat()));
     }
 
+    @Override
+    public Pattern canSendRegex() {
+        return canSendRegex;
+    }
+
     public MessageProvider getMessageProvider() {
         return messageProvider;
+    }
+
+    public String getReceiverFieldName() {
+        return receiverFieldName;
     }
 
     public Executor getExecutor() {

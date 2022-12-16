@@ -45,7 +45,7 @@ public abstract class OtpServiceAbstract implements OtpGenerator<Void> {
     }
 
     @Override
-    public Void generate() throws Exception {
+    public Void generate() {
         return null;
     }
 

@@ -1,6 +1,5 @@
 package org.bardframework.flow.processor.message.sender;
 
-import org.apache.commons.lang3.StringUtils;
 import org.bardframework.commons.sms.SmsSender;
 import org.bardframework.flow.processor.message.creator.MessageProvider;
 import org.bardframework.form.field.FieldTemplate;
@@ -15,34 +14,28 @@ public class MessageSenderSms extends MessageSenderAbstract {
     protected static final Logger LOGGER = LoggerFactory.getLogger(MessageSenderSms.class);
 
     protected final SmsSender smsSender;
-    protected final FieldTemplate<?> mobileNumberFieldTemplate;
 
-    public MessageSenderSms(SmsSender smsSender, MessageProvider messageProvider, String errorMessageKey, FieldTemplate<?> mobileNumberFieldTemplate) {
-        super(messageProvider, errorMessageKey);
+    public MessageSenderSms(String canSendRegex, FieldTemplate<?> receiverFieldTemplate, SmsSender smsSender, MessageProvider messageProvider, String errorMessageKey) {
+        super(canSendRegex, receiverFieldTemplate.getName(), messageProvider, errorMessageKey);
         this.smsSender = smsSender;
-        this.mobileNumberFieldTemplate = mobileNumberFieldTemplate;
+    }
+
+    public MessageSenderSms(String canSendRegex, String receiverFieldName, SmsSender smsSender, MessageProvider messageProvider, String errorMessageKey) {
+        super(canSendRegex, receiverFieldName, messageProvider, errorMessageKey);
+        this.smsSender = smsSender;
     }
 
     @Override
-    protected void send(String message, Map<String, String> args, Locale locale) throws IOException {
-        String mobileNumber = args.get(this.getMobileNumberFieldTemplate().getName());
-        if (StringUtils.isBlank(mobileNumber)) {
-            LOGGER.warn("mobile number not exist for [{}], can't send sms", args);
-            throw new IllegalStateException("mobile number not exist in args");
-        }
+    protected void send(String receiver, String message, Map<String, String> args, Locale locale) throws IOException {
         LOGGER.debug("sending message [{}]", message);
-        boolean sendResult = this.getSmsSender().send(mobileNumber, message, args);
+        boolean sendResult = this.getSmsSender().send(receiver, message, args);
         if (!sendResult) {
-            LOGGER.error("error sending sms to [{}]", mobileNumber);
-            throw new IllegalStateException("error sending sms to: " + mobileNumber);
+            LOGGER.error("error sending sms to [{}]", receiver);
+            throw new IllegalStateException("error sending sms to: " + receiver);
         }
     }
 
     public SmsSender getSmsSender() {
         return smsSender;
-    }
-
-    public FieldTemplate<?> getMobileNumberFieldTemplate() {
-        return mobileNumberFieldTemplate;
     }
 }

@@ -18,7 +18,7 @@ public class CaptchaGeneratorDefault implements OtpGenerator<GeneratedCaptcha> {
     }
 
     @Override
-    public GeneratedCaptcha generate() throws Exception {
+    public GeneratedCaptcha generate() {
         return this.getCaptchaService().generateCaptcha(this.getType(), this.getLength());
     }
 
