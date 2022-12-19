@@ -23,10 +23,10 @@ public abstract class MessageSenderAbstract implements MessageSender {
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(MessageSenderAbstract.class);
 
-    protected final Pattern canSendRegex;
     protected final String receiverFieldName;
     protected final MessageProvider messageProvider;
     protected final String errorMessageKey;
+    protected Pattern canSendRegex;
     protected Executor executor;
     protected int threadPoolSize = 100;
     protected boolean failOnError = true;
@@ -36,8 +36,7 @@ public abstract class MessageSenderAbstract implements MessageSender {
     protected DateTimeFormatter dateFormatterHijrah = DateTimeFormatter.ofPattern("yyyy/MM/dd");
     protected DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("H:mm:ss");
 
-    public MessageSenderAbstract(String canSendRegex, String receiverFieldName, MessageProvider messageProvider, String errorMessageKey) {
-        this.canSendRegex = Pattern.compile(canSendRegex);
+    public MessageSenderAbstract(String receiverFieldName, MessageProvider messageProvider, String errorMessageKey) {
         this.receiverFieldName = receiverFieldName;
         this.messageProvider = messageProvider;
         this.errorMessageKey = errorMessageKey;
@@ -92,6 +91,10 @@ public abstract class MessageSenderAbstract implements MessageSender {
         args.put("jalali_date", LocalDateTimeJalali.now().format(this.getDateFormatterJalali()));
         args.put("hijrah_date", HijrahDate.now().format(this.getDateFormatterHijrah()));
         args.put("time", dateTime.format(this.getTimeFormat()));
+    }
+
+    public void setCanSendRegex(String canSendRegex) {
+        this.canSendRegex = Pattern.compile(canSendRegex);
     }
 
     @Override

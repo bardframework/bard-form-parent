@@ -12,8 +12,8 @@ public class MessageSenderNoOp extends MessageSenderAbstract {
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(MessageSenderNoOp.class);
 
-    public MessageSenderNoOp(String canSendRegex, String receiverFieldName, MessageProvider messageProvider) {
-        super(canSendRegex, receiverFieldName, messageProvider, "no op message sender error");
+    public MessageSenderNoOp(String receiverFieldName, MessageProvider messageProvider) {
+        super(receiverFieldName, messageProvider, "no op message sender error");
     }
 
     @Override

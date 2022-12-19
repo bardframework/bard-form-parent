@@ -15,13 +15,13 @@ public class MessageSenderSms extends MessageSenderAbstract {
 
     protected final SmsSender smsSender;
 
-    public MessageSenderSms(String canSendRegex, FieldTemplate<?> receiverFieldTemplate, SmsSender smsSender, MessageProvider messageProvider, String errorMessageKey) {
-        super(canSendRegex, receiverFieldTemplate.getName(), messageProvider, errorMessageKey);
+    public MessageSenderSms(FieldTemplate<?> receiverFieldTemplate, SmsSender smsSender, MessageProvider messageProvider, String errorMessageKey) {
+        super(receiverFieldTemplate.getName(), messageProvider, errorMessageKey);
         this.smsSender = smsSender;
     }
 
-    public MessageSenderSms(String canSendRegex, String receiverFieldName, SmsSender smsSender, MessageProvider messageProvider, String errorMessageKey) {
-        super(canSendRegex, receiverFieldName, messageProvider, errorMessageKey);
+    public MessageSenderSms(String receiverFieldName, SmsSender smsSender, MessageProvider messageProvider, String errorMessageKey) {
+        super(receiverFieldName, messageProvider, errorMessageKey);
         this.smsSender = smsSender;
     }
 

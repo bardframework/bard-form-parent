@@ -21,12 +21,12 @@ public class MessageSenderEmail extends MessageSenderAbstract {
     private final MessageProvider subjectCreator;
     private final Authenticator authenticator;
 
-    public MessageSenderEmail(String canSendRegex, FieldTemplate<?> receiverFieldTemplate, String senderEmail, String senderUsername, String senderPassword, Properties configs, MessageProvider subjectCreator, MessageProvider emailBodyProvider, String errorMessageKey) throws AddressException {
-        this(canSendRegex, receiverFieldTemplate.getName(), senderEmail, senderUsername, senderPassword, configs, subjectCreator, emailBodyProvider, errorMessageKey);
+    public MessageSenderEmail(FieldTemplate<?> receiverFieldTemplate, String senderEmail, String senderUsername, String senderPassword, Properties configs, MessageProvider subjectCreator, MessageProvider emailBodyProvider, String errorMessageKey) throws AddressException {
+        this(receiverFieldTemplate.getName(), senderEmail, senderUsername, senderPassword, configs, subjectCreator, emailBodyProvider, errorMessageKey);
     }
 
-    public MessageSenderEmail(String canSendRegex, String receiverFieldName, String senderEmail, String senderUsername, String senderPassword, Properties configs, MessageProvider subjectCreator, MessageProvider emailBodyProvider, String errorMessageKey) throws AddressException {
-        super(canSendRegex, receiverFieldName, emailBodyProvider, errorMessageKey);
+    public MessageSenderEmail(String receiverFieldName, String senderEmail, String senderUsername, String senderPassword, Properties configs, MessageProvider subjectCreator, MessageProvider emailBodyProvider, String errorMessageKey) throws AddressException {
+        super(receiverFieldName, emailBodyProvider, errorMessageKey);
         this.senderEmail = InternetAddress.parse(senderEmail)[0];
         this.configs = configs;
         this.subjectCreator = subjectCreator;

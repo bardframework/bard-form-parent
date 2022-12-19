@@ -11,7 +11,7 @@ public interface MessageSender {
     Pattern canSendRegex();
 
     default boolean canSend(String receiver, Map<String, String> args) {
-        return this.canSendRegex().matcher(receiver).matches();
+        return null == this.canSendRegex() || this.canSendRegex().matcher(receiver).matches();
     }
 
 }
