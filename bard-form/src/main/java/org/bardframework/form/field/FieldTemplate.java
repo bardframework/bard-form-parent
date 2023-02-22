@@ -16,7 +16,7 @@ import java.util.Locale;
 import java.util.Map;
 
 public abstract class FieldTemplate<F extends Field> {
-    protected final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    protected final Logger log = LoggerFactory.getLogger(this.getClass());
     protected final Class<F> fieldClazz;
     protected final String name;
     protected Expression showExpression = null;

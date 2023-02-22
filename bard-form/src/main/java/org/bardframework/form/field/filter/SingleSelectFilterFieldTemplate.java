@@ -30,13 +30,13 @@ public class SingleSelectFilterFieldTemplate extends InputFieldTemplate<SingleSe
     public boolean isValid(String flowToken, SingleSelectFilterField field, IdFilter<String> filter, Map<String, String> flowData) {
         if (null == filter || StringUtils.isBlank(filter.getEquals())) {
             if (Boolean.TRUE.equals(field.getRequired())) {
-                LOGGER.debug("filterField [{}] is required, but it's value is empty", field.getName());
+                log.debug("filterField [{}] is required, but it's value is empty", field.getName());
                 return false;
             }
             return true;
         }
         if (field.getOptions().stream().filter(option -> !Boolean.TRUE.equals(option.getDisable())).noneMatch(option -> option.getId().equals(filter.getEquals().trim()))) {
-            LOGGER.debug("field [{}] is select type, but it's value[{}] dose not equal with select options", field.getName(), filter);
+            log.debug("field [{}] is select type, but it's value[{}] dose not equal with select options", field.getName(), filter);
             return false;
         }
         return true;

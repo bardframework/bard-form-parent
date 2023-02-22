@@ -11,7 +11,7 @@ import java.util.Locale;
 import java.util.Map;
 
 public class MessageSenderSms extends MessageSenderAbstract {
-    protected static final Logger LOGGER = LoggerFactory.getLogger(MessageSenderSms.class);
+    protected static final Logger log = LoggerFactory.getLogger(MessageSenderSms.class);
 
     protected final SmsSender smsSender;
 
@@ -27,10 +27,10 @@ public class MessageSenderSms extends MessageSenderAbstract {
 
     @Override
     protected void send(String receiver, String message, Map<String, String> args, Locale locale) throws IOException {
-        LOGGER.debug("sending message [{}]", message);
+        log.debug("sending message [{}]", message);
         boolean sendResult = this.getSmsSender().send(receiver, message, args);
         if (!sendResult) {
-            LOGGER.error("error sending sms to [{}]", receiver);
+            log.error("error sending sms to [{}]", receiver);
             throw new IllegalStateException("error sending sms to: " + receiver);
         }
     }

@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 
 public abstract class MessageSenderAbstract implements MessageSender {
 
-    protected static final Logger LOGGER = LoggerFactory.getLogger(MessageSenderAbstract.class);
+    protected static final Logger log = LoggerFactory.getLogger(MessageSenderAbstract.class);
 
     protected final String receiverFieldName;
     protected final MessageProvider messageProvider;
@@ -56,15 +56,15 @@ public abstract class MessageSenderAbstract implements MessageSender {
         Map<String, String> args = new HashMap<>(data);
         String message = this.getMessageProvider().create(args, locale);
         if (StringUtils.isBlank(message)) {
-            LOGGER.warn("message is empty[{}], can't send it", args);
+            log.warn("message is empty[{}], can't send it", args);
             throw new IllegalStateException("message provider generate empty message!");
         }
         String receiver = data.get(this.getReceiverFieldName());
         if (StringUtils.isBlank(receiver)) {
-            LOGGER.warn("receiver not exist for [{}], can't send message", args);
+            log.warn("receiver not exist for [{}], can't send message", args);
             throw new IllegalStateException("receiver not exist in args");
         }
-        LOGGER.debug("sending message [{}]", message);
+        log.debug("sending message [{}]", message);
         if (this.isExecuteInNewThread()) {
             this.getExecutor().execute(() -> this.sendInternal(receiver, message, args, locale));
         } else {
@@ -77,7 +77,7 @@ public abstract class MessageSenderAbstract implements MessageSender {
             this.addExtraArgs(args);
             this.send(receiver, message, args, locale);
         } catch (Exception e) {
-            LOGGER.error("error sending message, catching exception.", e);
+            log.error("error sending message, catching exception.", e);
             if (!this.isFailOnError()) {
                 return;
             }

@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Properties;
 
 public class MessageSenderEmail extends MessageSenderAbstract {
-    protected static final Logger LOGGER = LoggerFactory.getLogger(MessageSenderEmail.class);
+    protected static final Logger log = LoggerFactory.getLogger(MessageSenderEmail.class);
 
     private final InternetAddress senderEmail;
     private final Properties configs;
@@ -41,7 +41,7 @@ public class MessageSenderEmail extends MessageSenderAbstract {
     @Override
     protected void send(String receiver, String message, Map<String, String> args, Locale locale) throws Exception {
         Session session = Session.getInstance(configs, this.authenticator);
-        if (LOGGER.isDebugEnabled()) {
+        if (log.isDebugEnabled()) {
             session.setDebug(true);
         }
 
@@ -54,6 +54,6 @@ public class MessageSenderEmail extends MessageSenderAbstract {
         mimeMessage.addHeader("Content-Transfer-Encoding", "8bit");
         mimeMessage.setContent(message, "text/html; charset=utf-8");
         Transport.send(mimeMessage);
-        LOGGER.debug("email successfully sent to [{}]", receiver);
+        log.debug("email successfully sent to [{}]", receiver);
     }
 }

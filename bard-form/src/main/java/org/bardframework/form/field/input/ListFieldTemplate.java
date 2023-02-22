@@ -20,21 +20,21 @@ public class ListFieldTemplate extends InputFieldTemplate<ListField, List<String
     public boolean isValid(String flowToken, ListField field, List<String> values, Map<String, String> flowData) {
         if (CollectionUtils.isEmpty(values)) {
             if (Boolean.TRUE.equals(field.getRequired())) {
-                LOGGER.debug("field [{}] is required, but it's value is empty", field.getName());
+                log.debug("field [{}] is required, but it's value is empty", field.getName());
                 return false;
             }
             return true;
         }
         if (values.size() > field.getMaxCount()) {
-            LOGGER.debug("data count[{}] of field[{}] is greater than maximum[{}]", values.size(), field.getName(), field.getMaxCount());
+            log.debug("data count[{}] of field[{}] is greater than maximum[{}]", values.size(), field.getName(), field.getMaxCount());
             return false;
         }
         if (null != field.getMinLength() && values.stream().anyMatch(value -> value.length() < field.getMinLength())) {
-            LOGGER.debug("field [{}] min length is [{}], but one of it's values length is smaller than minimum", field.getName(), field.getMinLength());
+            log.debug("field [{}] min length is [{}], but one of it's values length is smaller than minimum", field.getName(), field.getMinLength());
             return false;
         }
         if (null != field.getMaxLength() && values.stream().anyMatch(value -> value.length() > field.getMaxLength())) {
-            LOGGER.debug("field [{}] max length is [{}], but one of it's values length is greater than maximum", field.getName(), field.getMaxLength());
+            log.debug("field [{}] max length is [{}], but one of it's values length is greater than maximum", field.getName(), field.getMaxLength());
             return false;
         }
         return true;

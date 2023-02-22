@@ -12,7 +12,7 @@ import java.util.Locale;
 import java.util.Map;
 
 public abstract class HeaderTemplate<H extends TableHeader, T> extends TableHeader {
-    protected final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    protected final Logger log = LoggerFactory.getLogger(this.getClass());
 
     private final Class<H> headerClazz;
     private String excelFormat;

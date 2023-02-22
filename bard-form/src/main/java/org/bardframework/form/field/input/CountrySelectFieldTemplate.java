@@ -18,18 +18,18 @@ public class CountrySelectFieldTemplate extends InputFieldTemplate<CountrySelect
     public boolean isValid(String flowToken, CountrySelectField field, String value, Map<String, String> flowData) {
         if (null == value) {
             if (Boolean.TRUE.equals(field.getRequired())) {
-                LOGGER.debug("field [{}] is required, but it's value is empty", field.getName());
+                log.debug("field [{}] is required, but it's value is empty", field.getName());
                 return false;
             }
             return true;
         }
         String countryCode = this.getCountryCode(value);
         if (CollectionUtils.isNotEmpty(field.getAvailableCountries()) && !field.getAvailableCountries().contains(countryCode)) {
-            LOGGER.debug("country code[{}] is not match with specified available countries[{}]", countryCode, field.getAvailableCountries());
+            log.debug("country code[{}] is not match with specified available countries[{}]", countryCode, field.getAvailableCountries());
             return false;
         }
         if (CollectionUtils.isNotEmpty(field.getExcludeCountries()) && field.getExcludeCountries().contains(countryCode)) {
-            LOGGER.debug("country code[{}] is in exclude countries[{}]", countryCode, field.getExcludeCountries());
+            log.debug("country code[{}] is in exclude countries[{}]", countryCode, field.getExcludeCountries());
             return false;
         }
         return true;

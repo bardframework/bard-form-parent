@@ -9,7 +9,7 @@ import java.util.List;
 
 public class FlowHandlerImpl extends FlowHandlerAbstract<FlowData> {
 
-    protected static final Logger LOGGER = LoggerFactory.getLogger(FlowHandlerImpl.class);
+    protected static final Logger log = LoggerFactory.getLogger(FlowHandlerImpl.class);
 
     public FlowHandlerImpl(FlowDataRepository<FlowData> flowDataRepository, List<FlowFormTemplate> forms) {
         super(flowDataRepository, forms);

@@ -1,6 +1,8 @@
 package org.bardframework.form;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.commons.utils.AssertionUtils;
 import org.bardframework.commons.utils.StringTemplateUtils;
@@ -9,8 +11,6 @@ import org.bardframework.form.field.FieldTemplate;
 import org.bardframework.form.field.input.InputField;
 import org.bardframework.form.field.input.InputFieldTemplate;
 import org.bardframework.form.field.view.ReadonlyField;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 
 import java.time.LocalDate;
@@ -20,15 +20,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Slf4j
+@UtilityClass
 public class FormUtils {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(FormUtils.class);
-
-    private FormUtils() {
-        /*
-            prevent instantiation
-         */
-    }
 
     public static BardForm toForm(FormTemplate formTemplate, Map<String, String> args, Map<String, String> values, Locale locale, HttpServletRequest httpRequest) throws Exception {
         if (null == formTemplate) {
@@ -70,7 +64,7 @@ public class FormUtils {
         try {
             return Boolean.parseBoolean(value);
         } catch (Exception e) {
-            LOGGER.error("error reading [{}] of form [{}] as boolean", property, formTemplate.getName(), e);
+            log.error("error reading [{}] of form [{}] as boolean", property, formTemplate.getName(), e);
             return null;
         }
     }
@@ -85,7 +79,7 @@ public class FormUtils {
                 return each;
             }
         }
-        LOGGER.error("error reading [{}] of form[{}] as Enum[{}]", property, formTemplate, enumClass);
+        log.error("error reading [{}] of form[{}] as Enum[{}]", property, formTemplate, enumClass);
         return null;
     }
 
@@ -113,7 +107,7 @@ public class FormUtils {
         try {
             return Boolean.parseBoolean(value);
         } catch (Exception e) {
-            LOGGER.error("error reading [{}] of [{}.{}] as boolean", property, FormTemplate, fieldName, e);
+            log.error("error reading [{}] of [{}.{}] as boolean", property, FormTemplate, fieldName, e);
             return null;
         }
     }
@@ -148,7 +142,7 @@ public class FormUtils {
         try {
             return Integer.parseInt(value);
         } catch (Exception e) {
-            LOGGER.error("error reading [{}] of [{}.{}] as Integer", property, formTemplate, fieldName, e);
+            log.error("error reading [{}] of [{}.{}] as Integer", property, formTemplate, fieldName, e);
             return null;
         }
     }
@@ -168,7 +162,7 @@ public class FormUtils {
         try {
             return Double.parseDouble(value);
         } catch (Exception e) {
-            LOGGER.error("error reading [{}] of [{}.{}] as Double", property, formTemplate, fieldName, e);
+            log.error("error reading [{}] of [{}.{}] as Double", property, formTemplate, fieldName, e);
             return null;
         }
     }
@@ -188,7 +182,7 @@ public class FormUtils {
         try {
             return Long.parseLong(value);
         } catch (Exception e) {
-            LOGGER.error("error reading [{}] of [{}.{}] as Long", property, formTemplate, fieldName, e);
+            log.error("error reading [{}] of [{}.{}] as Long", property, formTemplate, fieldName, e);
             return null;
         }
     }
@@ -208,7 +202,7 @@ public class FormUtils {
         try {
             return LocalDate.parse(value);
         } catch (Exception e) {
-            LOGGER.error("error reading [{}] of [{}.{}] as LocalDate", property, formTemplate, fieldName, e);
+            log.error("error reading [{}] of [{}.{}] as LocalDate", property, formTemplate, fieldName, e);
             return null;
         }
     }
@@ -225,7 +219,7 @@ public class FormUtils {
         try {
             return LocalDateTime.parse(value);
         } catch (Exception e) {
-            LOGGER.error("error reading [{}] of [{}.{}] as LocalDateTime", property, formTemplate, fieldName, e);
+            log.error("error reading [{}] of [{}.{}] as LocalDateTime", property, formTemplate, fieldName, e);
             return null;
         }
     }
@@ -244,7 +238,7 @@ public class FormUtils {
                 return each;
             }
         }
-        LOGGER.error("error reading [{}] of [{}.{}] as Enum[{}]", property, formTemplate, fieldName, enumClass);
+        log.error("error reading [{}] of [{}.{}] as Enum[{}]", property, formTemplate, fieldName, enumClass);
         return null;
     }
 
@@ -260,7 +254,7 @@ public class FormUtils {
         try {
             return LocalTime.parse(value);
         } catch (Exception e) {
-            LOGGER.error("error reading [{}] of [{}.{}] as LocalTime", property, formTemplate, fieldName, e);
+            log.error("error reading [{}] of [{}.{}] as LocalTime", property, formTemplate, fieldName, e);
             return null;
         }
     }

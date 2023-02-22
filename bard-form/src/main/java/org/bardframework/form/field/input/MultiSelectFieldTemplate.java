@@ -33,17 +33,17 @@ public class MultiSelectFieldTemplate extends InputFieldTemplate<MultiSelectFiel
     public boolean isValid(String flowToken, MultiSelectField field, List<String> values, Map<String, String> flowData) {
         if (CollectionUtils.isEmpty(values)) {
             if (Boolean.TRUE.equals(field.getRequired())) {
-                LOGGER.debug("field [{}] is required, but it's value is empty", field.getName());
+                log.debug("field [{}] is required, but it's value is empty", field.getName());
                 return false;
             }
             return true;
         }
         if (values.size() > field.getMaxCount()) {
-            LOGGER.debug("selected option count[{}] of field[{}] is greater than maximum[{}]", values.size(), field.getName(), field.getMaxCount());
+            log.debug("selected option count[{}] of field[{}] is greater than maximum[{}]", values.size(), field.getName(), field.getMaxCount());
             return false;
         }
         if (!values.stream().allMatch(value -> field.getOptions().stream().filter(option -> !Boolean.TRUE.equals(option.getDisable())).anyMatch(option -> option.getId().equals(value)))) {
-            LOGGER.debug("field [{}] is select type, but it's value[{}] dose not equal with select options", field.getName(), values);
+            log.debug("field [{}] is select type, but it's value[{}] dose not equal with select options", field.getName(), values);
             return false;
         }
         return true;

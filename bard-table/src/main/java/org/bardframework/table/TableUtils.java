@@ -1,11 +1,11 @@
 package org.bardframework.table;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormUtils;
 import org.bardframework.table.header.HeaderTemplate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 
 import java.time.LocalDate;
@@ -17,15 +17,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Slf4j
+@UtilityClass
 public class TableUtils {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(TableUtils.class);
-
-    private TableUtils() {
-        /*
-            prevent instantiation
-         */
-    }
 
     public static TableModel toTable(TableTemplate tableTemplate, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
         if (null == tableTemplate) {
@@ -66,7 +60,7 @@ public class TableUtils {
         try {
             return Boolean.parseBoolean(value);
         } catch (Exception e) {
-            LOGGER.error("error reading [{}] of [{}] as boolean", property, tableTemplate.getName(), e);
+            log.error("error reading [{}] of [{}] as boolean", property, tableTemplate.getName(), e);
             return null;
         }
     }
@@ -82,7 +76,7 @@ public class TableUtils {
         try {
             return Integer.parseInt(value);
         } catch (Exception e) {
-            LOGGER.error("error reading [{}] of [{}] as Integer", property, tableTemplate, e);
+            log.error("error reading [{}] of [{}] as Integer", property, tableTemplate, e);
             return null;
         }
     }
@@ -106,7 +100,7 @@ public class TableUtils {
         try {
             return Boolean.parseBoolean(value);
         } catch (Exception e) {
-            LOGGER.error("error reading [{}] of [{}.{}] as Boolean", property, TableTemplate, headerTemplate.getName(), e);
+            log.error("error reading [{}] of [{}.{}] as Boolean", property, TableTemplate, headerTemplate.getName(), e);
             return null;
         }
     }
@@ -133,7 +127,7 @@ public class TableUtils {
         try {
             return Double.parseDouble(value);
         } catch (Exception e) {
-            LOGGER.error("error reading [{}] of [{}.{}] as Double", property, tableTemplate, headerTemplate.getName(), e);
+            log.error("error reading [{}] of [{}.{}] as Double", property, tableTemplate, headerTemplate.getName(), e);
             return null;
         }
     }
@@ -149,7 +143,7 @@ public class TableUtils {
         try {
             return Long.parseLong(value);
         } catch (Exception e) {
-            LOGGER.error("error reading [{}] of [{}.{}] as Long", property, tableTemplate, headerTemplate.getName(), e);
+            log.error("error reading [{}] of [{}.{}] as Long", property, tableTemplate, headerTemplate.getName(), e);
             return null;
         }
     }
@@ -165,7 +159,7 @@ public class TableUtils {
         try {
             return LocalDate.parse(value);
         } catch (Exception e) {
-            LOGGER.error("error reading [{}] of [{}.{}] as LocalDate", property, tableTemplate, headerTemplate.getName(), e);
+            log.error("error reading [{}] of [{}.{}] as LocalDate", property, tableTemplate, headerTemplate.getName(), e);
             return null;
         }
     }
@@ -178,7 +172,7 @@ public class TableUtils {
         try {
             return LocalDateTime.parse(value);
         } catch (Exception e) {
-            LOGGER.error("error reading [{}] of [{}.{}] as LocalDateTime", property, tableTemplate, headerTemplate.getName(), e);
+            log.error("error reading [{}] of [{}.{}] as LocalDateTime", property, tableTemplate, headerTemplate.getName(), e);
             return null;
         }
     }
@@ -191,7 +185,7 @@ public class TableUtils {
         try {
             return LocalTime.parse(value);
         } catch (Exception e) {
-            LOGGER.error("error reading [{}] of [{}.{}] as LocalTime", property, tableTemplate, headerTemplate.getName(), e);
+            log.error("error reading [{}] of [{}.{}] as LocalTime", property, tableTemplate, headerTemplate.getName(), e);
             return null;
         }
     }

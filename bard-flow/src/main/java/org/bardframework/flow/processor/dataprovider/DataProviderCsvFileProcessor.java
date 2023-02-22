@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class DataProviderCsvFileProcessor extends FormProcessorAbstract {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DataProviderCsvFileProcessor.class);
+    private static final Logger log = LoggerFactory.getLogger(DataProviderCsvFileProcessor.class);
 
     protected final String csvFileLocation;
     protected final Map<Integer, String> mapper;
@@ -39,7 +39,7 @@ public class DataProviderCsvFileProcessor extends FormProcessorAbstract {
     public void process(String flowToken, Map<String, String> flowData, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
         String identifier = flowData.get(this.getIdentifierFieldName());
         if (StringUtils.isBlank(identifier)) {
-            LOGGER.warn("identifier not exist for [{}], in csv file", flowData);
+            log.warn("identifier not exist for [{}], in csv file", flowData);
             throw new FlowExecutionException(List.of("execution_error"));
         }
         try (InputStream inputStream = ResourceUtils.getResource(this.getCsvFileLocation()).getInputStream()) {
@@ -55,7 +55,7 @@ public class DataProviderCsvFileProcessor extends FormProcessorAbstract {
                         if (parts[0].trim().equalsIgnoreCase(identifier)) {
                             for (Integer index : mapper.keySet()) {
                                 if (index >= parts.length) {
-                                    LOGGER.warn("can't find attribute[{}] value for[{}]", mapper.get(index), identifier);
+                                    log.warn("can't find attribute[{}] value for[{}]", mapper.get(index), identifier);
                                 } else {
                                     flowData.put(mapper.get(index), WebUtils.escapeString(parts[index]));
                                 }
@@ -66,7 +66,7 @@ public class DataProviderCsvFileProcessor extends FormProcessorAbstract {
                 }
             }
         }
-        LOGGER.warn("can't find record for[{}] in csv file [{}]", identifier, this.getCsvFileLocation());
+        log.warn("can't find record for[{}] in csv file [{}]", identifier, this.getCsvFileLocation());
         throw new FlowExecutionException(List.of(identifierNotFoundErrorMessageCode));
     }
 

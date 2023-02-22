@@ -21,21 +21,21 @@ public class TextFilterFieldTemplate extends InputFieldTemplate<TextFilterField,
     public boolean isValid(String flowToken, TextFilterField field, StringFilter filter, Map<String, String> flowData) {
         if (null == filter || StringUtils.isBlank(filter.getContains())) {
             if (Boolean.TRUE.equals(field.getRequired())) {
-                LOGGER.debug("StringFilter [{}] is required, but it's value is empty", field.getName());
+                log.debug("StringFilter [{}] is required, but it's value is empty", field.getName());
                 return false;
             }
             return true;
         }
         if (null != field.getMinLength() && filter.getContains().length() < field.getMinLength()) {
-            LOGGER.debug("StringFilter [{}] min length is [{}], but it's value[{}] length is smaller than minimum", field.getName(), field.getMinLength(), filter);
+            log.debug("StringFilter [{}] min length is [{}], but it's value[{}] length is smaller than minimum", field.getName(), field.getMinLength(), filter);
             return false;
         }
         if (null != field.getMaxLength() && filter.getContains().length() > field.getMaxLength()) {
-            LOGGER.debug("StringFilter [{}] max length is [{}], but it's value[{}] length is greater than maximum", field.getName(), field.getMaxLength(), filter);
+            log.debug("StringFilter [{}] max length is [{}], but it's value[{}] length is greater than maximum", field.getName(), field.getMaxLength(), filter);
             return false;
         }
         if (StringUtils.isNotBlank(field.getRegex()) && !Pattern.matches(field.getRegex(), filter.getContains())) {
-            LOGGER.debug("StringFilter [{}] regex is [{}], but it's value[{}] not match with it", field.getName(), field.getRegex(), filter);
+            log.debug("StringFilter [{}] regex is [{}], but it's value[{}] not match with it", field.getName(), field.getRegex(), filter);
             return false;
         }
         return true;

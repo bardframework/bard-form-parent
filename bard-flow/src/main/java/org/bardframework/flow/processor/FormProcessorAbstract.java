@@ -13,7 +13,7 @@ import java.util.Map;
 
 public abstract class FormProcessorAbstract implements FormProcessor {
 
-    protected final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    protected final Logger log = LoggerFactory.getLogger(this.getClass());
 
     private Expression executeExpression = null;
 

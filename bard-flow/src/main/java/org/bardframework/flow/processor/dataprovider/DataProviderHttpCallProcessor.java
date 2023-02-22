@@ -3,8 +3,8 @@ package org.bardframework.flow.processor.dataprovider;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
-import org.bardframework.commons.web.utils.HttpCallResult;
-import org.bardframework.commons.web.utils.HttpCaller;
+import org.bardframework.commons.web.http.HttpCallResult;
+import org.bardframework.commons.web.http.HttpCaller;
 import org.bardframework.flow.exception.FlowExecutionException;
 import org.bardframework.flow.form.FormProcessor;
 import org.slf4j.Logger;
@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 
 public class DataProviderHttpCallProcessor extends HttpCaller implements FormProcessor {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DataProviderHttpCallProcessor.class);
+    private static final Logger log = LoggerFactory.getLogger(DataProviderHttpCallProcessor.class);
 
     protected final Map<String, Pattern> fieldsFetcher = new HashMap<>();
     private final Pattern fetchPattern;
@@ -46,12 +46,12 @@ public class DataProviderHttpCallProcessor extends HttpCaller implements FormPro
     public void process(String flowToken, Map<String, String> flowData, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
         HttpCallResult result = super.call(flowData);
         String responseString = null == result.getBody() ? null : new String(result.getBody(), StandardCharsets.UTF_8);
-        LOGGER.debug("data provider http call result: [{}]", responseString);
+        log.debug("data provider http call result: [{}]", responseString);
         if (StringUtils.isNotBlank(this.getResponseFieldName())) {
             flowData.put(this.getResponseFieldName(), responseString);
         }
         if (StringUtils.isBlank(responseString) || !this.getFetchPattern().matcher(responseString).find()) {
-            LOGGER.warn("data not found calling ws[{}], [{}].", this.getUrlTemplate(), flowData);
+            log.warn("data not found calling ws[{}], [{}].", this.getUrlTemplate(), flowData);
             throw new FlowExecutionException(List.of(this.getErrorMessageCode()));
         }
         Matcher matcher;

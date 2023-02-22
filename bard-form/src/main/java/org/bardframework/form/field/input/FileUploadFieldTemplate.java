@@ -10,7 +10,7 @@ import java.util.Locale;
 import java.util.Map;
 
 public class FileUploadFieldTemplate extends InputFieldTemplate<FileUploadField, String> {
-    protected static final Logger LOGGER = LoggerFactory.getLogger(FileUploadFieldTemplate.class);
+    protected static final Logger log = LoggerFactory.getLogger(FileUploadFieldTemplate.class);
 
     private final String uploadAction;
     private final String downloadAction;

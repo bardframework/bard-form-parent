@@ -35,17 +35,17 @@ public class MultiSelectFilterFieldTemplate extends InputFieldTemplate<MultiSele
     public boolean isValid(String flowToken, MultiSelectFilterField filterField, IdFilter<String> idFilter, Map<String, String> flowData) {
         if (null == idFilter || CollectionUtils.isEmpty(idFilter.getIn())) {
             if (Boolean.TRUE.equals(filterField.getRequired())) {
-                LOGGER.debug("filterField [{}] is required, but it's value is empty", filterField.getName());
+                log.debug("filterField [{}] is required, but it's value is empty", filterField.getName());
                 return false;
             }
             return true;
         }
         if (idFilter.getIn().size() > filterField.getMaxCount()) {
-            LOGGER.debug("selected option count[{}] of filterField[{}] is greater than maximum[{}]", idFilter.getIn().size(), filterField.getName(), filterField.getMaxCount());
+            log.debug("selected option count[{}] of filterField[{}] is greater than maximum[{}]", idFilter.getIn().size(), filterField.getName(), filterField.getMaxCount());
             return false;
         }
         if (!idFilter.getIn().stream().allMatch(value -> filterField.getOptions().stream().filter(option -> !Boolean.TRUE.equals(option.getDisable())).anyMatch(option -> option.getId().equals(value)))) {
-            LOGGER.debug("filterField [{}] is select type, but it's value[{}] dose not equal with select options", filterField.getName(), idFilter);
+            log.debug("filterField [{}] is select type, but it's value[{}] dose not equal with select options", filterField.getName(), idFilter);
             return false;
         }
         return true;

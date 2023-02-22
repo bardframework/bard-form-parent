@@ -40,7 +40,7 @@ public class CaptchaFieldTemplate extends OtpFieldTemplate<CaptchaField, Generat
          */
         String expectedAnswer = flowData.remove(ANSWER_KEY);
         if (StringUtils.isBlank(expectedAnswer)) {
-            LOGGER.debug("captcha answer in flow data is blank, flow token: [{}]", flowToken);
+            log.debug("captcha answer in flow data is blank, flow token: [{}]", flowToken);
             return false;
         }
         return expectedAnswer.equalsIgnoreCase(captcha);

@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 public class FlowDataRepositoryInMemory<D> implements FlowDataRepository<D> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FlowDataRepositoryInMemory.class);
+    private static final Logger log = LoggerFactory.getLogger(FlowDataRepositoryInMemory.class);
 
     private final Cache<String, D> cache;
 

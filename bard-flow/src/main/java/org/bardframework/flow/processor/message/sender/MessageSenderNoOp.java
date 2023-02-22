@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class MessageSenderNoOp extends MessageSenderAbstract {
 
-    protected static final Logger LOGGER = LoggerFactory.getLogger(MessageSenderNoOp.class);
+    protected static final Logger log = LoggerFactory.getLogger(MessageSenderNoOp.class);
 
     public MessageSenderNoOp(String receiverFieldName, MessageProvider messageProvider) {
         super(receiverFieldName, messageProvider, "no op message sender error");
@@ -18,6 +18,6 @@ public class MessageSenderNoOp extends MessageSenderAbstract {
 
     @Override
     protected void send(String receiver, String message, Map<String, String> args, Locale locale) throws IOException {
-        LOGGER.info("send message [{}] to [{}]", message, receiver);
+        log.info("send message [{}] to [{}]", message, receiver);
     }
 }

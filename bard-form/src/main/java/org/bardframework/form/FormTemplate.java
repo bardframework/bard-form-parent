@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 public class FormTemplate {
 
-    protected final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    protected final Logger log = LoggerFactory.getLogger(this.getClass());
 
     protected final String name;
     protected final MessageSource messageSource;
@@ -65,7 +65,7 @@ public class FormTemplate {
                 illegalFields.forEach(illegalField -> ex.addFieldError(illegalField, "illegal field"));
                 throw ex;
             } else {
-                LOGGER.warn("illegal fields[{}] exist in form [{}].", illegalFields, this.getName());
+                log.warn("illegal fields[{}] exist in form [{}].", illegalFields, this.getName());
             }
         }
         FormDataValidationException ex = new FormDataValidationException();

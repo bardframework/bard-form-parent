@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHandler {
 
-    protected static final Logger LOGGER = LoggerFactory.getLogger(FlowHandlerAbstract.class);
+    protected static final Logger log = LoggerFactory.getLogger(FlowHandlerAbstract.class);
     protected final FlowDataRepository<D> flowDataRepository;
     protected final List<FlowFormTemplate> forms;
     protected List<FormProcessor> preProcessors = new ArrayList<>();
@@ -82,11 +82,11 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
     @Override
     public void action(String flowToken, String action, Map<String, String> formData, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
             throws Exception {
-        LOGGER.debug("start action[{}] processing, flow token [{}], form data [{}]", action, flowToken, formData);
+        log.debug("start action[{}] processing, flow token [{}], form data [{}]", action, flowToken, formData);
         D flowData = this.getFlowDataRepository().get(flowToken);
         FlowFormTemplate currentFormTemplate = this.getCurrentFormTemplate(flowData);
         if (StringUtils.isBlank(action)) {
-            LOGGER.warn("null action can't process, flow token [{}], form [{}]", flowToken, currentFormTemplate.getName());
+            log.warn("null action can't process, flow token [{}], form [{}]", flowToken, currentFormTemplate.getName());
             httpResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
@@ -95,7 +95,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
                 /*
                     در صورتی که عملیات نامناسب درخواست شود (هیچ پردازشگری یافت نشود)، فلو را پاک می کنیم
                  */
-                LOGGER.warn("no processor exist to handle action [{}], flow token [{}], form [{}]", action, flowToken, currentFormTemplate.getName());
+                log.warn("no processor exist to handle action [{}], flow token [{}], form [{}]", action, flowToken, currentFormTemplate.getName());
                 throw new InvalidateFlowException(flowToken, "invalid action");
             }
         } catch (InvalidateFlowException ex) {

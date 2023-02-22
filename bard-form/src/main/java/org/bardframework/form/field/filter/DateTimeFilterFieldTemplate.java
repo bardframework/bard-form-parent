@@ -62,45 +62,45 @@ public class DateTimeFilterFieldTemplate extends InputFieldTemplate<DateTimeFilt
     public boolean isValid(String flowToken, DateTimeFilterField field, LocalDateTimeFilter filter, Map<String, String> flowData) {
         if (null == filter || (null == filter.getFrom() && null == filter.getTo())) {
             if (Boolean.TRUE.equals(field.getRequired())) {
-                LOGGER.debug("filterField [{}] is required, but it's value is empty", field.getName());
+                log.debug("filterField [{}] is required, but it's value is empty", field.getName());
                 return false;
             }
             return true;
         }
         if (null != field.getMinValue()) {
             if (null != filter.getFrom() && filter.getFrom().isBefore(this.getMinValue())) {
-                LOGGER.debug("field [{}] min value is [{}], but it's value is less than minimum", field.getName(), field.getMinValue());
+                log.debug("field [{}] min value is [{}], but it's value is less than minimum", field.getName(), field.getMinValue());
                 return false;
             }
             if (null != filter.getTo() && filter.getTo().isBefore(this.getMinValue())) {
-                LOGGER.debug("field [{}] min value is [{}], but it's value is less than minimum", field.getName(), field.getMinValue());
+                log.debug("field [{}] min value is [{}], but it's value is less than minimum", field.getName(), field.getMinValue());
                 return false;
             }
         }
         if (null != field.getMaxValue()) {
             if (null != filter.getFrom() && filter.getFrom().isAfter(this.getMaxValue())) {
-                LOGGER.debug("field [{}] max value is [{}], but it's value is greater than maximum", field.getName(), field.getMaxValue());
+                log.debug("field [{}] max value is [{}], but it's value is greater than maximum", field.getName(), field.getMaxValue());
                 return false;
             }
             if (null != filter.getTo() && filter.getTo().isAfter(this.getMaxValue())) {
-                LOGGER.debug("field [{}] max value is [{}], but it's value is greater than maximum", field.getName(), field.getMaxValue());
+                log.debug("field [{}] max value is [{}], but it's value is greater than maximum", field.getName(), field.getMaxValue());
                 return false;
             }
         }
         long length = null == filter.getFrom() || null == filter.getTo() ? Long.MAX_VALUE : Duration.between(filter.getFrom(), filter.getTo()).get(this.getLengthUnit()) + 1;
         if (length < 0) {
-            LOGGER.debug("values[{}] of range field[{}] is invalid, from is greater than to", filter, field.getName());
+            log.debug("values[{}] of range field[{}] is invalid, from is greater than to", filter, field.getName());
             /*
                 from > to
              */
             return false;
         }
         if (null != field.getMinLength() && length < field.getMinLength()) {
-            LOGGER.debug("field [{}] min length is [{}], but it's value length is smaller than minimum", field.getName(), field.getMaxLength());
+            log.debug("field [{}] min length is [{}], but it's value length is smaller than minimum", field.getName(), field.getMaxLength());
             return false;
         }
         if (null != field.getMaxLength() && length > field.getMaxLength()) {
-            LOGGER.debug("field [{}] max length is [{}], but it's value length is greater than maximum", field.getName(), field.getMaxLength());
+            log.debug("field [{}] max length is [{}], but it's value length is greater than maximum", field.getName(), field.getMaxLength());
             return false;
         }
         return true;

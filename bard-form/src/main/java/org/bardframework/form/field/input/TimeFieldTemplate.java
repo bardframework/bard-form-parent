@@ -21,17 +21,17 @@ public class TimeFieldTemplate extends InputFieldTemplate<TimeField, LocalTime> 
     public boolean isValid(String flowToken, TimeField field, LocalTime value, Map<String, String> flowData) {
         if (null == value) {
             if (Boolean.TRUE.equals(field.getRequired())) {
-                LOGGER.debug("field [{}] is required, but it's value is empty", field.getName());
+                log.debug("field [{}] is required, but it's value is empty", field.getName());
                 return false;
             }
             return true;
         }
         if (null != field.getMinValue() && value.isBefore(field.getMinValue())) {
-            LOGGER.debug("field [{}] min value is [{}], but it's value is less than minimum", field.getName(), field.getMinValue());
+            log.debug("field [{}] min value is [{}], but it's value is less than minimum", field.getName(), field.getMinValue());
             return false;
         }
         if (null != field.getMaxValue() && value.isAfter(field.getMaxValue())) {
-            LOGGER.debug("field [{}] max value is [{}], but it's value is greater than maximum", field.getName(), field.getMaxValue());
+            log.debug("field [{}] max value is [{}], but it's value is greater than maximum", field.getName(), field.getMaxValue());
             return false;
         }
         return true;

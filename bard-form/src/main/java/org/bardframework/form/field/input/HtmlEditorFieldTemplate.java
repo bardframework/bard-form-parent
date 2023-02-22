@@ -19,13 +19,13 @@ public class HtmlEditorFieldTemplate extends InputFieldTemplate<HtmlEditorField,
     public boolean isValid(String flowToken, HtmlEditorField field, String value, Map<String, String> flowData) {
         if (StringUtils.isBlank(value)) {
             if (Boolean.TRUE.equals(field.getRequired())) {
-                LOGGER.debug("field [{}] is required, but it's value is empty", field.getName());
+                log.debug("field [{}] is required, but it's value is empty", field.getName());
                 return false;
             }
             return true;
         }
         if (null != field.getMaxSize() && value.getBytes(StandardCharsets.UTF_8).length > field.getMaxSize()) {
-            LOGGER.debug("field [{}] max size is [{}] bytes, but it's value length is [{}] bytes.", field.getName(), field.getMaxSize(), value.getBytes(StandardCharsets.UTF_8).length);
+            log.debug("field [{}] max size is [{}] bytes, but it's value length is [{}] bytes.", field.getName(), field.getMaxSize(), value.getBytes(StandardCharsets.UTF_8).length);
             return false;
         }
         return true;

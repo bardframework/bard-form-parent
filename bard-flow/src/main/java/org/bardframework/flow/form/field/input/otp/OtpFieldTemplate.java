@@ -55,12 +55,12 @@ public abstract class OtpFieldTemplate<F extends OtpField, O> extends FlowInputF
     @Override
     public final boolean isValid(String flowToken, F field, String value, Map<String, String> flowData) throws Exception {
         if (StringUtils.isBlank(value)) {
-            LOGGER.debug("field otp [{}] is required, but it's value is empty", field.getName());
+            log.debug("field otp [{}] is required, but it's value is empty", field.getName());
             return false;
         }
         value = value.replace(" ", "");
         if (value.length() != this.getOtpGenerator().getLength()) {
-            LOGGER.debug("field [{}] length is [{}], than not equal to it's value[{}] length.", field.getName(), field.getLength(), value.length());
+            log.debug("field [{}] length is [{}], than not equal to it's value[{}] length.", field.getName(), field.getLength(), value.length());
             return false;
         }
         if (this.isValidOtp(flowToken, value, flowData)) {
@@ -106,13 +106,13 @@ public abstract class OtpFieldTemplate<F extends OtpField, O> extends FlowInputF
         int resendCount = flowData.containsKey(RESEND_COUNT_KEY) ? Integer.parseInt(flowData.get(RESEND_COUNT_KEY)) : 0;
         if (resendCount > this.getMaxSendCount()) {
             httpResponse.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());
-            LOGGER.error("flowToken[{}], max otp resend exceed", flowToken);
+            log.error("flowToken[{}], max otp resend exceed", flowToken);
             return;
         }
         long sentTime = flowData.containsKey(SENT_TIME_KEY) ? Long.parseLong(flowData.get(SENT_TIME_KEY)) : 0;
         long remainSeconds = this.getResendIntervalSeconds() - ((System.currentTimeMillis() - sentTime) / 1000);
         if (remainSeconds > 0) {
-            LOGGER.error("flowToken[{}], try to resend otp, before resend interval!", flowToken);
+            log.error("flowToken[{}], try to resend otp, before resend interval!", flowToken);
             httpResponse.getWriter().println(remainSeconds);
             httpResponse.setStatus(HttpStatus.TOO_EARLY.value());
             return;

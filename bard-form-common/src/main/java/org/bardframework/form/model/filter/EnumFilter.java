@@ -5,6 +5,6 @@ package org.bardframework.form.model.filter;
  *
  * @see Filter
  */
-public class EnumFilter<T extends Enum<T>> extends Filter<T, EnumFilter<T>> {
+public abstract class EnumFilter<T extends Enum<T>, F extends EnumFilter<T, F>> extends Filter<T, F> {
 
 }

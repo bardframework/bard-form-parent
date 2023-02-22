@@ -35,7 +35,7 @@ public class SotpFieldTemplate extends OtpFieldTemplate<OtpField, String> {
     protected boolean isValidOtp(String flowToken, String otp, Map<String, String> flowData) throws Exception {
         String expectedAnswer = flowData.get(ANSWER_KEY);
         if (StringUtils.isBlank(expectedAnswer)) {
-            LOGGER.debug("sotp answer in flow data is blank, flow token: [{}]", flowToken);
+            log.debug("sotp answer in flow data is blank, flow token: [{}]", flowToken);
             return false;
         }
         return expectedAnswer.equalsIgnoreCase(otp);

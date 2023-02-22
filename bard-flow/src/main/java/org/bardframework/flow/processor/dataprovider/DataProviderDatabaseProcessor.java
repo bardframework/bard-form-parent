@@ -33,7 +33,7 @@ public class DataProviderDatabaseProcessor extends FormProcessorAbstract {
             try (Statement statement = connection.createStatement()) {
                 try (ResultSet resultSet = statement.executeQuery(StringTemplateUtils.fillTemplate(fetchDataQuery, flowData))) {
                     if (!resultSet.next()) {
-                        LOGGER.warn("data not found in db to fill form, [{}], [{}]", flowData, formData);
+                        log.warn("data not found in db to fill form, [{}], [{}]", flowData, formData);
                         throw new FlowExecutionException(List.of(errorMessageCode));
                     }
                     for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++) {
