@@ -1,7 +1,7 @@
 package org.bardframework.form.model.filter;
 
 /**
- * Filter class for {@link String} id filter.
+ * Filter class for {@link Enum} filter.
  *
  * @see Filter
  */

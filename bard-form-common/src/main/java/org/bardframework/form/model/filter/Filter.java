@@ -1,6 +1,7 @@
 package org.bardframework.form.model.filter;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Base class for the various attribute filters. It can be added to a criteria class as a member, to support the
@@ -107,6 +108,17 @@ public abstract class Filter<T, F> {
         return (F) this;
     }
 
+
+    /**
+     * <p>Setter for the field <code>in</code>.</p>
+     *
+     * @param in a {@link Collection} object.
+     * @return a {@link Filter} object.
+     */
+    public F setIn(T... in) {
+        return this.setIn(List.of(in));
+    }
+
     /**
      * <p>Getter for the field <code>notIn</code>.</p>
      *
@@ -128,11 +140,12 @@ public abstract class Filter<T, F> {
     }
 
     /**
-     * <p>getFilterName.</p>
+     * <p>Setter for the field <code>notIn</code>.</p>
      *
-     * @return a {@link String} object.
+     * @param notIn a {@link Collection} object.
+     * @return a {@link Filter} object.
      */
-    protected String getFilterName() {
-        return this.getClass().getSimpleName();
+    public F setNotIn(T... notIn) {
+        return this.setNotIn(List.of(notIn));
     }
 }
