@@ -2,13 +2,12 @@ package org.bardframework.flow.processor.dataprovider;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.commons.web.http.HttpCallResult;
 import org.bardframework.commons.web.http.HttpCaller;
 import org.bardframework.flow.exception.FlowExecutionException;
 import org.bardframework.flow.form.FormProcessor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.expression.Expression;
 import org.springframework.expression.spel.SpelCompilerMode;
 import org.springframework.expression.spel.SpelParserConfiguration;
@@ -23,9 +22,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Slf4j
 public class DataProviderHttpCallProcessor extends HttpCaller implements FormProcessor {
-
-    private static final Logger log = LoggerFactory.getLogger(DataProviderHttpCallProcessor.class);
 
     protected final Map<String, Pattern> fieldsFetcher = new HashMap<>();
     private final Pattern fetchPattern;

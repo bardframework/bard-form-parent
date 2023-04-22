@@ -1,17 +1,16 @@
 package org.bardframework.flow.processor.message.sender;
 
+import lombok.extern.slf4j.Slf4j;
 import org.bardframework.commons.sms.SmsSender;
 import org.bardframework.flow.processor.message.creator.MessageProvider;
 import org.bardframework.form.field.FieldTemplate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Map;
 
+@Slf4j
 public class MessageSenderSms extends MessageSenderAbstract {
-    protected static final Logger log = LoggerFactory.getLogger(MessageSenderSms.class);
 
     protected final SmsSender smsSender;
 

@@ -1,12 +1,11 @@
 package org.bardframework.flow.processor.message.sender;
 
 import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.flow.exception.FlowExecutionException;
 import org.bardframework.flow.processor.message.creator.MessageProvider;
 import org.bardframework.time.LocalDateTimeJalali;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.time.chrono.HijrahDate;
@@ -19,9 +18,8 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.regex.Pattern;
 
+@Slf4j
 public abstract class MessageSenderAbstract implements MessageSender {
-
-    protected static final Logger log = LoggerFactory.getLogger(MessageSenderAbstract.class);
 
     protected final String receiverFieldName;
     protected final MessageProvider messageProvider;

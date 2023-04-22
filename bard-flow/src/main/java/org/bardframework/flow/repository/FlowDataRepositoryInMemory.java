@@ -2,15 +2,13 @@ package org.bardframework.flow.repository;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
+import lombok.extern.slf4j.Slf4j;
 import org.bardframework.flow.exception.InvalidateFlowException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public class FlowDataRepositoryInMemory<D> implements FlowDataRepository<D> {
-
-    private static final Logger log = LoggerFactory.getLogger(FlowDataRepositoryInMemory.class);
 
     private final Cache<String, D> cache;
 

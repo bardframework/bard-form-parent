@@ -2,6 +2,7 @@ package org.bardframework.flow;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.commons.utils.ReflectionUtils;
@@ -14,15 +15,13 @@ import org.bardframework.flow.repository.FlowDataRepository;
 import org.bardframework.form.BardForm;
 import org.bardframework.form.FormUtils;
 import org.bardframework.form.field.input.InputFieldTemplate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHandler {
 
-    protected static final Logger log = LoggerFactory.getLogger(FlowHandlerAbstract.class);
     protected final FlowDataRepository<D> flowDataRepository;
     protected final List<FlowFormTemplate> forms;
     protected List<FormProcessor> preProcessors = new ArrayList<>();

@@ -1,6 +1,7 @@
 package org.bardframework.form.field.input;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
@@ -9,6 +10,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+@Slf4j
 public class NewPasswordFieldTemplate extends PasswordFieldTemplate {
 
     public NewPasswordFieldTemplate(String name) {

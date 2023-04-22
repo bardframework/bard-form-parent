@@ -1,6 +1,7 @@
 package org.bardframework.flow.form.field.input.captcha;
 
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.commons.captcha.GeneratedCaptcha;
@@ -15,6 +16,7 @@ import java.util.Base64;
 import java.util.Locale;
 import java.util.Map;
 
+@Slf4j
 public class CaptchaFieldTemplate extends OtpFieldTemplate<CaptchaField, GeneratedCaptcha> {
 
     private static final String ANSWER_KEY = "X_ANSWER_CAPTCHA";

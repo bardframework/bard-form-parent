@@ -1,6 +1,7 @@
 package org.bardframework.flow.form.field.input.otp.sms;
 
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.flow.form.field.input.otp.OtpFieldTemplate;
 import org.bardframework.flow.form.field.input.otp.OtpGenerator;
@@ -10,6 +11,7 @@ import org.bardframework.form.field.input.OtpField;
 import java.util.Locale;
 import java.util.Map;
 
+@Slf4j
 public class SotpFieldTemplate extends OtpFieldTemplate<OtpField, String> {
 
     private static final String ANSWER_KEY = "X_GENERATED_SOTP";

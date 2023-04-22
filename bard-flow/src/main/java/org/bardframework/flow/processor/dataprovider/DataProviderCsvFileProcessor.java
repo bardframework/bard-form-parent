@@ -2,13 +2,12 @@ package org.bardframework.flow.processor.dataprovider;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.commons.web.utils.ResourceUtils;
 import org.bardframework.commons.web.utils.WebUtils;
 import org.bardframework.flow.exception.FlowExecutionException;
 import org.bardframework.flow.processor.FormProcessorAbstract;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -18,9 +17,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+@Slf4j
 public class DataProviderCsvFileProcessor extends FormProcessorAbstract {
-
-    private static final Logger log = LoggerFactory.getLogger(DataProviderCsvFileProcessor.class);
 
     protected final String csvFileLocation;
     protected final Map<Integer, String> mapper;

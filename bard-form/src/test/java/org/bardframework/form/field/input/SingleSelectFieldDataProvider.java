@@ -5,8 +5,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.bardframework.form.model.SelectOption;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.TestComponent;
 
 import java.util.Set;
@@ -14,7 +12,6 @@ import java.util.stream.Collectors;
 
 @TestComponent
 public class SingleSelectFieldDataProvider implements InputFieldDataProvider<SingleSelectField, String> {
-    private static final Logger log = LoggerFactory.getLogger(SingleSelectFieldDataProvider.class);
 
     @Override
     public String getValidValue(SingleSelectField field) throws Exception {

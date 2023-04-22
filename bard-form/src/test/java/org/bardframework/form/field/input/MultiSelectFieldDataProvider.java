@@ -5,8 +5,6 @@ import com.fasterxml.jackson.databind.node.TextNode;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.TestComponent;
 
 import java.util.Collections;
@@ -15,7 +13,6 @@ import java.util.stream.Collectors;
 
 @TestComponent
 public class MultiSelectFieldDataProvider implements InputFieldDataProvider<MultiSelectField, List<String>> {
-    private static final Logger log = LoggerFactory.getLogger(MultiSelectFieldDataProvider.class);
 
     @Override
     public List<String> getValidValue(MultiSelectField field) throws Exception {

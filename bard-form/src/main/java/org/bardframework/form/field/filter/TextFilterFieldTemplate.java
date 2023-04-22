@@ -1,6 +1,7 @@
 package org.bardframework.form.field.filter;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
@@ -11,6 +12,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+@Slf4j
 public class TextFilterFieldTemplate extends InputFieldTemplate<TextFilterField, StringFilter> {
 
     protected TextFilterFieldTemplate(String name) {

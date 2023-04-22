@@ -4,14 +4,15 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import org.bardframework.commons.utils.DateTimeUtils;
 import org.bardframework.commons.web.Calendar;
 import org.bardframework.time.LocalDateTimeJalali;
 import org.springframework.context.MessageSource;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.chrono.HijrahDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAccessor;
 import java.util.Locale;
 import java.util.function.Supplier;
@@ -20,39 +21,41 @@ import java.util.function.Supplier;
 @Getter
 @Setter
 @ToString
-public class LocalDateTimeHeaderTemplate extends HeaderTemplate<DateTimeHeader, LocalDateTime> {
+public class EpochMillsHeaderTemplate extends HeaderTemplate<DateHeader, Long> {
 
     private final DateTimeFormatter formatter;
     private DateTimeFormatter exportFormatter;
+    private Supplier<ZoneId> timeZoneProvider = ZoneId::systemDefault;
     private Supplier<Calendar> calendarProvider = () -> Calendar.GREGORIAN;
 
-    public LocalDateTimeHeaderTemplate(String formatterPattern) {
+    public EpochMillsHeaderTemplate(String formatterPattern) {
         this.formatter = DateTimeFormatter.ofPattern(formatterPattern);
         this.exportFormatter = DateTimeFormatter.ofPattern(formatterPattern);
     }
 
     @Override
-    public Object format(LocalDateTime value, Locale locale, MessageSource messageSource) {
+    public Object format(Long value, Locale locale, MessageSource messageSource) {
         if (null == value) {
             return null;
         }
-        return this.getFormatter().withLocale(locale).format(value);
+        LocalDateTime dateTime = DateTimeUtils.fromEpochMills(value, timeZoneProvider.get());
+        return this.getFormatter().withLocale(locale).format(dateTime);
     }
 
     @Override
-    public Object formatForExport(LocalDateTime value, Locale locale, MessageSource messageSource) {
+    public Object formatForExport(Long value, Locale locale, MessageSource messageSource) {
         if (null == value) {
             return null;
         }
+        LocalDateTime dateTime = DateTimeUtils.fromEpochMills(value, timeZoneProvider.get());
         Calendar calendar = calendarProvider.get();
         TemporalAccessor accessor;
         if (calendar == Calendar.GREGORIAN) {
-            accessor = value;
+            accessor = dateTime;
         } else if (calendar == Calendar.JALALI) {
-            accessor = LocalDateTimeJalali.of(value);
+            accessor = LocalDateTimeJalali.of(dateTime);
         } else if (calendar == Calendar.ISLAMIC) {
-            HijrahDate hijrahDate = HijrahDate.from(value);
-            accessor = LocalDateTime.of(hijrahDate.get(ChronoField.YEAR), hijrahDate.get(ChronoField.MONTH_OF_YEAR), hijrahDate.get(ChronoField.DAY_OF_MONTH), value.getHour(), value.getMinute(), value.getSecond());
+            accessor = HijrahDate.from(dateTime);
         } else {
             throw new IllegalStateException("unhandled calendar: " + calendar);
         }

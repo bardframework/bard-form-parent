@@ -23,7 +23,7 @@ public class LocalDateHeaderTemplate extends HeaderTemplate<DateHeader, LocalDat
 
     private final DateTimeFormatter formatter;
     private DateTimeFormatter exportFormatter;
-    private Supplier<Calendar> currentUserCalendarProvider = () -> Calendar.JALALI;
+    private Supplier<Calendar> calendarProvider = () -> Calendar.GREGORIAN;
 
     public LocalDateHeaderTemplate(String formatterPattern) {
         this.formatter = DateTimeFormatter.ofPattern(formatterPattern);
@@ -43,7 +43,7 @@ public class LocalDateHeaderTemplate extends HeaderTemplate<DateHeader, LocalDat
         if (null == value) {
             return null;
         }
-        Calendar calendar = currentUserCalendarProvider.get();
+        Calendar calendar = calendarProvider.get();
         TemporalAccessor accessor;
         if (calendar == Calendar.GREGORIAN) {
             accessor = value;

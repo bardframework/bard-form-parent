@@ -1,11 +1,10 @@
 package org.bardframework.form.field;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.bardframework.commons.utils.ReflectionUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.expression.Expression;
 import org.springframework.expression.spel.SpelCompilerMode;
 import org.springframework.expression.spel.SpelParserConfiguration;
@@ -15,8 +14,9 @@ import org.springframework.expression.spel.support.StandardEvaluationContext;
 import java.util.Locale;
 import java.util.Map;
 
+@Slf4j
 public abstract class FieldTemplate<F extends Field> {
-    protected final Logger log = LoggerFactory.getLogger(this.getClass());
+
     protected final Class<F> fieldClazz;
     protected final String name;
     protected Expression showExpression = null;

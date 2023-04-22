@@ -3,6 +3,7 @@ package org.bardframework.flow.form.field.input.otp;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.flow.exception.InvalidateFlowException;
 import org.bardframework.flow.form.field.input.FlowInputFieldTemplate;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+@Slf4j
 public abstract class OtpFieldTemplate<F extends OtpField, O> extends FlowInputFieldTemplate<F, String> {
 
     private static final String GENERATE_COUNT_KEY = "X_GENERATE_COUNT";

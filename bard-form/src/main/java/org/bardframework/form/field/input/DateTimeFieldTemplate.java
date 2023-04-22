@@ -1,6 +1,7 @@
 package org.bardframework.form.field.input;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Map;
 
+@Slf4j
 public class DateTimeFieldTemplate extends InputFieldTemplate<DateTimeField, LocalDateTime> {
     private boolean minIsNow;
     private boolean maxIsNow;

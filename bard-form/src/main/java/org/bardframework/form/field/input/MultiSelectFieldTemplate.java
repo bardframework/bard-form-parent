@@ -1,6 +1,7 @@
 package org.bardframework.form.field.input;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
@@ -13,6 +14,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class MultiSelectFieldTemplate extends InputFieldTemplate<MultiSelectField, List<String>> {
 
     protected final OptionDataSource optionDataSource;

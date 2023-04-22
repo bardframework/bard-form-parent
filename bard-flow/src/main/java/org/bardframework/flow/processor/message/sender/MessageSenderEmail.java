@@ -4,17 +4,16 @@ import jakarta.mail.*;
 import jakarta.mail.internet.AddressException;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
+import lombok.extern.slf4j.Slf4j;
 import org.bardframework.flow.processor.message.creator.MessageProvider;
 import org.bardframework.form.field.FieldTemplate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
+@Slf4j
 public class MessageSenderEmail extends MessageSenderAbstract {
-    protected static final Logger log = LoggerFactory.getLogger(MessageSenderEmail.class);
 
     private final InternetAddress senderEmail;
     private final Properties configs;

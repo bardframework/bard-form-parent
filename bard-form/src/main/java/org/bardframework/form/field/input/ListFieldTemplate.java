@@ -1,6 +1,7 @@
 package org.bardframework.form.field.input;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+@Slf4j
 public class ListFieldTemplate extends InputFieldTemplate<ListField, List<String>> {
 
     protected ListFieldTemplate(String name) {
