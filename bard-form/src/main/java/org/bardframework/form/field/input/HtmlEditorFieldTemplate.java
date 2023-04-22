@@ -1,6 +1,8 @@
 package org.bardframework.form.field.input;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
@@ -9,6 +11,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.Map;
 
+@Slf4j
+@Getter
 public class HtmlEditorFieldTemplate extends InputFieldTemplate<HtmlEditorField, String> {
 
     protected HtmlEditorFieldTemplate(String name) {

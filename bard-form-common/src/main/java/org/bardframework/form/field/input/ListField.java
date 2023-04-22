@@ -1,9 +1,17 @@
 package org.bardframework.form.field.input;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.bardframework.form.field.FieldType;
 
 import java.util.List;
 
+@Slf4j
+@Getter
+@Setter
+@ToString
 public class ListField extends InputField<List<String>> {
     private Integer minLength;
     private Integer maxLength;
@@ -25,37 +33,5 @@ public class ListField extends InputField<List<String>> {
     @Override
     public String toString(List<String> values) {
         return null == values ? null : String.join(SEPARATOR, values);
-    }
-
-    public Integer getMinLength() {
-        return minLength;
-    }
-
-    public void setMinLength(Integer minLength) {
-        this.minLength = minLength;
-    }
-
-    public Integer getMaxLength() {
-        return maxLength;
-    }
-
-    public void setMaxLength(Integer maxLength) {
-        this.maxLength = maxLength;
-    }
-
-    public Integer getMaxCount() {
-        return maxCount;
-    }
-
-    public void setMaxCount(Integer maxCount) {
-        this.maxCount = maxCount;
-    }
-
-    public Boolean getBulkAdd() {
-        return bulkAdd;
-    }
-
-    public void setBulkAdd(Boolean bulkAdd) {
-        this.bulkAdd = bulkAdd;
     }
 }

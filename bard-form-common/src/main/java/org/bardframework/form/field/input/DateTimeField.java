@@ -1,9 +1,17 @@
 package org.bardframework.form.field.input;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.bardframework.form.field.FieldType;
 
 import java.time.LocalDateTime;
 
+@Slf4j
+@Getter
+@Setter
+@ToString
 public class DateTimeField extends InputField<LocalDateTime> {
     private LocalDateTime minValue;
     private LocalDateTime maxValue;
@@ -18,22 +26,6 @@ public class DateTimeField extends InputField<LocalDateTime> {
     @Override
     public FieldType getType() {
         return InputFieldType.DATE_TIME;
-    }
-
-    public LocalDateTime getMinValue() {
-        return minValue;
-    }
-
-    public void setMinValue(LocalDateTime minValue) {
-        this.minValue = minValue;
-    }
-
-    public LocalDateTime getMaxValue() {
-        return maxValue;
-    }
-
-    public void setMaxValue(LocalDateTime maxValue) {
-        this.maxValue = maxValue;
     }
 
     @Override

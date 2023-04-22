@@ -1,5 +1,9 @@
 package org.bardframework.form.model.filter;
 
+import lombok.Getter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Class for filtering attributes with {@link String} type.
  * It can be added to a criteria class as a member, to support the following query parameters:
@@ -12,27 +16,15 @@ package org.bardframework.form.model.filter;
  * fieldName.contains='thing'
  * </code>
  */
+@Slf4j
+@Getter
+@ToString
 public class StringFilter extends Filter<String, StringFilter> {
 
     private String contains;
     private String doesNotContain;
     private String startWith;
     private String endWith;
-
-    /**
-     * <p>Constructor for StringFilter.</p>
-     */
-    public StringFilter() {
-    }
-
-    /**
-     * <p>Getter for the field <code>doesNotContain</code>.</p>
-     *
-     * @return a {@link String} object.
-     */
-    public String getDoesNotContain() {
-        return doesNotContain;
-    }
 
     /**
      * <p>Setter for the field <code>doesNotContain</code>.</p>
@@ -46,15 +38,6 @@ public class StringFilter extends Filter<String, StringFilter> {
     }
 
     /**
-     * <p>Getter for the field <code>contains</code>.</p>
-     *
-     * @return a {@link String} object.
-     */
-    public String getContains() {
-        return contains;
-    }
-
-    /**
      * <p>Setter for the field <code>contains</code>.</p>
      *
      * @param contains a {@link String} object.
@@ -65,17 +48,9 @@ public class StringFilter extends Filter<String, StringFilter> {
         return this;
     }
 
-    public String getStartWith() {
-        return startWith;
-    }
-
     public StringFilter setStartWith(String startWith) {
         this.startWith = startWith;
         return this;
-    }
-
-    public String getEndWith() {
-        return endWith;
     }
 
     public StringFilter setEndWith(String endWith) {

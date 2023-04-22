@@ -1,7 +1,15 @@
 package org.bardframework.form.field.input;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.bardframework.form.field.FieldType;
 
+@Slf4j
+@Getter
+@Setter
+@ToString
 public class NumberField extends InputField<Long> {
     private Long minValue;
     private Long maxValue;
@@ -22,30 +30,6 @@ public class NumberField extends InputField<Long> {
     @Override
     public String toString(Long value) {
         return null == value ? null : value.toString();
-    }
-
-    public Long getMinValue() {
-        return minValue;
-    }
-
-    public void setMinValue(Long minValue) {
-        this.minValue = minValue;
-    }
-
-    public Long getMaxValue() {
-        return maxValue;
-    }
-
-    public void setMaxValue(Long maxValue) {
-        this.maxValue = maxValue;
-    }
-
-    public String getMask() {
-        return mask;
-    }
-
-    public void setMask(String mask) {
-        this.mask = mask;
     }
 
 }

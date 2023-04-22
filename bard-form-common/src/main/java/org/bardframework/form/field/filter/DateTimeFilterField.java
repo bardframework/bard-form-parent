@@ -1,5 +1,9 @@
 package org.bardframework.form.field.filter;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.bardframework.form.field.FieldType;
 import org.bardframework.form.field.input.InputField;
 import org.bardframework.form.model.filter.LocalDateTimeFilter;
@@ -7,6 +11,10 @@ import org.bardframework.form.model.filter.LocalDateTimeFilter;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
+@Slf4j
+@Getter
+@Setter
+@ToString
 public class DateTimeFilterField extends InputField<LocalDateTimeFilter> {
     private Long minLength;
     private Long maxLength;
@@ -29,45 +37,5 @@ public class DateTimeFilterField extends InputField<LocalDateTimeFilter> {
     @Override
     public String toString(LocalDateTimeFilter value) {
         return String.join(SEPARATOR, null == value.getFrom() ? "" : value.getFrom().toString(), null == value.getTo() ? "" : value.getTo().toString());
-    }
-
-    public Long getMinLength() {
-        return minLength;
-    }
-
-    public void setMinLength(Long minLength) {
-        this.minLength = minLength;
-    }
-
-    public Long getMaxLength() {
-        return maxLength;
-    }
-
-    public void setMaxLength(Long maxLength) {
-        this.maxLength = maxLength;
-    }
-
-    public LocalDateTime getMinValue() {
-        return minValue;
-    }
-
-    public void setMinValue(LocalDateTime minValue) {
-        this.minValue = minValue;
-    }
-
-    public LocalDateTime getMaxValue() {
-        return maxValue;
-    }
-
-    public void setMaxValue(LocalDateTime maxValue) {
-        this.maxValue = maxValue;
-    }
-
-    public ChronoUnit getLengthUnit() {
-        return lengthUnit;
-    }
-
-    public void setLengthUnit(ChronoUnit lengthUnit) {
-        this.lengthUnit = lengthUnit;
     }
 }

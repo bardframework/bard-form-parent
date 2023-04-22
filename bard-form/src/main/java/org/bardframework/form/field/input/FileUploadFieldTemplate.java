@@ -1,16 +1,17 @@
 package org.bardframework.form.field.input;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Locale;
 import java.util.Map;
 
+@Slf4j
+@Getter
 public class FileUploadFieldTemplate extends InputFieldTemplate<FileUploadField, String> {
-    protected static final Logger log = LoggerFactory.getLogger(FileUploadFieldTemplate.class);
 
     private final String uploadAction;
     private final String downloadAction;
@@ -40,13 +41,5 @@ public class FileUploadFieldTemplate extends InputFieldTemplate<FileUploadField,
     @Override
     public String toValue(String value) {
         return value;
-    }
-
-    public String getDownloadAction() {
-        return downloadAction;
-    }
-
-    public String getUploadAction() {
-        return uploadAction;
     }
 }

@@ -1,5 +1,9 @@
 package org.bardframework.table.header;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.bardframework.commons.web.Calendar;
 import org.bardframework.time.LocalDateTimeJalali;
 import org.springframework.context.MessageSource;
@@ -12,6 +16,10 @@ import java.time.temporal.TemporalAccessor;
 import java.util.Locale;
 import java.util.function.Supplier;
 
+@Slf4j
+@Getter
+@Setter
+@ToString
 public class LocalDateTimeHeaderTemplate extends HeaderTemplate<DateTimeHeader, LocalDateTime> {
 
     private final DateTimeFormatter formatter;
@@ -49,25 +57,5 @@ public class LocalDateTimeHeaderTemplate extends HeaderTemplate<DateTimeHeader, 
             throw new IllegalStateException("unhandled calendar: " + calendar);
         }
         return this.getFormatter().withLocale(locale).format(accessor);
-    }
-
-    public Supplier<Calendar> getCurrentUserCalendarProvider() {
-        return currentUserCalendarProvider;
-    }
-
-    public void setCurrentUserCalendarProvider(Supplier<Calendar> currentUserCalendarProvider) {
-        this.currentUserCalendarProvider = currentUserCalendarProvider;
-    }
-
-    public DateTimeFormatter getFormatter() {
-        return formatter;
-    }
-
-    public DateTimeFormatter getExportFormatter() {
-        return exportFormatter;
-    }
-
-    public void setExportFormatter(DateTimeFormatter exportFormatter) {
-        this.exportFormatter = exportFormatter;
     }
 }

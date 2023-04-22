@@ -1,10 +1,19 @@
 package org.bardframework.form;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
+@Getter
+@Setter
+@ToString
 public class FormErrorResponse {
     private Map<String, String> fieldErrors = new HashMap<>();
     private List<String> errors = new ArrayList<>();
@@ -17,22 +26,6 @@ public class FormErrorResponse {
     }
 
     public FormErrorResponse(List<String> errors) {
-        this.errors = errors;
-    }
-
-    public Map<String, String> getFieldErrors() {
-        return fieldErrors;
-    }
-
-    public void setFieldErrors(Map<String, String> fieldErrors) {
-        this.fieldErrors = fieldErrors;
-    }
-
-    public List<String> getErrors() {
-        return errors;
-    }
-
-    public void setErrors(List<String> errors) {
         this.errors = errors;
     }
 }

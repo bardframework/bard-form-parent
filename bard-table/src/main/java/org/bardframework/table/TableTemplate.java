@@ -1,11 +1,19 @@
 package org.bardframework.table;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.table.header.HeaderTemplate;
 import org.springframework.context.MessageSource;
 
 import java.util.List;
 
+@Slf4j
+@Getter
+@Setter
+@ToString
 public class TableTemplate extends TableModel {
 
     private final MessageSource messageSource;
@@ -20,41 +28,5 @@ public class TableTemplate extends TableModel {
         this.modelClass = modelClass;
         this.headerTemplates = headerTemplates;
         this.messageSource = messageSource;
-    }
-
-    public List<HeaderTemplate<?, ?>> getHeaderTemplates() {
-        return headerTemplates;
-    }
-
-    public FormTemplate getFilterFormTemplate() {
-        return filterFormTemplate;
-    }
-
-    public void setFilterFormTemplate(FormTemplate filterFormTemplate) {
-        this.filterFormTemplate = filterFormTemplate;
-    }
-
-    public FormTemplate getSaveFormTemplate() {
-        return saveFormTemplate;
-    }
-
-    public void setSaveFormTemplate(FormTemplate saveFormTemplate) {
-        this.saveFormTemplate = saveFormTemplate;
-    }
-
-    public FormTemplate getUpdateFormTemplate() {
-        return updateFormTemplate;
-    }
-
-    public void setUpdateFormTemplate(FormTemplate updateFormTemplate) {
-        this.updateFormTemplate = updateFormTemplate;
-    }
-
-    public Class<?> getModelClass() {
-        return modelClass;
-    }
-
-    public MessageSource getMessageSource() {
-        return messageSource;
     }
 }

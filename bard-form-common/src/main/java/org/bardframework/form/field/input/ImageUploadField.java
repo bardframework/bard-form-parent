@@ -1,7 +1,15 @@
 package org.bardframework.form.field.input;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.bardframework.form.field.FieldType;
 
+@Slf4j
+@Getter
+@Setter
+@ToString
 public class ImageUploadField extends FileUploadField {
 
     private Double aspectRatio;
@@ -21,53 +29,5 @@ public class ImageUploadField extends FileUploadField {
     @Override
     public FieldType getType() {
         return InputFieldType.IMAGE_UPLOAD;
-    }
-
-    public Double getAspectRatioTolerance() {
-        return aspectRatioTolerance;
-    }
-
-    public void setAspectRatioTolerance(Double aspectRatioTolerance) {
-        this.aspectRatioTolerance = aspectRatioTolerance;
-    }
-
-    public Double getAspectRatio() {
-        return aspectRatio;
-    }
-
-    public void setAspectRatio(Double aspectRatio) {
-        this.aspectRatio = aspectRatio;
-    }
-
-    public Integer getMinWidth() {
-        return minWidth;
-    }
-
-    public void setMinWidth(Integer minWidth) {
-        this.minWidth = minWidth;
-    }
-
-    public Integer getMaxWidth() {
-        return maxWidth;
-    }
-
-    public void setMaxWidth(Integer maxWidth) {
-        this.maxWidth = maxWidth;
-    }
-
-    public Integer getMinHeight() {
-        return minHeight;
-    }
-
-    public void setMinHeight(Integer minHeight) {
-        this.minHeight = minHeight;
-    }
-
-    public Integer getMaxHeight() {
-        return maxHeight;
-    }
-
-    public void setMaxHeight(Integer maxHeight) {
-        this.maxHeight = maxHeight;
     }
 }

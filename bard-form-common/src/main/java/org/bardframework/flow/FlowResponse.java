@@ -1,24 +1,22 @@
 package org.bardframework.flow;
 
+import lombok.Getter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.bardframework.form.BardForm;
 
+@Slf4j
+@Getter
+@ToString
 public class FlowResponse {
     private BardForm form;
     private Boolean finished;
     private int steps;
     private int current;
 
-    public Boolean getFinished() {
-        return finished;
-    }
-
     public FlowResponse setFinished(Boolean finished) {
         this.finished = finished;
         return this;
-    }
-
-    public BardForm getForm() {
-        return form;
     }
 
     public FlowResponse setForm(BardForm form) {
@@ -26,17 +24,9 @@ public class FlowResponse {
         return this;
     }
 
-    public int getSteps() {
-        return steps;
-    }
-
     public FlowResponse setSteps(int steps) {
         this.steps = steps;
         return this;
-    }
-
-    public int getCurrent() {
-        return current;
     }
 
     public FlowResponse setCurrent(int current) {

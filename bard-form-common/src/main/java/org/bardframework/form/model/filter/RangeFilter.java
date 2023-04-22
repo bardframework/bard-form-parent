@@ -1,5 +1,9 @@
 package org.bardframework.form.model.filter;
 
+import lombok.Getter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Filter class for Comparable types, where less than / greater than / etc relations could be interpreted. It can be
  * added to a criteria class as a member, to support the following query parameters:
@@ -20,19 +24,13 @@ package org.bardframework.form.model.filter;
  * @see NumberRangeFilter
  * @see LocalDateFilter
  */
+@Slf4j
+@Getter
+@ToString
 public abstract class RangeFilter<T, F extends RangeFilter<T, F>> extends Filter<T, F> {
 
     private T from;
     private T to;
-
-    /**
-     * <p>Getter for the field <code>from</code>.</p>
-     *
-     * @return a T object.
-     */
-    public T getFrom() {
-        return from;
-    }
 
     /**
      * <p>Setter for the field <code>from</code>.</p>
@@ -43,15 +41,6 @@ public abstract class RangeFilter<T, F extends RangeFilter<T, F>> extends Filter
     public F setFrom(T from) {
         this.from = from;
         return (F) this;
-    }
-
-    /**
-     * <p>Getter for the field <code>to</code>.</p>
-     *
-     * @return a T object.
-     */
-    public T getTo() {
-        return to;
     }
 
     /**

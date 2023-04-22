@@ -1,7 +1,15 @@
 package org.bardframework.form.field.input;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.bardframework.form.field.FieldType;
 
+@Slf4j
+@Getter
+@Setter
+@ToString
 public class TextField extends InputField<String> {
     private String regex;
     private String mask;
@@ -27,37 +35,5 @@ public class TextField extends InputField<String> {
     @Override
     public String toString(String value) {
         return value;
-    }
-
-    public String getRegex() {
-        return regex;
-    }
-
-    public void setRegex(String regex) {
-        this.regex = regex;
-    }
-
-    public String getMask() {
-        return mask;
-    }
-
-    public void setMask(String mask) {
-        this.mask = mask;
-    }
-
-    public Integer getMinLength() {
-        return minLength;
-    }
-
-    public void setMinLength(Integer minLength) {
-        this.minLength = minLength;
-    }
-
-    public Integer getMaxLength() {
-        return maxLength;
-    }
-
-    public void setMaxLength(Integer maxLength) {
-        this.maxLength = maxLength;
     }
 }

@@ -1,9 +1,17 @@
 package org.bardframework.form.field.input;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.bardframework.form.field.FieldType;
 
 import java.util.List;
 
+@Slf4j
+@Getter
+@Setter
+@ToString
 public class CountrySelectField extends InputField<String> {
     private List<String> availableCountries;
     private List<String> excludeCountries;
@@ -16,21 +24,5 @@ public class CountrySelectField extends InputField<String> {
     @Override
     public FieldType getType() {
         return InputFieldType.COUNTRY_SELECT;
-    }
-
-    public List<String> getAvailableCountries() {
-        return availableCountries;
-    }
-
-    public void setAvailableCountries(List<String> availableCountries) {
-        this.availableCountries = availableCountries;
-    }
-
-    public List<String> getExcludeCountries() {
-        return excludeCountries;
-    }
-
-    public void setExcludeCountries(List<String> excludeCountries) {
-        this.excludeCountries = excludeCountries;
     }
 }

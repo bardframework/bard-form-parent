@@ -1,5 +1,10 @@
 package org.bardframework.form.model.filter;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -15,27 +20,15 @@ import java.util.List;
  *      fieldName.notIn='something','other'
  * </pre>
  */
+@Slf4j
+@Getter
+@ToString
 public abstract class Filter<T, F> {
     private T equals;
     private T notEquals;
     private Boolean specified;
     private Collection<T> in;
     private Collection<T> notIn;
-
-    /**
-     * <p>Constructor for Filter.</p>
-     */
-    public Filter() {
-    }
-
-    /**
-     * <p>Getter for the field <code>equals</code>.</p>
-     *
-     * @return a T object.
-     */
-    public T getEquals() {
-        return equals;
-    }
 
     /**
      * <p>Setter for the field <code>equals</code>.</p>
@@ -46,15 +39,6 @@ public abstract class Filter<T, F> {
     public F setEquals(T equals) {
         this.equals = equals;
         return (F) this;
-    }
-
-    /**
-     * <p>Getter for the field <code>notEquals</code>.</p>
-     *
-     * @return a T object.
-     */
-    public T getNotEquals() {
-        return notEquals;
     }
 
     /**
@@ -69,15 +53,6 @@ public abstract class Filter<T, F> {
     }
 
     /**
-     * <p>Getter for the field <code>specified</code>.</p>
-     *
-     * @return a {@link Boolean} object.
-     */
-    public Boolean getSpecified() {
-        return specified;
-    }
-
-    /**
      * <p>Setter for the field <code>specified</code>.</p>
      *
      * @param specified a {@link Boolean} object.
@@ -86,15 +61,6 @@ public abstract class Filter<T, F> {
     public F setSpecified(Boolean specified) {
         this.specified = specified;
         return (F) this;
-    }
-
-    /**
-     * <p>Getter for the field <code>in</code>.</p>
-     *
-     * @return a {@link Collection} object.
-     */
-    public Collection<T> getIn() {
-        return in;
     }
 
     /**
@@ -115,17 +81,9 @@ public abstract class Filter<T, F> {
      * @param in a {@link Collection} object.
      * @return a {@link Filter} object.
      */
+    @JsonIgnore
     public F setIn(T... in) {
         return this.setIn(List.of(in));
-    }
-
-    /**
-     * <p>Getter for the field <code>notIn</code>.</p>
-     *
-     * @return a {@link Collection} object.
-     */
-    public Collection<T> getNotIn() {
-        return notIn;
     }
 
     /**
@@ -145,6 +103,7 @@ public abstract class Filter<T, F> {
      * @param notIn a {@link Collection} object.
      * @return a {@link Filter} object.
      */
+    @JsonIgnore
     public F setNotIn(T... notIn) {
         return this.setNotIn(List.of(notIn));
     }

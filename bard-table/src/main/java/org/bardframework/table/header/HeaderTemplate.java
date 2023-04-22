@@ -1,18 +1,23 @@
 package org.bardframework.table.header;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.bardframework.commons.utils.ReflectionUtils;
 import org.bardframework.table.TableTemplate;
 import org.bardframework.table.TableUtils;
 import org.bardframework.table.header.type.HeaderType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 
 import java.util.Locale;
 import java.util.Map;
 
+@Slf4j
+@Getter
+@Setter
+@ToString
 public abstract class HeaderTemplate<H extends TableHeader, T> extends TableHeader {
-    protected final Logger log = LoggerFactory.getLogger(this.getClass());
 
     private final Class<H> headerClazz;
     private String excelFormat;
@@ -50,13 +55,5 @@ public abstract class HeaderTemplate<H extends TableHeader, T> extends TableHead
 
     public Object formatForExport(T value, Locale locale, MessageSource messageSource) {
         return this.format(value, locale, messageSource);
-    }
-
-    public String getExcelFormat() {
-        return excelFormat;
-    }
-
-    public void setExcelFormat(String excelFormat) {
-        this.excelFormat = excelFormat;
     }
 }

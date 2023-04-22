@@ -1,5 +1,14 @@
 package org.bardframework.form.model;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Getter
+@Setter
+@ToString
 public class SelectOption implements Comparable<SelectOption> {
     private String id;
     private String title;
@@ -19,46 +28,6 @@ public class SelectOption implements Comparable<SelectOption> {
         this.id = id;
         this.title = title;
         this.type = type;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Boolean getDisable() {
-        return disable;
-    }
-
-    public void setDisable(Boolean disable) {
-        this.disable = disable;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
     }
 
     @Override

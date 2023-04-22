@@ -1,7 +1,15 @@
 package org.bardframework.form.field.input;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.bardframework.form.field.FieldType;
 
+@Slf4j
+@Getter
+@Setter
+@ToString
 public class HtmlEditorField extends InputField<String> {
     private Integer maxSize;
 
@@ -20,13 +28,5 @@ public class HtmlEditorField extends InputField<String> {
     @Override
     public String toString(String value) {
         return value;
-    }
-
-    public Integer getMaxSize() {
-        return maxSize;
-    }
-
-    public void setMaxSize(Integer maxSize) {
-        this.maxSize = maxSize;
     }
 }

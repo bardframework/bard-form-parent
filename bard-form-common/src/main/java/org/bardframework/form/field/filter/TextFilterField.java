@@ -1,9 +1,17 @@
 package org.bardframework.form.field.filter;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.bardframework.form.field.FieldType;
 import org.bardframework.form.field.input.InputField;
 import org.bardframework.form.model.filter.StringFilter;
 
+@Slf4j
+@Getter
+@Setter
+@ToString
 public class TextFilterField extends InputField<StringFilter> {
     private String regex;
     private String mask;
@@ -33,37 +41,5 @@ public class TextFilterField extends InputField<StringFilter> {
             return null;
         }
         return value.getContains();
-    }
-
-    public String getRegex() {
-        return regex;
-    }
-
-    public void setRegex(String regex) {
-        this.regex = regex;
-    }
-
-    public String getMask() {
-        return mask;
-    }
-
-    public void setMask(String mask) {
-        this.mask = mask;
-    }
-
-    public Integer getMinLength() {
-        return minLength;
-    }
-
-    public void setMinLength(Integer minLength) {
-        this.minLength = minLength;
-    }
-
-    public Integer getMaxLength() {
-        return maxLength;
-    }
-
-    public void setMaxLength(Integer maxLength) {
-        this.maxLength = maxLength;
     }
 }

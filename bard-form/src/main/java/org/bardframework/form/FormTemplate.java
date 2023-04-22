@@ -1,13 +1,15 @@
 package org.bardframework.form;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
 import org.bardframework.commons.utils.ReflectionUtils;
 import org.bardframework.form.exception.FormDataValidationException;
 import org.bardframework.form.field.FieldTemplate;
 import org.bardframework.form.field.input.InputFieldTemplate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.expression.Expression;
 import org.springframework.expression.spel.SpelCompilerMode;
@@ -18,9 +20,11 @@ import org.springframework.expression.spel.support.StandardEvaluationContext;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
+@Getter
+@Setter
+@ToString
 public class FormTemplate {
-
-    protected final Logger log = LoggerFactory.getLogger(this.getClass());
 
     protected final String name;
     protected final MessageSource messageSource;
@@ -117,50 +121,6 @@ public class FormTemplate {
 
     public FieldTemplate<?> getField(String name, Map<String, String> args) {
         return this.getFieldTemplates(args).stream().filter(field -> field.getName().equals(name)).findFirst().orElse(null);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Class<?> getDtoClass() {
-        return dtoClass;
-    }
-
-    public void setDtoClass(Class<?> dtoClass) {
-        this.dtoClass = dtoClass;
-    }
-
-    public MessageSource getMessageSource() {
-        return messageSource;
-    }
-
-    public boolean isFailOnUnknownSubmitFields() {
-        return failOnUnknownSubmitFields;
-    }
-
-    public void setFailOnUnknownSubmitFields(boolean failOnUnknownSubmitFields) {
-        this.failOnUnknownSubmitFields = failOnUnknownSubmitFields;
-    }
-
-    public FieldDescriptionShowType getDescriptionShowType() {
-        return descriptionShowType;
-    }
-
-    public void setDescriptionShowType(FieldDescriptionShowType descriptionShowType) {
-        this.descriptionShowType = descriptionShowType;
-    }
-
-    public Boolean getSubmitPristine() {
-        return submitPristine;
-    }
-
-    public void setSubmitPristine(Boolean submitPristine) {
-        this.submitPristine = submitPristine;
-    }
-
-    public Expression getShowExpression() {
-        return showExpression;
     }
 
     public void setShowExpression(String showExpression) {

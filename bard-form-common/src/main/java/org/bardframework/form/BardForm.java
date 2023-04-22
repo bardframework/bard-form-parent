@@ -1,10 +1,18 @@
 package org.bardframework.form;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.bardframework.form.field.Field;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
+@Getter
+@Setter
+@ToString
 public class BardForm {
 
     protected String name;
@@ -15,70 +23,6 @@ public class BardForm {
     protected Boolean submitPristine;
     protected FieldDescriptionShowType fieldDescriptionShowType;
     protected List<Field> fields = new ArrayList<>();
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getConfirmMessage() {
-        return confirmMessage;
-    }
-
-    public void setConfirmMessage(String confirmMessage) {
-        this.confirmMessage = confirmMessage;
-    }
-
-    public List<Field> getFields() {
-        return fields;
-    }
-
-    public void setFields(List<Field> fields) {
-        this.fields = fields;
-    }
-
-    public String getSubmitLabel() {
-        return submitLabel;
-    }
-
-    public void setSubmitLabel(String submitLabel) {
-        this.submitLabel = submitLabel;
-    }
-
-    public FieldDescriptionShowType getFieldDescriptionShowType() {
-        return fieldDescriptionShowType;
-    }
-
-    public void setFieldDescriptionShowType(FieldDescriptionShowType fieldDescriptionShowType) {
-        this.fieldDescriptionShowType = fieldDescriptionShowType;
-    }
-
-    public Boolean getSubmitPristine() {
-        return submitPristine;
-    }
-
-    public void setSubmitPristine(Boolean submitPristine) {
-        this.submitPristine = submitPristine;
-    }
 
     public void addField(Field field) {
         if (null == this.fields) {

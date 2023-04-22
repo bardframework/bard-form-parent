@@ -1,9 +1,17 @@
 package org.bardframework.form.field.input;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.bardframework.form.field.FieldType;
 
 import java.time.LocalTime;
 
+@Slf4j
+@Getter
+@Setter
+@ToString
 public class TimeField extends InputField<LocalTime> {
     private LocalTime minValue;
     private LocalTime maxValue;
@@ -18,22 +26,6 @@ public class TimeField extends InputField<LocalTime> {
     @Override
     public FieldType getType() {
         return InputFieldType.TIME;
-    }
-
-    public LocalTime getMinValue() {
-        return minValue;
-    }
-
-    public void setMinValue(LocalTime minValue) {
-        this.minValue = minValue;
-    }
-
-    public LocalTime getMaxValue() {
-        return maxValue;
-    }
-
-    public void setMaxValue(LocalTime maxValue) {
-        this.maxValue = maxValue;
     }
 
     @Override
