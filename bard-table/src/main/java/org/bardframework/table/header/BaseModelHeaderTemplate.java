@@ -6,11 +6,10 @@ import org.bardframework.crud.api.base.BaseModel;
 import org.bardframework.crud.api.base.BaseRepository;
 import org.springframework.context.MessageSource;
 
-import java.io.Serializable;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-public abstract class BaseModelHeaderTemplate<M extends BaseModel<I>, R extends BaseRepository<M, ?, I, U>, I extends Serializable, U> extends HeaderTemplate<StringHeader, I> {
+public abstract class BaseModelHeaderTemplate<M extends BaseModel<I>, R extends BaseRepository<M, ?, I, U>, I, U> extends HeaderTemplate<StringHeader, I> {
     private final Cache<I, M> cache;
     private final R repository;
 

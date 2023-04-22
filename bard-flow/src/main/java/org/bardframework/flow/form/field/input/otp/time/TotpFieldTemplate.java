@@ -10,9 +10,8 @@ import java.util.Map;
 
 public class TotpFieldTemplate extends OtpFieldTemplate<OtpField, Void> {
     public static final String TOTP_SECRET_KEY = "X_TOTP_SECRET";
-    private String secretAttributeName = TOTP_SECRET_KEY;
-
     private final OtpServiceAbstract otpService;
+    private String secretAttributeName = TOTP_SECRET_KEY;
 
     public TotpFieldTemplate(String name, int maxTryToResolveCount, OtpServiceAbstract otpService) {
         super(name, otpService, maxTryToResolveCount);

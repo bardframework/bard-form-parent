@@ -107,10 +107,6 @@ public class FormTemplate {
         return allowedFieldNames;
     }
 
-    public void setShowExpression(String showExpression) {
-        this.showExpression = new SpelExpressionParser(new SpelParserConfiguration(SpelCompilerMode.IMMEDIATE, null)).parseExpression(showExpression);
-    }
-
     public boolean mustShow(Map<String, String> args) {
         return null == showExpression || Boolean.TRUE.equals(showExpression.getValue(new StandardEvaluationContext(args), Boolean.class));
     }
@@ -165,5 +161,9 @@ public class FormTemplate {
 
     public Expression getShowExpression() {
         return showExpression;
+    }
+
+    public void setShowExpression(String showExpression) {
+        this.showExpression = new SpelExpressionParser(new SpelParserConfiguration(SpelCompilerMode.IMMEDIATE, null)).parseExpression(showExpression);
     }
 }

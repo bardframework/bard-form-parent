@@ -6,12 +6,11 @@ import org.bardframework.crud.api.base.BaseModel;
 import org.bardframework.crud.api.base.BaseRepository;
 import org.bardframework.form.model.SelectOption;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public abstract class BaseModelOptionDataSource<M extends BaseModel<I>, C extends BaseCriteria<I>, R extends BaseRepository<M, C, I, U>, I extends Serializable, U> extends CachableOptionDataSource {
+public abstract class BaseModelOptionDataSource<M extends BaseModel<I>, C extends BaseCriteria<I>, R extends BaseRepository<M, C, I, U>, I, U> extends CachableOptionDataSource {
 
     private final R repository;
 

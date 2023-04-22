@@ -1,7 +1,5 @@
 package org.bardframework.form.model.filter;
 
-import java.io.Serializable;
-
 /**
  * Filter class for Comparable types, where less than / greater than / etc relations could be interpreted. It can be
  * added to a criteria class as a member, to support the following query parameters:
@@ -22,7 +20,7 @@ import java.io.Serializable;
  * @see NumberRangeFilter
  * @see LocalDateFilter
  */
-public abstract class RangeFilter<T extends Serializable, F extends RangeFilter<T, F>> extends Filter<T, F> {
+public abstract class RangeFilter<T, F extends RangeFilter<T, F>> extends Filter<T, F> {
 
     private T from;
     private T to;
