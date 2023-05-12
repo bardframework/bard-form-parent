@@ -14,14 +14,15 @@ import java.util.Map;
 @Setter
 @ToString
 public class TableData {
-    private List<String> headers;
-    private List<Map<String, List<Object>>> data;
+    private List<String> headers = new ArrayList<>();
+    private List<Map<String, List<Object>>> data = new ArrayList<>();
     private long total;
 
     public void addData(String id, List<Object> row) {
-        if (null == this.data) {
-            this.data = new ArrayList<>();
-        }
         this.data.add(Map.of(id, row));
+    }
+
+    public void addHeader(String header) {
+        this.headers.add(header);
     }
 }
