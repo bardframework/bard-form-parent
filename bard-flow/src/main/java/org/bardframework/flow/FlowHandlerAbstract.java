@@ -7,6 +7,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.commons.utils.ReflectionUtils;
 import org.bardframework.commons.web.utils.WebUtils;
+import org.bardframework.flow.exception.FlowDataValidationException;
 import org.bardframework.flow.exception.InvalidateFlowException;
 import org.bardframework.flow.form.FlowFormTemplate;
 import org.bardframework.flow.form.FormProcessor;
@@ -72,6 +73,11 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
             return this.processNextForm(flowToken, flowData, formData, httpRequest, httpResponse);
         } catch (InvalidateFlowException ex) {
             this.invalidateFlow(ex);
+            throw ex;
+        } catch (FlowDataValidationException ex) {
+            if (ex.isSendCurrentForm()) {
+                ex.setForm(FormUtils.toForm(currentFormTemplate, flowData.getData(), flowData.getData(), flowData.getLocale(), httpRequest));
+            }
             throw ex;
         } finally {
             this.updateFlowData(flowToken, flowData);
