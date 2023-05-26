@@ -34,6 +34,7 @@ public interface FlowExceptionControllerAdvice {
         }
         FlowResponse response = new FlowResponse();
         response.setFieldErrors(errors);
+        response.setForm(ex.getForm());
         return new ResponseEntity<>(response, HttpStatus.NOT_ACCEPTABLE);
     }
 
