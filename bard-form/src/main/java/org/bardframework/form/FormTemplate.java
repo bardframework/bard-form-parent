@@ -59,7 +59,7 @@ public class FormTemplate {
     /**
      * اعتبارسنجی داده های ارسالی
      */
-    public void validate(String flowToken, Map<String, String> flowData, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest) throws Exception {
+    public void validate(String flowToken, Map<String, String> flowData, Map<String, String> formData, Locale locale) throws Exception {
         Set<String> allowedFieldNames = this.getAllowedInputFields(flowData, locale);
         Set<String> illegalFields = new HashSet<>(formData.keySet());
         illegalFields.removeAll(allowedFieldNames);
@@ -78,7 +78,7 @@ public class FormTemplate {
             مرتب‌سازی برای کنترل سناریوهایی است که ترتیب اعتبارسنجی فیلدها مهم است (مانند فیلد کپچا که باید پیش از همه اعتبارسنجی شود)
          */
         for (InputFieldTemplate<?, ?> inputFieldTemplate : this.getFieldTemplates(flowData, InputFieldTemplate.class).stream().sorted(Comparator.comparingInt(InputFieldTemplate::getValidationOrder)).collect(Collectors.toList())) {
-            inputFieldTemplate.validate(flowToken, this, flowData, formData, locale, httpRequest, ex);
+            inputFieldTemplate.validate(flowToken, this, flowData, formData, locale, ex);
         }
         if (!MapUtils.isEmpty(ex.getInvalidFields())) {
             throw ex;

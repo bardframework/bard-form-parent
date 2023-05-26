@@ -3,6 +3,7 @@ package org.bardframework.flow;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.flow.exception.FlowDataValidationException;
 import org.bardframework.flow.exception.FlowExecutionException;
+import org.bardframework.form.exception.FormDataValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
@@ -50,6 +51,18 @@ public interface FlowExceptionControllerAdvice {
         return new ResponseEntity<>(response, HttpStatus.NOT_ACCEPTABLE);
     }
 
-    MessageSource getMessageSource();
+    @ExceptionHandler(FormDataValidationException.class)
+    default ResponseEntity<FlowResponse> handle(FormDataValidationException ex) {
+        log.debug("form data validation error: {}", ex.getMessage());
+        Map<String, String> fieldErrors = new HashMap<>();
+        for (Map.Entry<String, List<String>> entry : ex.getInvalidFields().entrySet()) {
+            fieldErrors.put(entry.getKey(), String.join("\n", entry.getValue()));
+        }
 
+        FlowResponse response = new FlowResponse();
+        response.setFieldErrors(fieldErrors);
+        return new ResponseEntity<>(response, HttpStatus.NOT_ACCEPTABLE);
+    }
+
+    MessageSource getMessageSource();
 }

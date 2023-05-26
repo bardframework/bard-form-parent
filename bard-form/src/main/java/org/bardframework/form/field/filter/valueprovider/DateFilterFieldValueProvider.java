@@ -1,6 +1,5 @@
 package org.bardframework.form.field.filter.valueprovider;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.bardframework.form.field.filter.DateFilterField;
 import org.bardframework.form.field.value.FieldValueProvider;
 import org.bardframework.form.model.filter.LocalDateFilter;
@@ -10,7 +9,7 @@ import java.time.LocalDate;
 public class DateFilterFieldValueProvider implements FieldValueProvider<DateFilterField, LocalDateFilter> {
 
     @Override
-    public LocalDateFilter getValue(DateFilterField field, HttpServletRequest httpRequest) {
+    public LocalDateFilter getValue(DateFilterField field) {
         Long length = field.getMaxLength();
         if (null == length) {
             length = field.getMinLength();

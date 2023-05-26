@@ -1,6 +1,5 @@
 package org.bardframework.form.field.value;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.bardframework.form.field.input.InputField;
 
 public abstract class ConstantValueProvider<T, F extends InputField<T>> implements FieldValueProvider<F, T> {
@@ -12,7 +11,7 @@ public abstract class ConstantValueProvider<T, F extends InputField<T>> implemen
     }
 
     @Override
-    public T getValue(F field, HttpServletRequest httpRequest) {
+    public T getValue(F field) {
         return value;
     }
 }

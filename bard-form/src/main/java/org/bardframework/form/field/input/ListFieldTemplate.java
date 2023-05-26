@@ -1,6 +1,5 @@
 package org.bardframework.form.field.input;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -43,8 +42,8 @@ public class ListFieldTemplate extends InputFieldTemplate<ListField, List<String
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, ListField field, Map<String, String> values, Locale locale, HttpServletRequest httpRequest) throws Exception {
-        super.fill(formTemplate, field, values, locale, httpRequest);
+    public void fill(FormTemplate formTemplate, ListField field, Map<String, String> values, Locale locale) throws Exception {
+        super.fill(formTemplate, field, values, locale);
         field.setMinLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "minLength", locale, values, this.getDefaultValues().getMinLength()));
         field.setMaxLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxLength", locale, values, this.getDefaultValues().getMaxLength()));
         field.setMaxCount(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxCount", locale, values, this.getDefaultValues().getMaxCount()));

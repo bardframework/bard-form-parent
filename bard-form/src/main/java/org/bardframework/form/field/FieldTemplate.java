@@ -1,6 +1,5 @@
 package org.bardframework.form.field;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.bardframework.commons.utils.ReflectionUtils;
 import org.bardframework.form.FormTemplate;
@@ -28,13 +27,13 @@ public abstract class FieldTemplate<F extends Field> {
         this.defaultValues = ReflectionUtils.newInstance(this.fieldClazz);
     }
 
-    public F toField(FormTemplate formTemplate, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
+    public F toField(FormTemplate formTemplate, Map<String, String> args, Locale locale) throws Exception {
         F field = this.getEmptyField();
-        this.fill(formTemplate, field, args, locale, httpRequest);
+        this.fill(formTemplate, field, args, locale);
         return field;
     }
 
-    protected void fill(FormTemplate formTemplate, F field, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
+    protected void fill(FormTemplate formTemplate, F field, Map<String, String> args, Locale locale) throws Exception {
         field.setTitle(FormUtils.getFieldStringProperty(formTemplate, this, "title", locale, args, this.getDefaultValues().getTitle()));
         field.setDescription(FormUtils.getFieldStringProperty(formTemplate, this, "description", locale, args, this.getDefaultValues().getDescription()));
     }

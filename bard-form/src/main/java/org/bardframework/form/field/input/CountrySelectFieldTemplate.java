@@ -1,6 +1,5 @@
 package org.bardframework.form.field.input;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -44,10 +43,10 @@ public class CountrySelectFieldTemplate extends InputFieldTemplate<CountrySelect
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, CountrySelectField field, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
+    public void fill(FormTemplate formTemplate, CountrySelectField field, Map<String, String> args, Locale locale) throws Exception {
         field.setAvailableCountries(FormUtils.getFieldListProperty(formTemplate, this.getName(), "availableCountries", locale, args, this.getDefaultValues().getAvailableCountries()));
         field.setExcludeCountries(FormUtils.getFieldListProperty(formTemplate, this.getName(), "excludeCountries", locale, args, this.defaultValues.getExcludeCountries()));
-        super.fill(formTemplate, field, args, locale, httpRequest);
+        super.fill(formTemplate, field, args, locale);
     }
 
     @Override

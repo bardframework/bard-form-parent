@@ -1,6 +1,5 @@
 package org.bardframework.form.field.view;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
 import org.bardframework.form.field.FieldTemplate;
@@ -18,14 +17,14 @@ public class FileDownloadFieldTemplate extends FieldTemplate<FileDownloadField> 
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, FileDownloadField field, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
-        super.fill(formTemplate, field, args, locale, httpRequest);
+    public void fill(FormTemplate formTemplate, FileDownloadField field, Map<String, String> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, args, locale);
         field.setSrc(FormUtils.getFieldStringProperty(formTemplate, this, "src", locale, args, this.getDefaultValues().getSrc()));
         field.setFileName(FormUtils.getFieldStringProperty(formTemplate, this, "fileName", locale, args, this.getDefaultValues().getFileName()));
         field.setContentType(FormUtils.getFieldStringProperty(formTemplate, this, "contentType", locale, args, this.getDefaultValues().getContentType()));
         field.setSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "size", locale, args, this.getDefaultValues().getSize()));
         if (null != dataProvider) {
-            dataProvider.fillData(field, args, httpRequest);
+            dataProvider.fillData(field, args);
         }
     }
 

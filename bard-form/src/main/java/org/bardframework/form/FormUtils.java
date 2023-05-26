@@ -1,6 +1,5 @@
 package org.bardframework.form;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -24,14 +23,14 @@ import java.util.stream.Stream;
 @UtilityClass
 public class FormUtils {
 
-    public static BardForm toForm(FormTemplate formTemplate, Map<String, String> args, Map<String, String> values, Locale locale, HttpServletRequest httpRequest) throws Exception {
+    public static BardForm toForm(FormTemplate formTemplate, Map<String, String> args, Map<String, String> values, Locale locale) throws Exception {
         if (null == formTemplate) {
             return null;
         }
-        return FormUtils.toForm(new BardForm(), formTemplate, args, values, locale, httpRequest);
+        return FormUtils.toForm(new BardForm(), formTemplate, args, values, locale);
     }
 
-    public static <F extends BardForm, T> F toForm(F form, FormTemplate formTemplate, Map<String, String> args, Map<String, String> values, Locale locale, HttpServletRequest httpRequest) throws Exception {
+    public static <F extends BardForm, T> F toForm(F form, FormTemplate formTemplate, Map<String, String> args, Map<String, String> values, Locale locale) throws Exception {
         form.setName(formTemplate.getName());
         form.setTitle(FormUtils.getFormStringProperty(formTemplate, "title", locale, args, null));
         form.setDescription(FormUtils.getFormStringProperty(formTemplate, "description", locale, args, null));
@@ -40,7 +39,7 @@ public class FormUtils {
         form.setSubmitPristine(FormUtils.getFormBooleanProperty(formTemplate, "submitPristine", locale, args, formTemplate.getSubmitPristine()));
         form.setFieldDescriptionShowType(FormUtils.getFormEnumProperty(formTemplate, "fieldDescriptionShowType", FieldDescriptionShowType.class, locale, args, formTemplate.getDescriptionShowType()));
         for (FieldTemplate<?> fieldTemplate : formTemplate.getFieldTemplates(args)) {
-            Field field = fieldTemplate.toField(formTemplate, args, locale, httpRequest);
+            Field field = fieldTemplate.toField(formTemplate, args, locale);
             String valueString = values.get(fieldTemplate.getName());
             if (field instanceof InputField<?> && null == ((InputField<?>) field).getValue()) {
                 InputFieldTemplate<?, T> inputFieldTemplate = (InputFieldTemplate<?, T>) fieldTemplate;

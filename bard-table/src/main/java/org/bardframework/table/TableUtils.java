@@ -1,6 +1,5 @@
 package org.bardframework.table;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -21,14 +20,14 @@ import java.util.stream.Collectors;
 @UtilityClass
 public class TableUtils {
 
-    public static TableModel toTable(TableTemplate tableTemplate, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
+    public static TableModel toTable(TableTemplate tableTemplate, Map<String, String> args, Locale locale) throws Exception {
         if (null == tableTemplate) {
             return null;
         }
-        return TableUtils.toTable(new TableModel(), tableTemplate, args, locale, httpRequest);
+        return TableUtils.toTable(new TableModel(), tableTemplate, args, locale);
     }
 
-    public static <T extends TableModel> T toTable(T table, TableTemplate tableTemplate, Map<String, String> args, Locale locale, HttpServletRequest httpRequest) throws Exception {
+    public static <T extends TableModel> T toTable(T table, TableTemplate tableTemplate, Map<String, String> args, Locale locale) throws Exception {
         table.setName(tableTemplate.getName());
         table.setTitle(TableUtils.getTableStringValue(tableTemplate, "title", locale, args, tableTemplate.getTitle()));
         table.setDescription(TableUtils.getTableStringValue(tableTemplate, "description", locale, args, tableTemplate.getDescription()));
@@ -39,9 +38,9 @@ public class TableUtils {
         table.setPageable(TableUtils.getTableBooleanValue(tableTemplate, "pageable", locale, args, tableTemplate.getPageable()));
         table.setHideColumn(TableUtils.getTableBooleanValue(tableTemplate, "hideColumn", locale, args, tableTemplate.getHideColumn()));
         table.setFetchSize(TableUtils.getTableIntegerValue(tableTemplate, "fetchSize", locale, args, tableTemplate.getFetchSize()));
-        table.setFilterForm(FormUtils.toForm(tableTemplate.getFilterFormTemplate(), args, Map.of(), locale, httpRequest));
-        table.setSaveForm(FormUtils.toForm(tableTemplate.getSaveFormTemplate(), args, Map.of(), locale, httpRequest));
-        table.setUpdateForm(FormUtils.toForm(tableTemplate.getUpdateFormTemplate(), args, Map.of(), locale, httpRequest));
+        table.setFilterForm(FormUtils.toForm(tableTemplate.getFilterFormTemplate(), args, Map.of(), locale));
+        table.setSaveForm(FormUtils.toForm(tableTemplate.getSaveFormTemplate(), args, Map.of(), locale));
+        table.setUpdateForm(FormUtils.toForm(tableTemplate.getUpdateFormTemplate(), args, Map.of(), locale));
 
         for (HeaderTemplate<?, ?> headerTemplate : tableTemplate.getHeaderTemplates()) {
             table.addHeader(headerTemplate.toHeader(tableTemplate, args, locale));
@@ -105,9 +104,6 @@ public class TableUtils {
         }
     }
 
-    /**
-     * @return false if we can't read property value
-     */
     public static List<String> getHeaderListValue(TableTemplate tableTemplate, HeaderTemplate<?, ?> headerTemplate, String property, Locale locale, Map<String, String> args, List<String> defaultValue) {
         String value = TableUtils.getHeaderStringValue(tableTemplate, headerTemplate, property, locale, args, null);
         if (StringUtils.isBlank(value)) {

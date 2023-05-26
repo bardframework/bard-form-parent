@@ -1,6 +1,5 @@
 package org.bardframework.form.field.filter;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -27,8 +26,8 @@ public class MultiSelectFilterFieldTemplate extends InputFieldTemplate<MultiSele
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, MultiSelectFilterField filterField, Map<String, String> values, Locale locale, HttpServletRequest httpRequest) throws Exception {
-        super.fill(formTemplate, filterField, values, locale, httpRequest);
+    public void fill(FormTemplate formTemplate, MultiSelectFilterField filterField, Map<String, String> values, Locale locale) throws Exception {
+        super.fill(formTemplate, filterField, values, locale);
         filterField.setMaxCount(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxCount", locale, values, this.getDefaultValues().getMaxCount()));
         filterField.setOptions(optionDataSource.getOptions(locale));
     }

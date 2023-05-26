@@ -1,6 +1,5 @@
 package org.bardframework.form.field.input;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
@@ -42,8 +41,8 @@ public class NewPasswordFieldTemplate extends PasswordFieldTemplate {
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, PasswordField field, Map<String, String> values, Locale locale, HttpServletRequest httpRequest) throws Exception {
-        super.fill(formTemplate, field, values, locale, httpRequest);
+    public void fill(FormTemplate formTemplate, PasswordField field, Map<String, String> values, Locale locale) throws Exception {
+        super.fill(formTemplate, field, values, locale);
         field.setRegex(FormUtils.getFieldStringProperty(formTemplate, this, "regex", locale, values, this.getDefaultValues().getRegex()));
         field.setMinLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "minLength", locale, values, this.getDefaultValues().getMinLength()));
         field.setMaxLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxLength", locale, values, this.getDefaultValues().getMaxLength()));

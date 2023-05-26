@@ -66,7 +66,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
             throws Exception {
         D flowData = this.getFlowDataRepository().get(flowToken);
         FlowFormTemplate currentFormTemplate = this.getCurrentFormTemplate(flowData);
-        currentFormTemplate.validate(flowToken, flowData.getData(), formData, flowData.getLocale(), httpRequest);
+        currentFormTemplate.validate(flowToken, flowData.getData(), formData, flowData.getLocale());
         this.fillFlowData(flowData.getData(), formData, currentFormTemplate);
         try {
             this.process(currentFormTemplate.getPostProcessors(), flowToken, flowData, formData, httpRequest, httpResponse);
@@ -76,7 +76,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
             throw ex;
         } catch (FlowDataValidationException ex) {
             if (ex.isSendCurrentForm()) {
-                ex.setForm(FormUtils.toForm(currentFormTemplate, flowData.getData(), flowData.getData(), flowData.getLocale(), httpRequest));
+                ex.setForm(FormUtils.toForm(currentFormTemplate, flowData.getData(), flowData.getData(), flowData.getLocale()));
             }
             throw ex;
         } finally {
@@ -227,7 +227,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
             /*
                 convert and fill form
              */
-            BardForm nextForm = FormUtils.toForm(formTemplate, flowData.getData(), flowData.getData(), flowData.getLocale(), httpRequest);
+            BardForm nextForm = FormUtils.toForm(formTemplate, flowData.getData(), flowData.getData(), flowData.getLocale());
             response.setForm(nextForm).setSteps(this.getStepsCounts(flowData)).setCurrent(flowData.getCurrentFormIndex());
         }
         if (null == formTemplate || formTemplate.isFinished()) {

@@ -1,6 +1,5 @@
 package org.bardframework.form.field.filter;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
@@ -24,8 +23,8 @@ public class DateFilterFieldTemplate extends InputFieldTemplate<DateFilterField,
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, DateFilterField field, Map<String, String> values, Locale locale, HttpServletRequest httpRequest) throws Exception {
-        super.fill(formTemplate, field, values, locale, httpRequest);
+    public void fill(FormTemplate formTemplate, DateFilterField field, Map<String, String> values, Locale locale) throws Exception {
+        super.fill(formTemplate, field, values, locale);
         field.setMinLength(FormUtils.getFieldLongProperty(formTemplate, this, "minLength", locale, values, this.getDefaultValues().getMinLength()));
         field.setMaxLength(FormUtils.getFieldLongProperty(formTemplate, this, "maxLength", locale, values, this.getDefaultValues().getMaxLength()));
         field.setMinValue(FormUtils.getFieldLocalDateProperty(formTemplate, this, "minValue", locale, values, this.getDefaultValues().getMinValue()));

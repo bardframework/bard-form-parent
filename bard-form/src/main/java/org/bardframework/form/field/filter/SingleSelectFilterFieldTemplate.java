@@ -1,6 +1,5 @@
 package org.bardframework.form.field.filter;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -24,8 +23,8 @@ public class SingleSelectFilterFieldTemplate extends InputFieldTemplate<SingleSe
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, SingleSelectFilterField field, Map<String, String> values, Locale locale, HttpServletRequest httpRequest) throws Exception {
-        super.fill(formTemplate, field, values, locale, httpRequest);
+    public void fill(FormTemplate formTemplate, SingleSelectFilterField field, Map<String, String> values, Locale locale) throws Exception {
+        super.fill(formTemplate, field, values, locale);
         field.setOptions(optionDataSource.getOptions(locale));
     }
 

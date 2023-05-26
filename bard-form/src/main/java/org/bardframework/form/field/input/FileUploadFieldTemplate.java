@@ -1,6 +1,5 @@
 package org.bardframework.form.field.input;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.bardframework.form.FormTemplate;
@@ -23,8 +22,8 @@ public class FileUploadFieldTemplate extends InputFieldTemplate<FileUploadField,
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, FileUploadField field, Map<String, String> values, Locale locale, HttpServletRequest httpRequest) throws Exception {
-        super.fill(formTemplate, field, values, locale, httpRequest);
+    public void fill(FormTemplate formTemplate, FileUploadField field, Map<String, String> values, Locale locale) throws Exception {
+        super.fill(formTemplate, field, values, locale);
         field.setMinSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "minSize", locale, values, this.getDefaultValues().getMinSize()));
         field.setMaxSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxSize", locale, values, this.getDefaultValues().getMaxSize()));
         field.setContentTypes(FormUtils.getFieldListProperty(formTemplate, this, "contentTypes", locale, values, this.getDefaultValues().getContentTypes()));

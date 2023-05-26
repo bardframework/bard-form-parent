@@ -84,8 +84,8 @@ public abstract class OtpFieldTemplate<F extends OtpField, O> extends FlowInputF
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, F field, Map<String, String> values, Locale locale, HttpServletRequest httpRequest) throws Exception {
-        super.fill(formTemplate, field, values, locale, httpRequest);
+    public void fill(FormTemplate formTemplate, F field, Map<String, String> values, Locale locale) throws Exception {
+        super.fill(formTemplate, field, values, locale);
         field.setLength(this.getOtpGenerator().getLength());
         field.setResendAction(this.getResendAction());
         field.setResendIntervalSeconds(this.getResendIntervalSeconds());
