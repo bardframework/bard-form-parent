@@ -6,16 +6,17 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Locale;
 
-public class DoubleHeaderTemplate extends HeaderTemplate<NumberHeader, Double> {
+public class DoubleHeaderTemplate<M> extends HeaderTemplate<M, NumberHeader, Double> {
     private final int decimalPlaces;
 
     public DoubleHeaderTemplate(int decimalPlaces) {
         this.decimalPlaces = decimalPlaces;
     }
 
-    public String format(Double value, Locale locale, MessageSource messageSource) {
+    @Override
+    protected Double format(Double value, MessageSource messageSource, Locale locale) {
         return BigDecimal.valueOf(value)
                 .setScale(decimalPlaces, RoundingMode.DOWN)
-                .toString();
+                .doubleValue();
     }
 }

@@ -1,13 +1,5 @@
 package org.bardframework.table.header;
 
-import org.springframework.context.MessageSource;
+public class ImageHeaderTemplate<M> extends HeaderTemplate<M, ImageHeader, String> {
 
-import java.util.Locale;
-
-public class ImageHeaderTemplate extends HeaderTemplate<ImageHeader, String> {
-
-    @Override
-    public Object format(String value, Locale locale, MessageSource messageSource) {
-        return value;
-    }
 }

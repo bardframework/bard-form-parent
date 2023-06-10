@@ -17,7 +17,7 @@ import java.util.Map;
 @Getter
 @Setter
 @ToString
-public abstract class HeaderTemplate<H extends TableHeader, T> extends TableHeader {
+public abstract class HeaderTemplate<M, H extends TableHeader, T> extends TableHeader {
 
     private final Class<H> headerClazz;
     private String excelFormat;
@@ -51,9 +51,31 @@ public abstract class HeaderTemplate<H extends TableHeader, T> extends TableHead
         return null;
     }
 
-    public abstract Object format(T value, Locale locale, MessageSource messageSource);
+    public Object getValue(M model, MessageSource messageSource, Locale locale, boolean export) {
+        T value = this.getValue(model);
+        if (null == value) {
+            return null;
+        }
+        if (export) {
+            return this.format(value, messageSource, locale);
+        } else {
+            return this.formatForExport(value, messageSource, locale);
+        }
+    }
 
-    public Object formatForExport(T value, Locale locale, MessageSource messageSource) {
-        return this.format(value, locale, messageSource);
+    protected T getValue(M model) {
+        try {
+            return (T) ReflectionUtils.getPropertyValue(model, this.getName());
+        } catch (Exception e) {
+            throw new IllegalStateException(String.format("can't read property [%s] of [%s] instance and convert it.", this.getName(), model.getClass()), e);
+        }
+    }
+
+    protected Object format(T value, MessageSource messageSource, Locale locale) {
+        return value;
+    }
+
+    protected Object formatForExport(T value, MessageSource messageSource, Locale locale) {
+        return this.format(value, messageSource, locale);
     }
 }

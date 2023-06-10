@@ -1,16 +1,5 @@
 package org.bardframework.table.header;
 
-import org.springframework.context.MessageSource;
+public class LongHeaderTemplate<M> extends HeaderTemplate<M, NumberHeader, Long> {
 
-import java.util.Locale;
-
-public class LongHeaderTemplate extends HeaderTemplate<NumberHeader, Long> {
-
-    @Override
-    public String format(Long value, Locale locale, MessageSource messageSource) {
-        if (null == value) {
-            return null;
-        }
-        return value.toString();
-    }
 }

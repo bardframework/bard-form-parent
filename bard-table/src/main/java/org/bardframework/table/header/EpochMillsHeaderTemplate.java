@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 @Getter
 @Setter
 @ToString
-public class EpochMillsHeaderTemplate extends HeaderTemplate<DateHeader, Long> {
+public class EpochMillsHeaderTemplate<M> extends HeaderTemplate<M, DateHeader, Long> {
 
     private final DateTimeFormatter formatter;
     private DateTimeFormatter exportFormatter;
@@ -34,19 +34,13 @@ public class EpochMillsHeaderTemplate extends HeaderTemplate<DateHeader, Long> {
     }
 
     @Override
-    public Object format(Long value, Locale locale, MessageSource messageSource) {
-        if (null == value) {
-            return null;
-        }
+    public Object format(Long value, MessageSource messageSource, Locale locale) {
         LocalDateTime dateTime = DateTimeUtils.fromEpochMills(value, timeZoneProvider.get());
         return this.getFormatter().withLocale(locale).format(dateTime);
     }
 
     @Override
-    public Object formatForExport(Long value, Locale locale, MessageSource messageSource) {
-        if (null == value) {
-            return null;
-        }
+    public Object formatForExport(Long value, MessageSource messageSource, Locale locale) {
         LocalDateTime dateTime = DateTimeUtils.fromEpochMills(value, timeZoneProvider.get());
         Calendar calendar = calendarProvider.get();
         TemporalAccessor accessor;

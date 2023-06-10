@@ -12,7 +12,7 @@ import java.util.Locale;
 @Slf4j
 @Getter
 @ToString
-public class LocalTimeHeaderTemplate extends HeaderTemplate<TimeHeader, LocalTime> {
+public class LocalTimeHeaderTemplate<M> extends HeaderTemplate<M, TimeHeader, LocalTime> {
 
     private final DateTimeFormatter formatter;
 
@@ -21,10 +21,7 @@ public class LocalTimeHeaderTemplate extends HeaderTemplate<TimeHeader, LocalTim
     }
 
     @Override
-    public Object format(LocalTime value, Locale locale, MessageSource messageSource) {
-        if (null == value) {
-            return null;
-        }
+    public Object format(LocalTime value, MessageSource messageSource, Locale locale) {
         return this.getFormatter().withLocale(locale).format(value);
     }
 }

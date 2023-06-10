@@ -19,7 +19,7 @@ import java.util.function.Supplier;
 @Getter
 @Setter
 @ToString
-public class LocalDateHeaderTemplate extends HeaderTemplate<DateHeader, LocalDate> {
+public class LocalDateHeaderTemplate<M> extends HeaderTemplate<M, DateHeader, LocalDate> {
 
     private final DateTimeFormatter formatter;
     private DateTimeFormatter exportFormatter;
@@ -31,18 +31,12 @@ public class LocalDateHeaderTemplate extends HeaderTemplate<DateHeader, LocalDat
     }
 
     @Override
-    public Object format(LocalDate value, Locale locale, MessageSource messageSource) {
-        if (null == value) {
-            return null;
-        }
+    public Object format(LocalDate value, MessageSource messageSource, Locale locale) {
         return this.getFormatter().withLocale(locale).format(value);
     }
 
     @Override
-    public Object formatForExport(LocalDate value, Locale locale, MessageSource messageSource) {
-        if (null == value) {
-            return null;
-        }
+    public Object formatForExport(LocalDate value, MessageSource messageSource, Locale locale) {
         Calendar calendar = calendarProvider.get();
         TemporalAccessor accessor;
         if (calendar == Calendar.GREGORIAN) {

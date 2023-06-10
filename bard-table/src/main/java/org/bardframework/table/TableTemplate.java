@@ -18,13 +18,13 @@ public class TableTemplate extends TableModel {
 
     private final MessageSource messageSource;
 
-    private final List<HeaderTemplate<?, ?>> headerTemplates;
+    private final List<HeaderTemplate<?, ?, ?>> headerTemplates;
     private final Class<?> modelClass;
     private FormTemplate filterFormTemplate;
     private FormTemplate saveFormTemplate;
     private FormTemplate updateFormTemplate;
 
-    public TableTemplate(List<HeaderTemplate<?, ?>> headerTemplates, Class<?> modelClass, MessageSource messageSource) {
+    public TableTemplate(List<HeaderTemplate<?, ?, ?>> headerTemplates, Class<?> modelClass, MessageSource messageSource) {
         this.modelClass = modelClass;
         this.headerTemplates = headerTemplates;
         this.messageSource = messageSource;

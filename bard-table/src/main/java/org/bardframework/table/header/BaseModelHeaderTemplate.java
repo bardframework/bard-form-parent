@@ -9,7 +9,7 @@ import org.springframework.context.MessageSource;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-public abstract class BaseModelHeaderTemplate<M extends BaseModel<I>, R extends BaseRepository<M, ?, I, U>, I, U> extends HeaderTemplate<StringHeader, I> {
+public abstract class BaseModelHeaderTemplate<M extends BaseModel<I>, R extends BaseRepository<M, ?, I, U>, I, U> extends HeaderTemplate<M, StringHeader, I> {
     private final Cache<I, M> cache;
     private final R repository;
 
@@ -22,10 +22,7 @@ public abstract class BaseModelHeaderTemplate<M extends BaseModel<I>, R extends 
     }
 
     @Override
-    public String format(I value, Locale locale, MessageSource messageSource) {
-        if (null == value) {
-            return null;
-        }
+    public Object format(I value, MessageSource messageSource, Locale locale) {
         U user = this.getUser();
         M model = cache.getIfPresent(value);
         if (null == model) {
