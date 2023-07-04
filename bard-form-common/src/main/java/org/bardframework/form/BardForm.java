@@ -22,13 +22,15 @@ public class BardForm {
     protected String submitLabel;
     protected Boolean submitPristine;
     protected FieldDescriptionShowType fieldDescriptionShowType;
-    protected List<Field> fields = new ArrayList<>();
+    protected final List<Field> fields = new ArrayList<>();
+    protected final List<BardForm> forms = new ArrayList<>();
 
     public void addField(Field field) {
-        if (null == this.fields) {
-            this.fields = new ArrayList<>();
-        }
         this.fields.add(field);
+    }
+
+    public void addForm(BardForm form) {
+        this.forms.add(form);
     }
 
     @Override

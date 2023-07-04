@@ -34,6 +34,7 @@ public class FormTemplate {
     protected boolean failOnUnknownSubmitFields = true;
     protected Boolean submitPristine;
     protected Expression showExpression = null;
+    protected List<FormTemplate> formTemplates = new ArrayList<>();
 
     public FormTemplate(String name, List<FieldTemplate<?>> fieldTemplates, MessageSource messageSource) {
         this.name = name;
@@ -44,7 +45,7 @@ public class FormTemplate {
     public void validate(Object dto, Locale locale, HttpServletRequest httpRequest) throws Exception {
         FormDataValidationException ex = new FormDataValidationException();
         /*
-            در بخش اعتبارسنچی ابتدا فیلدها براساس براساس اولیت اعتبارسنجی مرتب می شوند
+            در بخش اعتبارسنچی ابتدا فیلدها براساس اولیت اعتبارسنجی مرتب می شوند
             مرتب‌سازی برای کنترل سناریوهایی است که ترتیب اعتبارسنجی فیلدها مهم است (مانند فیلد کپچا که باید پیش از همه اعتبارسنجی شود)
          */
         for (InputFieldTemplate<?, ?> inputFieldTemplate : this.getFieldTemplates(Map.of(), InputFieldTemplate.class).stream().sorted(Comparator.comparingInt(InputFieldTemplate::getValidationOrder)).collect(Collectors.toList())) {
@@ -74,7 +75,7 @@ public class FormTemplate {
         }
         FormDataValidationException ex = new FormDataValidationException();
         /*
-            در بخش اعتبارسنچی ابتدا فیلدها براساس براساس اولیت اعتبارسنجی مرتب می شوند
+            در بخش اعتبارسنچی ابتدا فیلدها براساس اولیت اعتبارسنجی مرتب می شوند
             مرتب‌سازی برای کنترل سناریوهایی است که ترتیب اعتبارسنجی فیلدها مهم است (مانند فیلد کپچا که باید پیش از همه اعتبارسنجی شود)
          */
         for (InputFieldTemplate<?, ?> inputFieldTemplate : this.getFieldTemplates(flowData, InputFieldTemplate.class).stream().sorted(Comparator.comparingInt(InputFieldTemplate::getValidationOrder)).collect(Collectors.toList())) {

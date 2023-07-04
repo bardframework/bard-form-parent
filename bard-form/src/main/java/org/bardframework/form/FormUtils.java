@@ -49,6 +49,9 @@ public class FormUtils {
             }
             form.addField(field);
         }
+        for (FormTemplate childFormTemplate : formTemplate.getFormTemplates()) {
+            form.addForm(FormUtils.toForm(childFormTemplate, args, values, locale));
+        }
         return form;
     }
 
