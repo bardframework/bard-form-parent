@@ -31,6 +31,11 @@ public class LocalDateHeaderTemplate<M> extends HeaderTemplate<M, DateHeader, Lo
     }
 
     @Override
+    public DateHeader getEmptyHeader() {
+        return new DateHeader();
+    }
+
+    @Override
     public Object format(LocalDate value, MessageSource messageSource, Locale locale) {
         return this.getFormatter().withLocale(locale).format(value);
     }

@@ -41,5 +41,10 @@ public abstract class I18nBasedHeaderTemplate<M, T> extends HeaderTemplate<M, St
         return messageSource.getMessage(i18nKey, new Object[0], i18nKey, locale);
     }
 
+    @Override
+    public StringHeader getEmptyHeader() {
+        return new StringHeader();
+    }
+
     protected abstract String getI18nKey(T value);
 }

@@ -19,21 +19,16 @@ import java.util.Map;
 @ToString
 public abstract class HeaderTemplate<M, H extends TableHeader, T> extends TableHeader {
 
-    private final Class<H> headerClazz;
     private String excelFormat;
 
-    protected HeaderTemplate() {
-        this.headerClazz = ReflectionUtils.getGenericArgType(this.getClass(), 0);
-    }
-
-    public H toHeader(TableTemplate tableTemplate, Map<String, String> args, Locale locale) throws Exception {
+    public H toHeader(TableTemplate tableTemplate, Map<String, String> args, Locale locale) {
         H header = this.getEmptyHeader();
         header.setName(this.getName());
         this.fill(tableTemplate, header, args, locale);
         return header;
     }
 
-    protected void fill(TableTemplate tableTemplate, H header, Map<String, String> args, Locale locale) throws Exception {
+    protected void fill(TableTemplate tableTemplate, H header, Map<String, String> args, Locale locale) {
         header.setTitle(TableUtils.getHeaderStringValue(tableTemplate, this, "title", locale, args, this.getName()));
         header.setDescription(TableUtils.getHeaderStringValue(tableTemplate, this, "description", locale, args, this.getName()));
         header.setHidden(TableUtils.getHeaderBooleanValue(tableTemplate, this, "hidden", locale, args, this.getHidden()));
@@ -42,9 +37,7 @@ public abstract class HeaderTemplate<M, H extends TableHeader, T> extends TableH
         header.setSticky(TableUtils.getHeaderBooleanValue(tableTemplate, this, "sticky", locale, args, this.getSticky()));
     }
 
-    public H getEmptyHeader() {
-        return ReflectionUtils.newInstance(headerClazz);
-    }
+    public abstract H getEmptyHeader();
 
     @Override
     public HeaderType getType() {

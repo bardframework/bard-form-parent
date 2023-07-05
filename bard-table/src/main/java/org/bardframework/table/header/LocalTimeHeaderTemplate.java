@@ -21,6 +21,11 @@ public class LocalTimeHeaderTemplate<M> extends HeaderTemplate<M, TimeHeader, Lo
     }
 
     @Override
+    public TimeHeader getEmptyHeader() {
+        return new TimeHeader();
+    }
+
+    @Override
     public Object format(LocalTime value, MessageSource messageSource, Locale locale) {
         return this.getFormatter().withLocale(locale).format(value);
     }

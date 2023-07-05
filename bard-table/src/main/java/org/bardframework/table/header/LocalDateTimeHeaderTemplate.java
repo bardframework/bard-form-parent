@@ -32,6 +32,11 @@ public class LocalDateTimeHeaderTemplate<M> extends HeaderTemplate<M, DateTimeHe
     }
 
     @Override
+    public DateTimeHeader getEmptyHeader() {
+        return new DateTimeHeader();
+    }
+
+    @Override
     public Object format(LocalDateTime value, MessageSource messageSource, Locale locale) {
         return this.getFormatter().withLocale(locale).format(value);
     }

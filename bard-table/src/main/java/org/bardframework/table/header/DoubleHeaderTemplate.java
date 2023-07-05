@@ -14,6 +14,11 @@ public class DoubleHeaderTemplate<M> extends HeaderTemplate<M, NumberHeader, Dou
     }
 
     @Override
+    public NumberHeader getEmptyHeader() {
+        return new NumberHeader();
+    }
+
+    @Override
     protected Double format(Double value, MessageSource messageSource, Locale locale) {
         return BigDecimal.valueOf(value)
                 .setScale(decimalPlaces, RoundingMode.DOWN)

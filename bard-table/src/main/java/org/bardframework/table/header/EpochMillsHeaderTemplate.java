@@ -34,6 +34,11 @@ public class EpochMillsHeaderTemplate<M> extends HeaderTemplate<M, DateHeader, L
     }
 
     @Override
+    public DateHeader getEmptyHeader() {
+        return new DateHeader();
+    }
+
+    @Override
     public Object format(Long value, MessageSource messageSource, Locale locale) {
         LocalDateTime dateTime = DateTimeUtils.fromEpochMills(value, timeZoneProvider.get());
         return this.getFormatter().withLocale(locale).format(dateTime);
