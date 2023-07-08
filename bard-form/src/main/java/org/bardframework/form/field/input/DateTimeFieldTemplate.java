@@ -47,7 +47,7 @@ public class DateTimeFieldTemplate extends InputFieldTemplate<DateTimeField, Loc
             field.setMinValue(this.getMinValue());
         }
         if (null == field.getMaxValue()) {
-            field.setMinValue(this.getMaxValue());
+            field.setMaxValue(this.getMaxValue());
         }
     }
 
