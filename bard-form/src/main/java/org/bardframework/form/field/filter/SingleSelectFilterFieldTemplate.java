@@ -1,7 +1,6 @@
 package org.bardframework.form.field.filter;
 
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.field.input.InputFieldTemplate;
@@ -11,7 +10,6 @@ import org.bardframework.form.model.filter.IdFilter;
 import java.util.Locale;
 import java.util.Map;
 
-@Slf4j
 @Getter
 public class SingleSelectFilterFieldTemplate extends InputFieldTemplate<SingleSelectFilterField, IdFilter<String>> {
 

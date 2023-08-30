@@ -14,7 +14,6 @@ import org.bardframework.form.field.Field;
 public abstract class InputField<T> extends Field {
     public static final String SEPARATOR = ",";
     protected FieldDescriptionShowType descriptionShowType;
-    private String name;
     private String placeholder;
     private String errorMessage;
     private Boolean required;
@@ -25,7 +24,7 @@ public abstract class InputField<T> extends Field {
     }
 
     protected InputField(String name) {
-        this.name = name;
+        super(name);
     }
 
     public abstract String toString(T value);

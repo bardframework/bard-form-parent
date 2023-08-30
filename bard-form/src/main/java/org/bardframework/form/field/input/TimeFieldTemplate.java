@@ -1,7 +1,6 @@
 package org.bardframework.form.field.input;
 
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
@@ -10,7 +9,6 @@ import java.time.LocalTime;
 import java.util.Locale;
 import java.util.Map;
 
-@Slf4j
 @Getter
 public class TimeFieldTemplate extends InputFieldTemplate<TimeField, LocalTime> {
     private boolean minIsNow;
@@ -49,7 +47,7 @@ public class TimeFieldTemplate extends InputFieldTemplate<TimeField, LocalTime> 
             field.setMinValue(this.getMinValue());
         }
         if (null == field.getMaxValue()) {
-            field.setMinValue(this.getMaxValue());
+            field.setMaxValue(this.getMaxValue());
         }
     }
 

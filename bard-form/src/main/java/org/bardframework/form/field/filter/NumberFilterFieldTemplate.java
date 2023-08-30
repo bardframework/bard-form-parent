@@ -1,6 +1,5 @@
 package org.bardframework.form.field.filter;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
@@ -11,7 +10,6 @@ import org.bardframework.form.model.filter.LongFilter;
 import java.util.Locale;
 import java.util.Map;
 
-@Slf4j
 public class NumberFilterFieldTemplate extends InputFieldTemplate<NumberFilterField, LongFilter> {
 
     protected NumberFilterFieldTemplate(String name) {

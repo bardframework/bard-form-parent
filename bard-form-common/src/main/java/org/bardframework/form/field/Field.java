@@ -12,10 +12,18 @@ import lombok.extern.slf4j.Slf4j;
 @ToString
 @JsonTypeInfo(use = JsonTypeInfo.Id.MINIMAL_CLASS, property = "@type")
 public abstract class Field {
+    private String name;
     private String title;
     private String description;
 
     public abstract FieldType getType();
+
+    protected Field() {
+    }
+
+    protected Field(String name) {
+        this.name = name;
+    }
 
     /**
      * TODO remove after resolve polymorphic deserialization in tests

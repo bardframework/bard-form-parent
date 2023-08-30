@@ -63,7 +63,6 @@ public abstract class InputFieldTemplate<F extends InputField<T>, T> extends Fie
     @Override
     public void fill(FormTemplate formTemplate, F field, Map<String, String> values, Locale locale) throws Exception {
         super.fill(formTemplate, field, values, locale);
-        field.setName(this.getName());
         field.setDescriptionShowType(FormUtils.getFieldEnumProperty(formTemplate, this, "descriptionShowType", FieldDescriptionShowType.class, locale, values, this.getDefaultValues().getDescriptionShowType()));
         field.setPlaceholder(FormUtils.getFieldStringProperty(formTemplate, this, "placeholder", locale, values, this.getDefaultValues().getPlaceholder()));
         field.setRequired(FormUtils.getFieldBooleanProperty(formTemplate, this, "required", locale, values, this.getDefaultValues().getRequired()));

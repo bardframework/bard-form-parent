@@ -1,5 +1,6 @@
 package org.bardframework.form.field.option;
 
+import lombok.Getter;
 import org.bardframework.commons.utils.ReflectionUtils;
 import org.bardframework.crud.api.base.BaseCriteria;
 import org.bardframework.crud.api.base.BaseModel;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+@Getter
 public abstract class BaseModelOptionDataSource<M extends BaseModel<I>, C extends BaseCriteria<I>, R extends BaseRepository<M, C, I, U>, I, U> extends CachableOptionDataSource {
 
     private final R repository;

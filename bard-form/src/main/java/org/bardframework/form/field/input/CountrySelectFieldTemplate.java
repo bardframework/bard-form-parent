@@ -1,7 +1,6 @@
 package org.bardframework.form.field.input;
 
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
@@ -9,7 +8,6 @@ import org.bardframework.form.FormUtils;
 import java.util.Locale;
 import java.util.Map;
 
-@Slf4j
 @Getter
 public class CountrySelectFieldTemplate extends InputFieldTemplate<CountrySelectField, String> {
 

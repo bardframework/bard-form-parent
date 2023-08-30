@@ -13,6 +13,7 @@ import org.bardframework.form.field.FieldType;
 @ToString
 public class ReadonlyField extends Field {
 
+    private String name;
     private String mask;
     private String value;
 

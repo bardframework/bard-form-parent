@@ -11,5 +11,7 @@ public enum FilterFieldType implements FieldType {
     SINGLE_SELECT_FILTER,
     SINGLE_SELECT_SEARCHABLE_FILTER,
     TEXT_FILTER,
-    TIME_FILTER
+    TIME_FILTER,
+    IP4_FILTER,
+    IP6_FILTER,
 }

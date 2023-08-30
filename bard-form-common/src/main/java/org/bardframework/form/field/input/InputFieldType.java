@@ -10,6 +10,8 @@ public enum InputFieldType implements FieldType {
     FILE_UPLOAD,
     HTML_EDITOR,
     IMAGE_UPLOAD,
+    IP4,
+    IP6,
     LIST,
     MULTI_SELECT,
     MULTI_SELECT_SEARCHABLE,

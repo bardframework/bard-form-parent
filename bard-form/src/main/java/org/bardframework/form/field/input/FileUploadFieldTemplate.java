@@ -1,14 +1,12 @@
 package org.bardframework.form.field.input;
 
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
 
 import java.util.Locale;
 import java.util.Map;
 
-@Slf4j
 @Getter
 public class FileUploadFieldTemplate extends InputFieldTemplate<FileUploadField, String> {
 

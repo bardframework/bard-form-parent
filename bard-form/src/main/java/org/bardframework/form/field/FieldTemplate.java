@@ -1,9 +1,11 @@
 package org.bardframework.form.field;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.Getter;
 import org.bardframework.commons.utils.ReflectionUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.expression.Expression;
 import org.springframework.expression.spel.SpelCompilerMode;
 import org.springframework.expression.spel.SpelParserConfiguration;
@@ -13,13 +15,14 @@ import org.springframework.expression.spel.support.StandardEvaluationContext;
 import java.util.Locale;
 import java.util.Map;
 
-@Slf4j
+@Getter
 public abstract class FieldTemplate<F extends Field> {
 
     protected final Class<F> fieldClazz;
     protected final String name;
     protected Expression showExpression = null;
     protected F defaultValues;
+    protected Logger log = LoggerFactory.getLogger(this.getClass());
 
     protected FieldTemplate(String name) {
         this.name = name;
@@ -34,6 +37,7 @@ public abstract class FieldTemplate<F extends Field> {
     }
 
     protected void fill(FormTemplate formTemplate, F field, Map<String, String> args, Locale locale) throws Exception {
+        field.setName(this.getName());
         field.setTitle(FormUtils.getFieldStringProperty(formTemplate, this, "title", locale, args, this.getDefaultValues().getTitle()));
         field.setDescription(FormUtils.getFieldStringProperty(formTemplate, this, "description", locale, args, this.getDefaultValues().getDescription()));
     }
@@ -42,20 +46,12 @@ public abstract class FieldTemplate<F extends Field> {
         return ReflectionUtils.newInstance(this.fieldClazz);
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setShowExpression(String showExpression) {
-        this.showExpression = new SpelExpressionParser(new SpelParserConfiguration(SpelCompilerMode.IMMEDIATE, null)).parseExpression(showExpression);
+        this.showExpression = new SpelExpressionParser(new SpelParserConfiguration(SpelCompilerMode.MIXED, null)).parseExpression(showExpression);
     }
 
     public boolean mustShow(Map<String, String> args) {
         return null == showExpression || Boolean.TRUE.equals(showExpression.getValue(new StandardEvaluationContext(args), Boolean.class));
-    }
-
-    public F getDefaultValues() {
-        return defaultValues;
     }
 
     public void setDefaultValues(F defaultValues) {

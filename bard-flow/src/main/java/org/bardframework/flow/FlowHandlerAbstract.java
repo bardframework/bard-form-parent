@@ -2,7 +2,7 @@ package org.bardframework.flow;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.extern.slf4j.Slf4j;
+import lombok.Getter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.commons.utils.ReflectionUtils;
@@ -16,12 +16,16 @@ import org.bardframework.flow.repository.FlowDataRepository;
 import org.bardframework.form.BardForm;
 import org.bardframework.form.FormUtils;
 import org.bardframework.form.field.input.InputFieldTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Slf4j
+@Getter
 public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHandler {
+
+    protected final Logger log = LoggerFactory.getLogger(this.getClass());
 
     protected final FlowDataRepository<D> flowDataRepository;
     protected final List<FlowFormTemplate> forms;
@@ -71,14 +75,8 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
         try {
             this.process(currentFormTemplate.getPostProcessors(), flowToken, flowData, formData, httpRequest, httpResponse);
             return this.processNextForm(flowToken, flowData, formData, httpRequest, httpResponse);
-        } catch (InvalidateFlowException ex) {
-            this.invalidateFlow(ex);
-            throw ex;
-        } catch (FlowDataValidationException ex) {
-            if (ex.isSendCurrentForm()) {
-                ex.setForm(FormUtils.toForm(currentFormTemplate, flowData.getData(), flowData.getData(), flowData.getLocale()));
-            }
-            throw ex;
+        } catch (Exception ex) {
+            return this.handleSubmitException(flowToken, flowData, formData, currentFormTemplate, ex);
         } finally {
             this.updateFlowData(flowToken, flowData);
         }
@@ -241,6 +239,19 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
         return response;
     }
 
+    protected FlowResponse handleSubmitException(String flowToken, D flowData, Map<String, String> formData, FlowFormTemplate currentFormTemplate, Exception ex) throws Exception {
+        if (ex instanceof InvalidateFlowException e) {
+            this.invalidateFlow(e);
+        } else if (ex instanceof FlowDataValidationException e) {
+            if (e.isSendCurrentForm()) {
+                e.setForm(FormUtils.toForm(currentFormTemplate, flowData.getData(), flowData.getData(), flowData.getLocale()));
+            }
+        }
+        return this.handleException(flowToken, flowData, formData, currentFormTemplate, ex);
+    }
+
+    protected abstract FlowResponse handleException(String flowToken, D flowData, Map<String, String> formData, FlowFormTemplate currentFormTemplate, Exception ex) throws Exception;
+
     protected int getStepsCounts(D flowData) {
         return this.forms.size();
     }
@@ -261,10 +272,6 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
             processor.process(flowToken, flowData.getData(), formData, flowData.getLocale(), httpRequest, httpResponse);
         }
         return true;
-    }
-
-    public FlowDataRepository<D> getFlowDataRepository() {
-        return flowDataRepository;
     }
 
     public List<FormProcessor> getPreProcessors(D flowData) {

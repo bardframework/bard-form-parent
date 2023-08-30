@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Getter
 @ToString
-public class StringFilter extends Filter<String, StringFilter> {
+public class StringFilter extends RangeFilter<String, StringFilter> {
 
     private String contains;
     private String doesNotContain;
