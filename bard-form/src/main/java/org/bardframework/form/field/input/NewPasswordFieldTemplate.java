@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
 
+import java.util.Base64;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -23,16 +24,17 @@ public class NewPasswordFieldTemplate extends PasswordFieldTemplate {
             }
             return true;
         }
-        if (null != field.getMinLength() && value.length() < field.getMinLength()) {
-            log.debug("field [{}] min length is [{}], but it's value[{}] length is smaller than minimum", field.getName(), field.getMinLength(), value);
+        String rawPassword = new String(Base64.getDecoder().decode(value));
+        if (null != field.getMinLength() && rawPassword.length() < field.getMinLength()) {
+            log.debug("field [{}] min length is [{}], but it's value[{}] length is smaller than minimum", field.getName(), field.getMinLength(), rawPassword);
             return false;
         }
-        if (null != field.getMaxLength() && value.length() > field.getMaxLength()) {
-            log.debug("field [{}] max length is [{}], but it's value[{}] length is greater than maximum", field.getName(), field.getMaxLength(), value);
+        if (null != field.getMaxLength() && rawPassword.length() > field.getMaxLength()) {
+            log.debug("field [{}] max length is [{}], but it's value[{}] length is greater than maximum", field.getName(), field.getMaxLength(), rawPassword);
             return false;
         }
-        if (StringUtils.isNotBlank(field.getRegex()) && !Pattern.matches(field.getRegex(), value)) {
-            log.debug("field [{}] regex is [{}], but it's value[{}] not match with it", field.getName(), field.getRegex(), value);
+        if (StringUtils.isNotBlank(field.getRegex()) && !Pattern.matches(field.getRegex(), rawPassword)) {
+            log.debug("field [{}] regex is [{}], but it's value[{}] not match with it", field.getName(), field.getRegex(), rawPassword);
             return false;
         }
         return true;
