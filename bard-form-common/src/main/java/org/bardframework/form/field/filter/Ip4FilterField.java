@@ -6,13 +6,13 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.bardframework.form.field.FieldType;
 import org.bardframework.form.field.input.InputField;
-import org.bardframework.form.model.filter.LocalTimeFilter;
+import org.bardframework.form.model.filter.StringFilter;
 
 @Slf4j
 @Getter
 @Setter
 @ToString
-public class Ip4FilterField extends InputField<LocalTimeFilter> {
+public class Ip4FilterField extends InputField<StringFilter> {
     private String minValue;
     private String maxValue;
 
@@ -29,7 +29,7 @@ public class Ip4FilterField extends InputField<LocalTimeFilter> {
     }
 
     @Override
-    public String toString(LocalTimeFilter value) {
-        return String.join(SEPARATOR, null == value.getFrom() ? "" : value.getFrom().toString(), null == value.getTo() ? "" : value.getTo().toString());
+    public String toString(StringFilter value) {
+        return String.join(SEPARATOR, null == value.getFrom() ? "" : value.getFrom(), null == value.getTo() ? "" : value.getTo());
     }
 }

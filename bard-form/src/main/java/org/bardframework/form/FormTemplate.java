@@ -32,7 +32,8 @@ public class FormTemplate {
     protected FieldDescriptionShowType descriptionShowType = FieldDescriptionShowType.HINT;
     protected Class<?> dtoClass;
     protected boolean failOnUnknownSubmitFields = true;
-    protected Boolean submitPristine;
+    protected Boolean sendPristineInputs;
+    protected Boolean sendEmptyInputs;
     protected Expression showExpression = null;
     protected List<FormTemplate> formTemplates = new ArrayList<>();
 

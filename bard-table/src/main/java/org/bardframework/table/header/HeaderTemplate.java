@@ -50,9 +50,9 @@ public abstract class HeaderTemplate<M, H extends TableHeader, T> extends TableH
             return null;
         }
         if (export) {
-            return this.format(value, messageSource, locale);
-        } else {
             return this.formatForExport(value, messageSource, locale);
+        } else {
+            return this.format(value, messageSource, locale);
         }
     }
 

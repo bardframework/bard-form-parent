@@ -20,7 +20,8 @@ public class BardForm {
     protected String description;
     protected String confirmMessage;
     protected String submitLabel;
-    protected Boolean submitPristine;
+    protected Boolean sendPristineInputs;
+    protected Boolean sendEmptyInputs;
     protected FieldDescriptionShowType fieldDescriptionShowType;
     protected final List<Field> fields = new ArrayList<>();
     protected final List<BardForm> forms = new ArrayList<>();
