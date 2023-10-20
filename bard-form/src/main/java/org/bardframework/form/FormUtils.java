@@ -38,7 +38,9 @@ public class FormUtils {
         form.setSubmitLabel(FormUtils.getFormStringProperty(formTemplate, "submitLabel", locale, args, null));
         form.setSubmitPristineInputs(FormUtils.getFormBooleanProperty(formTemplate, "submitPristineInputs", locale, args, formTemplate.getSubmitPristineInputs()));
         form.setSubmitEmptyInputs(FormUtils.getFormBooleanProperty(formTemplate, "submitEmptyInputs", locale, args, formTemplate.getSubmitEmptyInputs()));
+        form.setAutoSubmitDelaySeconds(FormUtils.getFormIntegerProperty(formTemplate, "autoSubmitDelaySeconds", locale, args, formTemplate.getAutoSubmitDelaySeconds()));
         form.setFieldDescriptionShowType(FormUtils.getFormEnumProperty(formTemplate, "fieldDescriptionShowType", FieldDescriptionShowType.class, locale, args, formTemplate.getDescriptionShowType()));
+        form.setNestedFormShowType(FormUtils.getFormEnumProperty(formTemplate, "nestedFormShowType", NestedFormShowType.class, locale, args, formTemplate.getNestedFormShowType()));
         for (FieldTemplate<?> fieldTemplate : formTemplate.getFieldTemplates(args)) {
             Field field = fieldTemplate.toField(formTemplate, args, locale);
             String valueString = values.get(fieldTemplate.getName());
@@ -54,6 +56,22 @@ public class FormUtils {
             form.addForm(FormUtils.toForm(childFormTemplate, args, values, locale));
         }
         return form;
+    }
+
+    /**
+     * @return null if we can't find
+     */
+    public static Integer getFormIntegerProperty(FormTemplate formTemplate, String property, Locale locale, Map<String, String> args, Integer defaultValue) {
+        String value = FormUtils.getFormStringProperty(formTemplate, property, locale, args, null);
+        if (StringUtils.isBlank(value)) {
+            return defaultValue;
+        }
+        try {
+            return Integer.parseInt(value);
+        } catch (Exception e) {
+            log.error("error reading [{}] of form [{}] as Integer", property, formTemplate.getName(), e);
+            return null;
+        }
     }
 
     /**
@@ -85,7 +103,6 @@ public class FormUtils {
         log.error("error reading [{}] of form[{}] as Enum[{}]", property, formTemplate, enumClass);
         return null;
     }
-
 
     public static String getFormStringProperty(FormTemplate formTemplate, String property, Locale locale, Map<String, String> args, String defaultValue) {
         return FormUtils.getFormStringProperty(formTemplate.getName(), property, locale, args, defaultValue, formTemplate.getMessageSource());

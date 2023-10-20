@@ -26,6 +26,7 @@ public class TableModel {
     private BardForm saveForm;
     private BardForm updateForm;
 
+    private Boolean collapseFilterForm;
     private Boolean delete;
     private Boolean print;
     private Boolean export;

@@ -36,6 +36,7 @@ public class TableUtils {
         table.setExport(TableUtils.getTableBooleanValue(tableTemplate, "export", locale, args, tableTemplate.getExport()));
         table.setPreload(TableUtils.getTableBooleanValue(tableTemplate, "preload", locale, args, tableTemplate.getPreload()));
         table.setPageable(TableUtils.getTableBooleanValue(tableTemplate, "pageable", locale, args, tableTemplate.getPageable()));
+        table.setCollapseFilterForm(TableUtils.getTableBooleanValue(tableTemplate, "collapseFilterForm", locale, args, tableTemplate.getCollapseFilterForm()));
         table.setHideColumn(TableUtils.getTableBooleanValue(tableTemplate, "hideColumn", locale, args, tableTemplate.getHideColumn()));
         table.setFetchSize(TableUtils.getTableIntegerValue(tableTemplate, "fetchSize", locale, args, tableTemplate.getFetchSize()));
         table.setFilterForm(FormUtils.toForm(tableTemplate.getFilterFormTemplate(), args, Map.of(), locale));

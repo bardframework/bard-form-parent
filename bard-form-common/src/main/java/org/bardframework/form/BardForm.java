@@ -22,6 +22,8 @@ public class BardForm {
     protected String submitLabel;
     protected Boolean submitPristineInputs;
     protected Boolean submitEmptyInputs;
+    protected NestedFormShowType nestedFormShowType;
+    protected Integer autoSubmitDelaySeconds;
     protected FieldDescriptionShowType fieldDescriptionShowType;
     protected final List<Field> fields = new ArrayList<>();
     protected final List<BardForm> forms = new ArrayList<>();
