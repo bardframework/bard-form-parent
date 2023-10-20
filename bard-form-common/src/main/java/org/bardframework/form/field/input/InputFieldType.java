@@ -3,6 +3,7 @@ package org.bardframework.form.field.input;
 import org.bardframework.form.field.FieldType;
 
 public enum InputFieldType implements FieldType {
+    AVATAR_SELECT,
     CAPTCHA,
     CHECKBOX,
     COUNTRY_SELECT,
@@ -23,8 +24,10 @@ public enum InputFieldType implements FieldType {
     NUMBER,
     OTP,
     PASSWORD,
+    PHONE_NUMBER,
     SINGLE_SELECT,
     SINGLE_SELECT_SEARCHABLE,
+    SSOTP,
     SWITCH_BUTTON,
     TEXT,
     TEXT_AREA,

@@ -10,7 +10,7 @@ import org.bardframework.form.field.FieldType;
 @Getter
 @Setter
 @ToString
-public class OtpField extends InputField<String> {
+public abstract class OtpField extends InputField<String> {
     private int length;
     private String resendAction;
     private Integer resendIntervalSeconds;
