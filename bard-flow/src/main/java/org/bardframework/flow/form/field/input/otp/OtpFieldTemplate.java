@@ -77,7 +77,7 @@ public abstract class OtpFieldTemplate<F extends OtpField, O> extends FlowInputF
         }
         int resolveTryCount = flowData.containsKey(RESOLVE_COUNT_KEY) ? Integer.parseInt(flowData.get(RESOLVE_COUNT_KEY)) : 0;
         if (resolveTryCount >= this.getMaxTryToResolveCount()) {
-            throw new InvalidateFlowException(flowToken, "too many try to resolve otp, terminating flow...");
+            throw new InvalidateFlowException(flowToken, "invalid otp", this.getOtpMaxTryToResolveCountErrorMessage());
         }
         flowData.put(RESOLVE_COUNT_KEY, String.valueOf(resolveTryCount + 1));
         return false;
@@ -97,7 +97,7 @@ public abstract class OtpFieldTemplate<F extends OtpField, O> extends FlowInputF
     protected void sendInternal(String flowToken, Map<String, String> flowData, Locale locale, HttpServletResponse httpResponse) throws Exception {
         int generateCount = flowData.containsKey(GENERATE_COUNT_KEY) ? Integer.parseInt(flowData.get(GENERATE_COUNT_KEY)) : 0;
         if (generateCount > this.getMaxSendCount()) {
-            throw new InvalidateFlowException(flowToken, "max otp send (generate) count exceed");
+            throw new InvalidateFlowException(flowToken, "max otp send (generate) count exceed", this.getMaxSendCountErrorMessage());
         }
         this.send(flowToken, flowData, this.getOtpGenerator().generate(), locale, httpResponse);
         flowData.put(SENT_TIME_KEY, String.valueOf(System.currentTimeMillis()));
@@ -158,4 +158,8 @@ public abstract class OtpFieldTemplate<F extends OtpField, O> extends FlowInputF
     public void setCanEditIdentifier(Boolean canEditIdentifier) {
         this.canEditIdentifier = canEditIdentifier;
     }
+
+    protected abstract String getOtpMaxTryToResolveCountErrorMessage();
+
+    protected abstract String getMaxSendCountErrorMessage();
 }

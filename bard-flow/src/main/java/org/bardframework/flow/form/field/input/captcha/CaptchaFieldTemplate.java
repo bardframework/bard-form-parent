@@ -57,4 +57,14 @@ public class CaptchaFieldTemplate extends OtpFieldTemplate<CaptchaField, Generat
     public int getValidationOrder() {
         return Integer.MIN_VALUE;
     }
+
+    @Override
+    protected String getOtpMaxTryToResolveCountErrorMessage() {
+        return "captcha.error.max.resolve.exceeded";
+    }
+
+    @Override
+    protected String getMaxSendCountErrorMessage() {
+        return "captcha.error.max.send.exceeded";
+    }
 }

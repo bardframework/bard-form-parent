@@ -66,13 +66,13 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
     }
 
     @Override
-    public FlowResponse submit(String flowToken, Map<String, String> formData, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
+    public FlowResponse submit(String flowToken, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
             throws Exception {
         D flowData = this.getFlowDataRepository().get(flowToken);
         FlowFormTemplate currentFormTemplate = this.getCurrentFormTemplate(flowData);
-        currentFormTemplate.validate(flowToken, flowData.getData(), formData, flowData.getLocale());
-        this.fillFlowData(flowData.getData(), formData, currentFormTemplate);
         try {
+            currentFormTemplate.validate(flowToken, flowData.getData(), formData, flowData.getLocale());
+            this.fillFlowData(flowData.getData(), formData, currentFormTemplate);
             this.process(currentFormTemplate.getPostProcessors(), flowToken, flowData, formData, httpRequest, httpResponse);
             return this.processNextForm(flowToken, flowData, formData, httpRequest, httpResponse);
         } catch (Exception ex) {
@@ -83,7 +83,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
     }
 
     @Override
-    public void action(String flowToken, String action, Map<String, String> formData, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
+    public void action(String flowToken, String action, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
             throws Exception {
         log.debug("start action[{}] processing, flow token [{}], form data [{}]", action, flowToken, formData);
         D flowData = this.getFlowDataRepository().get(flowToken);

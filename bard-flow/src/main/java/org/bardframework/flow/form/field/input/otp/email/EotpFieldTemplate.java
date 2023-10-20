@@ -44,6 +44,16 @@ public class EotpFieldTemplate extends OtpFieldTemplate<OtpField, String> {
     }
 
     @Override
+    protected String getOtpMaxTryToResolveCountErrorMessage() {
+        return "eotp.error.max.resolve.exceeded";
+    }
+
+    @Override
+    protected String getMaxSendCountErrorMessage() {
+        return "eotp.error.max.send.exceeded";
+    }
+
+    @Override
     protected String getResendAction() {
         return "eotp-resend";
     }

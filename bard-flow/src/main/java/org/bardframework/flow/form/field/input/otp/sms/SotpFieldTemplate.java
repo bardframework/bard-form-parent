@@ -47,4 +47,14 @@ public class SotpFieldTemplate extends OtpFieldTemplate<OtpField, String> {
     protected String getResendAction() {
         return "sotp-resend";
     }
+
+    @Override
+    protected String getOtpMaxTryToResolveCountErrorMessage() {
+        return "sotp.error.max.resolve.exceeded";
+    }
+
+    @Override
+    protected String getMaxSendCountErrorMessage() {
+        return "sotp.error.max.send.exceeded";
+    }
 }

@@ -1,7 +1,11 @@
 package org.bardframework.flow.exception;
 
+import lombok.Getter;
+
+@Getter
 public class InvalidateFlowException extends Exception {
     private final String flowToken;
+    private String messageKey;
 
     public InvalidateFlowException(String flowToken, String message) {
         super(message);
@@ -13,7 +17,9 @@ public class InvalidateFlowException extends Exception {
         this.flowToken = flowToken;
     }
 
-    public String getFlowToken() {
-        return flowToken;
+    public InvalidateFlowException(String flowToken, String message, String messageKey) {
+        super(message);
+        this.flowToken = flowToken;
+        this.messageKey = messageKey;
     }
 }
