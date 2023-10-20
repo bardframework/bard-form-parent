@@ -5,13 +5,13 @@
     <parent>
         <groupId>org.bardframework</groupId>
         <artifactId>bard-parent</artifactId>
-        <version>18</version>
+        <version>19</version>
         <relativePath/>
     </parent>
 
     <groupId>org.bardframework.form</groupId>
     <artifactId>bard-form-parent</artifactId>
-    <version>2.5.24</version>
+    <version>2.6.24</version>
 
     <packaging>pom</packaging>
     <modules>
@@ -22,7 +22,7 @@
     </modules>
 
     <properties>
-        <bardframework.version>2.5.30</bardframework.version>
+        <bardframework.version>2.6.30</bardframework.version>
         <typescript-generator-maven-plugin.version>3.1.1185</typescript-generator-maven-plugin.version>
     </properties>
 
