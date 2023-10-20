@@ -32,10 +32,12 @@ public class FormTemplate {
     protected FieldDescriptionShowType descriptionShowType = FieldDescriptionShowType.HINT;
     protected Class<?> dtoClass;
     protected boolean failOnUnknownSubmitFields = true;
-    protected Boolean sendPristineInputs;
-    protected Boolean sendEmptyInputs;
+    protected Boolean submitPristineInputs;
+    protected Boolean submitEmptyInputs;
     protected Expression showExpression = null;
     protected List<FormTemplate> formTemplates = new ArrayList<>();
+    protected NestedFormShowType nestedFormShowType = NestedFormShowType.MAIN_FORM;
+    protected Integer autoSubmitDelaySeconds = null;
 
     public FormTemplate(String name, List<FieldTemplate<?>> fieldTemplates, MessageSource messageSource) {
         this.name = name;

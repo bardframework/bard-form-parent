@@ -36,8 +36,8 @@ public class FormUtils {
         form.setDescription(FormUtils.getFormStringProperty(formTemplate, "description", locale, args, null));
         form.setConfirmMessage(FormUtils.getFormStringProperty(formTemplate, "confirmMessage", locale, args, null));
         form.setSubmitLabel(FormUtils.getFormStringProperty(formTemplate, "submitLabel", locale, args, null));
-        form.setSendPristineInputs(FormUtils.getFormBooleanProperty(formTemplate, "sendPristineInputs", locale, args, formTemplate.getSendPristineInputs()));
-        form.setSendEmptyInputs(FormUtils.getFormBooleanProperty(formTemplate, "sendEmptyInputs", locale, args, formTemplate.getSendEmptyInputs()));
+        form.setSubmitPristineInputs(FormUtils.getFormBooleanProperty(formTemplate, "submitPristineInputs", locale, args, formTemplate.getSubmitPristineInputs()));
+        form.setSubmitEmptyInputs(FormUtils.getFormBooleanProperty(formTemplate, "submitEmptyInputs", locale, args, formTemplate.getSubmitEmptyInputs()));
         form.setFieldDescriptionShowType(FormUtils.getFormEnumProperty(formTemplate, "fieldDescriptionShowType", FieldDescriptionShowType.class, locale, args, formTemplate.getDescriptionShowType()));
         for (FieldTemplate<?> fieldTemplate : formTemplate.getFieldTemplates(args)) {
             Field field = fieldTemplate.toField(formTemplate, args, locale);
