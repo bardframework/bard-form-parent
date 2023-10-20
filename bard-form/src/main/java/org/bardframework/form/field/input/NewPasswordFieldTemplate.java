@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
 
+import java.nio.charset.Charset;
 import java.util.Base64;
 import java.util.Locale;
 import java.util.Map;
@@ -24,7 +25,8 @@ public class NewPasswordFieldTemplate extends PasswordFieldTemplate {
             }
             return true;
         }
-        String rawPassword = new String(Base64.getDecoder().decode(value));
+        byte[] passwordByteArray = Base64.getDecoder().decode(value);
+        String rawPassword = new String(passwordByteArray, Charset.defaultCharset());
         if (null != field.getMinLength() && rawPassword.length() < field.getMinLength()) {
             log.debug("field [{}] min length is [{}], but it's value[{}] length is smaller than minimum", field.getName(), field.getMinLength(), rawPassword);
             return false;
