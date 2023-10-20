@@ -4,7 +4,6 @@ import jakarta.mail.Authenticator;
 import jakarta.mail.Message;
 import jakarta.mail.Session;
 import jakarta.mail.Transport;
-import jakarta.mail.internet.AddressException;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import lombok.Getter;
@@ -18,23 +17,14 @@ import java.util.Properties;
 
 @Slf4j
 @Getter
-public class MessageSenderEmail extends MessageSenderAbstract {
+public abstract class MessageSenderEmail extends MessageSenderAbstract {
 
-    private final InternetAddress senderEmail;
-    private final Properties configs;
-    private final MessageProvider subjectCreator;
-    private final Authenticator authenticator;
-
-    public MessageSenderEmail(FieldTemplate<?> receiverFieldTemplate, String senderEmail, Authenticator authenticator, Properties configs, MessageProvider subjectCreator, MessageProvider emailBodyProvider, String errorMessageKey) throws AddressException {
-        this(receiverFieldTemplate.getName(), senderEmail, authenticator, configs, subjectCreator, emailBodyProvider, errorMessageKey);
+    public MessageSenderEmail(FieldTemplate<?> receiverFieldTemplate, MessageProvider emailBodyProvider, String errorMessageKey) {
+        this(receiverFieldTemplate.getName(), emailBodyProvider, errorMessageKey);
     }
 
-    public MessageSenderEmail(String receiverFieldName, String senderEmail, Authenticator authenticator, Properties configs, MessageProvider subjectCreator, MessageProvider emailBodyProvider, String errorMessageKey) throws AddressException {
-        super(receiverFieldName, emailBodyProvider, errorMessageKey);
-        this.senderEmail = InternetAddress.parse(senderEmail)[0];
-        this.configs = configs;
-        this.subjectCreator = subjectCreator;
-        this.authenticator = authenticator;
+    public MessageSenderEmail(String receiverFieldName, MessageProvider messageProvider, String errorMessageKey) {
+        super(receiverFieldName, messageProvider, errorMessageKey);
     }
 
     @Override
@@ -55,4 +45,12 @@ public class MessageSenderEmail extends MessageSenderAbstract {
         Transport.send(mimeMessage);
         log.debug("email successfully sent to [{}]", receiver);
     }
+
+    public abstract InternetAddress getSenderEmail();
+
+    public abstract Properties getConfigs();
+
+    public abstract MessageProvider getSubjectCreator();
+
+    public abstract Authenticator getAuthenticator();
 }
