@@ -16,7 +16,7 @@ public interface FlowHandler {
     FlowResponse submit(String flowToken, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
             throws Exception;
 
-    void action(String flowToken, String action, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
+    Object action(String flowToken, String action, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
             throws Exception;
 
     FlowResponse getCurrent(String flowToken, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)

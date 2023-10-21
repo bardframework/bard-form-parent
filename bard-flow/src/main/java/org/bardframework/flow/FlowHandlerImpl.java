@@ -13,7 +13,7 @@ public class FlowHandlerImpl extends FlowHandlerAbstract<FlowData> {
     }
 
     @Override
-    protected FlowResponse handleException(String flowToken, FlowData flowData, Map<String, String> formData, FlowFormTemplate currentFormTemplate, Exception ex) throws Exception {
+    protected FlowResponse handleException(String flowToken, FlowData flowData, Map<String, String> formData, FlowFormTemplate currentFormTemplate, FlowAction flowAction, Exception ex) throws Exception {
         throw ex;
     }
 }

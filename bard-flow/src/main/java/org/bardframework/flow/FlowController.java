@@ -32,9 +32,9 @@ public interface FlowController {
     }
 
     @PutMapping(value = "", consumes = APPLICATION_JSON_VALUE)
-    default void action(@RequestHeader(TOKEN_HEADER_NAME) String flowToken, @RequestParam(ACTION_PARAMETER_NAME) String action, @RequestBody Map<String, String> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
+    default Object action(@RequestHeader(TOKEN_HEADER_NAME) String flowToken, @RequestParam(ACTION_PARAMETER_NAME) String action, @RequestBody Map<String, String> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
             throws Exception {
-        this.getFlowHandler().action(flowToken, action, formData, locale, httpRequest, httpResponse);
+        return this.getFlowHandler().action(flowToken, action, formData, locale, httpRequest, httpResponse);
     }
 
     FlowHandler getFlowHandler();

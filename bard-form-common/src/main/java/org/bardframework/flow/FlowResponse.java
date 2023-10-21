@@ -18,6 +18,7 @@ import java.util.Map;
 public class FlowResponse {
     private BardForm form;
     private Boolean finished;
+    private Boolean reset;
     private int steps;
     private int current;
     private Map<String, String> fieldErrors = new HashMap<>();
@@ -25,6 +26,11 @@ public class FlowResponse {
 
     public FlowResponse setFinished(Boolean finished) {
         this.finished = finished;
+        return this;
+    }
+
+    public FlowResponse setReset(Boolean reset) {
+        this.reset = reset;
         return this;
     }
 
