@@ -1,6 +1,7 @@
 package org.bardframework.form.field;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.bardframework.commons.utils.ReflectionUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
@@ -16,6 +17,7 @@ import java.util.Locale;
 import java.util.Map;
 
 @Getter
+@Setter
 public abstract class FieldTemplate<F extends Field> {
 
     protected final Class<F> fieldClazz;
@@ -40,6 +42,7 @@ public abstract class FieldTemplate<F extends Field> {
         field.setName(this.getName());
         field.setTitle(FormUtils.getFieldStringProperty(formTemplate, this, "title", locale, args, this.getDefaultValues().getTitle()));
         field.setDescription(FormUtils.getFieldStringProperty(formTemplate, this, "description", locale, args, this.getDefaultValues().getDescription()));
+        field.setInfo(FormUtils.getFieldStringProperty(formTemplate, this, "info", locale, args, this.getDefaultValues().getInfo()));
     }
 
     protected F getEmptyField() {
@@ -52,9 +55,5 @@ public abstract class FieldTemplate<F extends Field> {
 
     public boolean mustShow(Map<String, String> args) {
         return null == showExpression || Boolean.TRUE.equals(showExpression.getValue(new StandardEvaluationContext(args), Boolean.class));
-    }
-
-    public void setDefaultValues(F defaultValues) {
-        this.defaultValues = defaultValues;
     }
 }

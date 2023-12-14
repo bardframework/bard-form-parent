@@ -3,9 +3,12 @@ package org.bardframework.flow.form.field.input.otp;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.flow.exception.InvalidateFlowException;
+import org.bardframework.flow.exception.MaxOtpSendExceededException;
 import org.bardframework.flow.form.field.input.FlowInputFieldTemplate;
 import org.bardframework.flow.processor.FormProcessorAbstract;
 import org.bardframework.form.FormTemplate;
@@ -17,6 +20,8 @@ import java.util.Locale;
 import java.util.Map;
 
 @Slf4j
+@Getter
+@Setter
 public abstract class OtpFieldTemplate<F extends OtpField, O> extends FlowInputFieldTemplate<F, String> {
 
     private static final String GENERATE_COUNT_KEY = "X_GENERATE_COUNT";
@@ -97,7 +102,7 @@ public abstract class OtpFieldTemplate<F extends OtpField, O> extends FlowInputF
     protected void sendInternal(String flowToken, Map<String, String> flowData, Locale locale, HttpServletResponse httpResponse) throws Exception {
         int generateCount = flowData.containsKey(GENERATE_COUNT_KEY) ? Integer.parseInt(flowData.get(GENERATE_COUNT_KEY)) : 0;
         if (generateCount > this.getMaxSendCount()) {
-            throw new InvalidateFlowException(flowToken, "max otp send (generate) count exceed", this.getMaxSendCountErrorMessage());
+            throw new MaxOtpSendExceededException(flowToken, "max otp send (generate) count exceed", this.getMaxSendCountErrorMessage());
         }
         this.send(flowToken, flowData, this.getOtpGenerator().generate(), locale, httpResponse);
         flowData.put(SENT_TIME_KEY, String.valueOf(System.currentTimeMillis()));
@@ -125,38 +130,6 @@ public abstract class OtpFieldTemplate<F extends OtpField, O> extends FlowInputF
     @Override
     public String toValue(String value) {
         return value;
-    }
-
-    public OtpGenerator<O> getOtpGenerator() {
-        return otpGenerator;
-    }
-
-    public int getMaxTryToResolveCount() {
-        return maxTryToResolveCount;
-    }
-
-    public int getMaxSendCount() {
-        return maxSendCount;
-    }
-
-    public void setMaxSendCount(int maxSendCount) {
-        this.maxSendCount = maxSendCount;
-    }
-
-    public Integer getResendIntervalSeconds() {
-        return resendIntervalSeconds;
-    }
-
-    public void setResendIntervalSeconds(Integer resendIntervalSeconds) {
-        this.resendIntervalSeconds = resendIntervalSeconds;
-    }
-
-    public Boolean getCanEditIdentifier() {
-        return canEditIdentifier;
-    }
-
-    public void setCanEditIdentifier(Boolean canEditIdentifier) {
-        this.canEditIdentifier = canEditIdentifier;
     }
 
     protected abstract String getOtpMaxTryToResolveCountErrorMessage();
