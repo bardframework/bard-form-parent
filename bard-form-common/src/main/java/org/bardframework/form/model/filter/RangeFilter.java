@@ -53,4 +53,9 @@ public abstract class RangeFilter<T, F extends RangeFilter<T, F>> extends Filter
         this.to = to;
         return (F) this;
     }
+
+    @Override
+    public boolean isEmpty() {
+        return null == this.getFrom() && null == this.getTo() && super.isEmpty();
+    }
 }

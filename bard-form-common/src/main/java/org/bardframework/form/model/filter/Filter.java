@@ -107,4 +107,12 @@ public abstract class Filter<T, F> {
     public F setNotIn(T... notIn) {
         return this.setNotIn(List.of(notIn));
     }
+
+    public boolean isEmpty() {
+        return null == this.getEquals()
+                && null == this.getNotEquals()
+                && null == this.getSpecified()
+                && (null == this.getIn() || this.getIn().isEmpty())
+                && (null == this.getNotIn() || this.getNotIn().isEmpty());
+    }
 }

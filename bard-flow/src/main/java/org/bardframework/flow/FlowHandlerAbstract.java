@@ -172,7 +172,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
                 continue;
             }
             String value = formData.remove(inputFieldTemplate.getName());
-            if (StringUtils.isNotBlank(value)) {
+            if (Boolean.TRUE.equals(currentFormTemplate.getSubmitEmptyInputs()) || StringUtils.isNotBlank(value)) {
                 flowData.put(inputFieldTemplate.getName(), WebUtils.escapeString(value));
             }
         }

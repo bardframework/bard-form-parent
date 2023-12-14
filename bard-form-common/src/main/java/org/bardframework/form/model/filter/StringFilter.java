@@ -57,4 +57,13 @@ public class StringFilter extends RangeFilter<String, StringFilter> {
         this.endWith = endWith;
         return this;
     }
+
+    @Override
+    public boolean isEmpty() {
+        return (null == this.getContains() || this.getContains().isEmpty())
+                && (null == this.getDoesNotContain() || this.getDoesNotContain().isEmpty())
+                && (null == this.getStartWith() || this.getStartWith().isEmpty())
+                && (null == this.getEndWith() || this.getEndWith().isEmpty())
+                && super.isEmpty();
+    }
 }
