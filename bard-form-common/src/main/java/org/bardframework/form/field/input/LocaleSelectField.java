@@ -1,19 +1,26 @@
 package org.bardframework.form.field.input;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.bardframework.form.field.FieldType;
 
 import java.util.List;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Builder
 public class LocaleSelectField extends InputField<List<String>> {
     private Integer maxCount;
     private List<String> availableLocales;
     private List<String> excludeLocales;
+
+    public LocaleSelectField() {
+    }
+
+    public LocaleSelectField(String name) {
+        super(name);
+    }
 
     @Override
     public String toString(List<String> value) {

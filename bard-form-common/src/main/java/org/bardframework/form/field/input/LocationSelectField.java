@@ -10,6 +10,13 @@ import org.bardframework.form.field.FieldType;
 @Builder
 public class LocationSelectField extends InputField<String> {
 
+    public LocationSelectField() {
+    }
+
+    public LocationSelectField(String name) {
+        super(name);
+    }
+
     @Override
     public String toString(String value) {
         return value;
