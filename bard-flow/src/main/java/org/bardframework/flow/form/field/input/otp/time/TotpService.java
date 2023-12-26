@@ -1,6 +1,7 @@
 package org.bardframework.flow.form.field.input.otp.time;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.bardframework.commons.utils.StringTemplateUtils;
 
 import java.math.BigInteger;
@@ -74,6 +75,9 @@ public class TotpService extends OtpServiceAbstract {
 
     @Override
     public boolean verify(String otp, byte[] secret) throws GeneralSecurityException {
+        if (!NumberUtils.isDigits(otp)) {
+            return false;
+        }
         int code = Integer.parseInt(otp);
         final long timeSeconds = System.currentTimeMillis() / 30_000;
         for (int i = -this.getWindow(); i <= this.getWindow(); ++i) {
