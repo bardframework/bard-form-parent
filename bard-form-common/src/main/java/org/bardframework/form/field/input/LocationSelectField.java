@@ -10,6 +10,8 @@ import org.bardframework.form.field.FieldType;
 @Builder
 public class LocationSelectField extends InputField<String> {
 
+    private Boolean showAddressAsTitle;
+
     public LocationSelectField() {
     }
 

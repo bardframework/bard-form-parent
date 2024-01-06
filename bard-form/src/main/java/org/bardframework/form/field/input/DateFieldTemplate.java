@@ -1,6 +1,7 @@
 package org.bardframework.form.field.input;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
@@ -10,6 +11,7 @@ import java.util.Locale;
 import java.util.Map;
 
 @Getter
+@Setter
 public class DateFieldTemplate extends InputFieldTemplate<DateField, LocalDate> {
     private boolean minIsNow;
     private boolean maxIsNow;

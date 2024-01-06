@@ -1,7 +1,10 @@
 package org.bardframework.form.field.input;
 
 import org.apache.commons.lang3.StringUtils;
+import org.bardframework.form.FormTemplate;
+import org.bardframework.form.FormUtils;
 
+import java.util.Locale;
 import java.util.Map;
 
 public class LocationSelectFieldTemplate extends InputFieldTemplate<LocationSelectField, String> {
@@ -20,6 +23,12 @@ public class LocationSelectFieldTemplate extends InputFieldTemplate<LocationSele
             return true;
         }
         return true;
+    }
+
+    @Override
+    public void fill(FormTemplate formTemplate, LocationSelectField field, Map<String, String> values, Locale locale) throws Exception {
+        super.fill(formTemplate, field, values, locale);
+        field.setShowAddressAsTitle(FormUtils.getFieldBooleanProperty(formTemplate, this, "showAddressAsTitle", locale, values, this.getDefaultValues().getShowAddressAsTitle()));
     }
 
     @Override
