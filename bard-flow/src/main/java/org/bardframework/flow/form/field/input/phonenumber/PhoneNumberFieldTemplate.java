@@ -30,17 +30,24 @@ public class PhoneNumberFieldTemplate extends InputFieldTemplate<PhoneNumberFiel
         if (Boolean.TRUE.equals(formField.getDisable())) {
             return;
         }
-        String stringValue = formData.get(this.getName());
-        if (!this.isValid(flowToken, formField, this.toValue(stringValue), formData)) {
-            ex.addFieldError(this.getName(), formField.getErrorMessage());
+        String fieldName = this.getName();
+        String stringValue = formData.get(fieldName);
+        try {
+            String value = this.toValue(stringValue);
+            if (!this.isValid(flowToken, formField, value, formData)) {
+                ex.addFieldError(fieldName, formField.getErrorMessage());
+            }
+            String phoneNumberString = formData.get(fieldName);
+            if (null == phoneNumberString) {
+                ex.addFieldError(fieldName, formField.getErrorMessage());
+            }
+            PhoneNumber phoneNumber = phoneNumberParser.parse(phoneNumberString);
+            formData.put(countrySelectFieldTemplate.getName(), phoneNumber.getCountryAlphaCode());
+            countrySelectFieldTemplate.validate(flowToken, formTemplate, flowData, formData, locale, ex);
+        } catch (Exception e) {
+            log.error("Unknown error: {} in validation field {}", e.getMessage(), fieldName);
+            ex.addFieldError(fieldName, formField.getErrorMessage());
         }
-        String phoneNumberString = formData.get(this.getName());
-        if (null == phoneNumberString) {
-            ex.addFieldError(this.getName(), formField.getErrorMessage());
-        }
-        PhoneNumber phoneNumber = phoneNumberParser.parse(phoneNumberString);
-        formData.put(countrySelectFieldTemplate.getName(), phoneNumber.getCountryAlphaCode());
-        countrySelectFieldTemplate.validate(flowToken, formTemplate, flowData, formData, locale, ex);
     }
 
     @Override

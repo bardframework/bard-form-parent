@@ -9,6 +9,11 @@ import org.bardframework.form.FormUtils;
 import org.bardframework.form.exception.FormDataValidationException;
 import org.bardframework.form.field.FieldTemplate;
 import org.bardframework.form.field.value.FieldValueProvider;
+import org.springframework.expression.Expression;
+import org.springframework.expression.spel.SpelCompilerMode;
+import org.springframework.expression.spel.SpelParserConfiguration;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
+import org.springframework.expression.spel.support.StandardEvaluationContext;
 
 import java.util.Locale;
 import java.util.Map;
@@ -20,6 +25,7 @@ public abstract class InputFieldTemplate<F extends InputField<T>, T> extends Fie
     protected boolean persistentValue = true;
     protected FieldValueProvider<F, T> valueProvider;
     protected FieldDescriptionShowType descriptionShowType;
+    protected Expression disableExpression = null;
 
     protected InputFieldTemplate(String name) {
         super(name);
@@ -65,9 +71,13 @@ public abstract class InputFieldTemplate<F extends InputField<T>, T> extends Fie
         super.fill(formTemplate, field, values, locale);
         field.setDescriptionShowType(FormUtils.getFieldEnumProperty(formTemplate, this, "descriptionShowType", FieldDescriptionShowType.class, locale, values, this.getDefaultValues().getDescriptionShowType()));
         field.setPlaceholder(FormUtils.getFieldStringProperty(formTemplate, this, "placeholder", locale, values, this.getDefaultValues().getPlaceholder()));
-        field.setRequired(FormUtils.getFieldBooleanProperty(formTemplate, this, "required", locale, values, this.getDefaultValues().getRequired()));
-        field.setDisable(FormUtils.getFieldBooleanProperty(formTemplate, this, "disable", locale, values, this.getDefaultValues().getDisable()));
         field.setErrorMessage(FormUtils.getFieldStringProperty(formTemplate, this, "errorMessage", locale, values, this.getDefaultValues().getErrorMessage()));
+        field.setRequired(FormUtils.getFieldBooleanProperty(formTemplate, this, "required", locale, values, this.getDefaultValues().getRequired()));
+        if (null == disableExpression) {
+            field.setDisable(FormUtils.getFieldBooleanProperty(formTemplate, this, "disable", locale, values, this.getDefaultValues().getDisable()));
+        } else {
+            field.setDisable(Boolean.TRUE.equals(this.disableExpression.getValue(new StandardEvaluationContext(values), Boolean.class)));
+        }
         if (null != valueProvider) {
             field.setValue(valueProvider.getValue(field));
         }
@@ -79,5 +89,9 @@ public abstract class InputFieldTemplate<F extends InputField<T>, T> extends Fie
 
     public int getValidationOrder() {
         return 0;
+    }
+
+    public void setDisableExpression(String disableExpression) {
+        this.disableExpression = (new SpelExpressionParser(new SpelParserConfiguration(SpelCompilerMode.MIXED, null))).parseExpression(disableExpression);
     }
 }

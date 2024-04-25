@@ -1,5 +1,6 @@
 package org.bardframework.flow.processor.message.creator;
 
+import org.bardframework.commons.utils.StringTemplateUtils;
 import org.springframework.context.MessageSource;
 
 import java.io.IOException;
@@ -18,7 +19,8 @@ public class MessageProviderMessageSource implements MessageProvider {
 
     @Override
     public String create(Map<String, String> args, Locale locale) throws IOException {
-        return this.getMessageSource().getMessage(this.getMessageTemplateKey(), new Object[]{}, locale);
+        String messageKey = StringTemplateUtils.fillTemplate(this.getMessageTemplateKey(), args);
+        return this.getMessageSource().getMessage(messageKey, new Object[]{}, locale);
     }
 
     public MessageSource getMessageSource() {

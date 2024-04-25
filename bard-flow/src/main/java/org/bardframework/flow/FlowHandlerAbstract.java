@@ -3,6 +3,7 @@ package org.bardframework.flow;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.commons.utils.ReflectionUtils;
@@ -23,6 +24,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Getter
+@Setter
 public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHandler {
 
     protected final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -50,7 +52,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
         FlowFormTemplate currentFormTemplate = null;
         try {
             /*
-                اجرای پیش پردازش های فلو
+                اجرای پیش پردازش‌های فلو
              */
             this.process(this.getPreProcessors(flowData), flowToken, flowData, Map.of(), httpRequest, httpResponse);
             currentFormTemplate = this.getCurrentFormTemplate(flowData);
@@ -60,7 +62,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
         } finally {
             /*
                 در تمامی حالات (حالاتی که استثنا رخ دهد یا خیر) باید دیتای تغیر یافته را ذخیره کنیم؛
-                برخی کنترل های امنیتی مانند غیر معتبر کردن کپچای استفاده شده، با پاک کردن از دیتا انجام می شود
+                برخی کنترل‌های امنیتی مانند غیر معتبر کردن کپچای استفاده شده، با پاک کردن از دیتا انجام می شود
                 در مثال ذکر شده و در حالتی که یک مرحله پس از کنترل کپچا استثنایی رخ دهد باید دیتا را ذخیره کنیم تا ناسازگاری در فرایند ایجاد نشود.
                 توضیحات فوق، بیانگر اهمیت و دلیل ذخیره ی دیتا در بلاک finally است
              */
@@ -71,8 +73,14 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
     @Override
     public FlowResponse submit(String flowToken, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
             throws Exception {
-        D flowData = this.getFlowDataRepository().get(flowToken);
-        FlowFormTemplate currentFormTemplate = this.getCurrentFormTemplate(flowData);
+        D flowData = null;
+        FlowFormTemplate currentFormTemplate = null;
+        try {
+            flowData = this.getFlowDataRepository().get(flowToken);
+            currentFormTemplate = this.getCurrentFormTemplate(flowData);
+        } catch (Exception ex) {
+            return this.handleExceptionInternal(flowToken, flowData, formData, currentFormTemplate, FlowAction.SUBMIT_FORM, ex);
+        }
         try {
             if (!Objects.equals(locale, flowData.getLocale())) {
                 this.onLocaleChange(flowToken, flowData, formData, FlowAction.SUBMIT_FORM, flowData.getLocale(), locale, httpRequest, httpResponse);
@@ -92,14 +100,16 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
     public Object action(String flowToken, String action, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
             throws Exception {
         log.debug("start action[{}] processing, flow token [{}], form data [{}]", action, flowToken, formData);
-        D flowData = this.getFlowDataRepository().get(flowToken);
-        FlowFormTemplate currentFormTemplate = this.getCurrentFormTemplate(flowData);
-        if (StringUtils.isBlank(action)) {
-            log.warn("null action can't process, flow token [{}], form [{}]", flowToken, currentFormTemplate.getName());
-            httpResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            return null;
-        }
+        D flowData = null;
+        FlowFormTemplate currentFormTemplate = null;
         try {
+            flowData = this.getFlowDataRepository().get(flowToken);
+            currentFormTemplate = this.getCurrentFormTemplate(flowData);
+            if (StringUtils.isBlank(action)) {
+                log.warn("null action can't process, flow token [{}], form [{}]", flowToken, currentFormTemplate.getName());
+                httpResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                return null;
+            }
             if (!Objects.equals(locale, flowData.getLocale())) {
                 this.onLocaleChange(flowToken, flowData, formData, FlowAction.PROCESS_ACTION, flowData.getLocale(), locale, httpRequest, httpResponse);
             }
@@ -108,7 +118,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
                     در صورتی که عملیات نامناسب درخواست شود (هیچ پردازشگری یافت نشود)، فلو را پاک می کنیم
                  */
                 log.warn("no processor exist to handle action [{}], flow token [{}], form [{}]", action, flowToken, currentFormTemplate.getName());
-                throw new InvalidateFlowException(flowToken, "invalid action");
+                throw new InvalidateFlowException(flowToken, "invalid action", null);
             }
         } catch (Exception ex) {
             return this.handleExceptionInternal(flowToken, flowData, formData, currentFormTemplate, FlowAction.PROCESS_ACTION, ex);
@@ -119,7 +129,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
     }
 
     /**
-     * این متد فقط فرم جاری را برمیگرداند و پیش پردازش های آن را اجرا نمی کند
+     * این متد فقط فرم جاری را برمیگرداند و پیش پردازش‌های آن را اجرا نمی کند
      */
     @Override
     public FlowResponse getCurrent(String flowToken, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
@@ -145,7 +155,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
     protected boolean processAction(String flowToken, String action, D flowData, Map<String, String> formData, FlowFormTemplate currentFormTemplate, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
         for (FlowInputFieldTemplate<?, ?> fieldTemplate : currentFormTemplate.getFieldTemplates(flowData.getData(), FlowInputFieldTemplate.class)) {
             /*
-                تلاش برای پردازش با پردازشگرهای اینپوت ها
+                تلاش برای پردازش با پردازشگرهای اینپوت‌ها
              */
             if (this.process(fieldTemplate.getActionProcessors().get(action), flowToken, flowData, formData, httpRequest, httpResponse)) {
                 return true;
@@ -181,9 +191,9 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
     /**
      * 1. محاسبه فرم بعدی
      * <br>
-     * 2. اجرای پیش پردازش های فرم
+     * 2. اجرای پیش پردازش‌های فرم
      * <br>
-     * 3. ذخیره داده های فلو
+     * 3. ذخیره داده‌های فلو
      */
     protected FlowResponse processNextForm(String flowToken, D flowData, Map<String, String> formData, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
         FlowFormTemplate nextFormTemplate = forms.subList(flowData.getCurrentFormIndex() + 1, forms.size()).stream()
@@ -192,7 +202,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
         if (null != nextFormTemplate) {
             this.process(nextFormTemplate.getPreProcessors(), flowToken, flowData, formData, httpRequest, httpResponse);
             /*
-                فراخوانی پیش پردازش های فیلد ها (مانند ارسال پیامک یا ...)
+                فراخوانی پیش پردازش‌های فیلد‌ها (مانند ارسال پیامک یا ...)
              */
             for (FlowInputFieldTemplate<?, ?> flowInputFieldTemplate : nextFormTemplate.getFieldTemplates(formData, FlowInputFieldTemplate.class)) {
                 flowInputFieldTemplate.preProcess(flowToken, flowData.getData(), flowData.getLocale(), httpResponse);
@@ -229,7 +239,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
 
     protected void invalidateFlow(InvalidateFlowException ex) {
         /*
-            در برخی موارد مانند تلاش زیاد برای تولید کپچا و ... خطای InvalidateFlowException تولید می شود و باید داده های مربوط به فلو پاک شوند
+            در برخی موارد مانند تلاش زیاد برای تولید کپچا و ... خطای InvalidateFlowException تولید می شود و باید داده‌های مربوط به فلو پاک شوند
          */
         this.cleanFlowData(ex.getFlowToken());
     }
@@ -247,7 +257,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
             response.setForm(nextForm).setSteps(this.getStepsCounts(flowData)).setCurrent(flowData.getCurrentFormIndex());
         }
         if (null == formTemplate || formTemplate.isFinished()) {
-            response.setFinished(Boolean.TRUE);
+            response.finished();
         } else {
             /*
                 در حالتی که فلو به پایان می رسد؛ نیازی به ست کردن فلو توکن نیست
@@ -261,7 +271,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
         if (ex instanceof InvalidateFlowException e) {
             this.invalidateFlow(e);
         } else if (ex instanceof FlowDataValidationException e) {
-            if (e.isSendCurrentForm()) {
+            if (e.isSendCurrentForm() && null != currentFormTemplate) {
                 e.setForm(FormUtils.toForm(currentFormTemplate, null == flowData ? null : flowData.getData(), null == flowData ? null : flowData.getData(), null == flowData ? null : flowData.getLocale()));
             }
         }
@@ -299,24 +309,12 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
         return preProcessors;
     }
 
-    public void setPreProcessors(List<FormProcessor> preProcessors) {
-        this.preProcessors = preProcessors;
-    }
-
     public List<FormProcessor> getPostProcessors(D flowData) {
         return postProcessors;
     }
 
-    public void setPostProcessors(List<FormProcessor> postProcessors) {
-        this.postProcessors = postProcessors;
-    }
-
     public Map<String, List<FormProcessor>> getActionProcessors(D flowData) {
         return actionProcessors;
-    }
-
-    public void setActionProcessors(Map<String, List<FormProcessor>> actionProcessors) {
-        this.actionProcessors = actionProcessors;
     }
 
     public enum FlowAction {

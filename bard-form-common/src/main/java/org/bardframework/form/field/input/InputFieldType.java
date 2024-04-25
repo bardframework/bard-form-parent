@@ -17,6 +17,7 @@ public enum InputFieldType implements FieldType {
     IP6,
     LIST,
     LOCALE_SELECT,
+    MULTI_LOCALE_SELECT,
     LOCATION_SELECT,
     MULTI_SELECT,
     MULTI_SELECT_SEARCHABLE,
@@ -32,4 +33,5 @@ public enum InputFieldType implements FieldType {
     TEXT,
     TEXT_AREA,
     TIME,
+    WYSIWYG,
 }

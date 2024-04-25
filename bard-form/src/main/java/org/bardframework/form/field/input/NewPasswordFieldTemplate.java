@@ -17,11 +17,6 @@ public class NewPasswordFieldTemplate extends InputFieldTemplate<NewPasswordFiel
     }
 
     @Override
-    public String toValue(String value) {
-        return value;
-    }
-
-    @Override
     public boolean isValid(String flowToken, NewPasswordField field, String value, Map<String, String> flowData) {
         if (StringUtils.isBlank(value)) {
             if (Boolean.TRUE.equals(field.getRequired())) {
@@ -48,12 +43,17 @@ public class NewPasswordFieldTemplate extends InputFieldTemplate<NewPasswordFiel
     }
 
     @Override
+    public String toValue(String value) {
+        return value;
+    }
+
+    @Override
     public void fill(FormTemplate formTemplate, NewPasswordField field, Map<String, String> values, Locale locale) throws Exception {
         super.fill(formTemplate, field, values, locale);
+        field.setShowConfirmPassword(FormUtils.getFieldBooleanProperty(formTemplate, this, "showConfirmPassword", locale, values, this.getDefaultValues().getShowConfirmPassword()));
         field.setRegex(FormUtils.getFieldStringProperty(formTemplate, this, "regex", locale, values, this.getDefaultValues().getRegex()));
         field.setMinLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "minLength", locale, values, this.getDefaultValues().getMinLength()));
         field.setMaxLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxLength", locale, values, this.getDefaultValues().getMaxLength()));
-        field.setShowConfirmPassword(FormUtils.getFieldBooleanProperty(formTemplate, this, "showConfirmPassword", locale, values, this.getDefaultValues().getShowConfirmPassword()));
     }
 
     @Override

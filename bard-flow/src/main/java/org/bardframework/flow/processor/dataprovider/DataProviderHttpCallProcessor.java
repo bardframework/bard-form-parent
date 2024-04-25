@@ -4,7 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.bardframework.commons.utils.http.HttpCallResult;
+import org.bardframework.commons.utils.http.HttpCallResponse;
 import org.bardframework.commons.utils.http.HttpCaller;
 import org.bardframework.flow.exception.FlowExecutionException;
 import org.bardframework.flow.form.FormProcessor;
@@ -42,7 +42,7 @@ public class DataProviderHttpCallProcessor extends HttpCaller implements FormPro
 
     @Override
     public void process(String flowToken, Map<String, String> flowData, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
-        HttpCallResult result = super.call(flowData);
+        HttpCallResponse result = super.call(flowData);
         String responseString = null == result.getBody() ? null : new String(result.getBody(), StandardCharsets.UTF_8);
         log.debug("data provider http call result: [{}]", responseString);
         if (StringUtils.isNotBlank(this.getResponseFieldName())) {

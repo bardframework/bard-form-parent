@@ -18,19 +18,26 @@ import java.util.Map;
 public class FlowResponse {
     private BardForm form;
     private Boolean finished;
-    private Boolean reset;
+    private Boolean failed;
+    private Integer resetDelaySeconds;
     private int steps;
     private int current;
     private Map<String, String> fieldErrors = new HashMap<>();
     private List<String> errors = new ArrayList<>();
 
-    public FlowResponse setFinished(Boolean finished) {
-        this.finished = finished;
+    public FlowResponse finished() {
+        this.finished = true;
         return this;
     }
 
-    public FlowResponse setReset(Boolean reset) {
-        this.reset = reset;
+    public FlowResponse failed() {
+        this.failed = true;
+        this.finished = true;
+        return this;
+    }
+
+    public FlowResponse setResetDelaySeconds(Integer resetDelaySeconds) {
+        this.resetDelaySeconds = resetDelaySeconds;
         return this;
     }
 

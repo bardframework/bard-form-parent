@@ -1,16 +1,18 @@
 package org.bardframework.form.field.input;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.bardframework.form.field.FieldType;
 
 import java.util.List;
 
-@Data
-@EqualsAndHashCode(callSuper = true)
-@Builder
-public class LocaleSelectField extends InputField<List<String>> {
+@Slf4j
+@Getter
+@Setter
+@ToString
+public class LocaleSelectField extends InputField<String> {
     private Integer maxCount;
     private List<String> availableLocales;
     private List<String> excludeLocales;
@@ -23,8 +25,8 @@ public class LocaleSelectField extends InputField<List<String>> {
     }
 
     @Override
-    public String toString(List<String> value) {
-        return null == value ? null : String.join(SEPARATOR, value);
+    public String toString(String value) {
+        return value;
     }
 
     @Override
