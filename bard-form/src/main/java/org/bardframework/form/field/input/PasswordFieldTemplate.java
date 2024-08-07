@@ -1,10 +1,14 @@
 package org.bardframework.form.field.input;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Map;
 
-public class PasswordFieldTemplate extends InputFieldTemplate<PasswordField, String> {
+@Getter
+@Setter
+public class PasswordFieldTemplate extends InputFieldTemplateAbstract<PasswordField, String> {
 
     public PasswordFieldTemplate(String name) {
         super(name);

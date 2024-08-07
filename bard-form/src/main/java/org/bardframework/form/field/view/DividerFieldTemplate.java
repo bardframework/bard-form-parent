@@ -1,14 +1,18 @@
 package org.bardframework.form.field.view;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.field.FieldTemplate;
 
 import java.util.Locale;
 import java.util.Map;
 
+@Getter
+@Setter
 public class DividerFieldTemplate extends FieldTemplate<DividerField> {
 
-    protected DividerFieldTemplate(String name) {
+    public DividerFieldTemplate(String name) {
         super(name);
     }
 

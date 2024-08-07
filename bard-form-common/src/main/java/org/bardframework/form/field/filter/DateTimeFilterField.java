@@ -4,21 +4,15 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.bardframework.form.field.FieldType;
-import org.bardframework.form.field.input.InputField;
-import org.bardframework.form.model.filter.LocalDateTimeFilter;
 
-import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 @Getter
 @Setter
 @ToString
-public class DateTimeFilterField extends InputField<LocalDateTimeFilter> {
-    private Long minLength;
-    private Long maxLength;
+public class DateTimeFilterField extends LongFilterField {
+
     private ChronoUnit lengthUnit;
-    private LocalDateTime minValue;
-    private LocalDateTime maxValue;
 
     public DateTimeFilterField() {
     }
@@ -30,10 +24,5 @@ public class DateTimeFilterField extends InputField<LocalDateTimeFilter> {
     @Override
     public FieldType getType() {
         return FilterFieldType.DATE_TIME_FILTER;
-    }
-
-    @Override
-    public String toString(LocalDateTimeFilter value) {
-        return String.join(SEPARATOR, null == value.getFrom() ? "" : value.getFrom().toString(), null == value.getTo() ? "" : value.getTo().toString());
     }
 }

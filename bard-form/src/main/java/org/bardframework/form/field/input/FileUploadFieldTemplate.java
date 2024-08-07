@@ -1,42 +1,22 @@
 package org.bardframework.form.field.input;
 
 import lombok.Getter;
-import org.bardframework.form.FormTemplate;
-import org.bardframework.form.FormUtils;
+import lombok.Setter;
 
-import java.util.Locale;
+import java.util.List;
 import java.util.Map;
 
 @Getter
-public class FileUploadFieldTemplate extends InputFieldTemplate<FileUploadField, String> {
+@Setter
+public class FileUploadFieldTemplate extends FileUploadFieldTemplateAbstract<FileUploadField> {
 
-    private final String uploadAction;
-    private final String downloadAction;
-
-    public FileUploadFieldTemplate(String name, String uploadAction, String downloadAction) {
+    public FileUploadFieldTemplate(String name) {
         super(name, true);
-        this.uploadAction = uploadAction;
-        this.downloadAction = downloadAction;
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, FileUploadField field, Map<String, String> values, Locale locale) throws Exception {
-        super.fill(formTemplate, field, values, locale);
-        field.setMinSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "minSize", locale, values, this.getDefaultValues().getMinSize()));
-        field.setMaxSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxSize", locale, values, this.getDefaultValues().getMaxSize()));
-        field.setContentTypes(FormUtils.getFieldListProperty(formTemplate, this, "contentTypes", locale, values, this.getDefaultValues().getContentTypes()));
-        field.setUploadAction(this.getUploadAction());
-        field.setDownloadAction(this.getDownloadAction());
-    }
-
-    @Override
-    public boolean isValid(String flowToken, FileUploadField field, String value, Map<String, String> flowData) {
+    public boolean isValid(String flowToken, FileUploadField field, List<String> values, Map<String, String> flowData) {
         //TODO not implement
         return true;
-    }
-
-    @Override
-    public String toValue(String value) {
-        return value;
     }
 }

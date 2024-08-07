@@ -1,21 +1,20 @@
 package org.bardframework.form.field.input;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.EnumUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.bardframework.commons.utils.data.LocaleCode;
-import org.bardframework.form.FormTemplate;
-import org.bardframework.form.FormUtils;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-public class MultiLocaleSelectFieldTemplate extends InputFieldTemplate<MultiLocaleSelectField, List<String>> {
-    protected MultiLocaleSelectFieldTemplate(String name) {
-        super(name);
+@Getter
+@Setter
+public class MultiLocaleSelectFieldTemplate extends MultiSelectFieldTemplateAbstract<MultiLocaleSelectField> {
+
+    public MultiLocaleSelectFieldTemplate(String name) {
+        super(name, null);
     }
 
     @Override
@@ -44,21 +43,5 @@ public class MultiLocaleSelectFieldTemplate extends InputFieldTemplate<MultiLoca
             return false;
         }
         return true;
-    }
-
-    @Override
-    public void fill(FormTemplate formTemplate, MultiLocaleSelectField field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
-        field.setAvailableLocales(FormUtils.getFieldListProperty(formTemplate, this.getName(), "availableLocale", locale, args, this.getDefaultValues().getAvailableLocales()));
-        field.setExcludeLocales(FormUtils.getFieldListProperty(formTemplate, this.getName(), "excludeLocale", locale, args, this.defaultValues.getExcludeLocales()));
-        field.setMaxCount(FormUtils.getFieldIntegerProperty(formTemplate, this.getName(), "maxCount", locale, args, this.getDefaultValues().getMaxCount()));
-    }
-
-    @Override
-    public List<String> toValue(String value) {
-        if (StringUtils.isBlank(value)) {
-            return null;
-        }
-        return Arrays.stream(value.split(InputField.SEPARATOR)).map(String::trim).collect(Collectors.toList());
     }
 }

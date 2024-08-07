@@ -1,5 +1,7 @@
 package org.bardframework.form.field.input;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.bardframework.form.FormTemplate;
@@ -8,9 +10,11 @@ import org.bardframework.form.FormUtils;
 import java.util.Locale;
 import java.util.Map;
 
-abstract class IpFieldTemplate<F extends Ip4Field> extends InputFieldTemplate<F, String> {
+@Getter
+@Setter
+abstract class IpFieldTemplateAbstract<F extends Ip4Field> extends InputFieldTemplateAbstract<F, String> {
 
-    protected IpFieldTemplate(String name) {
+    protected IpFieldTemplateAbstract(String name) {
         super(name);
     }
 
@@ -53,8 +57,8 @@ abstract class IpFieldTemplate<F extends Ip4Field> extends InputFieldTemplate<F,
     @Override
     public void fill(FormTemplate formTemplate, F field, Map<String, String> values, Locale locale) throws Exception {
         super.fill(formTemplate, field, values, locale);
-        field.setMinValue(FormUtils.getFieldStringProperty(formTemplate, this, "minValue", locale, values, this.getDefaultValues().getMinValue()));
-        field.setMaxValue(FormUtils.getFieldStringProperty(formTemplate, this, "maxValue", locale, values, this.getDefaultValues().getMaxValue()));
+        field.setMinValue(FormUtils.getFieldStringProperty(formTemplate, this, "minValue", locale, values, this.getDefaultValue().getMinValue()));
+        field.setMaxValue(FormUtils.getFieldStringProperty(formTemplate, this, "maxValue", locale, values, this.getDefaultValue().getMaxValue()));
     }
 
     @Override

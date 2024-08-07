@@ -9,13 +9,13 @@ import java.util.Map;
 
 public class PaymentFieldTemplate extends FieldTemplate<PaymentField> {
 
-    protected PaymentFieldTemplate(String name) {
+    public PaymentFieldTemplate(String name) {
         super(name);
     }
 
     @Override
     public void fill(FormTemplate formTemplate, PaymentField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
-        field.setAmount(FormUtils.getFieldLongProperty(formTemplate, this, "amount", locale, args, this.getDefaultValues().getAmount()));
+        field.setAmount(FormUtils.getFieldLongProperty(formTemplate, this, "amount", locale, args, this.getDefaultValue().getAmount()));
     }
 }

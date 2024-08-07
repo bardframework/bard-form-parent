@@ -1,5 +1,7 @@
 package org.bardframework.form.field.input;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.field.option.OptionDataSource;
@@ -7,9 +9,11 @@ import org.bardframework.form.field.option.OptionDataSource;
 import java.util.Locale;
 import java.util.Map;
 
-public class SingleSelectFieldTemplate extends InputFieldTemplate<SingleSelectField, String> {
+@Getter
+@Setter
+public class SingleSelectFieldTemplate extends InputFieldTemplateAbstract<SingleSelectField, String> {
 
-    protected final OptionDataSource optionDataSource;
+    public final OptionDataSource optionDataSource;
 
     protected SingleSelectFieldTemplate(String name, OptionDataSource optionDataSource) {
         super(name);

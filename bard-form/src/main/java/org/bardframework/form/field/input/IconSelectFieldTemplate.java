@@ -1,13 +1,16 @@
 package org.bardframework.form.field.input;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Map;
 
+@Getter
+@Setter
+public class IconSelectFieldTemplate extends InputFieldTemplateAbstract<IconSelectField, String> {
 
-public class IconSelectFieldTemplate extends InputFieldTemplate<IconSelectField, String> {
-
-    protected IconSelectFieldTemplate(String name) {
+    public IconSelectFieldTemplate(String name) {
         super(name);
     }
 

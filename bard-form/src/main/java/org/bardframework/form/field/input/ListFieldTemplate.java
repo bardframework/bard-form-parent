@@ -1,5 +1,7 @@
 package org.bardframework.form.field.input;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
@@ -9,9 +11,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class ListFieldTemplate extends InputFieldTemplate<ListField, List<String>> {
+@Getter
+@Setter
+public class ListFieldTemplate extends InputFieldTemplateAbstract<ListField, List<String>> {
 
-    protected ListFieldTemplate(String name) {
+    public ListFieldTemplate(String name) {
         super(name);
     }
 
@@ -42,10 +46,11 @@ public class ListFieldTemplate extends InputFieldTemplate<ListField, List<String
     @Override
     public void fill(FormTemplate formTemplate, ListField field, Map<String, String> values, Locale locale) throws Exception {
         super.fill(formTemplate, field, values, locale);
-        field.setMinLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "minLength", locale, values, this.getDefaultValues().getMinLength()));
-        field.setMaxLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxLength", locale, values, this.getDefaultValues().getMaxLength()));
-        field.setMaxCount(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxCount", locale, values, this.getDefaultValues().getMaxCount()));
-        field.setBulkAdd(FormUtils.getFieldBooleanProperty(formTemplate, this, "bulkAdd", locale, values, this.getDefaultValues().getBulkAdd()));
+        field.setMinLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "minLength", locale, values, this.getDefaultValue().getMinLength()));
+        field.setMaxLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxLength", locale, values, this.getDefaultValue().getMaxLength()));
+        field.setMaxCount(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxCount", locale, values, this.getDefaultValue().getMaxCount()));
+        field.setBulkAdd(FormUtils.getFieldBooleanProperty(formTemplate, this, "bulkAdd", locale, values, this.getDefaultValue().getBulkAdd()));
+        field.setSubmitType(this.getDefaultValue().getSubmitType());
     }
 
     @Override

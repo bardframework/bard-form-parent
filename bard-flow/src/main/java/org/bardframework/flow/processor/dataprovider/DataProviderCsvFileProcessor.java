@@ -2,6 +2,8 @@ package org.bardframework.flow.processor.dataprovider;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.commons.web.utils.ResourceUtils;
@@ -17,6 +19,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+@Getter
+@Setter
 @Slf4j
 public class DataProviderCsvFileProcessor extends FormProcessorAbstract {
 
@@ -68,27 +72,4 @@ public class DataProviderCsvFileProcessor extends FormProcessorAbstract {
         throw new FlowExecutionException(List.of(identifierNotFoundErrorMessageCode));
     }
 
-    public String getCsvFileLocation() {
-        return csvFileLocation;
-    }
-
-    public Map<Integer, String> getMapper() {
-        return mapper;
-    }
-
-    public String getIdentifierFieldName() {
-        return identifierFieldName;
-    }
-
-    public String getIdentifierNotFoundErrorMessageCode() {
-        return identifierNotFoundErrorMessageCode;
-    }
-
-    public String getSeparator() {
-        return separator;
-    }
-
-    public void setSeparator(String separator) {
-        this.separator = separator;
-    }
 }

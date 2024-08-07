@@ -2,6 +2,7 @@ package org.bardframework.flow.processor.dataprovider;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.bardframework.commons.utils.StringTemplateUtils;
 import org.bardframework.commons.utils.persian.PersianStringUtils;
@@ -17,6 +18,7 @@ import java.util.Locale;
 import java.util.Map;
 
 @Slf4j
+@Getter
 public class DataProviderDatabaseProcessor extends FormProcessorAbstract {
 
     private final DataSource dataSource;
@@ -46,7 +48,4 @@ public class DataProviderDatabaseProcessor extends FormProcessorAbstract {
         }
     }
 
-    public String getErrorMessageCode() {
-        return errorMessageCode;
-    }
 }

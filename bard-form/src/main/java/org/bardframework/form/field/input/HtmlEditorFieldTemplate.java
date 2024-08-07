@@ -1,6 +1,7 @@
 package org.bardframework.form.field.input;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
@@ -10,9 +11,10 @@ import java.util.Locale;
 import java.util.Map;
 
 @Getter
-public class HtmlEditorFieldTemplate extends InputFieldTemplate<HtmlEditorField, String> {
+@Setter
+public class HtmlEditorFieldTemplate extends InputFieldTemplateAbstract<HtmlEditorField, String> {
 
-    protected HtmlEditorFieldTemplate(String name) {
+    public HtmlEditorFieldTemplate(String name) {
         super(name);
     }
 
@@ -35,7 +37,7 @@ public class HtmlEditorFieldTemplate extends InputFieldTemplate<HtmlEditorField,
     @Override
     public void fill(FormTemplate formTemplate, HtmlEditorField field, Map<String, String> values, Locale locale) throws Exception {
         super.fill(formTemplate, field, values, locale);
-        field.setMaxSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxSize", locale, values, this.getDefaultValues().getMaxSize()));
+        field.setMaxSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxSize", locale, values, this.getDefaultValue().getMaxSize()));
     }
 
     @Override

@@ -1,12 +1,16 @@
 package org.bardframework.form.field.input;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Map;
 
-public class SwitchButtonFieldTemplate extends InputFieldTemplate<SwitchButtonField, Boolean> {
+@Getter
+@Setter
+public class SwitchButtonFieldTemplate extends InputFieldTemplateAbstract<SwitchButtonField, Boolean> {
 
-    protected SwitchButtonFieldTemplate(String name) {
+    public SwitchButtonFieldTemplate(String name) {
         super(name);
     }
 

@@ -1,10 +1,13 @@
 package org.bardframework.form.exception;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Getter
 public class FormDataValidationException extends RuntimeException {
     private final Map<String, List<String>> invalidFields = new HashMap<>();
 
@@ -18,7 +21,4 @@ public class FormDataValidationException extends RuntimeException {
         return this;
     }
 
-    public Map<String, List<String>> getInvalidFields() {
-        return invalidFields;
-    }
 }

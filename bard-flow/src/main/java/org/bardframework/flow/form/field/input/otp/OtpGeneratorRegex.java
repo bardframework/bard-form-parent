@@ -1,7 +1,11 @@
 package org.bardframework.flow.form.field.input.otp;
 
 import com.mifmif.common.regex.Generex;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class OtpGeneratorRegex implements OtpGenerator<String> {
     private final Generex generex;
     private final int length;
@@ -20,14 +24,6 @@ public class OtpGeneratorRegex implements OtpGenerator<String> {
     @Override
     public int getLength() {
         return length;
-    }
-
-    public Boolean getNumber() {
-        return number;
-    }
-
-    public void setNumber(Boolean number) {
-        this.number = number;
     }
 
     @Override

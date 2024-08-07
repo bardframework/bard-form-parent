@@ -14,8 +14,8 @@ import java.time.temporal.ChronoUnit;
 @Setter
 @ToString
 public class TimeFilterField extends InputField<LocalTimeFilter> {
-    private Long minLength;
-    private Long maxLength;
+    private Integer minLength;
+    private Integer maxLength;
     private ChronoUnit lengthUnit;
     private LocalTime minValue;
     private LocalTime maxValue;

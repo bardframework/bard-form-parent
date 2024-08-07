@@ -1,5 +1,7 @@
 package org.bardframework.flow.form.field.input.otp.time;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.bardframework.flow.form.field.input.otp.OtpGenerator;
 
 import javax.crypto.Mac;
@@ -10,6 +12,8 @@ import java.security.SecureRandom;
 /*
     https://github.com/google/google-authenticator/wiki/Key-Uri-Format
  */
+@Getter
+@Setter
 public abstract class OtpServiceAbstract implements OtpGenerator<Void> {
     /*
         SHA1 (Default)
@@ -54,60 +58,9 @@ public abstract class OtpServiceAbstract implements OtpGenerator<Void> {
         return true;
     }
 
-    public String getAlgorithm() {
-        return algorithm;
-    }
-
-    public void setAlgorithm(String algorithm) {
-        this.algorithm = algorithm;
-    }
-
-    public String getHmacAlgorithm() {
-        return hmacAlgorithm;
-    }
-
-    public void setHmacAlgorithm(String hmacAlgorithm) {
-        this.hmacAlgorithm = hmacAlgorithm;
-    }
-
-    public String getHmacProvider() {
-        return hmacProvider;
-    }
-
-    public void setHmacProvider(String hmacProvider) {
-        this.hmacProvider = hmacProvider;
-    }
-
-    public String getRngAlgorithm() {
-        return rngAlgorithm;
-    }
-
-    public void setRngAlgorithm(String rngAlgorithm) {
-        this.rngAlgorithm = rngAlgorithm;
-    }
-
-    public String getRngProvider() {
-        return rngProvider;
-    }
-
-    public void setRngProvider(String rngProvider) {
-        this.rngProvider = rngProvider;
-    }
-
     @Override
     public int getLength() {
         return length;
     }
 
-    public void setLength(int length) {
-        this.length = length;
-    }
-
-    public int getSecretSize() {
-        return secretSize;
-    }
-
-    public void setSecretSize(int secretSize) {
-        this.secretSize = secretSize;
-    }
 }

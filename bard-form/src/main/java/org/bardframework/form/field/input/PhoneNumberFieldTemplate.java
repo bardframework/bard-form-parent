@@ -1,25 +1,25 @@
-package org.bardframework.form.field.input.phonenumber;
+package org.bardframework.form.field.input;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
+import org.bardframework.form.common.PhoneNumber;
+import org.bardframework.form.common.PhoneNumberParser;
 import org.bardframework.form.exception.FormDataValidationException;
-import org.bardframework.form.field.input.CountrySelectField;
-import org.bardframework.form.field.input.CountrySelectFieldTemplate;
-import org.bardframework.form.field.input.InputFieldTemplate;
-import org.bardframework.form.field.input.PhoneNumberField;
 
 import java.util.Locale;
 import java.util.Map;
 
-@Slf4j
-public class PhoneNumberFieldTemplate extends InputFieldTemplate<PhoneNumberField, String> {
+@Getter
+@Setter
+public class PhoneNumberFieldTemplate extends InputFieldTemplateAbstract<PhoneNumberField, String> {
 
     private final PhoneNumberParser phoneNumberParser;
     private final CountrySelectFieldTemplate countrySelectFieldTemplate;
 
-    protected PhoneNumberFieldTemplate(String name, PhoneNumberParser phoneNumberParser, CountrySelectFieldTemplate countrySelectFieldTemplate) {
+    public PhoneNumberFieldTemplate(String name, PhoneNumberParser phoneNumberParser, CountrySelectFieldTemplate countrySelectFieldTemplate) {
         super(name);
         this.phoneNumberParser = phoneNumberParser;
         this.countrySelectFieldTemplate = countrySelectFieldTemplate;
@@ -71,7 +71,7 @@ public class PhoneNumberFieldTemplate extends InputFieldTemplate<PhoneNumberFiel
     @Override
     public void fill(FormTemplate formTemplate, PhoneNumberField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
-        field.setMaxLength(FormUtils.getFieldIntegerProperty(formTemplate, this.getName(), "maxLength", locale, args, this.getDefaultValues().getMaxLength()));
+        field.setMaxLength(FormUtils.getFieldIntegerProperty(formTemplate, this.getName(), "maxLength", locale, args, this.getDefaultValue().getMaxLength()));
         CountrySelectField countrySelectField = new CountrySelectField();
         countrySelectFieldTemplate.fill(formTemplate, countrySelectField, args, locale);
         field.setCountrySelectField(countrySelectField);

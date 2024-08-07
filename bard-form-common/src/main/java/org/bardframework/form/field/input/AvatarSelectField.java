@@ -7,7 +7,6 @@ import org.bardframework.form.field.FieldType;
 @Getter
 @Setter
 public class AvatarSelectField extends ImageUploadField {
-    private Boolean cropper;
 
     @Override
     public FieldType getType() {

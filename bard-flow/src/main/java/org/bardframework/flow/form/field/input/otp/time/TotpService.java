@@ -1,5 +1,7 @@
 package org.bardframework.flow.form.field.input.otp.time;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.bardframework.commons.utils.StringTemplateUtils;
@@ -9,6 +11,8 @@ import java.security.GeneralSecurityException;
 import java.util.HashMap;
 import java.util.Map;
 
+@Getter
+@Setter
 public class TotpService extends OtpServiceAbstract {
     private static final String KEY_URI_TEMPLATE = "otpauth://totp/::label::?secret=::secret::&issuer=::issuer::&algorithm=::algorithm::&digits=::length::&period=::periodSeconds::";
     private int periodSeconds = 30;
@@ -89,10 +93,6 @@ public class TotpService extends OtpServiceAbstract {
         return false;
     }
 
-    public int getWindow() {
-        return window;
-    }
-
     public void setWindow(int window) {
         if (window < 1 || window > 10) {
             throw new IllegalStateException("Window size provided not allowed: " + window);
@@ -100,11 +100,4 @@ public class TotpService extends OtpServiceAbstract {
         this.window = window;
     }
 
-    public int getPeriodSeconds() {
-        return periodSeconds;
-    }
-
-    public void setPeriodSeconds(int periodSeconds) {
-        this.periodSeconds = periodSeconds;
-    }
 }

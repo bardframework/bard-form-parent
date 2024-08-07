@@ -1,5 +1,7 @@
 package org.bardframework.form.field.input;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
@@ -10,7 +12,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class NewPasswordFieldTemplate extends InputFieldTemplate<NewPasswordField, String> {
+@Getter
+@Setter
+public class NewPasswordFieldTemplate extends InputFieldTemplateAbstract<NewPasswordField, String> {
 
     public NewPasswordFieldTemplate(String name) {
         super(name);
@@ -50,10 +54,10 @@ public class NewPasswordFieldTemplate extends InputFieldTemplate<NewPasswordFiel
     @Override
     public void fill(FormTemplate formTemplate, NewPasswordField field, Map<String, String> values, Locale locale) throws Exception {
         super.fill(formTemplate, field, values, locale);
-        field.setShowConfirmPassword(FormUtils.getFieldBooleanProperty(formTemplate, this, "showConfirmPassword", locale, values, this.getDefaultValues().getShowConfirmPassword()));
-        field.setRegex(FormUtils.getFieldStringProperty(formTemplate, this, "regex", locale, values, this.getDefaultValues().getRegex()));
-        field.setMinLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "minLength", locale, values, this.getDefaultValues().getMinLength()));
-        field.setMaxLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxLength", locale, values, this.getDefaultValues().getMaxLength()));
+        field.setShowConfirmPassword(FormUtils.getFieldBooleanProperty(formTemplate, this, "showConfirmPassword", locale, values, this.getDefaultValue().getShowConfirmPassword()));
+        field.setRegex(FormUtils.getFieldStringProperty(formTemplate, this, "regex", locale, values, this.getDefaultValue().getRegex()));
+        field.setMinLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "minLength", locale, values, this.getDefaultValue().getMinLength()));
+        field.setMaxLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxLength", locale, values, this.getDefaultValue().getMaxLength()));
     }
 
     @Override

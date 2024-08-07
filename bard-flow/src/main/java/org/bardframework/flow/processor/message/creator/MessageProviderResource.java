@@ -1,5 +1,6 @@
 package org.bardframework.flow.processor.message.creator;
 
+import lombok.Getter;
 import org.apache.commons.io.IOUtils;
 import org.bardframework.commons.utils.StringTemplateUtils;
 import org.bardframework.commons.web.utils.ResourceUtils;
@@ -11,6 +12,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+@Getter
 public class MessageProviderResource implements MessageProvider {
 
     protected final String resourcePathTemplate;
@@ -31,7 +33,4 @@ public class MessageProviderResource implements MessageProvider {
         }
     }
 
-    public String getResourcePathTemplate() {
-        return resourcePathTemplate;
-    }
 }

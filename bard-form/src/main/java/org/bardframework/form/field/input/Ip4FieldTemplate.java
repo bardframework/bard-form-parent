@@ -1,10 +1,15 @@
 package org.bardframework.form.field.input;
 
-public class Ip4FieldTemplate extends IpFieldTemplate<Ip4Field> {
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class Ip4FieldTemplate extends IpFieldTemplateAbstract<Ip4Field> {
 
     public static final int IP4_LENGTH = 32;
 
-    protected Ip4FieldTemplate(String name) {
+    public Ip4FieldTemplate(String name) {
         super(name);
     }
 

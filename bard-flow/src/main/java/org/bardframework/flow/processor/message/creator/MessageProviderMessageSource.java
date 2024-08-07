@@ -1,5 +1,6 @@
 package org.bardframework.flow.processor.message.creator;
 
+import lombok.Getter;
 import org.bardframework.commons.utils.StringTemplateUtils;
 import org.springframework.context.MessageSource;
 
@@ -7,6 +8,7 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.Map;
 
+@Getter
 public class MessageProviderMessageSource implements MessageProvider {
 
     protected final String messageTemplateKey;
@@ -23,11 +25,4 @@ public class MessageProviderMessageSource implements MessageProvider {
         return this.getMessageSource().getMessage(messageKey, new Object[]{}, locale);
     }
 
-    public MessageSource getMessageSource() {
-        return messageSource;
-    }
-
-    public String getMessageTemplateKey() {
-        return messageTemplateKey;
-    }
 }

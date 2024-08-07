@@ -4,19 +4,23 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.bardframework.form.field.FieldType;
+import org.bardframework.form.model.StringListSubmitType;
 
 import java.util.List;
 
 @Getter
 @Setter
 @ToString
-public class FileUploadField extends InputField<String> {
+public class FileUploadField extends InputField<List<String>> {
 
-    private Integer minSize;
-    private Integer maxSize;
-    private List<String> contentTypes;
-    private String uploadAction;
-    private String downloadAction;
+    protected Integer minSize;
+    protected Integer maxSize;
+    protected Integer totalSize;
+    protected List<String> contentTypes;
+    protected String uploadAction;
+    protected String downloadAction;
+    protected Byte count;
+    protected StringListSubmitType submitType;
 
     public FileUploadField() {
     }
@@ -31,7 +35,7 @@ public class FileUploadField extends InputField<String> {
     }
 
     @Override
-    public String toString(String value) {
-        return value;
+    public String toString(List<String> value) {
+        return null == value ? null : String.join(SEPARATOR, value);
     }
 }

@@ -1,6 +1,8 @@
 package org.bardframework.flow.form;
 
 import jakarta.annotation.PostConstruct;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.field.FieldTemplate;
@@ -11,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Getter
+@Setter
 public class FlowFormTemplate extends FormTemplate {
 
     private List<FormProcessor> preProcessors = new ArrayList<>();
@@ -31,35 +35,4 @@ public class FlowFormTemplate extends FormTemplate {
         this.getPostProcessors().forEach(processor -> processor.configurationValidate(this));
     }
 
-    public List<FormProcessor> getPreProcessors() {
-        return preProcessors;
-    }
-
-    public void setPreProcessors(List<FormProcessor> preProcessors) {
-        this.preProcessors = preProcessors;
-    }
-
-    public List<FormProcessor> getPostProcessors() {
-        return postProcessors;
-    }
-
-    public void setPostProcessors(List<FormProcessor> postProcessors) {
-        this.postProcessors = postProcessors;
-    }
-
-    public boolean isFinished() {
-        return finished;
-    }
-
-    public void setFinished(boolean finished) {
-        this.finished = finished;
-    }
-
-    public Map<String, List<FormProcessor>> getActionProcessors() {
-        return actionProcessors;
-    }
-
-    public void setActionProcessors(Map<String, List<FormProcessor>> actionProcessors) {
-        this.actionProcessors = actionProcessors;
-    }
 }

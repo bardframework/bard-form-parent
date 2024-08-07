@@ -16,7 +16,7 @@ import org.bardframework.flow.form.field.input.FlowInputFieldTemplate;
 import org.bardframework.flow.repository.FlowDataRepository;
 import org.bardframework.form.BardForm;
 import org.bardframework.form.FormUtils;
-import org.bardframework.form.field.input.InputFieldTemplate;
+import org.bardframework.form.field.input.InputFieldTemplateAbstract;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -177,7 +177,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
      * افزودن دیتاهای مورد نیاز در فرم به فلو دیتا
      */
     protected void fillFlowData(Map<String, String> flowData, Map<String, String> formData, FlowFormTemplate currentFormTemplate) {
-        for (InputFieldTemplate<?, ?> inputFieldTemplate : currentFormTemplate.getFieldTemplates(flowData, InputFieldTemplate.class)) {
+        for (InputFieldTemplateAbstract<?, ?> inputFieldTemplate : currentFormTemplate.getFieldTemplates(flowData, InputFieldTemplateAbstract.class)) {
             if (!inputFieldTemplate.isPersistentValue()) {
                 continue;
             }

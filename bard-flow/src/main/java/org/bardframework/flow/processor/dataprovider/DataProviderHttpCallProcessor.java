@@ -2,6 +2,8 @@ package org.bardframework.flow.processor.dataprovider;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.commons.utils.http.HttpCallResponse;
@@ -23,6 +25,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Slf4j
+@Setter
+@Getter
 public class DataProviderHttpCallProcessor extends HttpCaller implements FormProcessor {
 
     protected final Map<String, Pattern> fieldsFetcher = new HashMap<>();
@@ -61,28 +65,8 @@ public class DataProviderHttpCallProcessor extends HttpCaller implements FormPro
         }
     }
 
-    public Pattern getFetchPattern() {
-        return fetchPattern;
-    }
-
-    public Map<String, Pattern> getFieldsFetcher() {
-        return fieldsFetcher;
-    }
-
-    public String getErrorMessageCode() {
-        return errorMessageCode;
-    }
-
     public void setExecuteExpression(String executeExpression) {
         this.executeExpression = new SpelExpressionParser(new SpelParserConfiguration(SpelCompilerMode.IMMEDIATE, null)).parseExpression(executeExpression);
-    }
-
-    public String getResponseFieldName() {
-        return responseFieldName;
-    }
-
-    public void setResponseFieldName(String responseFieldName) {
-        this.responseFieldName = responseFieldName;
     }
 
     @Override

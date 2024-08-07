@@ -1,9 +1,10 @@
 package org.bardframework.form.field.filter;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
-import org.bardframework.form.field.input.InputFieldTemplate;
+import org.bardframework.form.field.input.InputFieldTemplateAbstract;
 import org.bardframework.form.field.option.OptionDataSource;
 import org.bardframework.form.model.filter.IdFilter;
 
@@ -11,9 +12,10 @@ import java.util.Locale;
 import java.util.Map;
 
 @Getter
-public class SingleSelectFilterFieldTemplate extends InputFieldTemplate<SingleSelectFilterField, IdFilter<String>> {
+@Setter
+public class SingleSelectFilterFieldTemplate extends InputFieldTemplateAbstract<SingleSelectFilterField, IdFilter<String>> {
 
-    protected final OptionDataSource optionDataSource;
+    public final OptionDataSource optionDataSource;
 
     protected SingleSelectFilterFieldTemplate(String name, OptionDataSource optionDataSource) {
         super(name);

@@ -21,7 +21,6 @@ import lombok.ToString;
  *
  * @param <T> the type of filter.
  * @see NumberRangeFilter
- * @see LocalDateFilter
  */
 @Getter
 @ToString

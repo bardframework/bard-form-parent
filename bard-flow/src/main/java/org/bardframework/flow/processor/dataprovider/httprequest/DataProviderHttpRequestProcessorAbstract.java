@@ -2,6 +2,7 @@ package org.bardframework.flow.processor.dataprovider.httprequest;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.Getter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.flow.processor.FormProcessorAbstract;
@@ -11,6 +12,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Getter
 public abstract class DataProviderHttpRequestProcessorAbstract extends FormProcessorAbstract {
 
     protected final Map<String, String> mapper;
@@ -28,10 +30,6 @@ public abstract class DataProviderHttpRequestProcessorAbstract extends FormProce
             values = values.stream().filter(StringUtils::isNotBlank).collect(Collectors.toList());
             flowData.put(fieldName, CollectionUtils.isEmpty(values) ? null : String.join(this.getValuesSeparator(), values));
         }
-    }
-
-    public Map<String, String> getMapper() {
-        return mapper;
     }
 
     public String getValuesSeparator() {

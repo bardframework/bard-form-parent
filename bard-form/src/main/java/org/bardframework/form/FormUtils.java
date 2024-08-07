@@ -8,12 +8,10 @@ import org.bardframework.commons.utils.StringTemplateUtils;
 import org.bardframework.form.field.Field;
 import org.bardframework.form.field.FieldTemplate;
 import org.bardframework.form.field.input.InputField;
-import org.bardframework.form.field.input.InputFieldTemplate;
+import org.bardframework.form.field.input.InputFieldTemplateAbstract;
 import org.bardframework.form.field.view.ReadonlyField;
 import org.springframework.context.MessageSource;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -45,7 +43,7 @@ public class FormUtils {
             Field field = fieldTemplate.toField(formTemplate, args, locale);
             String valueString = values.get(fieldTemplate.getName());
             if (field instanceof InputField<?> && null == ((InputField<?>) field).getValue()) {
-                InputFieldTemplate<?, T> inputFieldTemplate = (InputFieldTemplate<?, T>) fieldTemplate;
+                InputFieldTemplateAbstract<?, T> inputFieldTemplate = (InputFieldTemplateAbstract<?, T>) fieldTemplate;
                 ((InputField<T>) field).setValue(inputFieldTemplate.toValue(valueString));
             } else if (field instanceof ReadonlyField) {
                 ((ReadonlyField) field).setValue(valueString);
@@ -187,6 +185,26 @@ public class FormUtils {
         }
     }
 
+    public static Byte getFieldByteProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Locale locale, Map<String, String> args, Byte defaultValue) {
+        return FormUtils.getFieldByteProperty(formTemplate, fieldTemplate.getName(), property, locale, args, defaultValue);
+    }
+
+    /**
+     * @return null if we can't read property value
+     */
+    public static Byte getFieldByteProperty(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, String> args, Byte defaultValue) {
+        String value = FormUtils.getFieldStringProperty(formTemplate, fieldName, property, locale, args, null);
+        if (StringUtils.isBlank(value)) {
+            return defaultValue;
+        }
+        try {
+            return Byte.parseByte(value);
+        } catch (Exception e) {
+            log.error("error reading [{}] of [{}.{}] as Byte", property, formTemplate, fieldName, e);
+            return null;
+        }
+    }
+
     public static Long getFieldLongProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Locale locale, Map<String, String> args, Long defaultValue) {
         return FormUtils.getFieldLongProperty(formTemplate, fieldTemplate.getName(), property, locale, args, defaultValue);
     }
@@ -203,43 +221,6 @@ public class FormUtils {
             return Long.parseLong(value);
         } catch (Exception e) {
             log.error("error reading [{}] of [{}.{}] as Long", property, formTemplate, fieldName, e);
-            return null;
-        }
-    }
-
-    public static LocalDate getFieldLocalDateProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Locale locale, Map<String, String> args, LocalDate defaultValue) {
-        return FormUtils.getFieldLocalDateProperty(formTemplate, fieldTemplate.getName(), property, locale, args, defaultValue);
-    }
-
-    /**
-     * @return null if we can't read property value
-     */
-    public static LocalDate getFieldLocalDateProperty(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, String> args, LocalDate defaultValue) {
-        String value = FormUtils.getFieldStringProperty(formTemplate, fieldName, property, locale, args, null);
-        if (StringUtils.isBlank(value)) {
-            return defaultValue;
-        }
-        try {
-            return LocalDate.parse(value);
-        } catch (Exception e) {
-            log.error("error reading [{}] of [{}.{}] as LocalDate", property, formTemplate, fieldName, e);
-            return null;
-        }
-    }
-
-    public static LocalDateTime getFieldLocalDateTimeProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Locale locale, Map<String, String> args, LocalDateTime defaultValue) {
-        return FormUtils.getFieldLocalDateTimeProperty(formTemplate, fieldTemplate.getName(), property, locale, args, defaultValue);
-    }
-
-    public static LocalDateTime getFieldLocalDateTimeProperty(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, String> args, LocalDateTime defaultValue) {
-        String value = FormUtils.getFieldStringProperty(formTemplate, fieldName, property, locale, args, null);
-        if (StringUtils.isBlank(value)) {
-            return defaultValue;
-        }
-        try {
-            return LocalDateTime.parse(value);
-        } catch (Exception e) {
-            log.error("error reading [{}] of [{}.{}] as LocalDateTime", property, formTemplate, fieldName, e);
             return null;
         }
     }

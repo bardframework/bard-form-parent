@@ -1,11 +1,13 @@
 package org.bardframework.form.field.filter;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
 import org.bardframework.form.field.input.InputField;
-import org.bardframework.form.field.input.InputFieldTemplate;
+import org.bardframework.form.field.input.InputFieldTemplateAbstract;
 import org.bardframework.form.field.option.OptionDataSource;
 import org.bardframework.form.model.filter.IdFilter;
 
@@ -14,11 +16,13 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class MultiSelectFilterFieldTemplate extends InputFieldTemplate<MultiSelectFilterField, IdFilter<String>> {
+@Getter
+@Setter
+public class MultiSelectFilterFieldTemplate extends InputFieldTemplateAbstract<MultiSelectFilterField, IdFilter<String>> {
 
     protected final OptionDataSource optionDataSource;
 
-    protected MultiSelectFilterFieldTemplate(String name, OptionDataSource optionDataSource) {
+    public MultiSelectFilterFieldTemplate(String name, OptionDataSource optionDataSource) {
         super(name);
         this.optionDataSource = optionDataSource;
     }
@@ -26,7 +30,7 @@ public class MultiSelectFilterFieldTemplate extends InputFieldTemplate<MultiSele
     @Override
     public void fill(FormTemplate formTemplate, MultiSelectFilterField filterField, Map<String, String> values, Locale locale) throws Exception {
         super.fill(formTemplate, filterField, values, locale);
-        filterField.setMaxCount(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxCount", locale, values, this.getDefaultValues().getMaxCount()));
+        filterField.setMaxCount(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxCount", locale, values, this.getDefaultValue().getMaxCount()));
         filterField.setOptions(optionDataSource.getOptions(locale));
     }
 

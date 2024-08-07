@@ -1,15 +1,14 @@
 package org.bardframework.form.field.filter.valueprovider;
 
+import org.bardframework.commons.utils.DateTimeUtils;
 import org.bardframework.form.field.filter.DateFilterField;
 import org.bardframework.form.field.value.FieldValueProvider;
-import org.bardframework.form.model.filter.LocalDateFilter;
+import org.bardframework.form.model.filter.LongFilter;
 
-import java.time.LocalDate;
-
-public class DateFilterFieldValueProvider implements FieldValueProvider<DateFilterField, LocalDateFilter> {
+public class DateFilterFieldValueProvider implements FieldValueProvider<DateFilterField, LongFilter> {
 
     @Override
-    public LocalDateFilter getValue(DateFilterField field) {
+    public LongFilter getValue(DateFilterField field) {
         Long length = field.getMaxLength();
         if (null == length) {
             length = field.getMinLength();
@@ -18,15 +17,15 @@ public class DateFilterFieldValueProvider implements FieldValueProvider<DateFilt
             length = 8L;
         }
         length = length - 1;
-        LocalDate maxValue = field.getMaxValue();
+        Long maxValue = field.getMaxValue();
         if (null != maxValue) {
-            return new LocalDateFilter().setFrom(maxValue.minusDays(length)).setTo(maxValue);
+            return new LongFilter().setFrom(maxValue - length).setTo(maxValue);
         }
-        LocalDate minValue = field.getMinValue();
+        Long minValue = field.getMinValue();
         if (null != minValue) {
-            return new LocalDateFilter().setFrom(minValue).setTo(minValue.plusDays(length));
+            return new LongFilter().setFrom(minValue).setTo(minValue + length);
         }
-        LocalDate now = LocalDate.now();
-        return new LocalDateFilter().setFrom(now.minusDays(length)).setTo(now);
+        Long now = DateTimeUtils.getTodayUtc();
+        return new LongFilter().setFrom(now - length).setTo(now);
     }
 }

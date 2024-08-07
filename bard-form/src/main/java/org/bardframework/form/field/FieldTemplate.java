@@ -23,13 +23,13 @@ public abstract class FieldTemplate<F extends Field> {
     protected final Class<F> fieldClazz;
     protected final String name;
     protected Expression showExpression = null;
-    protected F defaultValues;
+    protected F defaultValue;
     protected Logger log = LoggerFactory.getLogger(this.getClass());
 
     protected FieldTemplate(String name) {
         this.name = name;
         this.fieldClazz = ReflectionUtils.getGenericArgType(this.getClass(), 0);
-        this.defaultValues = ReflectionUtils.newInstance(this.fieldClazz);
+        this.defaultValue = ReflectionUtils.newInstance(this.fieldClazz);
     }
 
     public F toField(FormTemplate formTemplate, Map<String, String> args, Locale locale) throws Exception {
@@ -40,9 +40,9 @@ public abstract class FieldTemplate<F extends Field> {
 
     protected void fill(FormTemplate formTemplate, F field, Map<String, String> args, Locale locale) throws Exception {
         field.setName(this.getName());
-        field.setTitle(FormUtils.getFieldStringProperty(formTemplate, this, "title", locale, args, this.getDefaultValues().getTitle()));
-        field.setDescription(FormUtils.getFieldStringProperty(formTemplate, this, "description", locale, args, this.getDefaultValues().getDescription()));
-        field.setInfo(FormUtils.getFieldStringProperty(formTemplate, this, "info", locale, args, this.getDefaultValues().getInfo()));
+        field.setTitle(FormUtils.getFieldStringProperty(formTemplate, this, "title", locale, args, this.getDefaultValue().getTitle()));
+        field.setDescription(FormUtils.getFieldStringProperty(formTemplate, this, "description", locale, args, this.getDefaultValue().getDescription()));
+        field.setInfo(FormUtils.getFieldStringProperty(formTemplate, this, "info", locale, args, this.getDefaultValue().getInfo()));
     }
 
     protected F getEmptyField() {

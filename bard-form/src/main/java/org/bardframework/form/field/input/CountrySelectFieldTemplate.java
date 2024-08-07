@@ -1,6 +1,7 @@
 package org.bardframework.form.field.input;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
@@ -9,9 +10,10 @@ import java.util.Locale;
 import java.util.Map;
 
 @Getter
-public class CountrySelectFieldTemplate extends InputFieldTemplate<CountrySelectField, String> {
+@Setter
+public class CountrySelectFieldTemplate extends InputFieldTemplateAbstract<CountrySelectField, String> {
 
-    protected CountrySelectFieldTemplate(String name) {
+    public CountrySelectFieldTemplate(String name) {
         super(name);
     }
 
@@ -42,9 +44,9 @@ public class CountrySelectFieldTemplate extends InputFieldTemplate<CountrySelect
 
     @Override
     public void fill(FormTemplate formTemplate, CountrySelectField field, Map<String, String> args, Locale locale) throws Exception {
-        field.setAvailableCountries(FormUtils.getFieldListProperty(formTemplate, this.getName(), "availableCountries", locale, args, this.getDefaultValues().getAvailableCountries()));
-        field.setExcludeCountries(FormUtils.getFieldListProperty(formTemplate, this.getName(), "excludeCountries", locale, args, this.defaultValues.getExcludeCountries()));
         super.fill(formTemplate, field, args, locale);
+        field.setAvailableCountries(FormUtils.getFieldListProperty(formTemplate, this.getName(), "availableCountries", locale, args, this.getDefaultValue().getAvailableCountries()));
+        field.setExcludeCountries(FormUtils.getFieldListProperty(formTemplate, this.getName(), "excludeCountries", locale, args, this.defaultValue.getExcludeCountries()));
     }
 
     @Override

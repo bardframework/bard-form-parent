@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.bardframework.form</groupId>
         <artifactId>bard-form-parent</artifactId>
-        <version>3.4.14</version>
+        <version>3.4.24</version>
     </parent>
 
     <artifactId>bard-form-common</artifactId>
@@ -19,6 +19,10 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.bardframework.commons</groupId>
+            <artifactId>common-utils</artifactId>
         </dependency>
     </dependencies>
 

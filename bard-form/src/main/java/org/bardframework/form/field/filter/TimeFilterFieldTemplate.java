@@ -1,10 +1,12 @@
 package org.bardframework.form.field.filter;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
 import org.bardframework.form.field.input.InputField;
-import org.bardframework.form.field.input.InputFieldTemplate;
+import org.bardframework.form.field.input.InputFieldTemplateAbstract;
 import org.bardframework.form.model.filter.LocalTimeFilter;
 
 import java.time.Duration;
@@ -13,22 +15,25 @@ import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 import java.util.Map;
 
-public class TimeFilterFieldTemplate extends InputFieldTemplate<TimeFilterField, LocalTimeFilter> {
+@Getter
+@Setter
+public class TimeFilterFieldTemplate extends InputFieldTemplateAbstract<TimeFilterField, LocalTimeFilter> {
+
     private boolean minIsNow;
     private boolean maxIsNow;
     private ChronoUnit lengthUnit = ChronoUnit.SECONDS;
 
-    protected TimeFilterFieldTemplate(String name) {
+    public TimeFilterFieldTemplate(String name) {
         super(name);
     }
 
     @Override
     public void fill(FormTemplate formTemplate, TimeFilterField field, Map<String, String> values, Locale locale) throws Exception {
         super.fill(formTemplate, field, values, locale);
-        field.setMinLength(FormUtils.getFieldLongProperty(formTemplate, this, "minLength", locale, values, this.getDefaultValues().getMinLength()));
-        field.setMaxLength(FormUtils.getFieldLongProperty(formTemplate, this, "maxLength", locale, values, this.getDefaultValues().getMaxLength()));
-        field.setMinValue(FormUtils.getFieldLocalTimeProperty(formTemplate, this, "minValue", locale, values, this.getDefaultValues().getMinValue()));
-        field.setMaxValue(FormUtils.getFieldLocalTimeProperty(formTemplate, this, "maxValue", locale, values, this.getDefaultValues().getMaxValue()));
+        field.setMinLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "minLength", locale, values, this.getDefaultValue().getMinLength()));
+        field.setMaxLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxLength", locale, values, this.getDefaultValue().getMaxLength()));
+        field.setMinValue(FormUtils.getFieldLocalTimeProperty(formTemplate, this, "minValue", locale, values, this.getDefaultValue().getMinValue()));
+        field.setMaxValue(FormUtils.getFieldLocalTimeProperty(formTemplate, this, "maxValue", locale, values, this.getDefaultValue().getMaxValue()));
         field.setLengthUnit(field.getLengthUnit());
         if (null == field.getMinValue()) {
             field.setMinValue(this.getMinValue());
@@ -111,29 +116,5 @@ public class TimeFilterFieldTemplate extends InputFieldTemplate<TimeFilterField,
 
     public LocalTime getMaxValue() {
         return maxIsNow ? LocalTime.now() : null;
-    }
-
-    public boolean isMinIsNow() {
-        return minIsNow;
-    }
-
-    public void setMinIsNow(boolean minIsNow) {
-        this.minIsNow = minIsNow;
-    }
-
-    public boolean isMaxIsNow() {
-        return maxIsNow;
-    }
-
-    public void setMaxIsNow(boolean maxIsNow) {
-        this.maxIsNow = maxIsNow;
-    }
-
-    public ChronoUnit getLengthUnit() {
-        return lengthUnit;
-    }
-
-    public void setLengthUnit(ChronoUnit lengthUnit) {
-        this.lengthUnit = lengthUnit;
     }
 }

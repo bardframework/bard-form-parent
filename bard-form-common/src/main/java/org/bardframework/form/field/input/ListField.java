@@ -3,8 +3,8 @@ package org.bardframework.form.field.input;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 import org.bardframework.form.field.FieldType;
+import org.bardframework.form.model.StringListSubmitType;
 
 import java.util.List;
 
@@ -16,6 +16,7 @@ public class ListField extends InputField<List<String>> {
     private Integer maxLength;
     private Integer maxCount;
     private Boolean bulkAdd;
+    private StringListSubmitType submitType;
 
     public ListField() {
     }

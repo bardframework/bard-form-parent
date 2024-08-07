@@ -16,6 +16,6 @@ public class ReadOnlyFieldTemplate extends FieldTemplate<ReadonlyField> {
     @Override
     public void fill(FormTemplate formTemplate, ReadonlyField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
-        field.setMask(FormUtils.getFieldStringProperty(formTemplate, this, "mask", locale, args, this.getDefaultValues().getMask()));
+        field.setMask(FormUtils.getFieldStringProperty(formTemplate, this, "mask", locale, args, this.getDefaultValue().getMask()));
     }
 }

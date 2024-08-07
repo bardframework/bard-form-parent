@@ -1,5 +1,7 @@
 package org.bardframework.form.field.input;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
@@ -7,8 +9,11 @@ import org.bardframework.form.FormUtils;
 import java.util.Locale;
 import java.util.Map;
 
-public class LocaleSelectFieldTemplate extends InputFieldTemplate<LocaleSelectField, String> {
-    protected LocaleSelectFieldTemplate(String name) {
+@Getter
+@Setter
+public class LocaleSelectFieldTemplate extends InputFieldTemplateAbstract<LocaleSelectField, String> {
+
+    public LocaleSelectFieldTemplate(String name) {
         super(name);
     }
 
@@ -36,8 +41,8 @@ public class LocaleSelectFieldTemplate extends InputFieldTemplate<LocaleSelectFi
 
     public void fill(FormTemplate formTemplate, LocaleSelectField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
-        field.setAvailableLocales(FormUtils.getFieldListProperty(formTemplate, this.getName(), "availableLocale", locale, args, this.getDefaultValues().getAvailableLocales()));
-        field.setExcludeLocales(FormUtils.getFieldListProperty(formTemplate, this.getName(), "excludeLocale", locale, args, this.defaultValues.getExcludeLocales()));
+        field.setAvailableLocales(FormUtils.getFieldListProperty(formTemplate, this.getName(), "availableLocale", locale, args, this.getDefaultValue().getAvailableLocales()));
+        field.setExcludeLocales(FormUtils.getFieldListProperty(formTemplate, this.getName(), "excludeLocale", locale, args, this.defaultValue.getExcludeLocales()));
     }
 
     public String toValue(String value) {

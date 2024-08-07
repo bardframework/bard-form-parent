@@ -20,18 +20,17 @@ import java.util.Map;
 
 @Getter
 @Setter
-public abstract class InputFieldTemplate<F extends InputField<T>, T> extends FieldTemplate<F> {
+public abstract class InputFieldTemplateAbstract<F extends InputField<T>, T> extends FieldTemplate<F> {
 
     protected boolean persistentValue = true;
     protected FieldValueProvider<F, T> valueProvider;
-    protected FieldDescriptionShowType descriptionShowType;
     protected Expression disableExpression = null;
 
-    protected InputFieldTemplate(String name) {
+    protected InputFieldTemplateAbstract(String name) {
         super(name);
     }
 
-    public InputFieldTemplate(String name, boolean persistentValue) {
+    public InputFieldTemplateAbstract(String name, boolean persistentValue) {
         this(name);
         this.persistentValue = persistentValue;
     }
@@ -69,12 +68,12 @@ public abstract class InputFieldTemplate<F extends InputField<T>, T> extends Fie
     @Override
     public void fill(FormTemplate formTemplate, F field, Map<String, String> values, Locale locale) throws Exception {
         super.fill(formTemplate, field, values, locale);
-        field.setDescriptionShowType(FormUtils.getFieldEnumProperty(formTemplate, this, "descriptionShowType", FieldDescriptionShowType.class, locale, values, this.getDefaultValues().getDescriptionShowType()));
-        field.setPlaceholder(FormUtils.getFieldStringProperty(formTemplate, this, "placeholder", locale, values, this.getDefaultValues().getPlaceholder()));
-        field.setErrorMessage(FormUtils.getFieldStringProperty(formTemplate, this, "errorMessage", locale, values, this.getDefaultValues().getErrorMessage()));
-        field.setRequired(FormUtils.getFieldBooleanProperty(formTemplate, this, "required", locale, values, this.getDefaultValues().getRequired()));
+        field.setDescriptionShowType(FormUtils.getFieldEnumProperty(formTemplate, this, "descriptionShowType", FieldDescriptionShowType.class, locale, values, this.getDefaultValue().getDescriptionShowType()));
+        field.setPlaceholder(FormUtils.getFieldStringProperty(formTemplate, this, "placeholder", locale, values, this.getDefaultValue().getPlaceholder()));
+        field.setErrorMessage(FormUtils.getFieldStringProperty(formTemplate, this, "errorMessage", locale, values, this.getDefaultValue().getErrorMessage()));
+        field.setRequired(FormUtils.getFieldBooleanProperty(formTemplate, this, "required", locale, values, this.getDefaultValue().getRequired()));
         if (null == disableExpression) {
-            field.setDisable(FormUtils.getFieldBooleanProperty(formTemplate, this, "disable", locale, values, this.getDefaultValues().getDisable()));
+            field.setDisable(FormUtils.getFieldBooleanProperty(formTemplate, this, "disable", locale, values, this.getDefaultValue().getDisable()));
         } else {
             field.setDisable(Boolean.TRUE.equals(this.disableExpression.getValue(new StandardEvaluationContext(values), Boolean.class)));
         }
@@ -84,7 +83,7 @@ public abstract class InputFieldTemplate<F extends InputField<T>, T> extends Fie
     }
 
     private String getErrorMessage(FormTemplate formTemplate, Map<String, String> formData, Locale locale) {
-        return FormUtils.getFieldStringProperty(formTemplate, this, "errorMessage", locale, formData, this.getDefaultValues().getErrorMessage());
+        return FormUtils.getFieldStringProperty(formTemplate, this, "errorMessage", locale, formData, this.getDefaultValue().getErrorMessage());
     }
 
     public int getValidationOrder() {

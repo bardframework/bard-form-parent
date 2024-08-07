@@ -1,8 +1,11 @@
 package org.bardframework.flow.exception;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class FlowExecutionException extends RuntimeException {
     private final List<String> errorsMessageCodes = new ArrayList<>();
 
@@ -16,7 +19,4 @@ public class FlowExecutionException extends RuntimeException {
         return this;
     }
 
-    public List<String> getErrorsMessageCodes() {
-        return errorsMessageCodes;
-    }
 }

@@ -1,6 +1,8 @@
 package org.bardframework.flow.processor.message.sender;
 
 import jakarta.annotation.PostConstruct;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.flow.exception.FlowExecutionException;
@@ -19,6 +21,8 @@ import java.util.concurrent.Executors;
 import java.util.regex.Pattern;
 
 @Slf4j
+@Getter
+@Setter
 public abstract class MessageSenderAbstract implements MessageSender {
 
     protected final String receiverFieldName;
@@ -100,71 +104,4 @@ public abstract class MessageSenderAbstract implements MessageSender {
         return canSendRegex;
     }
 
-    public MessageProvider getMessageProvider() {
-        return messageProvider;
-    }
-
-    public String getReceiverFieldName() {
-        return receiverFieldName;
-    }
-
-    public Executor getExecutor() {
-        return executor;
-    }
-
-    public boolean isFailOnError() {
-        return failOnError;
-    }
-
-    public void setFailOnError(boolean failOnError) {
-        this.failOnError = failOnError;
-    }
-
-    public DateTimeFormatter getDateFormatGregorian() {
-        return dateFormatGregorian;
-    }
-
-    public void setDateFormatGregorian(DateTimeFormatter dateFormatGregorian) {
-        this.dateFormatGregorian = dateFormatGregorian;
-    }
-
-    public DateTimeFormatter getDateFormatterJalali() {
-        return dateFormatterJalali;
-    }
-
-    public void setDateFormatterJalali(DateTimeFormatter dateFormatterJalali) {
-        this.dateFormatterJalali = dateFormatterJalali;
-    }
-
-    public DateTimeFormatter getDateFormatterHijrah() {
-        return dateFormatterHijrah;
-    }
-
-    public void setDateFormatterHijrah(DateTimeFormatter dateFormatterHijrah) {
-        this.dateFormatterHijrah = dateFormatterHijrah;
-    }
-
-    public DateTimeFormatter getTimeFormat() {
-        return timeFormat;
-    }
-
-    public void setTimeFormat(DateTimeFormatter timeFormat) {
-        this.timeFormat = timeFormat;
-    }
-
-    public boolean isExecuteInNewThread() {
-        return executeInNewThread;
-    }
-
-    public void setExecuteInNewThread(boolean executeInNewThread) {
-        this.executeInNewThread = executeInNewThread;
-    }
-
-    public int getThreadPoolSize() {
-        return threadPoolSize;
-    }
-
-    public void setThreadPoolSize(int threadPoolSize) {
-        this.threadPoolSize = threadPoolSize;
-    }
 }

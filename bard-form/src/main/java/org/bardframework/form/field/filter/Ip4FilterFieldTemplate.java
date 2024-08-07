@@ -1,10 +1,14 @@
 package org.bardframework.form.field.filter;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.bardframework.form.field.input.Ip4FieldTemplate;
 
-public class Ip4FilterFieldTemplate extends IpFilterFieldTemplate<Ip4FilterField> {
+@Getter
+@Setter
+public class Ip4FilterFieldTemplate extends IpFilterFieldTemplateAbstract<Ip4FilterField> {
 
-    protected Ip4FilterFieldTemplate(String name) {
+    public Ip4FilterFieldTemplate(String name) {
         super(name);
     }
 

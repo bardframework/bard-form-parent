@@ -9,15 +9,15 @@ import java.util.Map;
 
 public class GravatarFieldTemplate extends FieldTemplate<GravatarField> {
 
-    protected GravatarFieldTemplate(String name) {
+    public GravatarFieldTemplate(String name) {
         super(name);
     }
 
     @Override
     public void fill(FormTemplate formTemplate, GravatarField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
-        field.setIdentifier(FormUtils.getFieldStringProperty(formTemplate, this, "identifier", locale, args, this.getDefaultValues().getIdentifier()));
-        field.setSize(FormUtils.getFieldLongProperty(formTemplate, this, "size", locale, args, this.getDefaultValues().getSize()));
-        field.setCircle(FormUtils.getFieldBooleanProperty(formTemplate, this, "circle", locale, args, this.getDefaultValues().getCircle()));
+        field.setIdentifier(FormUtils.getFieldStringProperty(formTemplate, this, "identifier", locale, args, this.getDefaultValue().getIdentifier()));
+        field.setSize(FormUtils.getFieldLongProperty(formTemplate, this, "size", locale, args, this.getDefaultValue().getSize()));
+        field.setCircle(FormUtils.getFieldBooleanProperty(formTemplate, this, "circle", locale, args, this.getDefaultValue().getCircle()));
     }
 }

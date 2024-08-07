@@ -23,12 +23,12 @@ public class ImageViewFieldTemplate extends FieldTemplate<ImageViewField> {
     @Override
     public void fill(FormTemplate formTemplate, ImageViewField field, Map<String, String> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, args, locale);
-        field.setSrc(FormUtils.getFieldStringProperty(formTemplate, this, "src", locale, args, this.getDefaultValues().getSrc()));
-        field.setFileName(FormUtils.getFieldStringProperty(formTemplate, this, "fileName", locale, args, this.getDefaultValues().getFileName()));
-        field.setContentType(FormUtils.getFieldStringProperty(formTemplate, this, "contentType", locale, args, this.getDefaultValues().getContentType()));
-        field.setSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "size", locale, args, this.getDefaultValues().getSize()));
-        field.setVisibleSeconds(FormUtils.getFieldIntegerProperty(formTemplate, this, "visibleSeconds", locale, args, this.getDefaultValues().getVisibleSeconds()));
-        field.setSpoilSeconds(FormUtils.getFieldIntegerProperty(formTemplate, this, "spoilSeconds", locale, args, this.getDefaultValues().getSpoilSeconds()));
+        field.setSrc(FormUtils.getFieldStringProperty(formTemplate, this, "src", locale, args, this.getDefaultValue().getSrc()));
+        field.setFileName(FormUtils.getFieldStringProperty(formTemplate, this, "fileName", locale, args, this.getDefaultValue().getFileName()));
+        field.setContentType(FormUtils.getFieldStringProperty(formTemplate, this, "contentType", locale, args, this.getDefaultValue().getContentType()));
+        field.setSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "size", locale, args, this.getDefaultValue().getSize()));
+        field.setVisibleSeconds(FormUtils.getFieldIntegerProperty(formTemplate, this, "visibleSeconds", locale, args, this.getDefaultValue().getVisibleSeconds()));
+        field.setSpoilSeconds(FormUtils.getFieldIntegerProperty(formTemplate, this, "spoilSeconds", locale, args, this.getDefaultValue().getSpoilSeconds()));
         if (null != dataProvider) {
             dataProvider.fillData(field, args);
         }

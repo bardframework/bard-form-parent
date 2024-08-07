@@ -65,8 +65,8 @@ public class SsotpFieldTemplate extends FlowInputFieldTemplate<SsotpField, Strin
 
     @Override
     public void fill(FormTemplate formTemplate, SsotpField field, Map<String, String> args, Locale locale) throws Exception {
-        field.setTitle(FormUtils.getFieldStringProperty(formTemplate, this, "title", locale, args, this.getDefaultValues().getTitle()));
-        field.setDescription(FormUtils.getFieldStringProperty(formTemplate, this, "description", locale, args, this.getDefaultValues().getDescription()));
+        field.setTitle(FormUtils.getFieldStringProperty(formTemplate, this, "title", locale, args, this.getDefaultValue().getTitle()));
+        field.setDescription(FormUtils.getFieldStringProperty(formTemplate, this, "description", locale, args, this.getDefaultValue().getDescription()));
         field.setNumber(this.getOtpGenerator().isNumber());
         field.setOtp(args.get(ANSWER_KEY));
     }

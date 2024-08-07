@@ -10,15 +10,10 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Builder
-public class MultiLocaleSelectField extends InputField<List<String>> {
-    private Integer maxCount;
+public class MultiLocaleSelectField extends MultiSelectSearchableField {
+
     private List<String> availableLocales;
     private List<String> excludeLocales;
-
-    @Override
-    public String toString(List<String> value) {
-        return null == value ? null : String.join(SEPARATOR, value);
-    }
 
     @Override
     public FieldType getType() {

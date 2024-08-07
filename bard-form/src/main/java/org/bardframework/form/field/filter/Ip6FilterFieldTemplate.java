@@ -1,10 +1,14 @@
 package org.bardframework.form.field.filter;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.bardframework.form.field.input.Ip6FieldTemplate;
 
-public class Ip6FilterFieldTemplate extends IpFilterFieldTemplate<Ip6FilterField> {
+@Getter
+@Setter
+public class Ip6FilterFieldTemplate extends IpFilterFieldTemplateAbstract<Ip6FilterField> {
 
-    protected Ip6FilterFieldTemplate(String name) {
+    public Ip6FilterFieldTemplate(String name) {
         super(name);
     }
 

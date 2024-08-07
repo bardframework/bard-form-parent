@@ -1,10 +1,15 @@
 package org.bardframework.form.field.input;
 
-public class Ip6FieldTemplate extends IpFieldTemplate<Ip6Field> {
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class Ip6FieldTemplate extends IpFieldTemplateAbstract<Ip6Field> {
 
     public static final int IP6_LENGTH = 12;
 
-    protected Ip6FieldTemplate(String name) {
+    public Ip6FieldTemplate(String name) {
         super(name);
     }
 

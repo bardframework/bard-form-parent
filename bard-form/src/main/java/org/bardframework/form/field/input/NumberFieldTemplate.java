@@ -1,5 +1,7 @@
 package org.bardframework.form.field.input;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
@@ -7,9 +9,11 @@ import org.bardframework.form.FormUtils;
 import java.util.Locale;
 import java.util.Map;
 
-public class NumberFieldTemplate extends InputFieldTemplate<NumberField, Long> {
+@Getter
+@Setter
+public class NumberFieldTemplate extends InputFieldTemplateAbstract<NumberField, Long> {
 
-    protected NumberFieldTemplate(String name) {
+    public NumberFieldTemplate(String name) {
         super(name);
     }
 
@@ -38,11 +42,11 @@ public class NumberFieldTemplate extends InputFieldTemplate<NumberField, Long> {
         super.fill(formTemplate, field, values, locale);
         field.setMinValue(this.getMinValue(formTemplate, values, locale));
         field.setMaxValue(this.getMaxValue(formTemplate, values, locale));
-        field.setMask(FormUtils.getFieldStringProperty(formTemplate, this, "mask", locale, values, this.getDefaultValues().getMask()));
+        field.setMask(FormUtils.getFieldStringProperty(formTemplate, this, "mask", locale, values, this.getDefaultValue().getMask()));
     }
 
     private Long getMinValue(FormTemplate formTemplate, Map<String, String> values, Locale locale) {
-        Long minValue = FormUtils.getFieldLongProperty(formTemplate, this, "minValue", locale, values, this.getDefaultValues().getMinValue());
+        Long minValue = FormUtils.getFieldLongProperty(formTemplate, this, "minValue", locale, values, this.getDefaultValue().getMinValue());
         if (null == minValue) {
             return Long.MIN_VALUE;
         }
@@ -50,7 +54,7 @@ public class NumberFieldTemplate extends InputFieldTemplate<NumberField, Long> {
     }
 
     private Long getMaxValue(FormTemplate formTemplate, Map<String, String> values, Locale locale) {
-        Long maxValue = FormUtils.getFieldLongProperty(formTemplate, this, "maxValue", locale, values, this.getDefaultValues().getMaxValue());
+        Long maxValue = FormUtils.getFieldLongProperty(formTemplate, this, "maxValue", locale, values, this.getDefaultValue().getMaxValue());
         if (null == maxValue) {
             return Long.MAX_VALUE;
         }

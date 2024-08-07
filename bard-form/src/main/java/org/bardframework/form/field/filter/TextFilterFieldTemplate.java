@@ -1,18 +1,22 @@
 package org.bardframework.form.field.filter;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
-import org.bardframework.form.field.input.InputFieldTemplate;
+import org.bardframework.form.field.input.InputFieldTemplateAbstract;
 import org.bardframework.form.model.filter.StringFilter;
 
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class TextFilterFieldTemplate extends InputFieldTemplate<TextFilterField, StringFilter> {
+@Getter
+@Setter
+public class TextFilterFieldTemplate extends InputFieldTemplateAbstract<TextFilterField, StringFilter> {
 
-    protected TextFilterFieldTemplate(String name) {
+    public TextFilterFieldTemplate(String name) {
         super(name);
     }
 
@@ -43,10 +47,10 @@ public class TextFilterFieldTemplate extends InputFieldTemplate<TextFilterField,
     @Override
     public void fill(FormTemplate formTemplate, TextFilterField field, Map<String, String> values, Locale locale) throws Exception {
         super.fill(formTemplate, field, values, locale);
-        field.setRegex(FormUtils.getFieldStringProperty(formTemplate, this, "regex", locale, values, this.getDefaultValues().getRegex()));
-        field.setMask(FormUtils.getFieldStringProperty(formTemplate, this, "mask", locale, values, this.getDefaultValues().getMask()));
-        field.setMinLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "minLength", locale, values, this.getDefaultValues().getMinLength()));
-        field.setMaxLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxLength", locale, values, this.getDefaultValues().getMaxLength()));
+        field.setRegex(FormUtils.getFieldStringProperty(formTemplate, this, "regex", locale, values, this.getDefaultValue().getRegex()));
+        field.setMask(FormUtils.getFieldStringProperty(formTemplate, this, "mask", locale, values, this.getDefaultValue().getMask()));
+        field.setMinLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "minLength", locale, values, this.getDefaultValue().getMinLength()));
+        field.setMaxLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxLength", locale, values, this.getDefaultValue().getMaxLength()));
     }
 
     @Override

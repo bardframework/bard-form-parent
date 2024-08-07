@@ -1,5 +1,6 @@
 package org.bardframework.flow.processor.message.sender;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.bardframework.commons.sms.SmsSender;
 import org.bardframework.flow.processor.message.creator.MessageProvider;
@@ -10,6 +11,7 @@ import java.util.Locale;
 import java.util.Map;
 
 @Slf4j
+@Getter
 public class MessageSenderSms extends MessageSenderAbstract {
 
     protected final SmsSender smsSender;
@@ -34,7 +36,4 @@ public class MessageSenderSms extends MessageSenderAbstract {
         }
     }
 
-    public SmsSender getSmsSender() {
-        return smsSender;
-    }
 }

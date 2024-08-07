@@ -1,6 +1,7 @@
 package org.bardframework.form.field.input;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
@@ -10,11 +11,12 @@ import java.util.Locale;
 import java.util.Map;
 
 @Getter
-public class TimeFieldTemplate extends InputFieldTemplate<TimeField, LocalTime> {
+@Setter
+public class TimeFieldTemplate extends InputFieldTemplateAbstract<TimeField, LocalTime> {
     private boolean minIsNow;
     private boolean maxIsNow;
 
-    protected TimeFieldTemplate(String name) {
+    public TimeFieldTemplate(String name) {
         super(name);
     }
 
@@ -41,8 +43,8 @@ public class TimeFieldTemplate extends InputFieldTemplate<TimeField, LocalTime> 
     @Override
     public void fill(FormTemplate formTemplate, TimeField field, Map<String, String> values, Locale locale) throws Exception {
         super.fill(formTemplate, field, values, locale);
-        field.setMinValue(FormUtils.getFieldLocalTimeProperty(formTemplate, this, "minValue", locale, values, this.getDefaultValues().getMinValue()));
-        field.setMaxValue(FormUtils.getFieldLocalTimeProperty(formTemplate, this, "maxValue", locale, values, this.getDefaultValues().getMaxValue()));
+        field.setMinValue(FormUtils.getFieldLocalTimeProperty(formTemplate, this, "minValue", locale, values, this.getDefaultValue().getMinValue()));
+        field.setMaxValue(FormUtils.getFieldLocalTimeProperty(formTemplate, this, "maxValue", locale, values, this.getDefaultValue().getMaxValue()));
         if (null == field.getMinValue()) {
             field.setMinValue(this.getMinValue());
         }
@@ -59,11 +61,11 @@ public class TimeFieldTemplate extends InputFieldTemplate<TimeField, LocalTime> 
         return LocalTime.parse(value);
     }
 
-    public LocalTime getMinValue() {
+    protected LocalTime getMinValue() {
         return minIsNow ? LocalTime.now() : null;
     }
 
-    public LocalTime getMaxValue() {
+    protected LocalTime getMaxValue() {
         return maxIsNow ? LocalTime.now() : null;
     }
 }

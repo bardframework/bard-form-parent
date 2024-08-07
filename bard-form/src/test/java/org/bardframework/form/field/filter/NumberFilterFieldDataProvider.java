@@ -8,10 +8,10 @@ import org.bardframework.form.model.filter.LongFilter;
 import org.springframework.boot.test.context.TestComponent;
 
 @TestComponent
-public class NumberFilterFieldDataProvider implements InputFieldDataProvider<NumberFilterField, LongFilter> {
+public class NumberFilterFieldDataProvider implements InputFieldDataProvider<LongFilterField, LongFilter> {
 
     @Override
-    public LongFilter getValidValue(NumberFilterField field) {
+    public LongFilter getValidValue(LongFilterField field) {
         boolean generateNullValue = !Boolean.TRUE.equals(field.getRequired()) && RandomUtils.nextBoolean();
         if (generateNullValue) {
             return null;
@@ -27,7 +27,7 @@ public class NumberFilterFieldDataProvider implements InputFieldDataProvider<Num
     }
 
     @Override
-    public LongFilter getInvalidValue(NumberFilterField field) {
+    public LongFilter getInvalidValue(LongFilterField field) {
         if (Boolean.TRUE.equals(field.getRequired())) {
             return null;
         }
@@ -76,6 +76,6 @@ public class NumberFilterFieldDataProvider implements InputFieldDataProvider<Num
 
     @Override
     public boolean supports(InputField<?> field) {
-        return NumberFilterField.class.equals(field.getClass());
+        return LongFilterField.class.equals(field.getClass());
     }
 }

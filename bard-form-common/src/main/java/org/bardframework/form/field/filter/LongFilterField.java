@@ -10,16 +10,17 @@ import org.bardframework.form.model.filter.LongFilter;
 @Getter
 @Setter
 @ToString
-public class NumberFilterField extends InputField<LongFilter> {
-    private Long minValue;
-    private Long maxValue;
+public class LongFilterField extends InputField<LongFilter> {
+
     private Long minLength;
     private Long maxLength;
+    private Long minValue;
+    private Long maxValue;
 
-    public NumberFilterField() {
+    public LongFilterField() {
     }
 
-    protected NumberFilterField(String name) {
+    protected LongFilterField(String name) {
         super(name);
     }
 

@@ -9,7 +9,7 @@ import org.apache.commons.collections4.MapUtils;
 import org.bardframework.commons.utils.ReflectionUtils;
 import org.bardframework.form.exception.FormDataValidationException;
 import org.bardframework.form.field.FieldTemplate;
-import org.bardframework.form.field.input.InputFieldTemplate;
+import org.bardframework.form.field.input.InputFieldTemplateAbstract;
 import org.springframework.context.MessageSource;
 import org.springframework.expression.Expression;
 import org.springframework.expression.spel.SpelCompilerMode;
@@ -51,7 +51,7 @@ public class FormTemplate {
             در بخش اعتبارسنچی ابتدا فیلدها براساس اولیت اعتبارسنجی مرتب می شوند
             مرتب‌سازی برای کنترل سناریوهایی است که ترتیب اعتبارسنجی فیلدها مهم است (مانند فیلد کپچا که باید پیش از همه اعتبارسنجی شود)
          */
-        for (InputFieldTemplate<?, ?> inputFieldTemplate : this.getFieldTemplates(Map.of(), InputFieldTemplate.class).stream().sorted(Comparator.comparingInt(InputFieldTemplate::getValidationOrder)).collect(Collectors.toList())) {
+        for (InputFieldTemplateAbstract<?, ?> inputFieldTemplate : this.getFieldTemplates(Map.of(), InputFieldTemplateAbstract.class).stream().sorted(Comparator.comparingInt(InputFieldTemplateAbstract::getValidationOrder)).collect(Collectors.toList())) {
             Object value = ReflectionUtils.getPropertyValue(dto, inputFieldTemplate.getName());
             inputFieldTemplate.validate(this, value, locale, httpRequest, ex);
         }
@@ -81,7 +81,7 @@ public class FormTemplate {
             در بخش اعتبارسنچی ابتدا فیلدها براساس اولیت اعتبارسنجی مرتب می شوند
             مرتب‌سازی برای کنترل سناریوهایی است که ترتیب اعتبارسنجی فیلدها مهم است (مانند فیلد کپچا که باید پیش از همه اعتبارسنجی شود)
          */
-        for (InputFieldTemplate<?, ?> inputFieldTemplate : this.getFieldTemplates(flowData, InputFieldTemplate.class).stream().sorted(Comparator.comparingInt(InputFieldTemplate::getValidationOrder)).collect(Collectors.toList())) {
+        for (InputFieldTemplateAbstract<?, ?> inputFieldTemplate : this.getFieldTemplates(flowData, InputFieldTemplateAbstract.class).stream().sorted(Comparator.comparingInt(InputFieldTemplateAbstract::getValidationOrder)).collect(Collectors.toList())) {
             inputFieldTemplate.validate(flowToken, this, flowData, formData, locale, ex);
         }
         if (!MapUtils.isEmpty(ex.getInvalidFields())) {
@@ -104,9 +104,9 @@ public class FormTemplate {
      * این فیلدها شامل تمامی اینپوت فیلدهایی است که فعال باشند
      */
     public Set<String> getAllowedInputFields(Map<String, String> args, Locale locale) throws Exception {
-        List<InputFieldTemplate> inputFieldTemplates = this.getFieldTemplates(args, InputFieldTemplate.class);
+        List<InputFieldTemplateAbstract> inputFieldTemplates = this.getFieldTemplates(args, InputFieldTemplateAbstract.class);
         Set<String> allowedFieldNames = new HashSet<>();
-        for (InputFieldTemplate<?, ?> inputFieldTemplate : inputFieldTemplates) {
+        for (InputFieldTemplateAbstract<?, ?> inputFieldTemplate : inputFieldTemplates) {
             Boolean disable = FormUtils.getFieldBooleanProperty(this, inputFieldTemplate, "disable", locale, args, null);
             if (!Boolean.TRUE.equals(disable)) {
                 allowedFieldNames.add(inputFieldTemplate.getName());

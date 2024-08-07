@@ -1,18 +1,22 @@
 package org.bardframework.form.field.filter;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
 import org.bardframework.form.field.input.InputField;
-import org.bardframework.form.field.input.InputFieldTemplate;
+import org.bardframework.form.field.input.InputFieldTemplateAbstract;
 import org.bardframework.form.model.filter.StringFilter;
 
 import java.util.Locale;
 import java.util.Map;
 
-abstract class IpFilterFieldTemplate<F extends Ip4FilterField> extends InputFieldTemplate<F, StringFilter> {
+@Getter
+@Setter
+abstract class IpFilterFieldTemplateAbstract<F extends Ip4FilterField> extends InputFieldTemplateAbstract<F, StringFilter> {
 
-    protected IpFilterFieldTemplate(String name) {
+    protected IpFilterFieldTemplateAbstract(String name) {
         super(name);
     }
 
@@ -59,8 +63,8 @@ abstract class IpFilterFieldTemplate<F extends Ip4FilterField> extends InputFiel
     @Override
     public void fill(FormTemplate formTemplate, F field, Map<String, String> values, Locale locale) throws Exception {
         super.fill(formTemplate, field, values, locale);
-        field.setMinValue(FormUtils.getFieldStringProperty(formTemplate, this, "minValue", locale, values, this.getDefaultValues().getMinValue()));
-        field.setMaxValue(FormUtils.getFieldStringProperty(formTemplate, this, "maxValue", locale, values, this.getDefaultValues().getMaxValue()));
+        field.setMinValue(FormUtils.getFieldStringProperty(formTemplate, this, "minValue", locale, values, this.getDefaultValue().getMinValue()));
+        field.setMaxValue(FormUtils.getFieldStringProperty(formTemplate, this, "maxValue", locale, values, this.getDefaultValue().getMaxValue()));
     }
 
     @Override

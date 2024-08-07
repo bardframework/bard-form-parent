@@ -1,5 +1,7 @@
 package org.bardframework.form.field.input;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
@@ -7,7 +9,9 @@ import org.bardframework.form.FormUtils;
 import java.util.Locale;
 import java.util.Map;
 
-public class LocationSelectFieldTemplate extends InputFieldTemplate<LocationSelectField, String> {
+@Getter
+@Setter
+public class LocationSelectFieldTemplate extends InputFieldTemplateAbstract<LocationSelectField, String> {
 
     public LocationSelectFieldTemplate(String name) {
         super(name);
@@ -28,7 +32,7 @@ public class LocationSelectFieldTemplate extends InputFieldTemplate<LocationSele
     @Override
     public void fill(FormTemplate formTemplate, LocationSelectField field, Map<String, String> values, Locale locale) throws Exception {
         super.fill(formTemplate, field, values, locale);
-        field.setShowAddressAsTitle(FormUtils.getFieldBooleanProperty(formTemplate, this, "showAddressAsTitle", locale, values, this.getDefaultValues().getShowAddressAsTitle()));
+        field.setShowAddressAsTitle(FormUtils.getFieldBooleanProperty(formTemplate, this, "showAddressAsTitle", locale, values, this.getDefaultValue().getShowAddressAsTitle()));
     }
 
     @Override

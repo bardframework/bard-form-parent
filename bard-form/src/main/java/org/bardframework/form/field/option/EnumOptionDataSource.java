@@ -1,5 +1,7 @@
 package org.bardframework.form.field.option;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.model.SelectOption;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+@Setter
+@Getter
 public class EnumOptionDataSource extends CachableOptionDataSource {
 
     private final MessageSource messageSource;
@@ -42,11 +46,4 @@ public class EnumOptionDataSource extends CachableOptionDataSource {
         return prefix + anEnum.name();
     }
 
-    public String getKeyPrefix() {
-        return keyPrefix;
-    }
-
-    public void setKeyPrefix(String keyPrefix) {
-        this.keyPrefix = keyPrefix;
-    }
 }

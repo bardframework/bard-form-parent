@@ -1,32 +1,36 @@
 package org.bardframework.form.field.filter;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
+import org.bardframework.commons.utils.DateTimeUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
 import org.bardframework.form.field.input.InputField;
-import org.bardframework.form.field.input.InputFieldTemplate;
-import org.bardframework.form.model.filter.LocalDateFilter;
+import org.bardframework.form.field.input.InputFieldTemplateAbstract;
+import org.bardframework.form.model.filter.LongFilter;
 
-import java.time.LocalDate;
 import java.time.Period;
 import java.util.Locale;
 import java.util.Map;
 
-public class DateFilterFieldTemplate extends InputFieldTemplate<DateFilterField, LocalDateFilter> {
+@Getter
+@Setter
+public class DateFilterFieldTemplate extends InputFieldTemplateAbstract<DateFilterField, LongFilter> {
     private boolean minIsNow;
     private boolean maxIsNow;
 
-    protected DateFilterFieldTemplate(String name) {
+    public DateFilterFieldTemplate(String name) {
         super(name);
     }
 
     @Override
     public void fill(FormTemplate formTemplate, DateFilterField field, Map<String, String> values, Locale locale) throws Exception {
         super.fill(formTemplate, field, values, locale);
-        field.setMinLength(FormUtils.getFieldLongProperty(formTemplate, this, "minLength", locale, values, this.getDefaultValues().getMinLength()));
-        field.setMaxLength(FormUtils.getFieldLongProperty(formTemplate, this, "maxLength", locale, values, this.getDefaultValues().getMaxLength()));
-        field.setMinValue(FormUtils.getFieldLocalDateProperty(formTemplate, this, "minValue", locale, values, this.getDefaultValues().getMinValue()));
-        field.setMaxValue(FormUtils.getFieldLocalDateProperty(formTemplate, this, "maxValue", locale, values, this.getDefaultValues().getMaxValue()));
+        field.setMinLength(FormUtils.getFieldLongProperty(formTemplate, this, "minLength", locale, values, this.getDefaultValue().getMinLength()));
+        field.setMaxLength(FormUtils.getFieldLongProperty(formTemplate, this, "maxLength", locale, values, this.getDefaultValue().getMaxLength()));
+        field.setMinValue(FormUtils.getFieldLongProperty(formTemplate, this, "minValue", locale, values, this.getDefaultValue().getMinValue()));
+        field.setMaxValue(FormUtils.getFieldLongProperty(formTemplate, this, "maxValue", locale, values, this.getDefaultValue().getMaxValue()));
         if (null == field.getMinValue()) {
             field.setMinValue(this.getMinValue());
         }
@@ -36,7 +40,7 @@ public class DateFilterFieldTemplate extends InputFieldTemplate<DateFilterField,
     }
 
     @Override
-    public LocalDateFilter toValue(String value) {
+    public LongFilter toValue(String value) {
         if (StringUtils.isBlank(value)) {
             return null;
         }
@@ -44,18 +48,18 @@ public class DateFilterFieldTemplate extends InputFieldTemplate<DateFilterField,
         if (parts.length != 2) {
             throw new IllegalStateException(value + " is not valid for range value");
         }
-        LocalDateFilter filter = new LocalDateFilter();
+        LongFilter filter = new LongFilter();
         if (!parts[0].isBlank()) {
-            filter.setFrom(LocalDate.parse(parts[0]));
+            filter.setFrom(Long.parseLong(parts[0]));
         }
         if (!parts[1].isBlank()) {
-            filter.setTo(LocalDate.parse(parts[1]));
+            filter.setTo(Long.parseLong(parts[1]));
         }
         return filter;
     }
 
     @Override
-    public boolean isValid(String flowToken, DateFilterField field, LocalDateFilter filter, Map<String, String> flowData) {
+    public boolean isValid(String flowToken, DateFilterField field, LongFilter filter, Map<String, String> flowData) {
         if (null == filter || (null == filter.getFrom() && null == filter.getTo())) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 log.debug("filterField [{}] is required, but it's value is empty", field.getName());
@@ -64,26 +68,26 @@ public class DateFilterFieldTemplate extends InputFieldTemplate<DateFilterField,
             return true;
         }
         if (null != field.getMinValue()) {
-            if (null != filter.getFrom() && filter.getFrom().isBefore(this.getMinValue())) {
+            if (null != filter.getFrom() && filter.getFrom() < this.getMinValue()) {
                 log.debug("field [{}] min value is [{}], but it's value is less than minimum", field.getName(), field.getMinValue());
                 return false;
             }
-            if (null != filter.getTo() && filter.getTo().isBefore(this.getMinValue())) {
+            if (null != filter.getTo() && filter.getTo() < this.getMinValue()) {
                 log.debug("field [{}] min value is [{}], but it's value is less than minimum", field.getName(), field.getMinValue());
                 return false;
             }
         }
         if (null != field.getMaxValue()) {
-            if (null != filter.getFrom() && filter.getFrom().isAfter(this.getMaxValue())) {
+            if (null != filter.getFrom() && filter.getFrom() > this.getMaxValue()) {
                 log.debug("field [{}] max value is [{}], but it's value is greater than maximum", field.getName(), field.getMaxValue());
                 return false;
             }
-            if (null != filter.getTo() && filter.getTo().isAfter(this.getMaxValue())) {
+            if (null != filter.getTo() && filter.getTo() > this.getMaxValue()) {
                 log.debug("field [{}] max value is [{}], but it's value is greater than maximum", field.getName(), field.getMaxValue());
                 return false;
             }
         }
-        long length = null == filter.getFrom() || null == filter.getTo() ? Long.MAX_VALUE : Period.between(filter.getFrom(), filter.getTo()).getDays() + 1;
+        long length = null == filter.getFrom() || null == filter.getTo() ? Long.MAX_VALUE : Period.between(DateTimeUtils.dateFromEpochMills(filter.getFrom()), DateTimeUtils.dateFromEpochMills(filter.getTo())).getDays() + 1;
         if (length < 0) {
             log.debug("values[{}] of range field[{}] is invalid, from is greater than to", filter, field.getName());
             /*
@@ -102,27 +106,12 @@ public class DateFilterFieldTemplate extends InputFieldTemplate<DateFilterField,
         return true;
     }
 
-    public LocalDate getMinValue() {
-        return minIsNow ? LocalDate.now() : null;
+    public Long getMinValue() {
+        return minIsNow ? DateTimeUtils.getNowUtc() : null;
     }
 
-    public LocalDate getMaxValue() {
-        return maxIsNow ? LocalDate.now() : null;
+    public Long getMaxValue() {
+        return maxIsNow ? DateTimeUtils.getNowUtc() : null;
     }
 
-    public boolean isMinIsNow() {
-        return minIsNow;
-    }
-
-    public void setMinIsNow(boolean minIsNow) {
-        this.minIsNow = minIsNow;
-    }
-
-    public boolean isMaxIsNow() {
-        return maxIsNow;
-    }
-
-    public void setMaxIsNow(boolean maxIsNow) {
-        this.maxIsNow = maxIsNow;
-    }
 }

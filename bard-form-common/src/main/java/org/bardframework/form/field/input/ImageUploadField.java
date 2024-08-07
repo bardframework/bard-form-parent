@@ -16,6 +16,7 @@ public class ImageUploadField extends FileUploadField {
     private Integer maxWidth;
     private Integer minHeight;
     private Integer maxHeight;
+    private Boolean cropper;
 
     public ImageUploadField() {
     }

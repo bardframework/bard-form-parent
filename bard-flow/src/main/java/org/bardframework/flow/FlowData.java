@@ -1,11 +1,15 @@
 package org.bardframework.flow;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+@Getter
+@Setter
 public class FlowData {
 
     public static final String LANGUAGE_FIELD_NAME = "S_LANG_TAG";
@@ -23,19 +27,4 @@ public class FlowData {
         return this;
     }
 
-    public Map<String, String> getData() {
-        return data;
-    }
-
-    public void setData(Map<String, String> data) {
-        this.data = data;
-    }
-
-    public int getCurrentFormIndex() {
-        return currentFormIndex;
-    }
-
-    public void setCurrentFormIndex(int currentFormIndex) {
-        this.currentFormIndex = currentFormIndex;
-    }
 }

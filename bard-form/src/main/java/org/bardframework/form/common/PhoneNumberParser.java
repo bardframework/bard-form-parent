@@ -1,4 +1,4 @@
-package org.bardframework.form.field.input.phonenumber;
+package org.bardframework.form.common;
 
 public interface PhoneNumberParser {
 

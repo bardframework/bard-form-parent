@@ -1,10 +1,12 @@
 package org.bardframework.flow.form.field.input.captcha;
 
+import lombok.Getter;
 import org.bardframework.commons.captcha.CaptchaService;
 import org.bardframework.commons.captcha.CaptchaType;
 import org.bardframework.commons.captcha.GeneratedCaptcha;
 import org.bardframework.flow.form.field.input.otp.OtpGenerator;
 
+@Getter
 public class CaptchaGeneratorDefault implements OtpGenerator<GeneratedCaptcha> {
 
     private final CaptchaService captchaService;
@@ -20,14 +22,6 @@ public class CaptchaGeneratorDefault implements OtpGenerator<GeneratedCaptcha> {
     @Override
     public GeneratedCaptcha generate() {
         return this.getCaptchaService().generateCaptcha(this.getType(), this.getLength());
-    }
-
-    public CaptchaService getCaptchaService() {
-        return captchaService;
-    }
-
-    public CaptchaType getType() {
-        return type;
     }
 
     @Override
