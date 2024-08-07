@@ -196,7 +196,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
      * 3. ذخیره داده‌های فلو
      */
     protected FlowResponse processNextForm(String flowToken, D flowData, Map<String, String> formData, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
-        FlowFormTemplate nextFormTemplate = forms.subList(flowData.getCurrentFormIndex() + 1, forms.size()).stream()
+        FlowFormTemplate nextFormTemplate = this.getForms().subList(flowData.getCurrentFormIndex() + 1, this.getForms().size()).stream()
                 .filter(formTemplate -> formTemplate.mustShow(flowData.getData()))
                 .findFirst().orElse(null);
         if (null != nextFormTemplate) {
@@ -210,7 +210,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
             /*
                 تنظیم کردن اندیس فرم جاری باید پس از موفقیت آمیز بودن اجرای preProcessهای آن باشد
              */
-            flowData.setCurrentFormIndex(this.forms.indexOf(nextFormTemplate));
+            flowData.setCurrentFormIndex(this.getForms().indexOf(nextFormTemplate));
         }
         FlowResponse response = this.toResponse(flowToken, nextFormTemplate, flowData, httpRequest, httpResponse);
         if (Boolean.TRUE.equals(response.getFinished())) {
@@ -220,7 +220,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
     }
 
     protected FlowFormTemplate getCurrentFormTemplate(D flowData) throws Exception {
-        return this.forms.get(flowData.getCurrentFormIndex());
+        return this.getForms().get(flowData.getCurrentFormIndex());
     }
 
     protected void onFinished(String flowToken, D flowData, Map<String, String> formData, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
@@ -281,7 +281,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
     protected abstract FlowResponse handleException(String flowToken, D flowData, Map<String, String> formData, FlowFormTemplate currentFormTemplate, FlowAction flowAction, Exception ex) throws Exception;
 
     protected int getStepsCounts(D flowData) {
-        return this.forms.size();
+        return this.getForms().size();
     }
 
     protected void cleanFlowData(String flowToken) {

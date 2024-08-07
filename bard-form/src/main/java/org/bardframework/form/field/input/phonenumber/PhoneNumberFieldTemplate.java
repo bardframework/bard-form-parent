@@ -1,4 +1,4 @@
-package org.bardframework.flow.form.field.input.phonenumber;
+package org.bardframework.form.field.input.phonenumber;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -8,6 +8,7 @@ import org.bardframework.form.exception.FormDataValidationException;
 import org.bardframework.form.field.input.CountrySelectField;
 import org.bardframework.form.field.input.CountrySelectFieldTemplate;
 import org.bardframework.form.field.input.InputFieldTemplate;
+import org.bardframework.form.field.input.PhoneNumberField;
 
 import java.util.Locale;
 import java.util.Map;

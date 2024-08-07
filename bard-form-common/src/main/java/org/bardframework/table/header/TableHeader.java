@@ -4,10 +4,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 import org.bardframework.table.header.type.HeaderType;
 
-@Slf4j
 @Getter
 @Setter
 @ToString

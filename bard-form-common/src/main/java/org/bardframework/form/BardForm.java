@@ -3,13 +3,11 @@ package org.bardframework.form;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 import org.bardframework.form.field.Field;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
 @Getter
 @Setter
 @ToString

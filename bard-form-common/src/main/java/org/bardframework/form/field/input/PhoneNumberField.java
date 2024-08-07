@@ -1,11 +1,8 @@
-package org.bardframework.flow.form.field.input.phonenumber;
+package org.bardframework.form.field.input;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.bardframework.form.field.FieldType;
-import org.bardframework.form.field.input.CountrySelectField;
-import org.bardframework.form.field.input.InputField;
-import org.bardframework.form.field.input.InputFieldType;
 
 @Getter
 @Setter

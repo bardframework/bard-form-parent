@@ -3,7 +3,6 @@ package org.bardframework.form.model.filter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collection;
 import java.util.List;
@@ -20,7 +19,6 @@ import java.util.List;
  *      fieldName.notIn='something','other'
  * </pre>
  */
-@Slf4j
 @Getter
 @ToString
 public abstract class Filter<T, F> {

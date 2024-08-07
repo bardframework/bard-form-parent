@@ -18,7 +18,6 @@ public class MultiLocaleSelectFieldTemplate extends InputFieldTemplate<MultiLoca
         super(name);
     }
 
-
     @Override
     public boolean isValid(String flowToken, MultiLocaleSelectField field, List<String> values, Map<String, String> flowData) {
         if (CollectionUtils.isEmpty(values)) {

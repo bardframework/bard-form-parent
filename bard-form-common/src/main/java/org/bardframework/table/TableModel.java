@@ -3,14 +3,12 @@ package org.bardframework.table;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 import org.bardframework.form.BardForm;
 import org.bardframework.table.header.TableHeader;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
 @Getter
 @Setter
 @ToString

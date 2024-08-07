@@ -8,7 +8,6 @@ import org.bardframework.form.field.FieldType;
 
 import java.util.List;
 
-@Slf4j
 @Getter
 @Setter
 @ToString

@@ -9,7 +9,6 @@ import org.bardframework.form.model.SelectOption;
 
 import java.util.List;
 
-@Slf4j
 @Getter
 @Setter
 @ToString

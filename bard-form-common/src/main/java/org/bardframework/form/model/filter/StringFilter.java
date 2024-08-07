@@ -2,7 +2,6 @@ package org.bardframework.form.model.filter;
 
 import lombok.Getter;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Class for filtering attributes with {@link String} type.
@@ -16,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
  * fieldName.contains='thing'
  * </code>
  */
-@Slf4j
 @Getter
 @ToString
 public class StringFilter extends RangeFilter<String, StringFilter> {

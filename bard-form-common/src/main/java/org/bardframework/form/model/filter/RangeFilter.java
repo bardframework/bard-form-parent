@@ -2,7 +2,6 @@ package org.bardframework.form.model.filter;
 
 import lombok.Getter;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Filter class for Comparable types, where less than / greater than / etc relations could be interpreted. It can be
@@ -24,7 +23,6 @@ import lombok.extern.slf4j.Slf4j;
  * @see NumberRangeFilter
  * @see LocalDateFilter
  */
-@Slf4j
 @Getter
 @ToString
 public abstract class RangeFilter<T, F extends RangeFilter<T, F>> extends Filter<T, F> {

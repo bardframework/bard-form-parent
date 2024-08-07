@@ -137,7 +137,7 @@ public class FormUtils {
     }
 
     /**
-     * @return false if we can't read property value
+     * @return defaultValue if we can't read property value
      */
     public static List<String> getFieldListProperty(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, String> args, List<String> defaultValue) {
         String value = FormUtils.getFieldStringProperty(formTemplate, fieldName, property, locale, args, null);
