@@ -16,7 +16,7 @@ public class Ip4Field extends InputField<String> {
     public Ip4Field() {
     }
 
-    protected Ip4Field(String name) {
+    public Ip4Field(String name) {
         super(name);
     }
 

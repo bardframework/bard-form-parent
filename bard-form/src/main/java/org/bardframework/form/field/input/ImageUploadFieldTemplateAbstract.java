@@ -13,7 +13,7 @@ import java.util.Map;
 @Setter
 abstract class ImageUploadFieldTemplateAbstract<F extends ImageUploadField> extends FileUploadFieldTemplateAbstract<F> {
 
-    protected ImageUploadFieldTemplateAbstract(String name) {
+    public ImageUploadFieldTemplateAbstract(String name) {
         super(name, true);
     }
 

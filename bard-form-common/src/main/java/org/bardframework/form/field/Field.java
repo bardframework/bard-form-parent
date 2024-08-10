@@ -17,10 +17,10 @@ public abstract class Field {
 
     public abstract FieldType getType();
 
-    protected Field() {
+    public Field() {
     }
 
-    protected Field(String name) {
+    public Field(String name) {
         this.name = name;
     }
 

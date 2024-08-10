@@ -11,7 +11,7 @@
 
     <groupId>org.bardframework.form</groupId>
     <artifactId>bard-form-parent</artifactId>
-    <version>3.4.24</version>
+    <version>3.5.4</version>
 
     <packaging>pom</packaging>
     <modules>
@@ -22,7 +22,7 @@
     </modules>
 
     <properties>
-        <bardframework.version>3.4.30</bardframework.version>
+        <bardframework.version>3.5.10</bardframework.version>
         <typescript-generator-maven-plugin.version>3.1.1185</typescript-generator-maven-plugin.version>
     </properties>
 

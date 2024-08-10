@@ -14,7 +14,7 @@ public class HtmlEditorField extends InputField<String> {
     public HtmlEditorField() {
     }
 
-    protected HtmlEditorField(String name) {
+    public HtmlEditorField(String name) {
         super(name);
     }
 

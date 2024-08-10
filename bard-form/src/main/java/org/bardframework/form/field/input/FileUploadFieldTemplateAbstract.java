@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Setter
 abstract class FileUploadFieldTemplateAbstract<F extends FileUploadField> extends InputFieldTemplateAbstract<F, List<String>> {
 
-    protected FileUploadFieldTemplateAbstract(String name) {
+    public FileUploadFieldTemplateAbstract(String name) {
         super(name, true);
     }
 

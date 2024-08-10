@@ -26,7 +26,7 @@ public abstract class InputFieldTemplateAbstract<F extends InputField<T>, T> ext
     protected FieldValueProvider<F, T> valueProvider;
     protected Expression disableExpression = null;
 
-    protected InputFieldTemplateAbstract(String name) {
+    public InputFieldTemplateAbstract(String name) {
         super(name);
     }
 

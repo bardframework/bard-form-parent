@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class ImageUploadFieldTemplate extends ImageUploadFieldTemplateAbstract<ImageUploadField> {
 
-    protected ImageUploadFieldTemplate(String name) {
+    public ImageUploadFieldTemplate(String name) {
         super(name);
     }
 }

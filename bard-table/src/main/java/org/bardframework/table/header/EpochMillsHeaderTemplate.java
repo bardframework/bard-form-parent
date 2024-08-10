@@ -28,6 +28,10 @@ public class EpochMillsHeaderTemplate<M> extends HeaderTemplate<M, DateHeader, L
     private Supplier<ZoneId> timeZoneProvider = ZoneId::systemDefault;
     private Supplier<Calendar> calendarProvider = () -> Calendar.GREGORIAN;
 
+    public EpochMillsHeaderTemplate(String formatterPattern) {
+        this(() -> formatterPattern);
+    }
+
     public EpochMillsHeaderTemplate(Supplier<String> formatterPatternSupplier) {
         this.formatter = DateTimeFormatter.ofPattern(formatterPatternSupplier.get());
         this.exportFormatter = DateTimeFormatter.ofPattern(formatterPatternSupplier.get());

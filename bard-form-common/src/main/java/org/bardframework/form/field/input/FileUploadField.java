@@ -25,7 +25,7 @@ public class FileUploadField extends InputField<List<String>> {
     public FileUploadField() {
     }
 
-    protected FileUploadField(String name) {
+    public FileUploadField(String name) {
         super(name);
     }
 

@@ -20,7 +20,7 @@ public class LongFilterField extends InputField<LongFilter> {
     public LongFilterField() {
     }
 
-    protected LongFilterField(String name) {
+    public LongFilterField(String name) {
         super(name);
     }
 

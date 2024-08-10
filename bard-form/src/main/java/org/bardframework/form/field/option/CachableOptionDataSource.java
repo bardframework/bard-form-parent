@@ -18,11 +18,11 @@ public abstract class CachableOptionDataSource implements OptionDataSource {
     private final Cache<Locale, List<SelectOption>> cache;
     private SortBy sortBy = SortBy.TITLE;
 
-    protected CachableOptionDataSource() {
+    public CachableOptionDataSource() {
         this(Long.MAX_VALUE);
     }
 
-    protected CachableOptionDataSource(long cacheExpirationMs) {
+    public CachableOptionDataSource(long cacheExpirationMs) {
         this.cache = Caffeine.newBuilder()
                 .maximumSize(10_000)
                 .expireAfterWrite(cacheExpirationMs, TimeUnit.MILLISECONDS)

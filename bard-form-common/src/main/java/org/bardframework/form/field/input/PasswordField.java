@@ -17,7 +17,7 @@ public class PasswordField extends InputField<String> {
     public PasswordField() {
     }
 
-    protected PasswordField(String name) {
+    public PasswordField(String name) {
         super(name);
     }
 

@@ -13,7 +13,7 @@ public class Ip6Field extends Ip4Field {
     public Ip6Field() {
     }
 
-    protected Ip6Field(String name) {
+    public Ip6Field(String name) {
         super(name);
     }
 

@@ -26,7 +26,7 @@ public abstract class FieldTemplate<F extends Field> {
     protected F defaultValue;
     protected Logger log = LoggerFactory.getLogger(this.getClass());
 
-    protected FieldTemplate(String name) {
+    public FieldTemplate(String name) {
         this.name = name;
         this.fieldClazz = ReflectionUtils.getGenericArgType(this.getClass(), 0);
         this.defaultValue = ReflectionUtils.newInstance(this.fieldClazz);

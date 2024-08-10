@@ -21,7 +21,7 @@ public class TextField extends InputField<String> {
     public TextField() {
     }
 
-    protected TextField(String name) {
+    public TextField(String name) {
         super(name);
     }
 

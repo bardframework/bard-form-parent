@@ -21,7 +21,7 @@ public class ImageUploadField extends FileUploadField {
     public ImageUploadField() {
     }
 
-    protected ImageUploadField(String name) {
+    public ImageUploadField(String name) {
         super(name);
     }
 

@@ -15,7 +15,7 @@ public class SingleSelectFieldTemplate extends InputFieldTemplateAbstract<Single
 
     public final OptionDataSource optionDataSource;
 
-    protected SingleSelectFieldTemplate(String name, OptionDataSource optionDataSource) {
+    public SingleSelectFieldTemplate(String name, OptionDataSource optionDataSource) {
         super(name);
         this.optionDataSource = optionDataSource;
     }

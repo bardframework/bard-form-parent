@@ -14,7 +14,7 @@ import java.util.Map;
 @Setter
 abstract class IpFieldTemplateAbstract<F extends Ip4Field> extends InputFieldTemplateAbstract<F, String> {
 
-    protected IpFieldTemplateAbstract(String name) {
+    public IpFieldTemplateAbstract(String name) {
         super(name);
     }
 

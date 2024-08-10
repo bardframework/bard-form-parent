@@ -23,7 +23,7 @@ public class TextFilterField extends InputField<StringFilter> {
     public TextFilterField() {
     }
 
-    protected TextFilterField(String name) {
+    public TextFilterField(String name) {
         super(name);
     }
 

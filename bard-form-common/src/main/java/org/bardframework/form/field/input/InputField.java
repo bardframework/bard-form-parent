@@ -21,7 +21,7 @@ public abstract class InputField<T> extends Field {
     public InputField() {
     }
 
-    protected InputField(String name) {
+    public InputField(String name) {
         super(name);
     }
 

@@ -14,7 +14,7 @@ public class WysiwygField extends InputField<String> {
     public WysiwygField() {
     }
 
-    protected WysiwygField(String name) {
+    public WysiwygField(String name) {
         super(name);
     }
 
