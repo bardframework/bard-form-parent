@@ -10,6 +10,7 @@ import org.springframework.context.MessageSource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 @Setter
 @Getter
@@ -25,7 +26,7 @@ public class EnumOptionDataSource extends CachableOptionDataSource {
     }
 
     @Override
-    protected List<SelectOption> loadOptions(Locale locale) {
+    protected List<SelectOption> loadOptions(Map<String, String> args, Locale locale) {
         List<SelectOption> options = new ArrayList<>();
         for (Enum<?> anEnum : enumOptionsClass.getEnumConstants()) {
             String titleMessageKey = this.getMessageKey(anEnum);

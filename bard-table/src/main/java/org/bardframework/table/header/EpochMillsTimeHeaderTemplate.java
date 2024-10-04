@@ -4,15 +4,17 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
-import org.bardframework.commons.utils.DateTimeUtils;
 import org.bardframework.commons.web.Calendar;
 import org.bardframework.time.LocalDateTimeJalali;
 import org.springframework.context.MessageSource;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.chrono.HijrahDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAccessor;
 import java.util.Locale;
 import java.util.function.Supplier;
@@ -21,41 +23,37 @@ import java.util.function.Supplier;
 @Getter
 @Setter
 @ToString
-public class EpochMillsHeaderTemplate<M> extends HeaderTemplate<M, DateHeader, Long> {
+public class EpochMillsTimeHeaderTemplate<M> extends HeaderTemplate<M, TimeHeader, LocalTime> {
 
-    private final DateTimeFormatter formatter;
     private DateTimeFormatter exportFormatter;
     private Supplier<ZoneId> timeZoneProvider = ZoneId::systemDefault;
     private Supplier<Calendar> calendarProvider = () -> Calendar.GREGORIAN;
 
-    public EpochMillsHeaderTemplate(String formatterPattern) {
-        this(() -> formatterPattern);
+    public EpochMillsTimeHeaderTemplate(String exportFormatterPattern) {
+        this(() -> exportFormatterPattern);
     }
 
-    public EpochMillsHeaderTemplate(Supplier<String> formatterPatternSupplier) {
-        this.formatter = DateTimeFormatter.ofPattern(formatterPatternSupplier.get());
-        this.exportFormatter = DateTimeFormatter.ofPattern(formatterPatternSupplier.get());
+    public EpochMillsTimeHeaderTemplate(Supplier<String> exportFormatterPatternSupplier) {
+        this.exportFormatter = DateTimeFormatter.ofPattern(exportFormatterPatternSupplier.get());
     }
 
-    public EpochMillsHeaderTemplate(DateTimeFormatter formatter, DateTimeFormatter exportFormatter) {
-        this.formatter = formatter;
+    public EpochMillsTimeHeaderTemplate(DateTimeFormatter exportFormatter) {
         this.exportFormatter = exportFormatter;
     }
 
     @Override
-    public DateHeader getEmptyHeader() {
-        return new DateHeader();
+    public TimeHeader getEmptyHeader() {
+        return new TimeHeader();
     }
 
     @Override
-    public Object format(Long value, MessageSource messageSource, Locale locale) {
-        LocalDateTime dateTime = DateTimeUtils.fromEpochMills(value, timeZoneProvider.get());
-        return this.getFormatter().withLocale(locale).format(dateTime);
+    protected Object format(LocalTime value, MessageSource messageSource, Locale locale) {
+        return value.getLong(ChronoField.MILLI_OF_DAY);
     }
 
     @Override
-    public Object formatForExport(Long value, MessageSource messageSource, Locale locale) {
-        LocalDateTime dateTime = DateTimeUtils.fromEpochMills(value, timeZoneProvider.get());
+    public Object formatForExport(LocalTime value, MessageSource messageSource, Locale locale) {
+        LocalDateTime dateTime = LocalDateTime.of(LocalDate.MIN, value);
         Calendar calendar = calendarProvider.get();
         TemporalAccessor accessor;
         if (calendar == Calendar.GREGORIAN) {
@@ -67,6 +65,6 @@ public class EpochMillsHeaderTemplate<M> extends HeaderTemplate<M, DateHeader, L
         } else {
             throw new IllegalStateException("unhandled calendar: " + calendar);
         }
-        return this.getFormatter().withLocale(locale).format(accessor);
+        return this.getExportFormatter().withLocale(locale).format(accessor);
     }
 }

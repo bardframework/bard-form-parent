@@ -4,6 +4,7 @@ import org.bardframework.form.model.SelectOption;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class ConstantOptionDataSource implements OptionDataSource {
 
@@ -14,7 +15,7 @@ public class ConstantOptionDataSource implements OptionDataSource {
     }
 
     @Override
-    public List<SelectOption> getOptions(Locale locale) {
+    public List<SelectOption> getOptions(Map<String, String> args, Locale locale) throws Exception {
         return options;
     }
 }

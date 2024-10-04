@@ -35,9 +35,9 @@ public class WysiwygFieldTemplate extends InputFieldTemplateAbstract<WysiwygFiel
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, WysiwygField field, Map<String, String> values, Locale locale) throws Exception {
-        super.fill(formTemplate, field, values, locale);
-        field.setMaxSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxSize", locale, values, this.getDefaultValue().getMaxSize()));
+    public void fill(FormTemplate formTemplate, WysiwygField field, Map<String, String> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, args, locale);
+        field.setMaxSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxSize", locale, args, this.getDefaultValue().getMaxSize()));
     }
 
     @Override

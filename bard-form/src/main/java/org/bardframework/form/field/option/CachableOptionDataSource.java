@@ -9,6 +9,7 @@ import org.bardframework.form.model.SelectOption;
 import java.text.Collator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Setter
@@ -30,25 +31,20 @@ public abstract class CachableOptionDataSource implements OptionDataSource {
     }
 
     @Override
-    public List<SelectOption> getOptions(Locale locale) {
+    public List<SelectOption> getOptions(Map<String, String> args, Locale locale) {
         List<SelectOption> options = cache.getIfPresent(locale);
         if (null == options) {
-            options = this.loadOptions(locale);
-            options.sort((option1, option2) -> {
-                switch (this.getSortBy()) {
-                    case TITLE:
-                        return Collator.getInstance(locale).compare(option1.getTitle(), option2.getTitle());
-                    case NATURAL_ORDER:
-                        return 0;
-                    default:
-                        return option1.getId().compareTo(option2.getId());
-                }
+            options = this.loadOptions(args, locale);
+            options.sort((option1, option2) -> switch (this.getSortBy()) {
+                case TITLE -> Collator.getInstance(locale).compare(option1.getTitle(), option2.getTitle());
+                case NATURAL_ORDER -> 0;
+                default -> option1.getId().compareTo(option2.getId());
             });
             this.cache.put(locale, options);
         }
         return options;
     }
 
-    protected abstract List<SelectOption> loadOptions(Locale locale);
+    protected abstract List<SelectOption> loadOptions(Map<String, String> args, Locale locale);
 
 }

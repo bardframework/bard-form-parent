@@ -52,12 +52,12 @@ public class NewPasswordFieldTemplate extends InputFieldTemplateAbstract<NewPass
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, NewPasswordField field, Map<String, String> values, Locale locale) throws Exception {
-        super.fill(formTemplate, field, values, locale);
-        field.setShowConfirmPassword(FormUtils.getFieldBooleanProperty(formTemplate, this, "showConfirmPassword", locale, values, this.getDefaultValue().getShowConfirmPassword()));
-        field.setRegex(FormUtils.getFieldStringProperty(formTemplate, this, "regex", locale, values, this.getDefaultValue().getRegex()));
-        field.setMinLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "minLength", locale, values, this.getDefaultValue().getMinLength()));
-        field.setMaxLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxLength", locale, values, this.getDefaultValue().getMaxLength()));
+    public void fill(FormTemplate formTemplate, NewPasswordField field, Map<String, String> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, args, locale);
+        field.setShowConfirmPassword(FormUtils.getFieldBooleanProperty(formTemplate, this, "showConfirmPassword", locale, args, this.getDefaultValue().getShowConfirmPassword()));
+        field.setRegex(FormUtils.getFieldStringProperty(formTemplate, this, "regex", locale, args, this.getDefaultValue().getRegex()));
+        field.setMinLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "minLength", locale, args, this.getDefaultValue().getMinLength()));
+        field.setMaxLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxLength", locale, args, this.getDefaultValue().getMaxLength()));
     }
 
     @Override

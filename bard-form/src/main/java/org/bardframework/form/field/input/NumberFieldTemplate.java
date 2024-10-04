@@ -38,11 +38,11 @@ public class NumberFieldTemplate extends InputFieldTemplateAbstract<NumberField,
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, NumberField field, Map<String, String> values, Locale locale) throws Exception {
-        super.fill(formTemplate, field, values, locale);
-        field.setMinValue(this.getMinValue(formTemplate, values, locale));
-        field.setMaxValue(this.getMaxValue(formTemplate, values, locale));
-        field.setMask(FormUtils.getFieldStringProperty(formTemplate, this, "mask", locale, values, this.getDefaultValue().getMask()));
+    public void fill(FormTemplate formTemplate, NumberField field, Map<String, String> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, args, locale);
+        field.setMinValue(this.getMinValue(formTemplate, args, locale));
+        field.setMaxValue(this.getMaxValue(formTemplate, args, locale));
+        field.setMask(FormUtils.getFieldStringProperty(formTemplate, this, "mask", locale, args, this.getDefaultValue().getMask()));
     }
 
     private Long getMinValue(FormTemplate formTemplate, Map<String, String> values, Locale locale) {

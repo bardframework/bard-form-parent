@@ -66,16 +66,16 @@ public abstract class InputFieldTemplateAbstract<F extends InputField<T>, T> ext
     public abstract T toValue(String value);
 
     @Override
-    public void fill(FormTemplate formTemplate, F field, Map<String, String> values, Locale locale) throws Exception {
-        super.fill(formTemplate, field, values, locale);
-        field.setDescriptionShowType(FormUtils.getFieldEnumProperty(formTemplate, this, "descriptionShowType", FieldDescriptionShowType.class, locale, values, this.getDefaultValue().getDescriptionShowType()));
-        field.setPlaceholder(FormUtils.getFieldStringProperty(formTemplate, this, "placeholder", locale, values, this.getDefaultValue().getPlaceholder()));
-        field.setErrorMessage(FormUtils.getFieldStringProperty(formTemplate, this, "errorMessage", locale, values, this.getDefaultValue().getErrorMessage()));
-        field.setRequired(FormUtils.getFieldBooleanProperty(formTemplate, this, "required", locale, values, this.getDefaultValue().getRequired()));
+    public void fill(FormTemplate formTemplate, F field, Map<String, String> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, args, locale);
+        field.setDescriptionShowType(FormUtils.getFieldEnumProperty(formTemplate, this, "descriptionShowType", FieldDescriptionShowType.class, locale, args, this.getDefaultValue().getDescriptionShowType()));
+        field.setPlaceholder(FormUtils.getFieldStringProperty(formTemplate, this, "placeholder", locale, args, this.getDefaultValue().getPlaceholder()));
+        field.setErrorMessage(FormUtils.getFieldStringProperty(formTemplate, this, "errorMessage", locale, args, this.getDefaultValue().getErrorMessage()));
+        field.setRequired(FormUtils.getFieldBooleanProperty(formTemplate, this, "required", locale, args, this.getDefaultValue().getRequired()));
         if (null == disableExpression) {
-            field.setDisable(FormUtils.getFieldBooleanProperty(formTemplate, this, "disable", locale, values, this.getDefaultValue().getDisable()));
+            field.setDisable(FormUtils.getFieldBooleanProperty(formTemplate, this, "disable", locale, args, this.getDefaultValue().getDisable()));
         } else {
-            field.setDisable(Boolean.TRUE.equals(this.disableExpression.getValue(new StandardEvaluationContext(values), Boolean.class)));
+            field.setDisable(Boolean.TRUE.equals(this.disableExpression.getValue(new StandardEvaluationContext(args), Boolean.class)));
         }
         if (null != valueProvider) {
             field.setValue(valueProvider.getValue(field));

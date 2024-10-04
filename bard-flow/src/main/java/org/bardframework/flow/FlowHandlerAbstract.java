@@ -153,7 +153,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
     }
 
     protected boolean processAction(String flowToken, String action, D flowData, Map<String, String> formData, FlowFormTemplate currentFormTemplate, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
-        for (FlowInputFieldTemplate<?, ?> fieldTemplate : currentFormTemplate.getFieldTemplates(flowData.getData(), FlowInputFieldTemplate.class)) {
+        for (FlowInputFieldTemplate<?, ?> fieldTemplate : currentFormTemplate.getFieldTemplates(flowData.getData(), formData, FlowInputFieldTemplate.class)) {
             /*
                 تلاش برای پردازش با پردازشگرهای اینپوت‌ها
              */
@@ -177,7 +177,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
      * افزودن دیتاهای مورد نیاز در فرم به فلو دیتا
      */
     protected void fillFlowData(Map<String, String> flowData, Map<String, String> formData, FlowFormTemplate currentFormTemplate) {
-        for (InputFieldTemplateAbstract<?, ?> inputFieldTemplate : currentFormTemplate.getFieldTemplates(flowData, InputFieldTemplateAbstract.class)) {
+        for (InputFieldTemplateAbstract<?, ?> inputFieldTemplate : currentFormTemplate.getFieldTemplates(flowData, formData, InputFieldTemplateAbstract.class)) {
             if (!inputFieldTemplate.isPersistentValue()) {
                 continue;
             }
@@ -204,7 +204,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
             /*
                 فراخوانی پیش پردازش‌های فیلد‌ها (مانند ارسال پیامک یا ...)
              */
-            for (FlowInputFieldTemplate<?, ?> flowInputFieldTemplate : nextFormTemplate.getFieldTemplates(formData, FlowInputFieldTemplate.class)) {
+            for (FlowInputFieldTemplate<?, ?> flowInputFieldTemplate : nextFormTemplate.getFieldTemplates(flowData.getData(), formData, FlowInputFieldTemplate.class)) {
                 flowInputFieldTemplate.preProcess(flowToken, flowData.getData(), flowData.getLocale(), httpResponse);
             }
             /*
@@ -220,7 +220,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
     }
 
     protected FlowFormTemplate getCurrentFormTemplate(D flowData) throws Exception {
-        return this.getForms().get(flowData.getCurrentFormIndex());
+        return this.getForms().get(Math.max(flowData.getCurrentFormIndex(), 0));
     }
 
     protected void onFinished(String flowToken, D flowData, Map<String, String> formData, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {

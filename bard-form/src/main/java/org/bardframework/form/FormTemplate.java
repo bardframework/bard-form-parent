@@ -45,13 +45,13 @@ public class FormTemplate {
         this.messageSource = messageSource;
     }
 
-    public void validate(Object dto, Locale locale, HttpServletRequest httpRequest) throws Exception {
+    public void validate(Map<String, String> flowData, Object dto, Locale locale, HttpServletRequest httpRequest) throws Exception {
         FormDataValidationException ex = new FormDataValidationException();
         /*
             در بخش اعتبارسنچی ابتدا فیلدها براساس اولیت اعتبارسنجی مرتب می شوند
             مرتب‌سازی برای کنترل سناریوهایی است که ترتیب اعتبارسنجی فیلدها مهم است (مانند فیلد کپچا که باید پیش از همه اعتبارسنجی شود)
          */
-        for (InputFieldTemplateAbstract<?, ?> inputFieldTemplate : this.getFieldTemplates(Map.of(), InputFieldTemplateAbstract.class).stream().sorted(Comparator.comparingInt(InputFieldTemplateAbstract::getValidationOrder)).collect(Collectors.toList())) {
+        for (InputFieldTemplateAbstract<?, ?> inputFieldTemplate : this.getFieldTemplates(flowData, Map.of(), InputFieldTemplateAbstract.class).stream().sorted(Comparator.comparingInt(InputFieldTemplateAbstract::getValidationOrder)).toList()) {
             Object value = ReflectionUtils.getPropertyValue(dto, inputFieldTemplate.getName());
             inputFieldTemplate.validate(this, value, locale, httpRequest, ex);
         }
@@ -64,7 +64,7 @@ public class FormTemplate {
      * اعتبارسنجی داده های ارسالی
      */
     public void validate(String flowToken, Map<String, String> flowData, Map<String, String> formData, Locale locale) throws Exception {
-        Set<String> allowedFieldNames = this.getAllowedInputFields(flowData, locale);
+        Set<String> allowedFieldNames = this.getAllowedInputFields(flowData, formData, locale);
         Set<String> illegalFields = new HashSet<>(formData.keySet());
         illegalFields.removeAll(allowedFieldNames);
         if (!illegalFields.isEmpty()) {
@@ -81,7 +81,7 @@ public class FormTemplate {
             در بخش اعتبارسنچی ابتدا فیلدها براساس اولیت اعتبارسنجی مرتب می شوند
             مرتب‌سازی برای کنترل سناریوهایی است که ترتیب اعتبارسنجی فیلدها مهم است (مانند فیلد کپچا که باید پیش از همه اعتبارسنجی شود)
          */
-        for (InputFieldTemplateAbstract<?, ?> inputFieldTemplate : this.getFieldTemplates(flowData, InputFieldTemplateAbstract.class).stream().sorted(Comparator.comparingInt(InputFieldTemplateAbstract::getValidationOrder)).collect(Collectors.toList())) {
+        for (InputFieldTemplateAbstract<?, ?> inputFieldTemplate : this.getFieldTemplates(flowData, formData, InputFieldTemplateAbstract.class).stream().sorted(Comparator.comparingInt(InputFieldTemplateAbstract::getValidationOrder)).collect(Collectors.toList())) {
             inputFieldTemplate.validate(flowToken, this, flowData, formData, locale, ex);
         }
         if (!MapUtils.isEmpty(ex.getInvalidFields())) {
@@ -89,9 +89,9 @@ public class FormTemplate {
         }
     }
 
-    public <T extends FieldTemplate<?>> List<T> getFieldTemplates(Map<String, String> args, Class<T> superClass) {
+    public <T extends FieldTemplate<?>> List<T> getFieldTemplates(Map<String, String> flowData, Map<String, String> args, Class<T> superClass) {
         List<T> fieldTemplates = new ArrayList<>();
-        for (FieldTemplate<?> fieldTemplate : this.getFieldTemplates(args)) {
+        for (FieldTemplate<?> fieldTemplate : this.getFieldTemplates(flowData, args)) {
             if (superClass.isAssignableFrom(fieldTemplate.getClass())) {
                 fieldTemplates.add((T) fieldTemplate);
             }
@@ -103,8 +103,8 @@ public class FormTemplate {
      * محاسبه لیست فیلدهایی که استفاده کننده مجاز به ارسال دیتا برای آن هاست
      * این فیلدها شامل تمامی اینپوت فیلدهایی است که فعال باشند
      */
-    public Set<String> getAllowedInputFields(Map<String, String> args, Locale locale) throws Exception {
-        List<InputFieldTemplateAbstract> inputFieldTemplates = this.getFieldTemplates(args, InputFieldTemplateAbstract.class);
+    public Set<String> getAllowedInputFields(Map<String, String> flowData, Map<String, String> args, Locale locale) throws Exception {
+        List<InputFieldTemplateAbstract> inputFieldTemplates = this.getFieldTemplates(flowData, args, InputFieldTemplateAbstract.class);
         Set<String> allowedFieldNames = new HashSet<>();
         for (InputFieldTemplateAbstract<?, ?> inputFieldTemplate : inputFieldTemplates) {
             Boolean disable = FormUtils.getFieldBooleanProperty(this, inputFieldTemplate, "disable", locale, args, null);
@@ -119,12 +119,12 @@ public class FormTemplate {
         return null == showExpression || Boolean.TRUE.equals(showExpression.getValue(new StandardEvaluationContext(args), Boolean.class));
     }
 
-    public List<FieldTemplate<?>> getFieldTemplates(Map<String, String> args) {
+    public List<FieldTemplate<?>> getFieldTemplates(Map<String, String> flowData, Map<String, String> args) {
         return fieldTemplates.stream().filter(fieldTemplate -> fieldTemplate.mustShow(args)).collect(Collectors.toList());
     }
 
-    public FieldTemplate<?> getField(String name, Map<String, String> args) {
-        return this.getFieldTemplates(args).stream().filter(field -> field.getName().equals(name)).findFirst().orElse(null);
+    public FieldTemplate<?> getField(String name, Map<String, String> flowData, Map<String, String> args) {
+        return this.getFieldTemplates(flowData, args).stream().filter(field -> field.getName().equals(name)).findFirst().orElse(null);
     }
 
     public void setShowExpression(String showExpression) {

@@ -30,9 +30,9 @@ public class LocationSelectFieldTemplate extends InputFieldTemplateAbstract<Loca
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, LocationSelectField field, Map<String, String> values, Locale locale) throws Exception {
-        super.fill(formTemplate, field, values, locale);
-        field.setShowAddressAsTitle(FormUtils.getFieldBooleanProperty(formTemplate, this, "showAddressAsTitle", locale, values, this.getDefaultValue().getShowAddressAsTitle()));
+    public void fill(FormTemplate formTemplate, LocationSelectField field, Map<String, String> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, args, locale);
+        field.setShowAddressAsTitle(FormUtils.getFieldBooleanProperty(formTemplate, this, "showAddressAsTitle", locale, args, this.getDefaultValue().getShowAddressAsTitle()));
     }
 
     @Override

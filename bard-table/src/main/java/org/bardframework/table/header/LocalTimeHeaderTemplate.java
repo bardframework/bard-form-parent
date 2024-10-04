@@ -8,6 +8,7 @@ import org.springframework.context.MessageSource;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
+import java.util.function.Supplier;
 
 @Slf4j
 @Getter
@@ -16,8 +17,16 @@ public class LocalTimeHeaderTemplate<M> extends HeaderTemplate<M, TimeHeader, Lo
 
     private final DateTimeFormatter formatter;
 
-    public LocalTimeHeaderTemplate(String formatterPattern) {
-        this.formatter = DateTimeFormatter.ofPattern(formatterPattern);
+    public LocalTimeHeaderTemplate(String exportFormatterPattern) {
+        this(() -> exportFormatterPattern);
+    }
+
+    public LocalTimeHeaderTemplate(Supplier<String> exportFormatterPatternSupplier) {
+        this.formatter = DateTimeFormatter.ofPattern(exportFormatterPatternSupplier.get());
+    }
+
+    public LocalTimeHeaderTemplate(DateTimeFormatter exportFormatter) {
+        this.formatter = exportFormatter;
     }
 
     @Override

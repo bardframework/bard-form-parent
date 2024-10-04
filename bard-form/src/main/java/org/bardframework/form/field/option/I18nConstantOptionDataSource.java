@@ -10,6 +10,7 @@ import org.springframework.context.MessageSource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -25,13 +26,15 @@ public class I18nConstantOptionDataSource extends CachableOptionDataSource {
     }
 
     @Override
-    protected List<SelectOption> loadOptions(Locale locale) {
+    protected List<SelectOption> loadOptions(Map<String, String> args, Locale locale) {
         List<SelectOption> translatedOptions = new ArrayList<>();
         for (SelectOption option : options) {
             String titleMessageKey = StringUtils.isBlank(keyPrefix) ? option.getId() : keyPrefix + "." + option.getId();
+            String descriptionMessageKey = titleMessageKey + "." + "description";
             SelectOption translatedOption = new SelectOption();
             translatedOption.setId(option.getId());
             translatedOption.setTitle(messageSource.getMessage(titleMessageKey, null, titleMessageKey, locale));
+            translatedOption.setDescription(messageSource.getMessage(descriptionMessageKey, null, null, locale));
             translatedOption.setDisable(option.getDisable());
             translatedOption.setType(option.getType());
             translatedOption.setIcon(option.getIcon());

@@ -26,10 +26,10 @@ public abstract class MultiSelectFieldTemplateAbstract<F extends MultiSelectFiel
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, F field, Map<String, String> values, Locale locale) throws Exception {
-        super.fill(formTemplate, field, values, locale);
-        field.setMaxCount(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxCount", locale, values, this.getDefaultValue().getMaxCount()));
-        field.setOptions(null == this.getOptionDataSource() ? List.of() : this.getOptionDataSource().getOptions(locale));
+    public void fill(FormTemplate formTemplate, F field, Map<String, String> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, args, locale);
+        field.setMaxCount(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxCount", locale, args, this.getDefaultValue().getMaxCount()));
+        field.setOptions(null == this.getOptionDataSource() ? List.of() : this.getOptionDataSource().getOptions(args, locale));
         field.setSubmitType(this.getDefaultValue().getSubmitType());
     }
 

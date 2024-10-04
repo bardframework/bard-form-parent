@@ -8,18 +8,17 @@
         <version>3.6.4</version>
     </parent>
 
-    <artifactId>bard-table</artifactId>
+    <artifactId>bard-flow-redis</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
             <groupId>org.bardframework.form</groupId>
-            <artifactId>bard-form</artifactId>
+            <artifactId>bard-flow</artifactId>
         </dependency>
         <dependency>
-            <groupId>jakarta.servlet</groupId>
-            <artifactId>jakarta.servlet-api</artifactId>
-            <scope>provided</scope>
+            <groupId>org.bardframework.commons</groupId>
+            <artifactId>common-redis</artifactId>
         </dependency>
     </dependencies>
 </project>

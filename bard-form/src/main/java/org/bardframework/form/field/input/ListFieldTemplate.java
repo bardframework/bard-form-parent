@@ -44,12 +44,12 @@ public class ListFieldTemplate extends InputFieldTemplateAbstract<ListField, Lis
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, ListField field, Map<String, String> values, Locale locale) throws Exception {
-        super.fill(formTemplate, field, values, locale);
-        field.setMinLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "minLength", locale, values, this.getDefaultValue().getMinLength()));
-        field.setMaxLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxLength", locale, values, this.getDefaultValue().getMaxLength()));
-        field.setMaxCount(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxCount", locale, values, this.getDefaultValue().getMaxCount()));
-        field.setBulkAdd(FormUtils.getFieldBooleanProperty(formTemplate, this, "bulkAdd", locale, values, this.getDefaultValue().getBulkAdd()));
+    public void fill(FormTemplate formTemplate, ListField field, Map<String, String> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, args, locale);
+        field.setMinLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "minLength", locale, args, this.getDefaultValue().getMinLength()));
+        field.setMaxLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxLength", locale, args, this.getDefaultValue().getMaxLength()));
+        field.setMaxCount(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxCount", locale, args, this.getDefaultValue().getMaxCount()));
+        field.setBulkAdd(FormUtils.getFieldBooleanProperty(formTemplate, this, "bulkAdd", locale, args, this.getDefaultValue().getBulkAdd()));
         field.setSubmitType(this.getDefaultValue().getSubmitType());
     }
 

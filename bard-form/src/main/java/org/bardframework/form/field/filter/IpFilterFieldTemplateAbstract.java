@@ -61,10 +61,10 @@ abstract class IpFilterFieldTemplateAbstract<F extends Ip4FilterField> extends I
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, F field, Map<String, String> values, Locale locale) throws Exception {
-        super.fill(formTemplate, field, values, locale);
-        field.setMinValue(FormUtils.getFieldStringProperty(formTemplate, this, "minValue", locale, values, this.getDefaultValue().getMinValue()));
-        field.setMaxValue(FormUtils.getFieldStringProperty(formTemplate, this, "maxValue", locale, values, this.getDefaultValue().getMaxValue()));
+    public void fill(FormTemplate formTemplate, F field, Map<String, String> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, args, locale);
+        field.setMinValue(FormUtils.getFieldStringProperty(formTemplate, this, "minValue", locale, args, this.getDefaultValue().getMinValue()));
+        field.setMaxValue(FormUtils.getFieldStringProperty(formTemplate, this, "maxValue", locale, args, this.getDefaultValue().getMaxValue()));
     }
 
     @Override

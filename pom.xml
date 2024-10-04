@@ -5,24 +5,25 @@
     <parent>
         <groupId>org.bardframework</groupId>
         <artifactId>bard-parent</artifactId>
-        <version>23</version>
+        <version>24</version>
         <relativePath/>
     </parent>
 
     <groupId>org.bardframework.form</groupId>
     <artifactId>bard-form-parent</artifactId>
-    <version>3.5.4</version>
+    <version>3.6.4</version>
 
     <packaging>pom</packaging>
     <modules>
         <module>bard-flow</module>
+        <module>bard-flow-redis</module>
         <module>bard-form</module>
         <module>bard-form-common</module>
         <module>bard-table</module>
     </modules>
 
     <properties>
-        <bardframework.version>3.5.10</bardframework.version>
+        <bardframework.version>3.6.10</bardframework.version>
         <typescript-generator-maven-plugin.version>3.1.1185</typescript-generator-maven-plugin.version>
     </properties>
 

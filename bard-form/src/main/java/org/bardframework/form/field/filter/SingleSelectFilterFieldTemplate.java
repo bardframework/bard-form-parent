@@ -23,9 +23,9 @@ public class SingleSelectFilterFieldTemplate extends InputFieldTemplateAbstract<
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, SingleSelectFilterField field, Map<String, String> values, Locale locale) throws Exception {
-        super.fill(formTemplate, field, values, locale);
-        field.setOptions(optionDataSource.getOptions(locale));
+    public void fill(FormTemplate formTemplate, SingleSelectFilterField field, Map<String, String> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, args, locale);
+        field.setOptions(optionDataSource.getOptions(args, locale));
     }
 
 

@@ -10,6 +10,7 @@ import org.bardframework.form.model.SelectOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 @Getter
 public abstract class BaseModelOptionDataSource<M extends BaseModel<I>, C extends BaseCriteria<I>, R extends BaseRepository<M, C, I, U>, I, U> extends CachableOptionDataSource {
@@ -22,7 +23,7 @@ public abstract class BaseModelOptionDataSource<M extends BaseModel<I>, C extend
     }
 
     @Override
-    protected List<SelectOption> loadOptions(Locale locale) {
+    protected List<SelectOption> loadOptions(Map<String, String> args, Locale locale) {
         U user = this.getUser();
         List<M> list = repository.get(this.getCriteria(user), null);
         List<SelectOption> options = new ArrayList<>();

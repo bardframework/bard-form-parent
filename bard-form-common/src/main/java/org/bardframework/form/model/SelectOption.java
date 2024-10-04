@@ -10,6 +10,7 @@ import lombok.ToString;
 public class SelectOption implements Comparable<SelectOption> {
     private String id;
     private String title;
+    private String description;
     private String type;
     private String icon;
     private Boolean disable;

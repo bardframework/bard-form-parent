@@ -3,17 +3,27 @@ package org.bardframework.flow.form.field.input.otp;
 import com.mifmif.common.regex.Generex;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.math.NumberUtils;
 
 @Getter
 @Setter
 public class OtpGeneratorRegex implements OtpGenerator<String> {
-    private final Generex generex;
-    private final int length;
+    private Generex generex;
+    private int length;
     private Boolean number;
 
-    public OtpGeneratorRegex(String otpRegex, int length) {
-        this.generex = new Generex(otpRegex);
-        this.length = length;
+    public OtpGeneratorRegex() {
+    }
+
+    public OtpGeneratorRegex(String pattern) {
+        this.setPattern(pattern);
+        this.init();
+    }
+
+    private void init() {
+        String sampleOtp = this.generate();
+        this.length = sampleOtp.length();
+        this.number = NumberUtils.isCreatable(sampleOtp);
     }
 
     @Override
@@ -29,5 +39,10 @@ public class OtpGeneratorRegex implements OtpGenerator<String> {
     @Override
     public Boolean isNumber() {
         return number;
+    }
+
+    public void setPattern(String pattern) {
+        this.generex = new Generex(pattern);
+        this.init();
     }
 }

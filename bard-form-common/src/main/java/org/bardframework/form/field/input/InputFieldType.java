@@ -5,6 +5,7 @@ import org.bardframework.form.field.FieldType;
 public enum InputFieldType implements FieldType {
     AVATAR_SELECT,
     CAPTCHA,
+    CARD,
     CHECKBOX,
     COUNTRY_SELECT,
     DATE,

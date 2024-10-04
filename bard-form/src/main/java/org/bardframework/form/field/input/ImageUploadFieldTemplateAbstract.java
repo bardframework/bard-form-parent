@@ -18,14 +18,14 @@ abstract class ImageUploadFieldTemplateAbstract<F extends ImageUploadField> exte
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, F field, Map<String, String> values, Locale locale) throws Exception {
-        super.fill(formTemplate, field, values, locale);
-        field.setAspectRatio(FormUtils.getFieldDoubleProperty(formTemplate, this, "aspectRatio", locale, values, this.getDefaultValue().getAspectRatio()));
-        field.setAspectRatio(FormUtils.getFieldDoubleProperty(formTemplate, this, "aspectRatioTolerance", locale, values, this.getDefaultValue().getAspectRatioTolerance()));
-        field.setMinWidth(FormUtils.getFieldIntegerProperty(formTemplate, this, "minWidth", locale, values, this.getDefaultValue().getMinWidth()));
-        field.setMaxWidth(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxWidth", locale, values, this.getDefaultValue().getMaxWidth()));
-        field.setMinHeight(FormUtils.getFieldIntegerProperty(formTemplate, this, "minHeight", locale, values, this.getDefaultValue().getMinHeight()));
-        field.setMaxHeight(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxHeight", locale, values, this.getDefaultValue().getMaxHeight()));
+    public void fill(FormTemplate formTemplate, F field, Map<String, String> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, args, locale);
+        field.setAspectRatio(FormUtils.getFieldDoubleProperty(formTemplate, this, "aspectRatio", locale, args, this.getDefaultValue().getAspectRatio()));
+        field.setAspectRatio(FormUtils.getFieldDoubleProperty(formTemplate, this, "aspectRatioTolerance", locale, args, this.getDefaultValue().getAspectRatioTolerance()));
+        field.setMinWidth(FormUtils.getFieldIntegerProperty(formTemplate, this, "minWidth", locale, args, this.getDefaultValue().getMinWidth()));
+        field.setMaxWidth(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxWidth", locale, args, this.getDefaultValue().getMaxWidth()));
+        field.setMinHeight(FormUtils.getFieldIntegerProperty(formTemplate, this, "minHeight", locale, args, this.getDefaultValue().getMinHeight()));
+        field.setMaxHeight(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxHeight", locale, args, this.getDefaultValue().getMaxHeight()));
     }
 
     @Override

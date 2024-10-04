@@ -25,13 +25,13 @@ abstract class FileUploadFieldTemplateAbstract<F extends FileUploadField> extend
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, F field, Map<String, String> values, Locale locale) throws Exception {
-        super.fill(formTemplate, field, values, locale);
-        field.setMinSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "minSize", locale, values, this.getDefaultValue().getMinSize()));
-        field.setMaxSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxSize", locale, values, this.getDefaultValue().getMaxSize()));
-        field.setTotalSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "totalSize", locale, values, this.getDefaultValue().getTotalSize()));
-        field.setCount(FormUtils.getFieldByteProperty(formTemplate, this, "count", locale, values, this.getDefaultValue().getCount()));
-        field.setContentTypes(FormUtils.getFieldListProperty(formTemplate, this, "contentTypes", locale, values, this.getDefaultValue().getContentTypes()));
+    public void fill(FormTemplate formTemplate, F field, Map<String, String> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, args, locale);
+        field.setMinSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "minSize", locale, args, this.getDefaultValue().getMinSize()));
+        field.setMaxSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxSize", locale, args, this.getDefaultValue().getMaxSize()));
+        field.setTotalSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "totalSize", locale, args, this.getDefaultValue().getTotalSize()));
+        field.setCount(FormUtils.getFieldByteProperty(formTemplate, this, "count", locale, args, this.getDefaultValue().getCount()));
+        field.setContentTypes(FormUtils.getFieldListProperty(formTemplate, this, "contentTypes", locale, args, this.getDefaultValue().getContentTypes()));
         field.setUploadAction(this.getDefaultValue().getUploadAction());
         field.setDownloadAction(this.getDefaultValue().getDownloadAction());
         field.setSubmitType(this.getDefaultValue().getSubmitType());

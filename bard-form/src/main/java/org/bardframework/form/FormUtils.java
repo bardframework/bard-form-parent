@@ -39,7 +39,7 @@ public class FormUtils {
         form.setAutoSubmitDelaySeconds(FormUtils.getFormIntegerProperty(formTemplate, "autoSubmitDelaySeconds", locale, args, formTemplate.getAutoSubmitDelaySeconds()));
         form.setFieldDescriptionShowType(FormUtils.getFormEnumProperty(formTemplate, "fieldDescriptionShowType", FieldDescriptionShowType.class, locale, args, formTemplate.getDescriptionShowType()));
         form.setNestedFormShowType(FormUtils.getFormEnumProperty(formTemplate, "nestedFormShowType", NestedFormShowType.class, locale, args, formTemplate.getNestedFormShowType()));
-        for (FieldTemplate<?> fieldTemplate : formTemplate.getFieldTemplates(args)) {
+        for (FieldTemplate<?> fieldTemplate : formTemplate.getFieldTemplates(values, args)) {
             Field field = fieldTemplate.toField(formTemplate, args, locale);
             String valueString = values.get(fieldTemplate.getName());
             if (field instanceof InputField<?> && null == ((InputField<?>) field).getValue()) {

@@ -41,10 +41,10 @@ public class DateFieldTemplate extends InputFieldTemplateAbstract<DateField, Lon
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, DateField field, Map<String, String> values, Locale locale) throws Exception {
-        super.fill(formTemplate, field, values, locale);
-        field.setMinValue(FormUtils.getFieldLongProperty(formTemplate, this, "minValue", locale, values, this.getDefaultValue().getMinValue()));
-        field.setMaxValue(FormUtils.getFieldLongProperty(formTemplate, this, "maxValue", locale, values, this.getDefaultValue().getMaxValue()));
+    public void fill(FormTemplate formTemplate, DateField field, Map<String, String> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, args, locale);
+        field.setMinValue(FormUtils.getFieldLongProperty(formTemplate, this, "minValue", locale, args, this.getDefaultValue().getMinValue()));
+        field.setMaxValue(FormUtils.getFieldLongProperty(formTemplate, this, "maxValue", locale, args, this.getDefaultValue().getMaxValue()));
         if (null == field.getMinValue()) {
             field.setMinValue(this.getMinValue());
         }
