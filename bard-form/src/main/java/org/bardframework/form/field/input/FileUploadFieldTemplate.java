@@ -15,7 +15,7 @@ public class FileUploadFieldTemplate extends FileUploadFieldTemplateAbstract<Fil
     }
 
     @Override
-    public boolean isValid(String flowToken, FileUploadField field, List<String> values, Map<String, String> flowData) {
+    public boolean isValid(String flowToken, FileUploadField field, List<String> values, Map<String, Object> flowData) {
         //TODO not implement
         return true;
     }

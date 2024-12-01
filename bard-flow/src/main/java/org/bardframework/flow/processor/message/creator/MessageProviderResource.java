@@ -23,8 +23,8 @@ public class MessageProviderResource implements MessageProvider {
     }
 
     @Override
-    public String create(Map<String, String> args, Locale locale) throws IOException {
-        Map<String, String> newArgs = new HashMap<>(args);
+    public String create(Map<String, Object> args, Locale locale) throws IOException {
+        Map<String, Object> newArgs = new HashMap<>(args);
         newArgs.put(localeArgKey, locale.getLanguage());
         String resourcePath = StringTemplateUtils.fillTemplate(resourcePathTemplate, newArgs);
         try (InputStream inputStream = ResourceUtils.getResource(resourcePath).getInputStream()) {

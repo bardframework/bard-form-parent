@@ -37,22 +37,22 @@ public class SsotpFieldTemplate extends FlowInputFieldTemplate<SsotpField, Strin
     }
 
     @Override
-    public void preProcess(String flowToken, Map<String, String> flowData, Locale locale, HttpServletResponse httpResponse) throws Exception {
+    public void preProcess(String flowToken, Map<String, Object> flowData, Locale locale, HttpServletResponse httpResponse) throws Exception {
         String otp = this.getOtpGenerator().generate();
         flowData.put(ANSWER_KEY, otp);
     }
 
     @Override
-    public void validate(String flowToken, FormTemplate formTemplate, Map<String, String> flowData, Map<String, String> formData, Locale locale, FormDataValidationException ex) throws Exception {
-        String identifier = flowData.get(this.identifierFieldTemplate.getName());
-        String expectedAnswer = flowData.get(ANSWER_KEY);
-        String receivedOtp = ssotpMessageReceiver.remove(identifier);
-        if (!StringUtils.isBlank(expectedAnswer) && expectedAnswer.equals(receivedOtp)) {
+    public void validate(String flowToken, FormTemplate formTemplate, Map<String, Object> flowData, Map<String, Object> formData, Locale locale, FormDataValidationException ex) throws Exception {
+        Object identifier = flowData.get(this.identifierFieldTemplate.getName());
+        Object expectedAnswer = flowData.get(ANSWER_KEY);
+        String receivedOtp = ssotpMessageReceiver.remove(identifier.toString());
+        if (null != expectedAnswer && expectedAnswer.equals(receivedOtp)) {
             flowData.remove(ANSWER_KEY);
             flowData.remove(RESOLVE_COUNT_KEY);
             return;
         }
-        int resolveTryCount = flowData.containsKey(RESOLVE_COUNT_KEY) ? Integer.parseInt(flowData.get(RESOLVE_COUNT_KEY)) : 0;
+        int resolveTryCount = flowData.containsKey(RESOLVE_COUNT_KEY) ? Integer.parseInt(flowData.get(RESOLVE_COUNT_KEY).toString()) : 0;
         if (resolveTryCount >= this.getMaxTryToResolveCount()) {
             throw new InvalidateFlowException(flowToken, "too many try to resolve ssotp, terminating flow...");
         }
@@ -64,20 +64,15 @@ public class SsotpFieldTemplate extends FlowInputFieldTemplate<SsotpField, Strin
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, SsotpField field, Map<String, String> args, Locale locale) throws Exception {
+    public void fill(FormTemplate formTemplate, SsotpField field, Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception {
         field.setTitle(FormUtils.getFieldStringProperty(formTemplate, this, "title", locale, args, this.getDefaultValue().getTitle()));
         field.setDescription(FormUtils.getFieldStringProperty(formTemplate, this, "description", locale, args, this.getDefaultValue().getDescription()));
         field.setNumber(this.getOtpGenerator().isNumber());
-        field.setOtp(args.get(ANSWER_KEY));
+        field.setOtp(args.get(ANSWER_KEY).toString());
     }
 
     @Override
-    public boolean isValid(String flowToken, SsotpField field, String value, Map<String, String> flowData) {
+    public boolean isValid(String flowToken, SsotpField field, String value, Map<String, Object> flowData) {
         return true;
-    }
-
-    @Override
-    public String toValue(String value) {
-        return null;
     }
 }

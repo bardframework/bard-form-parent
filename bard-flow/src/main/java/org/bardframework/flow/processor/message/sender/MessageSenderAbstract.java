@@ -44,7 +44,7 @@ public abstract class MessageSenderAbstract implements MessageSender {
         this.errorMessageKey = errorMessageKey;
     }
 
-    protected abstract void send(String receiver, String message, Map<String, String> args, Locale locale) throws Exception;
+    protected abstract void send(String receiver, String message, Map<String, Object> args, Locale locale) throws Exception;
 
     @PostConstruct
     void init() {
@@ -54,27 +54,27 @@ public abstract class MessageSenderAbstract implements MessageSender {
     }
 
     @Override
-    public final void send(Map<String, String> data, Locale locale) throws Exception {
-        Map<String, String> args = new HashMap<>(data);
+    public final void send(Map<String, Object> data, Locale locale) throws Exception {
+        Map<String, Object> args = new HashMap<>(data);
         String message = this.getMessageProvider().create(args, locale);
         if (StringUtils.isBlank(message)) {
             log.warn("message is empty[{}], can't send it", args);
             throw new IllegalStateException("message provider generate empty message!");
         }
-        String receiver = data.get(this.getReceiverFieldName());
-        if (StringUtils.isBlank(receiver)) {
+        Object receiver = data.get(this.getReceiverFieldName());
+        if (null == receiver) {
             log.warn("receiver not exist for [{}], can't send message", args);
             throw new IllegalStateException("receiver not exist in args");
         }
         log.debug("sending message [{}]", message);
         if (this.isExecuteInNewThread()) {
-            this.getExecutor().execute(() -> this.sendInternal(receiver, message, args, locale));
+            this.getExecutor().execute(() -> this.sendInternal(receiver.toString(), message, args, locale));
         } else {
-            this.sendInternal(receiver, message, args, locale);
+            this.sendInternal(receiver.toString(), message, args, locale);
         }
     }
 
-    private void sendInternal(String receiver, String message, Map<String, String> args, Locale locale) {
+    private void sendInternal(String receiver, String message, Map<String, Object> args, Locale locale) {
         try {
             this.addExtraArgs(args);
             this.send(receiver, message, args, locale);
@@ -87,7 +87,7 @@ public abstract class MessageSenderAbstract implements MessageSender {
         }
     }
 
-    protected void addExtraArgs(Map<String, String> args) {
+    protected void addExtraArgs(Map<String, Object> args) {
         LocalDateTime dateTime = LocalDateTime.now();
         args.put("date", dateTime.format(this.getDateFormatGregorian()));
         args.put("jalali_date", LocalDateTimeJalali.now().format(this.getDateFormatterJalali()));

@@ -2,7 +2,6 @@ package org.bardframework.form.field.input;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang3.StringUtils;
 import org.bardframework.commons.utils.DateTimeUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
@@ -21,7 +20,7 @@ public class DateFieldTemplate extends InputFieldTemplateAbstract<DateField, Lon
     }
 
     @Override
-    public boolean isValid(String flowToken, DateField field, Long value, Map<String, String> flowData) {
+    public boolean isValid(String flowToken, DateField field, Long value, Map<String, Object> flowData) {
         if (null == value) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 log.debug("field [{}] is required, but it's value is empty", field.getName());
@@ -41,8 +40,8 @@ public class DateFieldTemplate extends InputFieldTemplateAbstract<DateField, Lon
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, DateField field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
+    public void fill(FormTemplate formTemplate, DateField field, Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, values, args, locale);
         field.setMinValue(FormUtils.getFieldLongProperty(formTemplate, this, "minValue", locale, args, this.getDefaultValue().getMinValue()));
         field.setMaxValue(FormUtils.getFieldLongProperty(formTemplate, this, "maxValue", locale, args, this.getDefaultValue().getMaxValue()));
         if (null == field.getMinValue()) {
@@ -51,14 +50,6 @@ public class DateFieldTemplate extends InputFieldTemplateAbstract<DateField, Lon
         if (null == field.getMaxValue()) {
             field.setMaxValue(this.getMaxValue());
         }
-    }
-
-    @Override
-    public Long toValue(String value) {
-        if (StringUtils.isBlank(value)) {
-            return null;
-        }
-        return Long.parseLong(value);
     }
 
     public Long getMinValue() {

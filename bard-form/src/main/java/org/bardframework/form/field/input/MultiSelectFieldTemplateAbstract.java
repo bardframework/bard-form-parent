@@ -3,16 +3,13 @@ package org.bardframework.form.field.input;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
 import org.bardframework.form.field.option.OptionDataSource;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -26,15 +23,14 @@ public abstract class MultiSelectFieldTemplateAbstract<F extends MultiSelectFiel
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, F field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
+    public void fill(FormTemplate formTemplate, F field, Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, values, args, locale);
         field.setMaxCount(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxCount", locale, args, this.getDefaultValue().getMaxCount()));
         field.setOptions(null == this.getOptionDataSource() ? List.of() : this.getOptionDataSource().getOptions(args, locale));
-        field.setSubmitType(this.getDefaultValue().getSubmitType());
     }
 
     @Override
-    public boolean isValid(String flowToken, F field, List<String> values, Map<String, String> flowData) {
+    public boolean isValid(String flowToken, F field, List<String> values, Map<String, Object> flowData) {
         if (CollectionUtils.isEmpty(values)) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 log.debug("field [{}] is required, but it's value is empty", field.getName());
@@ -51,13 +47,5 @@ public abstract class MultiSelectFieldTemplateAbstract<F extends MultiSelectFiel
             return false;
         }
         return true;
-    }
-
-    @Override
-    public List<String> toValue(String value) {
-        if (StringUtils.isBlank(value)) {
-            return null;
-        }
-        return Arrays.stream(value.split(InputField.SEPARATOR)).map(String::trim).collect(Collectors.toList());
     }
 }

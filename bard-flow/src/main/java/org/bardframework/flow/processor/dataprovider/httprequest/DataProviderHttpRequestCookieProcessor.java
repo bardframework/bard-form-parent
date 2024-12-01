@@ -14,7 +14,7 @@ import java.util.Objects;
  */
 public class DataProviderHttpRequestCookieProcessor extends DataProviderHttpRequestProcessorAbstract {
 
-    public DataProviderHttpRequestCookieProcessor(Map<String, String> mapper) {
+    public DataProviderHttpRequestCookieProcessor(Map<String, Object> mapper) {
         super(mapper);
     }
 

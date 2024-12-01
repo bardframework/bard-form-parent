@@ -7,7 +7,6 @@ import lombok.Setter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.commons.utils.ReflectionUtils;
-import org.bardframework.commons.web.utils.WebUtils;
 import org.bardframework.flow.exception.FlowDataValidationException;
 import org.bardframework.flow.exception.InvalidateFlowException;
 import org.bardframework.flow.form.FlowFormTemplate;
@@ -16,6 +15,7 @@ import org.bardframework.flow.form.field.input.FlowInputFieldTemplate;
 import org.bardframework.flow.repository.FlowDataRepository;
 import org.bardframework.form.BardForm;
 import org.bardframework.form.FormUtils;
+import org.bardframework.form.exception.FormDataValidationException;
 import org.bardframework.form.field.input.InputFieldTemplateAbstract;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +41,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
     }
 
     @Override
-    public FlowResponse start(Map<String, String> initValues, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
+    public FlowResponse start(Map<String, Object> initValues, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
             throws Exception {
         D flowData = ReflectionUtils.newInstance(ReflectionUtils.getGenericArgType(this.getClass(), 0));
         String flowToken = this.generateFlowToken();
@@ -58,7 +58,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
             currentFormTemplate = this.getCurrentFormTemplate(flowData);
             return this.processNextForm(flowToken, flowData, Map.of(), httpRequest, httpResponse);
         } catch (Exception e) {
-            return this.handleExceptionInternal(flowToken, flowData, initValues, currentFormTemplate, FlowAction.START, e);
+            return this.handleExceptionInternal(flowToken, flowData, initValues, currentFormTemplate, FlowAction.START, httpRequest, httpResponse, e);
         } finally {
             /*
                 در تمامی حالات (حالاتی که استثنا رخ دهد یا خیر) باید دیتای تغیر یافته را ذخیره کنیم؛
@@ -71,7 +71,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
     }
 
     @Override
-    public FlowResponse submit(String flowToken, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
+    public FlowResponse submit(String flowToken, Map<String, Object> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
             throws Exception {
         D flowData = null;
         FlowFormTemplate currentFormTemplate = null;
@@ -79,25 +79,25 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
             flowData = this.getFlowDataRepository().get(flowToken);
             currentFormTemplate = this.getCurrentFormTemplate(flowData);
         } catch (Exception ex) {
-            return this.handleExceptionInternal(flowToken, flowData, formData, currentFormTemplate, FlowAction.SUBMIT_FORM, ex);
+            return this.handleExceptionInternal(flowToken, flowData, formData, currentFormTemplate, FlowAction.SUBMIT_FORM, httpRequest, httpResponse, ex);
         }
         try {
             if (!Objects.equals(locale, flowData.getLocale())) {
                 this.onLocaleChange(flowToken, flowData, formData, FlowAction.SUBMIT_FORM, flowData.getLocale(), locale, httpRequest, httpResponse);
             }
-            currentFormTemplate.validate(flowToken, flowData.getData(), formData, flowData.getLocale());
-            this.fillFlowData(flowData.getData(), formData, currentFormTemplate);
+            currentFormTemplate.validate(flowToken, flowData.getData(), formData, flowData.getLocale(), httpRequest, httpResponse);
+            this.fillFlowData(flowData.getData(), formData, currentFormTemplate, httpRequest, httpResponse);
             this.process(currentFormTemplate.getPostProcessors(), flowToken, flowData, formData, httpRequest, httpResponse);
             return this.processNextForm(flowToken, flowData, formData, httpRequest, httpResponse);
         } catch (Exception ex) {
-            return this.handleExceptionInternal(flowToken, flowData, formData, currentFormTemplate, FlowAction.SUBMIT_FORM, ex);
+            return this.handleExceptionInternal(flowToken, flowData, formData, currentFormTemplate, FlowAction.SUBMIT_FORM, httpRequest, httpResponse, ex);
         } finally {
             this.updateFlowData(flowToken, flowData);
         }
     }
 
     @Override
-    public Object action(String flowToken, String action, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
+    public Object action(String flowToken, String action, Map<String, Object> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
             throws Exception {
         log.debug("start action[{}] processing, flow token [{}], form data [{}]", action, flowToken, formData);
         D flowData = null;
@@ -121,7 +121,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
                 throw new InvalidateFlowException(flowToken, "invalid action", null);
             }
         } catch (Exception ex) {
-            return this.handleExceptionInternal(flowToken, flowData, formData, currentFormTemplate, FlowAction.PROCESS_ACTION, ex);
+            return this.handleExceptionInternal(flowToken, flowData, formData, currentFormTemplate, FlowAction.PROCESS_ACTION, httpRequest, httpResponse, ex);
         } finally {
             this.updateFlowData(flowToken, flowData);
         }
@@ -148,12 +148,12 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
             }
             return this.toResponse(flowToken, currentFormTemplate, flowData, httpRequest, httpResponse);
         } catch (Exception ex) {
-            return this.handleExceptionInternal(flowToken, flowData, Map.of(), currentFormTemplate, FlowAction.GET_CURRENT, ex);
+            return this.handleExceptionInternal(flowToken, flowData, Map.of(), currentFormTemplate, FlowAction.GET_CURRENT, httpRequest, httpResponse, ex);
         }
     }
 
-    protected boolean processAction(String flowToken, String action, D flowData, Map<String, String> formData, FlowFormTemplate currentFormTemplate, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
-        for (FlowInputFieldTemplate<?, ?> fieldTemplate : currentFormTemplate.getFieldTemplates(flowData.getData(), formData, FlowInputFieldTemplate.class)) {
+    protected boolean processAction(String flowToken, String action, D flowData, Map<String, Object> formData, FlowFormTemplate currentFormTemplate, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
+        for (FlowInputFieldTemplate<?, ?> fieldTemplate : currentFormTemplate.getFieldTemplates(flowData.getData(), formData, FlowInputFieldTemplate.class, httpRequest, httpResponse)) {
             /*
                 تلاش برای پردازش با پردازشگرهای اینپوت‌ها
              */
@@ -176,14 +176,14 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
     /**
      * افزودن دیتاهای مورد نیاز در فرم به فلو دیتا
      */
-    protected void fillFlowData(Map<String, String> flowData, Map<String, String> formData, FlowFormTemplate currentFormTemplate) {
-        for (InputFieldTemplateAbstract<?, ?> inputFieldTemplate : currentFormTemplate.getFieldTemplates(flowData, formData, InputFieldTemplateAbstract.class)) {
+    protected void fillFlowData(Map<String, Object> flowData, Map<String, Object> formData, FlowFormTemplate currentFormTemplate, HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
+        for (InputFieldTemplateAbstract<?, ?> inputFieldTemplate : currentFormTemplate.getFieldTemplates(flowData, formData, InputFieldTemplateAbstract.class, httpRequest, httpResponse)) {
             if (!inputFieldTemplate.isPersistentValue()) {
                 continue;
             }
-            String value = formData.remove(inputFieldTemplate.getName());
-            if (Boolean.TRUE.equals(currentFormTemplate.getSubmitEmptyInputs()) || StringUtils.isNotBlank(value)) {
-                flowData.put(inputFieldTemplate.getName(), WebUtils.escapeString(value));
+            Object value = formData.get(inputFieldTemplate.getName());
+            if (Boolean.TRUE.equals(currentFormTemplate.getSubmitEmptyInputs()) || null != value) {
+                flowData.put(inputFieldTemplate.getName(), value);
             }
         }
     }
@@ -195,7 +195,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
      * <br>
      * 3. ذخیره داده‌های فلو
      */
-    protected FlowResponse processNextForm(String flowToken, D flowData, Map<String, String> formData, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
+    protected FlowResponse processNextForm(String flowToken, D flowData, Map<String, Object> formData, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
         FlowFormTemplate nextFormTemplate = this.getForms().subList(flowData.getCurrentFormIndex() + 1, this.getForms().size()).stream()
                 .filter(formTemplate -> formTemplate.mustShow(flowData.getData()))
                 .findFirst().orElse(null);
@@ -204,7 +204,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
             /*
                 فراخوانی پیش پردازش‌های فیلد‌ها (مانند ارسال پیامک یا ...)
              */
-            for (FlowInputFieldTemplate<?, ?> flowInputFieldTemplate : nextFormTemplate.getFieldTemplates(flowData.getData(), formData, FlowInputFieldTemplate.class)) {
+            for (FlowInputFieldTemplate<?, ?> flowInputFieldTemplate : nextFormTemplate.getFieldTemplates(flowData.getData(), formData, FlowInputFieldTemplate.class, httpRequest, httpResponse)) {
                 flowInputFieldTemplate.preProcess(flowToken, flowData.getData(), flowData.getLocale(), httpResponse);
             }
             /*
@@ -223,7 +223,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
         return this.getForms().get(Math.max(flowData.getCurrentFormIndex(), 0));
     }
 
-    protected void onFinished(String flowToken, D flowData, Map<String, String> formData, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
+    protected void onFinished(String flowToken, D flowData, Map<String, Object> formData, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
         this.process(this.getPostProcessors(flowData), flowToken, flowData, formData, httpRequest, httpResponse);
         this.cleanFlowData(flowToken);
     }
@@ -253,7 +253,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
             /*
                 convert and fill form
              */
-            BardForm nextForm = FormUtils.toForm(formTemplate, flowData.getData(), flowData.getData(), flowData.getLocale());
+            BardForm nextForm = FormUtils.toForm(formTemplate, flowData.getData(), flowData.getData(), flowData.getLocale(), httpRequest, httpResponse);
             response.setForm(nextForm).setSteps(this.getStepsCounts(flowData)).setCurrent(flowData.getCurrentFormIndex());
         }
         if (null == formTemplate || formTemplate.isFinished()) {
@@ -262,23 +262,26 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
             /*
                 در حالتی که فلو به پایان می رسد؛ نیازی به ست کردن فلو توکن نیست
              */
-            httpResponse.setHeader(TOKEN_HEADER_NAME, flowToken);
+            response.setId(flowToken);
         }
         return response;
     }
 
-    protected FlowResponse handleExceptionInternal(String flowToken, D flowData, Map<String, String> formData, FlowFormTemplate currentFormTemplate, FlowAction flowAction, Exception ex) throws Exception {
+    protected FlowResponse handleExceptionInternal(String flowToken, D flowData, Map<String, Object> formData, FlowFormTemplate currentFormTemplate, FlowAction flowAction, HttpServletRequest httpRequest, HttpServletResponse httpResponse, Exception ex) throws Exception {
         if (ex instanceof InvalidateFlowException e) {
             this.invalidateFlow(e);
         } else if (ex instanceof FlowDataValidationException e) {
             if (e.isSendCurrentForm() && null != currentFormTemplate) {
-                e.setForm(FormUtils.toForm(currentFormTemplate, null == flowData ? null : flowData.getData(), null == flowData ? null : flowData.getData(), null == flowData ? null : flowData.getLocale()));
+                e.setForm(FormUtils.toForm(currentFormTemplate, null == flowData ? null : flowData.getData(), null == flowData ? null : flowData.getData(), null == flowData ? null : flowData.getLocale(), httpRequest, httpResponse));
             }
         }
-        return this.handleException(flowToken, flowData, formData, currentFormTemplate, flowAction, ex);
+        if (!(ex instanceof FlowDataValidationException || ex instanceof FormDataValidationException)) {
+            log.error("error in flow [{}].", flowToken, ex);
+        }
+        return this.handleException(flowToken, flowData, formData, currentFormTemplate, flowAction, httpRequest, httpResponse, ex);
     }
 
-    protected abstract FlowResponse handleException(String flowToken, D flowData, Map<String, String> formData, FlowFormTemplate currentFormTemplate, FlowAction flowAction, Exception ex) throws Exception;
+    protected abstract FlowResponse handleException(String flowToken, D flowData, Map<String, Object> formData, FlowFormTemplate currentFormTemplate, FlowAction flowAction, HttpServletRequest httpRequest, HttpServletResponse httpResponse, Exception ex) throws Exception;
 
     protected int getStepsCounts(D flowData) {
         return this.getForms().size();
@@ -288,7 +291,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
         this.getFlowDataRepository().remove(flowToken);
     }
 
-    protected boolean process(List<FormProcessor> processors, String flowToken, D flowData, Map<String, String> formData, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
+    protected boolean process(List<FormProcessor> processors, String flowToken, D flowData, Map<String, Object> formData, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
         if (CollectionUtils.isEmpty(processors)) {
             return false;
         }
@@ -302,7 +305,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
         return true;
     }
 
-    protected void onLocaleChange(String flowToken, D flowData, Map<String, String> formData, FlowAction flowAction, Locale startLocale, Locale newLocale, HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
+    protected void onLocaleChange(String flowToken, D flowData, Map<String, Object> formData, FlowAction flowAction, Locale startLocale, Locale newLocale, HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
     }
 
     public List<FormProcessor> getPreProcessors(D flowData) {

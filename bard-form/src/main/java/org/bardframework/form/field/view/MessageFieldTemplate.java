@@ -14,8 +14,8 @@ public class MessageFieldTemplate extends FieldTemplate<MessageField> {
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, MessageField field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
+    public void fill(FormTemplate formTemplate, MessageField field, Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, values, args, locale);
         field.setMessage(FormUtils.getFieldStringProperty(formTemplate, this, "message", locale, args, this.getDefaultValue().getMessage()));
     }
 

@@ -35,39 +35,41 @@ public abstract class InputFieldTemplateAbstract<F extends InputField<T>, T> ext
         this.persistentValue = persistentValue;
     }
 
-    public void validate(FormTemplate formTemplate, Object value, Locale locale, HttpServletRequest httpRequest, FormDataValidationException ex)
+    public void validate(FormTemplate formTemplate, Map<String, Object> values, Object value, Locale locale, HttpServletRequest httpRequest, FormDataValidationException ex)
             throws Exception {
-        F formField = this.toField(formTemplate, Map.of(), locale);
+        F formField = this.toField(formTemplate, values, Map.of(), locale);
         if (Boolean.TRUE.equals(formField.getDisable())) {
             return;
         }
         this.validate(null, formTemplate, formField, (T) value, Map.of(), Map.of(), locale, ex);
     }
 
-    public void validate(String flowToken, FormTemplate formTemplate, Map<String, String> flowData, Map<String, String> formData, Locale locale, FormDataValidationException ex)
+    public void validate(String flowToken, FormTemplate formTemplate, Map<String, Object> flowData, Map<String, Object> formData, Locale locale, FormDataValidationException ex)
             throws Exception {
-        F formField = this.toField(formTemplate, formData, locale);
+        F formField = this.toField(formTemplate, flowData, formData, locale);
         if (Boolean.TRUE.equals(formField.getDisable())) {
             return;
         }
-        String stringValue = formData.get(this.getName());
-        this.validate(flowToken, formTemplate, formField, this.toValue(stringValue), flowData, formData, locale, ex);
+        Object value = formData.get(this.getName());
+        this.validate(flowToken, formTemplate, formField, this.toValue(value), flowData, formData, locale, ex);
     }
 
-    private void validate(String flowToken, FormTemplate formTemplate, F formField, T value, Map<String, String> flowData, Map<String, String> formData, Locale locale, FormDataValidationException ex)
+    private void validate(String flowToken, FormTemplate formTemplate, F formField, T value, Map<String, Object> flowData, Map<String, Object> formData, Locale locale, FormDataValidationException ex)
             throws Exception {
         if (!this.isValid(flowToken, formField, value, flowData)) {
             ex.addFieldError(this.getName(), this.getErrorMessage(formTemplate, formData, locale));
         }
     }
 
-    public abstract boolean isValid(String flowToken, F field, T value, Map<String, String> flowData) throws Exception;
+    public abstract boolean isValid(String flowToken, F field, T value, Map<String, Object> flowData) throws Exception;
 
-    public abstract T toValue(String value);
+    public T toValue(Object value) {
+        return (T) value;
+    }
 
     @Override
-    public void fill(FormTemplate formTemplate, F field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
+    public void fill(FormTemplate formTemplate, F field, Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, values, args, locale);
         field.setDescriptionShowType(FormUtils.getFieldEnumProperty(formTemplate, this, "descriptionShowType", FieldDescriptionShowType.class, locale, args, this.getDefaultValue().getDescriptionShowType()));
         field.setPlaceholder(FormUtils.getFieldStringProperty(formTemplate, this, "placeholder", locale, args, this.getDefaultValue().getPlaceholder()));
         field.setErrorMessage(FormUtils.getFieldStringProperty(formTemplate, this, "errorMessage", locale, args, this.getDefaultValue().getErrorMessage()));
@@ -82,7 +84,7 @@ public abstract class InputFieldTemplateAbstract<F extends InputField<T>, T> ext
         }
     }
 
-    private String getErrorMessage(FormTemplate formTemplate, Map<String, String> formData, Locale locale) {
+    private String getErrorMessage(FormTemplate formTemplate, Map<String, Object> formData, Locale locale) {
         return FormUtils.getFieldStringProperty(formTemplate, this, "errorMessage", locale, formData, this.getDefaultValue().getErrorMessage());
     }
 

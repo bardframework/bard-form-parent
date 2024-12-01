@@ -19,7 +19,7 @@ public class HtmlEditorFieldTemplate extends InputFieldTemplateAbstract<HtmlEdit
     }
 
     @Override
-    public boolean isValid(String flowToken, HtmlEditorField field, String value, Map<String, String> flowData) {
+    public boolean isValid(String flowToken, HtmlEditorField field, String value, Map<String, Object> flowData) {
         if (StringUtils.isBlank(value)) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 log.debug("field [{}] is required, but it's value is empty", field.getName());
@@ -35,13 +35,8 @@ public class HtmlEditorFieldTemplate extends InputFieldTemplateAbstract<HtmlEdit
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, HtmlEditorField field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
+    public void fill(FormTemplate formTemplate, HtmlEditorField field, Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, values, args, locale);
         field.setMaxSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxSize", locale, args, this.getDefaultValue().getMaxSize()));
-    }
-
-    @Override
-    public String toValue(String value) {
-        return value;
     }
 }

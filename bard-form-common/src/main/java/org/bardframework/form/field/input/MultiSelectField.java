@@ -5,7 +5,6 @@ import lombok.Setter;
 import lombok.ToString;
 import org.bardframework.form.field.FieldType;
 import org.bardframework.form.model.SelectOption;
-import org.bardframework.form.model.StringListSubmitType;
 
 import java.util.List;
 
@@ -15,7 +14,6 @@ import java.util.List;
 public class MultiSelectField extends InputField<List<String>> {
     private Integer maxCount;
     private List<SelectOption> options;
-    private StringListSubmitType submitType;
 
     public MultiSelectField() {
     }

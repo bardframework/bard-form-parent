@@ -28,7 +28,7 @@ public abstract class MessageSenderEmail extends MessageSenderAbstract {
     }
 
     @Override
-    protected void send(String receiver, String message, Map<String, String> args, Locale locale) throws Exception {
+    protected void send(String receiver, String message, Map<String, Object> args, Locale locale) throws Exception {
         Session session = Session.getInstance(this.getConfigs(), this.getAuthenticator());
         if (log.isDebugEnabled()) {
             session.setDebug(true);

@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class DataProviderHttpRequestParameterProcessor extends DataProviderHttpRequestProcessorAbstract {
 
-    public DataProviderHttpRequestParameterProcessor(Map<String, String> mapper) {
+    public DataProviderHttpRequestParameterProcessor(Map<String, Object> mapper) {
         super(mapper);
     }
 

@@ -4,13 +4,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.bardframework.commons.redis.DataManager;
 import org.bardframework.commons.redis.DataManagerRedisImpl;
 import org.bardframework.commons.utils.ReflectionUtils;
+import org.bardframework.flow.FlowData;
 import org.bardframework.flow.exception.InvalidateFlowException;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import java.time.Duration;
 
 @Slf4j
-public class FlowDataRepositoryRedis<D> implements FlowDataRepository<D> {
+public class FlowDataRepositoryRedis<D extends FlowData> implements FlowDataRepository<D> {
 
     private final DataManager cache;
     private final Duration expiration;
@@ -44,7 +45,11 @@ public class FlowDataRepositoryRedis<D> implements FlowDataRepository<D> {
         this.cache.remove(token);
     }
 
-    public Class<D> getDataClass() {
-        return ReflectionUtils.getGenericArgType(this.getClass(), 0);
+    protected Class<D> getDataClass() {
+        try {
+            return ReflectionUtils.getGenericArgType(this.getClass(), 0);
+        } catch (Exception e) {
+            return (Class<D>) FlowData.class;
+        }
     }
 }

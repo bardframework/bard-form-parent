@@ -9,9 +9,9 @@ import java.util.Map;
 
 public interface FormProcessor extends Comparable<FormProcessor> {
 
-    void process(String flowToken, Map<String, String> flowData, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception;
+    void process(String flowToken, Map<String, Object> flowData, Map<String, Object> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception;
 
-    boolean mustExecute(Map<String, String> args);
+    boolean mustExecute(Map<String, Object> args);
 
     /**
      * @return processor order, smaller number has higher priority.

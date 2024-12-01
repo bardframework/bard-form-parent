@@ -15,7 +15,7 @@ public class PasswordFieldTemplate extends InputFieldTemplateAbstract<PasswordFi
     }
 
     @Override
-    public boolean isValid(String flowToken, PasswordField field, String value, Map<String, String> flowData) {
+    public boolean isValid(String flowToken, PasswordField field, String value, Map<String, Object> flowData) {
         if (StringUtils.isBlank(value)) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 log.debug("field [{}] is required, but it's value is empty", field.getName());
@@ -24,11 +24,6 @@ public class PasswordFieldTemplate extends InputFieldTemplateAbstract<PasswordFi
             return true;
         }
         return true;
-    }
-
-    @Override
-    public String toValue(String value) {
-        return value;
     }
 
     @Override

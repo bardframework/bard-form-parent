@@ -21,7 +21,7 @@ public class TextFilterFieldTemplate extends InputFieldTemplateAbstract<TextFilt
     }
 
     @Override
-    public boolean isValid(String flowToken, TextFilterField field, StringFilter filter, Map<String, String> flowData) {
+    public boolean isValid(String flowToken, TextFilterField field, StringFilter filter, Map<String, Object> flowData) {
         if (null == filter || StringUtils.isBlank(filter.getContains())) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 log.debug("StringFilter [{}] is required, but it's value is empty", field.getName());
@@ -45,8 +45,8 @@ public class TextFilterFieldTemplate extends InputFieldTemplateAbstract<TextFilt
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, TextFilterField field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
+    public void fill(FormTemplate formTemplate, TextFilterField field, Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, values, args, locale);
         field.setRegex(FormUtils.getFieldStringProperty(formTemplate, this, "regex", locale, args, this.getDefaultValue().getRegex()));
         field.setMask(FormUtils.getFieldStringProperty(formTemplate, this, "mask", locale, args, this.getDefaultValue().getMask()));
         field.setMinLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "minLength", locale, args, this.getDefaultValue().getMinLength()));
@@ -54,7 +54,16 @@ public class TextFilterFieldTemplate extends InputFieldTemplateAbstract<TextFilt
     }
 
     @Override
-    public StringFilter toValue(String value) {
-        return StringUtils.isBlank(value) ? null : new StringFilter().setContains(value);
+    public StringFilter toValue(Object value) {
+        if (null == value) {
+            return null;
+        }
+        if (!(value instanceof String)) {
+            throw new IllegalStateException(value + " is not valid for: " + this.getClass().getName());
+        }
+        if (StringUtils.isBlank(value.toString())) {
+            return null;
+        }
+        return new StringFilter().setContains(value.toString());
     }
 }

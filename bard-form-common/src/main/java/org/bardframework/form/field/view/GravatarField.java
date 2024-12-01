@@ -14,6 +14,7 @@ import org.bardframework.form.field.FieldType;
 public class GravatarField extends Field {
     private String identifier;
     private Long size;
+    private Long cornerRadius;
     private Boolean circle;
 
     public FieldType getType() {

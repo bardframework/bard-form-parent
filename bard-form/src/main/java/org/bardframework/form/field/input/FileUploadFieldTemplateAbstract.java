@@ -2,15 +2,13 @@ package org.bardframework.form.field.input;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -25,23 +23,37 @@ abstract class FileUploadFieldTemplateAbstract<F extends FileUploadField> extend
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, F field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
-        field.setMinSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "minSize", locale, args, this.getDefaultValue().getMinSize()));
-        field.setMaxSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxSize", locale, args, this.getDefaultValue().getMaxSize()));
-        field.setTotalSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "totalSize", locale, args, this.getDefaultValue().getTotalSize()));
-        field.setCount(FormUtils.getFieldByteProperty(formTemplate, this, "count", locale, args, this.getDefaultValue().getCount()));
-        field.setContentTypes(FormUtils.getFieldListProperty(formTemplate, this, "contentTypes", locale, args, this.getDefaultValue().getContentTypes()));
-        field.setUploadAction(this.getDefaultValue().getUploadAction());
-        field.setDownloadAction(this.getDefaultValue().getDownloadAction());
-        field.setSubmitType(this.getDefaultValue().getSubmitType());
+    public boolean isValid(String flowToken, F field, List<String> values, Map<String, Object> flowData) throws Exception {
+        if (CollectionUtils.isEmpty(values)) {
+            if (Boolean.TRUE.equals(field.getRequired())) {
+                log.debug("field [{}] is required, but it's value is empty", field.getName());
+                return false;
+            }
+            return true;
+        }
+        if (null != field.getMinCount() && values.size() < field.getMinCount()) {
+            log.debug("data count[{}] of field[{}] is less than minimum[{}]", values.size(), field.getName(), field.getMinCount());
+            return false;
+        }
+        if (null != field.getMaxCount() && values.size() > field.getMaxCount()) {
+            log.debug("data count[{}] of field[{}] is greater than maximum[{}]", values.size(), field.getName(), field.getMaxCount());
+            return false;
+        }
+        //TODO implement other validators
+        return true;
     }
 
     @Override
-    public List<String> toValue(String value) {
-        if (StringUtils.isBlank(value)) {
-            return null;
-        }
-        return Arrays.stream(value.split(InputField.SEPARATOR)).map(String::trim).collect(Collectors.toList());
+    public void fill(FormTemplate formTemplate, F field, Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, values, args, locale);
+        field.setMinSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "minSize", locale, args, this.getDefaultValue().getMinSize()));
+        field.setMaxSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxSize", locale, args, this.getDefaultValue().getMaxSize()));
+        field.setMinTotalSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "minTotalSize", locale, args, this.getDefaultValue().getMinTotalSize()));
+        field.setMaxTotalSize(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxTotalSize", locale, args, this.getDefaultValue().getMaxTotalSize()));
+        field.setMinCount(FormUtils.getFieldByteProperty(formTemplate, this, "minCount", locale, args, this.getDefaultValue().getMinCount()));
+        field.setMaxCount(FormUtils.getFieldByteProperty(formTemplate, this, "maxCount", locale, args, this.getDefaultValue().getMaxCount()));
+        field.setValidContentTypes(FormUtils.getFieldListProperty(formTemplate, this, "validContentTypes", locale, args, this.getDefaultValue().getValidContentTypes()));
+        field.setUploadAction(this.getDefaultValue().getUploadAction());
+        field.setDownloadAction(this.getDefaultValue().getDownloadAction());
     }
 }

@@ -6,5 +6,5 @@ import java.util.Map;
 
 public interface FileFieldDataProvider {
 
-    void fillData(FileDownloadField field, Map<String, String> arg) throws Exception;
+    void fillData(FileDownloadField field, Map<String, Object> args) throws Exception;
 }

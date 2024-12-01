@@ -26,7 +26,7 @@ public abstract class FlowInputFieldTemplate<F extends InputField<T>, T> extends
         super(name, persistentValue);
     }
 
-    public void preProcess(String flowToken, Map<String, String> flowData, Locale locale, HttpServletResponse httpResponse) throws Exception {
+    public void preProcess(String flowToken, Map<String, Object> flowData, Locale locale, HttpServletResponse httpResponse) throws Exception {
 
     }
 }

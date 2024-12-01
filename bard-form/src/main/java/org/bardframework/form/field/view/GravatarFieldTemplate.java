@@ -14,8 +14,8 @@ public class GravatarFieldTemplate extends FieldTemplate<GravatarField> {
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, GravatarField field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
+    public void fill(FormTemplate formTemplate, GravatarField field, Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, values, args, locale);
         field.setIdentifier(FormUtils.getFieldStringProperty(formTemplate, this, "identifier", locale, args, this.getDefaultValue().getIdentifier()));
         field.setSize(FormUtils.getFieldLongProperty(formTemplate, this, "size", locale, args, this.getDefaultValue().getSize()));
         field.setCircle(FormUtils.getFieldBooleanProperty(formTemplate, this, "circle", locale, args, this.getDefaultValue().getCircle()));

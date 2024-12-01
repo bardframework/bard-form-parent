@@ -6,11 +6,14 @@ import lombok.ToString;
 import org.bardframework.form.field.Field;
 import org.bardframework.form.field.FieldType;
 
+import java.util.List;
+
 @Getter
 @Setter
 @ToString
 public class FileDownloadField extends Field {
 
+    private List<FileModel> files;
     private String src;
     private String fileName;
     private String contentType;
@@ -19,5 +22,15 @@ public class FileDownloadField extends Field {
     @Override
     public FieldType getType() {
         return ViewFieldType.FILE_DOWNLOAD;
+    }
+
+    @Getter
+    @Setter
+    @ToString
+    public static class FileModel {
+        private String data;
+        private String contentType;
+        private Integer size;
+        private String description;
     }
 }

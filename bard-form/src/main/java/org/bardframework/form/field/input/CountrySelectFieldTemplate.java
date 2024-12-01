@@ -18,7 +18,7 @@ public class CountrySelectFieldTemplate extends InputFieldTemplateAbstract<Count
     }
 
     @Override
-    public boolean isValid(String flowToken, CountrySelectField field, String value, Map<String, String> flowData) {
+    public boolean isValid(String flowToken, CountrySelectField field, String value, Map<String, Object> flowData) {
         if (null == value) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 log.debug("field [{}] is required, but it's value is empty", field.getName());
@@ -43,14 +43,9 @@ public class CountrySelectFieldTemplate extends InputFieldTemplateAbstract<Count
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, CountrySelectField field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
+    public void fill(FormTemplate formTemplate, CountrySelectField field, Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, values, args, locale);
         field.setAvailableCountries(FormUtils.getFieldListProperty(formTemplate, this.getName(), "availableCountries", locale, args, this.getDefaultValue().getAvailableCountries()));
         field.setExcludeCountries(FormUtils.getFieldListProperty(formTemplate, this.getName(), "excludeCountries", locale, args, this.defaultValue.getExcludeCountries()));
-    }
-
-    @Override
-    public String toValue(String value) {
-        return value;
     }
 }

@@ -26,7 +26,7 @@ public class I18nConstantOptionDataSource extends CachableOptionDataSource {
     }
 
     @Override
-    protected List<SelectOption> loadOptions(Map<String, String> args, Locale locale) {
+    protected List<SelectOption> loadOptions(Map<String, Object> args, Locale locale) {
         List<SelectOption> translatedOptions = new ArrayList<>();
         for (SelectOption option : options) {
             String titleMessageKey = StringUtils.isBlank(keyPrefix) ? option.getId() : keyPrefix + "." + option.getId();

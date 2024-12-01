@@ -18,7 +18,7 @@ public class MultiLocaleSelectFieldTemplate extends MultiSelectFieldTemplateAbst
     }
 
     @Override
-    public boolean isValid(String flowToken, MultiLocaleSelectField field, List<String> values, Map<String, String> flowData) {
+    public boolean isValid(String flowToken, MultiLocaleSelectField field, List<String> values, Map<String, Object> flowData) {
         if (CollectionUtils.isEmpty(values)) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 log.debug("field [{}] is required, but it's value is empty", field.getName());

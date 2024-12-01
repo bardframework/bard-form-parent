@@ -32,13 +32,13 @@ public abstract class FieldTemplate<F extends Field> {
         this.defaultValue = ReflectionUtils.newInstance(this.fieldClazz);
     }
 
-    public F toField(FormTemplate formTemplate, Map<String, String> args, Locale locale) throws Exception {
+    public F toField(FormTemplate formTemplate, Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception {
         F field = this.getEmptyField();
-        this.fill(formTemplate, field, args, locale);
+        this.fill(formTemplate, field, values, args, locale);
         return field;
     }
 
-    protected void fill(FormTemplate formTemplate, F field, Map<String, String> args, Locale locale) throws Exception {
+    protected void fill(FormTemplate formTemplate, F field, Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception {
         field.setName(this.getName());
         field.setTitle(FormUtils.getFieldStringProperty(formTemplate, this, "title", locale, args, this.getDefaultValue().getTitle()));
         field.setDescription(FormUtils.getFieldStringProperty(formTemplate, this, "description", locale, args, this.getDefaultValue().getDescription()));
@@ -53,7 +53,7 @@ public abstract class FieldTemplate<F extends Field> {
         this.showExpression = new SpelExpressionParser(new SpelParserConfiguration(SpelCompilerMode.MIXED, null)).parseExpression(showExpression);
     }
 
-    public boolean mustShow(Map<String, String> args) {
+    public boolean mustShow(Map<String, Object> args) {
         return null == showExpression || Boolean.TRUE.equals(showExpression.getValue(new StandardEvaluationContext(args), Boolean.class));
     }
 }

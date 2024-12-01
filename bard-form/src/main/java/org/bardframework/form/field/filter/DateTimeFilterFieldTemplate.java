@@ -2,16 +2,15 @@ package org.bardframework.form.field.filter;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang3.StringUtils;
 import org.bardframework.commons.utils.DateTimeUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
-import org.bardframework.form.field.input.InputField;
 import org.bardframework.form.field.input.InputFieldTemplateAbstract;
 import org.bardframework.form.model.filter.LongFilter;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -27,8 +26,8 @@ public class DateTimeFilterFieldTemplate extends InputFieldTemplateAbstract<Date
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, DateTimeFilterField field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
+    public void fill(FormTemplate formTemplate, DateTimeFilterField field, Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, values, args, locale);
         field.setMinLength(FormUtils.getFieldLongProperty(formTemplate, this, "minLength", locale, args, this.getDefaultValue().getMinLength()));
         field.setMaxLength(FormUtils.getFieldLongProperty(formTemplate, this, "maxLength", locale, args, this.getDefaultValue().getMaxLength()));
         field.setMinValue(FormUtils.getFieldLongProperty(formTemplate, this, "minValue", locale, args, this.getDefaultValue().getMinValue()));
@@ -43,26 +42,27 @@ public class DateTimeFilterFieldTemplate extends InputFieldTemplateAbstract<Date
     }
 
     @Override
-    public LongFilter toValue(String value) {
-        if (StringUtils.isBlank(value)) {
+    public LongFilter toValue(Object value) {
+        if (null == value) {
             return null;
         }
-        String[] parts = value.split(InputField.SEPARATOR);
-        if (parts.length != 2) {
-            throw new IllegalStateException(value + " is not valid for range value");
+        if (!(value instanceof List<?>)) {
+            throw new IllegalStateException(value + " is not valid for: " + this.getClass().getName());
+        }
+        List<Long> parts = (List<Long>) value;
+        if (parts.isEmpty()) {
+            return null;
         }
         LongFilter filter = new LongFilter();
-        if (!parts[0].isBlank()) {
-            filter.setFrom(Long.parseLong(parts[0]));
-        }
-        if (!parts[1].isBlank()) {
-            filter.setTo(Long.parseLong(parts[1]));
+        filter.setFrom(parts.get(0));
+        if (parts.size() > 1) {
+            filter.setTo(parts.get(1));
         }
         return filter;
     }
 
     @Override
-    public boolean isValid(String flowToken, DateTimeFilterField field, LongFilter filter, Map<String, String> flowData) {
+    public boolean isValid(String flowToken, DateTimeFilterField field, LongFilter filter, Map<String, Object> flowData) {
         if (null == filter || (null == filter.getFrom() && null == filter.getTo())) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 log.debug("filterField [{}] is required, but it's value is empty", field.getName());

@@ -21,7 +21,7 @@ public class TimeFieldTemplate extends InputFieldTemplateAbstract<TimeField, Loc
     }
 
     @Override
-    public boolean isValid(String flowToken, TimeField field, LocalTime value, Map<String, String> flowData) {
+    public boolean isValid(String flowToken, TimeField field, LocalTime value, Map<String, Object> flowData) {
         if (null == value) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 log.debug("field [{}] is required, but it's value is empty", field.getName());
@@ -41,8 +41,8 @@ public class TimeFieldTemplate extends InputFieldTemplateAbstract<TimeField, Loc
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, TimeField field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
+    public void fill(FormTemplate formTemplate, TimeField field, Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, values, args, locale);
         field.setMinValue(FormUtils.getFieldLocalTimeProperty(formTemplate, this, "minValue", locale, args, this.getDefaultValue().getMinValue()));
         field.setMaxValue(FormUtils.getFieldLocalTimeProperty(formTemplate, this, "maxValue", locale, args, this.getDefaultValue().getMaxValue()));
         if (null == field.getMinValue()) {
@@ -54,11 +54,17 @@ public class TimeFieldTemplate extends InputFieldTemplateAbstract<TimeField, Loc
     }
 
     @Override
-    public LocalTime toValue(String value) {
-        if (StringUtils.isBlank(value)) {
+    public LocalTime toValue(Object value) {
+        if (null == value) {
             return null;
         }
-        return LocalTime.parse(value);
+        if (!(value instanceof String)) {
+            throw new IllegalStateException(value + " is not valid for: " + this.getClass().getName());
+        }
+        if (StringUtils.isBlank(value.toString())) {
+            return null;
+        }
+        return LocalTime.parse(((String) value).trim());
     }
 
     protected LocalTime getMinValue() {

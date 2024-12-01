@@ -32,7 +32,7 @@ public class DataProviderDatabaseProcessor extends FormProcessorAbstract {
     }
 
     @Override
-    public void process(String flowToken, Map<String, String> flowData, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
+    public void process(String flowToken, Map<String, Object> flowData, Map<String, Object> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
         try (Connection connection = dataSource.getConnection()) {
             try (Statement statement = connection.createStatement()) {
                 try (ResultSet resultSet = statement.executeQuery(StringTemplateUtils.fillTemplate(fetchDataQuery, flowData))) {

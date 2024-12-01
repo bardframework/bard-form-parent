@@ -33,7 +33,6 @@ public abstract class OtpFieldTemplate<F extends OtpField, O> extends FlowInputF
     private final int maxTryToResolveCount;
     private int maxSendCount = 20;
     private Integer resendIntervalSeconds;
-    private Boolean canEditIdentifier;
 
     public OtpFieldTemplate(String name, OtpGenerator<O> otpGenerator, int maxTryToResolveCount) {
         super(name, false);
@@ -43,16 +42,16 @@ public abstract class OtpFieldTemplate<F extends OtpField, O> extends FlowInputF
 
     protected abstract String getResendAction();
 
-    protected abstract void send(String flowToken, Map<String, String> flowData, O otp, Locale locale, HttpServletResponse httpResponse) throws Exception;
+    protected abstract void send(String flowToken, Map<String, Object> flowData, O otp, Locale locale, HttpServletResponse httpResponse) throws Exception;
 
-    protected abstract boolean isValidOtp(String flowToken, String otp, Map<String, String> flowData) throws Exception;
+    protected abstract boolean isValidOtp(String flowToken, String otp, Map<String, Object> flowData) throws Exception;
 
     @PostConstruct
     void init() {
         if (StringUtils.isNoneBlank(this.getResendAction())) {
             this.setActionProcessors(Map.of(this.getResendAction(), List.of(new FormProcessorAbstract() {
                 @Override
-                public void process(String flowToken, Map<String, String> flowData, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
+                public void process(String flowToken, Map<String, Object> flowData, Map<String, Object> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
                     resend(flowToken, flowData, locale, httpResponse);
                 }
             })));
@@ -60,7 +59,7 @@ public abstract class OtpFieldTemplate<F extends OtpField, O> extends FlowInputF
     }
 
     @Override
-    public final boolean isValid(String flowToken, F field, String value, Map<String, String> flowData) throws Exception {
+    public final boolean isValid(String flowToken, F field, String value, Map<String, Object> flowData) throws Exception {
         if (StringUtils.isBlank(value)) {
             log.debug("field otp [{}] is required, but it's value is empty", field.getName());
             return false;
@@ -80,7 +79,7 @@ public abstract class OtpFieldTemplate<F extends OtpField, O> extends FlowInputF
             flowData.remove(RESEND_COUNT_KEY);
             return true;
         }
-        int resolveTryCount = flowData.containsKey(RESOLVE_COUNT_KEY) ? Integer.parseInt(flowData.get(RESOLVE_COUNT_KEY)) : 0;
+        int resolveTryCount = flowData.containsKey(RESOLVE_COUNT_KEY) ? (int) flowData.get(RESOLVE_COUNT_KEY) : 0;
         if (resolveTryCount >= this.getMaxTryToResolveCount()) {
             throw new InvalidateFlowException(flowToken, "invalid otp", this.getOtpMaxTryToResolveCountErrorMessage());
         }
@@ -89,18 +88,17 @@ public abstract class OtpFieldTemplate<F extends OtpField, O> extends FlowInputF
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, F field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
+    public void fill(FormTemplate formTemplate, F field, Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, values, args, locale);
         field.setLength(this.getOtpGenerator().getLength());
         field.setResendAction(this.getResendAction());
         field.setResendIntervalSeconds(this.getResendIntervalSeconds());
-        field.setCanEditIdentifier(this.getCanEditIdentifier());
         field.setNumber(this.getOtpGenerator().isNumber());
         field.setRequired(true);
     }
 
-    protected void sendInternal(String flowToken, Map<String, String> flowData, Locale locale, HttpServletResponse httpResponse) throws Exception {
-        int generateCount = flowData.containsKey(GENERATE_COUNT_KEY) ? Integer.parseInt(flowData.get(GENERATE_COUNT_KEY)) : 0;
+    protected void sendInternal(String flowToken, Map<String, Object> flowData, Locale locale, HttpServletResponse httpResponse) throws Exception {
+        int generateCount = flowData.containsKey(GENERATE_COUNT_KEY) ? (int) flowData.get(GENERATE_COUNT_KEY) : 0;
         if (generateCount > this.getMaxSendCount()) {
             throw new MaxOtpSendExceededException(flowToken, "max otp send (generate) count exceed", this.getMaxSendCountErrorMessage());
         }
@@ -109,14 +107,14 @@ public abstract class OtpFieldTemplate<F extends OtpField, O> extends FlowInputF
         flowData.put(GENERATE_COUNT_KEY, String.valueOf(generateCount + 1));
     }
 
-    public void resend(String flowToken, Map<String, String> flowData, Locale locale, HttpServletResponse httpResponse) throws Exception {
-        int resendCount = flowData.containsKey(RESEND_COUNT_KEY) ? Integer.parseInt(flowData.get(RESEND_COUNT_KEY)) : 0;
+    public void resend(String flowToken, Map<String, Object> flowData, Locale locale, HttpServletResponse httpResponse) throws Exception {
+        int resendCount = flowData.containsKey(RESEND_COUNT_KEY) ? (int) flowData.get(RESEND_COUNT_KEY) : 0;
         if (resendCount > this.getMaxSendCount()) {
             httpResponse.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());
             log.error("flowToken[{}], max otp resend exceed", flowToken);
             return;
         }
-        long sentTime = flowData.containsKey(SENT_TIME_KEY) ? Long.parseLong(flowData.get(SENT_TIME_KEY)) : 0;
+        long sentTime = flowData.containsKey(SENT_TIME_KEY) ? (long) flowData.get(SENT_TIME_KEY) : 0;
         long remainSeconds = this.getResendIntervalSeconds() - ((System.currentTimeMillis() - sentTime) / 1000);
         if (remainSeconds > 0) {
             log.error("flowToken[{}], try to resend otp, before resend interval!", flowToken);
@@ -125,11 +123,6 @@ public abstract class OtpFieldTemplate<F extends OtpField, O> extends FlowInputF
             return;
         }
         this.sendInternal(flowToken, flowData, locale, httpResponse);
-    }
-
-    @Override
-    public String toValue(String value) {
-        return value;
     }
 
     protected abstract String getOtpMaxTryToResolveCountErrorMessage();

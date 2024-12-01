@@ -20,7 +20,7 @@ public class MessageProviderMessageSource implements MessageProvider {
     }
 
     @Override
-    public String create(Map<String, String> args, Locale locale) throws IOException {
+    public String create(Map<String, Object> args, Locale locale) throws IOException {
         String messageKey = StringTemplateUtils.fillTemplate(this.getMessageTemplateKey(), args);
         return this.getMessageSource().getMessage(messageKey, new Object[]{}, locale);
     }

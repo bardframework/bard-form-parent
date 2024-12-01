@@ -13,7 +13,7 @@ public class FlowDataValidationException extends RuntimeException {
 
     private final boolean sendCurrentForm;
     private BardForm form;
-    private final Map<String, String> fieldErrors = new HashMap<>();
+    private final Map<String, Object> fieldErrors = new HashMap<>();
 
     public FlowDataValidationException() {
         this(false);

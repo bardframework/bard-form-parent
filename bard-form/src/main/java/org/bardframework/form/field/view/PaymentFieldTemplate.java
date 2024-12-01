@@ -14,8 +14,8 @@ public class PaymentFieldTemplate extends FieldTemplate<PaymentField> {
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, PaymentField field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
+    public void fill(FormTemplate formTemplate, PaymentField field, Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, values, args, locale);
         field.setAmount(FormUtils.getFieldLongProperty(formTemplate, this, "amount", locale, args, this.getDefaultValue().getAmount()));
     }
 }

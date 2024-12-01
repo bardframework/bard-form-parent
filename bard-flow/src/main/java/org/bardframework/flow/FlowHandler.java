@@ -10,13 +10,13 @@ import java.util.Map;
 public interface FlowHandler {
     String TOKEN_HEADER_NAME = "X-Flow-Token";
 
-    FlowResponse start(Map<String, String> initValues, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
+    FlowResponse start(Map<String, Object> initValues, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
             throws Exception;
 
-    FlowResponse submit(String flowToken, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
+    FlowResponse submit(String flowToken, Map<String, Object> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
             throws Exception;
 
-    Object action(String flowToken, String action, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
+    Object action(String flowToken, String action, Map<String, Object> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
             throws Exception;
 
     FlowResponse getCurrent(String flowToken, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)

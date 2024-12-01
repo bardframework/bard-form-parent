@@ -28,7 +28,7 @@ public class TotpFieldTemplate extends OtpFieldTemplate<OtpField, Void> {
     }
 
     @Override
-    protected void send(String flowToken, Map<String, String> flowData, Void otp, Locale locale, HttpServletResponse httpResponse) throws Exception {
+    protected void send(String flowToken, Map<String, Object> flowData, Void otp, Locale locale, HttpServletResponse httpResponse) throws Exception {
         /*
             do nothing
          */
@@ -36,8 +36,8 @@ public class TotpFieldTemplate extends OtpFieldTemplate<OtpField, Void> {
     }
 
     @Override
-    protected boolean isValidOtp(String flowToken, String otp, Map<String, String> flowData) throws Exception {
-        String totpSecretBase64 = flowData.get(this.getSecretAttributeName());
+    protected boolean isValidOtp(String flowToken, String otp, Map<String, Object> flowData) throws Exception {
+        String totpSecretBase64 = flowData.get(this.getSecretAttributeName()).toString();
         byte[] totpSecret = Base64.getDecoder().decode(totpSecretBase64);
         return otpService.verify(otp, totpSecret);
     }

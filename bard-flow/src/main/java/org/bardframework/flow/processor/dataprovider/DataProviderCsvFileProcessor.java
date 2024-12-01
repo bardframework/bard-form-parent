@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.bardframework.commons.web.utils.ResourceUtils;
 import org.bardframework.commons.web.utils.WebUtils;
 import org.bardframework.flow.exception.FlowExecutionException;
@@ -38,9 +37,9 @@ public class DataProviderCsvFileProcessor extends FormProcessorAbstract {
     }
 
     @Override
-    public void process(String flowToken, Map<String, String> flowData, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
-        String identifier = flowData.get(this.getIdentifierFieldName());
-        if (StringUtils.isBlank(identifier)) {
+    public void process(String flowToken, Map<String, Object> flowData, Map<String, Object> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
+        Object identifier = flowData.get(this.getIdentifierFieldName());
+        if (null == identifier) {
             log.warn("identifier not exist for [{}], in csv file", flowData);
             throw new FlowExecutionException(List.of("execution_error"));
         }
@@ -54,7 +53,7 @@ public class DataProviderCsvFileProcessor extends FormProcessorAbstract {
                             continue;
                         }
                         String[] parts = new String(line.getBytes(), StandardCharsets.UTF_8).split(this.getSeparator());
-                        if (parts[0].trim().equalsIgnoreCase(identifier)) {
+                        if (parts[0].trim().equalsIgnoreCase(identifier.toString())) {
                             for (Integer index : mapper.keySet()) {
                                 if (index >= parts.length) {
                                     log.warn("can't find attribute[{}] value for[{}]", mapper.get(index), identifier);

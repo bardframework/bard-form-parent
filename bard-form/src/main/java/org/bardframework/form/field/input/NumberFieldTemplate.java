@@ -2,7 +2,6 @@ package org.bardframework.form.field.input;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
 
@@ -18,7 +17,7 @@ public class NumberFieldTemplate extends InputFieldTemplateAbstract<NumberField,
     }
 
     @Override
-    public boolean isValid(String flowToken, NumberField field, Long value, Map<String, String> flowData) {
+    public boolean isValid(String flowToken, NumberField field, Long value, Map<String, Object> flowData) {
         if (null == value) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 log.debug("field [{}] is required, but it's value is empty", field.getName());
@@ -38,14 +37,22 @@ public class NumberFieldTemplate extends InputFieldTemplateAbstract<NumberField,
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, NumberField field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
+    public void fill(FormTemplate formTemplate, NumberField field, Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, values, args, locale);
         field.setMinValue(this.getMinValue(formTemplate, args, locale));
         field.setMaxValue(this.getMaxValue(formTemplate, args, locale));
         field.setMask(FormUtils.getFieldStringProperty(formTemplate, this, "mask", locale, args, this.getDefaultValue().getMask()));
     }
 
-    private Long getMinValue(FormTemplate formTemplate, Map<String, String> values, Locale locale) {
+    @Override
+    public Long toValue(Object value) {
+        if (null == value) {
+            return null;
+        }
+        return Long.valueOf(value.toString());
+    }
+
+    private Long getMinValue(FormTemplate formTemplate, Map<String, Object> values, Locale locale) {
         Long minValue = FormUtils.getFieldLongProperty(formTemplate, this, "minValue", locale, values, this.getDefaultValue().getMinValue());
         if (null == minValue) {
             return Long.MIN_VALUE;
@@ -53,20 +60,12 @@ public class NumberFieldTemplate extends InputFieldTemplateAbstract<NumberField,
         return minValue;
     }
 
-    private Long getMaxValue(FormTemplate formTemplate, Map<String, String> values, Locale locale) {
+    private Long getMaxValue(FormTemplate formTemplate, Map<String, Object> values, Locale locale) {
         Long maxValue = FormUtils.getFieldLongProperty(formTemplate, this, "maxValue", locale, values, this.getDefaultValue().getMaxValue());
         if (null == maxValue) {
             return Long.MAX_VALUE;
         }
         return maxValue;
-    }
-
-    @Override
-    public Long toValue(String value) {
-        if (StringUtils.isBlank(value)) {
-            return null;
-        }
-        return Long.valueOf(value);
     }
 
     public String toString(Long value) {

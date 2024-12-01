@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public class DataProviderHttpRequestHeaderProcessor extends DataProviderHttpRequestProcessorAbstract {
 
-    public DataProviderHttpRequestHeaderProcessor(Map<String, String> mapper) {
+    public DataProviderHttpRequestHeaderProcessor(Map<String, Object> mapper) {
         super(mapper);
     }
 

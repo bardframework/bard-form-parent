@@ -3,18 +3,15 @@ package org.bardframework.form.field.filter;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
-import org.bardframework.form.field.input.InputField;
 import org.bardframework.form.field.input.InputFieldTemplateAbstract;
 import org.bardframework.form.field.option.OptionDataSource;
 import org.bardframework.form.model.filter.IdFilter;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -28,14 +25,14 @@ public class MultiSelectFilterFieldTemplate extends InputFieldTemplateAbstract<M
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, MultiSelectFilterField filterField, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, filterField, args, locale);
+    public void fill(FormTemplate formTemplate, MultiSelectFilterField filterField, Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception {
+        super.fill(formTemplate, filterField, values, args, locale);
         filterField.setMaxCount(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxCount", locale, args, this.getDefaultValue().getMaxCount()));
         filterField.setOptions(optionDataSource.getOptions(args, locale));
     }
 
     @Override
-    public boolean isValid(String flowToken, MultiSelectFilterField filterField, IdFilter<String> idFilter, Map<String, String> flowData) {
+    public boolean isValid(String flowToken, MultiSelectFilterField filterField, IdFilter<String> idFilter, Map<String, Object> flowData) {
         if (null == idFilter || CollectionUtils.isEmpty(idFilter.getIn())) {
             if (Boolean.TRUE.equals(filterField.getRequired())) {
                 log.debug("filterField [{}] is required, but it's value is empty", filterField.getName());
@@ -55,10 +52,17 @@ public class MultiSelectFilterFieldTemplate extends InputFieldTemplateAbstract<M
     }
 
     @Override
-    public IdFilter<String> toValue(String value) {
-        if (StringUtils.isBlank(value)) {
+    public IdFilter<String> toValue(Object value) {
+        if (null == value) {
             return null;
         }
-        return new IdFilter<String>().setIn(Arrays.stream(value.split(InputField.SEPARATOR)).map(String::trim).collect(Collectors.toList()));
+        if (!(value instanceof List<?>)) {
+            throw new IllegalStateException(value + " is not valid for: " + this.getClass().getName());
+        }
+        List<String> parts = (List<String>) value;
+        if (parts.isEmpty()) {
+            return null;
+        }
+        return new IdFilter<String>().setIn(parts);
     }
 }

@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.bardframework.form.field.FieldType;
-import org.bardframework.form.model.StringListSubmitType;
 
 import java.util.List;
 
@@ -15,12 +14,13 @@ public class FileUploadField extends InputField<List<String>> {
 
     protected Integer minSize;
     protected Integer maxSize;
-    protected Integer totalSize;
-    protected List<String> contentTypes;
+    protected Integer minTotalSize;
+    protected Integer maxTotalSize;
+    protected Byte minCount;
+    protected Byte maxCount;
+    protected List<String> validContentTypes;
     protected String uploadAction;
     protected String downloadAction;
-    protected Byte count;
-    protected StringListSubmitType submitType;
 
     public FileUploadField() {
     }

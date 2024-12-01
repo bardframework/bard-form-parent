@@ -13,7 +13,7 @@ public class ReadonlyField extends Field {
 
     private String name;
     private String mask;
-    private String value;
+    private Object value;
 
     @Override
     public FieldType getType() {

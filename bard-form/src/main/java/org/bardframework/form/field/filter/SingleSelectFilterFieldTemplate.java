@@ -23,14 +23,14 @@ public class SingleSelectFilterFieldTemplate extends InputFieldTemplateAbstract<
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, SingleSelectFilterField field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
+    public void fill(FormTemplate formTemplate, SingleSelectFilterField field, Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, values, args, locale);
         field.setOptions(optionDataSource.getOptions(args, locale));
     }
 
 
     @Override
-    public boolean isValid(String flowToken, SingleSelectFilterField field, IdFilter<String> filter, Map<String, String> flowData) {
+    public boolean isValid(String flowToken, SingleSelectFilterField field, IdFilter<String> filter, Map<String, Object> flowData) {
         if (null == filter || StringUtils.isBlank(filter.getEquals())) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 log.debug("filterField [{}] is required, but it's value is empty", field.getName());
@@ -46,7 +46,16 @@ public class SingleSelectFilterFieldTemplate extends InputFieldTemplateAbstract<
     }
 
     @Override
-    public IdFilter<String> toValue(String id) {
-        return StringUtils.isBlank(id) ? null : new IdFilter<String>().setEquals(id);
+    public IdFilter<String> toValue(Object value) {
+        if (null == value) {
+            return null;
+        }
+        if (!(value instanceof String)) {
+            throw new IllegalStateException(value + " is not valid for: " + this.getClass().getName());
+        }
+        if (StringUtils.isBlank(value.toString())) {
+            return null;
+        }
+        return new IdFilter<String>().setEquals(value.toString());
     }
 }

@@ -1,5 +1,7 @@
 package org.bardframework.flow;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.bardframework.flow.form.FlowFormTemplate;
 import org.bardframework.flow.repository.FlowDataRepository;
 
@@ -13,7 +15,7 @@ public class FlowHandlerImpl extends FlowHandlerAbstract<FlowData> {
     }
 
     @Override
-    protected FlowResponse handleException(String flowToken, FlowData flowData, Map<String, String> formData, FlowFormTemplate currentFormTemplate, FlowAction flowAction, Exception ex) throws Exception {
+    protected FlowResponse handleException(String flowToken, FlowData flowData, Map<String, Object> formData, FlowFormTemplate currentFormTemplate, FlowAction flowAction, HttpServletRequest httpRequest, HttpServletResponse httpResponse, Exception ex) throws Exception {
         throw ex;
     }
 }

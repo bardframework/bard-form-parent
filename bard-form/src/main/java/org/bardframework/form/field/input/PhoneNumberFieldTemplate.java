@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
-import org.bardframework.form.FormUtils;
+import org.bardframework.form.common.CountryPhoneNumberInfo;
 import org.bardframework.form.common.PhoneNumber;
 import org.bardframework.form.common.PhoneNumberParser;
 import org.bardframework.form.exception.FormDataValidationException;
@@ -26,23 +26,29 @@ public class PhoneNumberFieldTemplate extends InputFieldTemplateAbstract<PhoneNu
     }
 
     @Override
-    public void validate(String flowToken, FormTemplate formTemplate, Map<String, String> flowData, Map<String, String> formData, Locale locale, FormDataValidationException ex) throws Exception {
-        PhoneNumberField formField = this.toField(formTemplate, formData, locale);
+    public void validate(String flowToken, FormTemplate formTemplate, Map<String, Object> flowData, Map<String, Object> formData, Locale locale, FormDataValidationException ex) throws Exception {
+        PhoneNumberField formField = this.toField(formTemplate, flowData, formData, locale);
         if (Boolean.TRUE.equals(formField.getDisable())) {
             return;
         }
         String fieldName = this.getName();
-        String stringValue = formData.get(fieldName);
+        Object stringValue = formData.get(fieldName);
         try {
             String value = this.toValue(stringValue);
             if (!this.isValid(flowToken, formField, value, formData)) {
                 ex.addFieldError(fieldName, formField.getErrorMessage());
+                return;
             }
-            String phoneNumberString = formData.get(fieldName);
+            Object phoneNumberString = formData.get(fieldName);
             if (null == phoneNumberString) {
                 ex.addFieldError(fieldName, formField.getErrorMessage());
+                return;
             }
-            PhoneNumber phoneNumber = phoneNumberParser.parse(phoneNumberString);
+            PhoneNumber phoneNumber = phoneNumberParser.parse(phoneNumberString.toString());
+            if (null == phoneNumber) {
+                ex.addFieldError(fieldName, formField.getErrorMessage());
+                return;
+            }
             formData.put(countrySelectFieldTemplate.getName(), phoneNumber.getCountryAlphaCode());
             countrySelectFieldTemplate.validate(flowToken, formTemplate, flowData, formData, locale, ex);
         } catch (Exception e) {
@@ -52,7 +58,7 @@ public class PhoneNumberFieldTemplate extends InputFieldTemplateAbstract<PhoneNu
     }
 
     @Override
-    public boolean isValid(String flowToken, PhoneNumberField field, String value, Map<String, String> flowData) {
+    public boolean isValid(String flowToken, PhoneNumberField field, String value, Map<String, Object> flowData) {
         if (null == value) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 log.debug("field [{}] is required, but it's value is empty", field.getName());
@@ -61,7 +67,7 @@ public class PhoneNumberFieldTemplate extends InputFieldTemplateAbstract<PhoneNu
             return true;
         }
         PhoneNumber phoneNumber = phoneNumberParser.parse(value);
-        if (null != field.getMaxLength() && phoneNumber.getFullNumber().length() > field.getMaxLength()) {
+        if (null == phoneNumber || (null != field.getMaxLength() && phoneNumber.getFullNumber().length() > field.getMaxLength())) {
             log.debug("field [{}] max length is [{}], but it's value[{}] length is greater than maximum", field.getName(), field.getMaxLength(), phoneNumber);
             return false;
         }
@@ -69,19 +75,25 @@ public class PhoneNumberFieldTemplate extends InputFieldTemplateAbstract<PhoneNu
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, PhoneNumberField field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
-        field.setMaxLength(FormUtils.getFieldIntegerProperty(formTemplate, this.getName(), "maxLength", locale, args, this.getDefaultValue().getMaxLength()));
+    public void fill(FormTemplate formTemplate, PhoneNumberField field, Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, values, args, locale);
+        field.setMaxLength(CountryPhoneNumberInfo.DE.getMaxLength() + String.valueOf(CountryPhoneNumberInfo.DE.getCountryCode()).length());
         CountrySelectField countrySelectField = new CountrySelectField();
-        countrySelectFieldTemplate.fill(formTemplate, countrySelectField, args, locale);
+        countrySelectFieldTemplate.fill(formTemplate, countrySelectField, values, args, locale);
         field.setCountrySelectField(countrySelectField);
     }
 
     @Override
-    public String toValue(String value) {
-        if (StringUtils.isBlank(value)) {
+    public String toValue(Object value) {
+        if (null == value) {
             return null;
         }
-        return phoneNumberParser.parse(value).getFullNumber();
+        if (!(value instanceof String)) {
+            throw new IllegalStateException(value + " is not valid for: " + this.getClass().getName());
+        }
+        if (StringUtils.isBlank(value.toString())) {
+            return null;
+        }
+        return phoneNumberParser.parse(value.toString()).getFullNumber();
     }
 }

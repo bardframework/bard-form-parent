@@ -11,7 +11,8 @@ import org.bardframework.form.field.Field;
 @ToString
 public abstract class InputField<T> extends Field {
     public static final String SEPARATOR = ",";
-    protected FieldDescriptionShowType descriptionShowType;
+
+    private FieldDescriptionShowType descriptionShowType;
     private String placeholder;
     private String errorMessage;
     private Boolean required;

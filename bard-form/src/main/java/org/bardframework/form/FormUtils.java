@@ -1,15 +1,13 @@
 package org.bardframework.form;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.commons.utils.AssertionUtils;
 import org.bardframework.commons.utils.StringTemplateUtils;
-import org.bardframework.form.field.Field;
 import org.bardframework.form.field.FieldTemplate;
-import org.bardframework.form.field.input.InputField;
-import org.bardframework.form.field.input.InputFieldTemplateAbstract;
-import org.bardframework.form.field.view.ReadonlyField;
 import org.springframework.context.MessageSource;
 
 import java.time.LocalTime;
@@ -21,45 +19,19 @@ import java.util.stream.Stream;
 @UtilityClass
 public class FormUtils {
 
-    public static BardForm toForm(FormTemplate formTemplate, Map<String, String> args, Map<String, String> values, Locale locale) throws Exception {
+    public static BardForm toForm(FormTemplate formTemplate, Map<String, Object> values, Map<String, Object> args, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
         if (null == formTemplate) {
             return null;
         }
-        return FormUtils.toForm(new BardForm(), formTemplate, args, values, locale);
-    }
-
-    public static <F extends BardForm, T> F toForm(F form, FormTemplate formTemplate, Map<String, String> args, Map<String, String> values, Locale locale) throws Exception {
-        form.setName(formTemplate.getName());
-        form.setTitle(FormUtils.getFormStringProperty(formTemplate, "title", locale, args, null));
-        form.setDescription(FormUtils.getFormStringProperty(formTemplate, "description", locale, args, null));
-        form.setConfirmMessage(FormUtils.getFormStringProperty(formTemplate, "confirmMessage", locale, args, null));
-        form.setSubmitLabel(FormUtils.getFormStringProperty(formTemplate, "submitLabel", locale, args, null));
-        form.setSubmitPristineInputs(FormUtils.getFormBooleanProperty(formTemplate, "submitPristineInputs", locale, args, formTemplate.getSubmitPristineInputs()));
-        form.setSubmitEmptyInputs(FormUtils.getFormBooleanProperty(formTemplate, "submitEmptyInputs", locale, args, formTemplate.getSubmitEmptyInputs()));
-        form.setAutoSubmitDelaySeconds(FormUtils.getFormIntegerProperty(formTemplate, "autoSubmitDelaySeconds", locale, args, formTemplate.getAutoSubmitDelaySeconds()));
-        form.setFieldDescriptionShowType(FormUtils.getFormEnumProperty(formTemplate, "fieldDescriptionShowType", FieldDescriptionShowType.class, locale, args, formTemplate.getDescriptionShowType()));
-        form.setNestedFormShowType(FormUtils.getFormEnumProperty(formTemplate, "nestedFormShowType", NestedFormShowType.class, locale, args, formTemplate.getNestedFormShowType()));
-        for (FieldTemplate<?> fieldTemplate : formTemplate.getFieldTemplates(values, args)) {
-            Field field = fieldTemplate.toField(formTemplate, args, locale);
-            String valueString = values.get(fieldTemplate.getName());
-            if (field instanceof InputField<?> && null == ((InputField<?>) field).getValue()) {
-                InputFieldTemplateAbstract<?, T> inputFieldTemplate = (InputFieldTemplateAbstract<?, T>) fieldTemplate;
-                ((InputField<T>) field).setValue(inputFieldTemplate.toValue(valueString));
-            } else if (field instanceof ReadonlyField) {
-                ((ReadonlyField) field).setValue(valueString);
-            }
-            form.addField(field);
-        }
-        for (FormTemplate childFormTemplate : formTemplate.getFormTemplates()) {
-            form.addForm(FormUtils.toForm(childFormTemplate, args, values, locale));
-        }
+        BardForm form = new BardForm();
+        formTemplate.fillForm(form, values, args, locale, httpRequest, httpResponse);
         return form;
     }
 
     /**
      * @return null if we can't find
      */
-    public static Integer getFormIntegerProperty(FormTemplate formTemplate, String property, Locale locale, Map<String, String> args, Integer defaultValue) {
+    public static Integer getFormIntegerProperty(FormTemplate formTemplate, String property, Locale locale, Map<String, Object> args, Integer defaultValue) {
         String value = FormUtils.getFormStringProperty(formTemplate, property, locale, args, null);
         if (StringUtils.isBlank(value)) {
             return defaultValue;
@@ -75,7 +47,7 @@ public class FormUtils {
     /**
      * @return false if we can't find
      */
-    public static Boolean getFormBooleanProperty(FormTemplate formTemplate, String property, Locale locale, Map<String, String> args, Boolean defaultValue) {
+    public static Boolean getFormBooleanProperty(FormTemplate formTemplate, String property, Locale locale, Map<String, Object> args, Boolean defaultValue) {
         String value = FormUtils.getFormStringProperty(formTemplate, property, locale, args, null);
         if (StringUtils.isBlank(value)) {
             return defaultValue;
@@ -88,7 +60,7 @@ public class FormUtils {
         }
     }
 
-    public static <T extends Enum<T>> T getFormEnumProperty(FormTemplate formTemplate, String property, Class<T> enumClass, Locale locale, Map<String, String> args, T defaultValue) {
+    public static <T extends Enum<T>> T getFormEnumProperty(FormTemplate formTemplate, String property, Class<T> enumClass, Locale locale, Map<String, Object> args, T defaultValue) {
         String enumName = FormUtils.getFormStringProperty(formTemplate, property, locale, args, null);
         if (StringUtils.isBlank(enumName)) {
             return defaultValue;
@@ -102,22 +74,22 @@ public class FormUtils {
         return null;
     }
 
-    public static String getFormStringProperty(FormTemplate formTemplate, String property, Locale locale, Map<String, String> args, String defaultValue) {
+    public static String getFormStringProperty(FormTemplate formTemplate, String property, Locale locale, Map<String, Object> args, String defaultValue) {
         return FormUtils.getFormStringProperty(formTemplate.getName(), property, locale, args, defaultValue, formTemplate.getMessageSource());
     }
 
-    public static String getFormStringProperty(String formName, String property, Locale locale, Map<String, String> args, String defaultValue, MessageSource messageSource) {
+    public static String getFormStringProperty(String formName, String property, Locale locale, Map<String, Object> args, String defaultValue, MessageSource messageSource) {
         return FormUtils.getString("form", property, List.of(formName), locale, args, defaultValue, messageSource);
     }
 
-    public static Boolean getFieldBooleanProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Locale locale, Map<String, String> args, Boolean defaultValue) {
+    public static Boolean getFieldBooleanProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Locale locale, Map<String, Object> args, Boolean defaultValue) {
         return FormUtils.getFieldBooleanProperty(formTemplate, fieldTemplate.getName(), property, locale, args, defaultValue);
     }
 
     /**
      * @return null if we can't read property value
      */
-    public static Boolean getFieldBooleanProperty(FormTemplate FormTemplate, String fieldName, String property, Locale locale, Map<String, String> args, Boolean defaultValue) {
+    public static Boolean getFieldBooleanProperty(FormTemplate FormTemplate, String fieldName, String property, Locale locale, Map<String, Object> args, Boolean defaultValue) {
         String value = FormUtils.getFieldStringProperty(FormTemplate, fieldName, property, locale, args, null);
         if (StringUtils.isBlank(value)) {
             return defaultValue;
@@ -130,14 +102,14 @@ public class FormUtils {
         }
     }
 
-    public static List<String> getFieldListProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Locale locale, Map<String, String> args, List<String> defaultValue) {
+    public static List<String> getFieldListProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Locale locale, Map<String, Object> args, List<String> defaultValue) {
         return FormUtils.getFieldListProperty(formTemplate, fieldTemplate.getName(), property, locale, args, defaultValue);
     }
 
     /**
      * @return defaultValue if we can't read property value
      */
-    public static List<String> getFieldListProperty(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, String> args, List<String> defaultValue) {
+    public static List<String> getFieldListProperty(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, Object> args, List<String> defaultValue) {
         String value = FormUtils.getFieldStringProperty(formTemplate, fieldName, property, locale, args, null);
         if (StringUtils.isBlank(value)) {
             return defaultValue;
@@ -145,14 +117,14 @@ public class FormUtils {
         return Arrays.stream(value.split(",")).map(String::trim).collect(Collectors.toList());
     }
 
-    public static Integer getFieldIntegerProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Locale locale, Map<String, String> args, Integer defaultValue) {
+    public static Integer getFieldIntegerProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Locale locale, Map<String, Object> args, Integer defaultValue) {
         return FormUtils.getFieldIntegerProperty(formTemplate, fieldTemplate.getName(), property, locale, args, defaultValue);
     }
 
     /**
      * @return null if we can't read property value
      */
-    public static Integer getFieldIntegerProperty(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, String> args, Integer defaultValue) {
+    public static Integer getFieldIntegerProperty(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, Object> args, Integer defaultValue) {
         String value = FormUtils.getFieldStringProperty(formTemplate, fieldName, property, locale, args, null);
         if (StringUtils.isBlank(value)) {
             return defaultValue;
@@ -165,14 +137,14 @@ public class FormUtils {
         }
     }
 
-    public static Double getFieldDoubleProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Locale locale, Map<String, String> args, Double defaultValue) {
+    public static Double getFieldDoubleProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Locale locale, Map<String, Object> args, Double defaultValue) {
         return FormUtils.getFieldDoubleProperty(formTemplate, fieldTemplate.getName(), property, locale, args, defaultValue);
     }
 
     /**
      * @return null if we can't read property value
      */
-    public static Double getFieldDoubleProperty(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, String> args, Double defaultValue) {
+    public static Double getFieldDoubleProperty(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, Object> args, Double defaultValue) {
         String value = FormUtils.getFieldStringProperty(formTemplate, fieldName, property, locale, args, null);
         if (StringUtils.isBlank(value)) {
             return defaultValue;
@@ -185,14 +157,14 @@ public class FormUtils {
         }
     }
 
-    public static Byte getFieldByteProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Locale locale, Map<String, String> args, Byte defaultValue) {
+    public static Byte getFieldByteProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Locale locale, Map<String, Object> args, Byte defaultValue) {
         return FormUtils.getFieldByteProperty(formTemplate, fieldTemplate.getName(), property, locale, args, defaultValue);
     }
 
     /**
      * @return null if we can't read property value
      */
-    public static Byte getFieldByteProperty(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, String> args, Byte defaultValue) {
+    public static Byte getFieldByteProperty(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, Object> args, Byte defaultValue) {
         String value = FormUtils.getFieldStringProperty(formTemplate, fieldName, property, locale, args, null);
         if (StringUtils.isBlank(value)) {
             return defaultValue;
@@ -205,14 +177,14 @@ public class FormUtils {
         }
     }
 
-    public static Long getFieldLongProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Locale locale, Map<String, String> args, Long defaultValue) {
+    public static Long getFieldLongProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Locale locale, Map<String, Object> args, Long defaultValue) {
         return FormUtils.getFieldLongProperty(formTemplate, fieldTemplate.getName(), property, locale, args, defaultValue);
     }
 
     /**
      * @return null if we can't read property value
      */
-    public static Long getFieldLongProperty(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, String> args, Long defaultValue) {
+    public static Long getFieldLongProperty(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, Object> args, Long defaultValue) {
         String value = FormUtils.getFieldStringProperty(formTemplate, fieldName, property, locale, args, null);
         if (StringUtils.isBlank(value)) {
             return defaultValue;
@@ -225,11 +197,11 @@ public class FormUtils {
         }
     }
 
-    public static <T extends Enum<T>> T getFieldEnumProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Class<T> enumClass, Locale locale, Map<String, String> args, T defaultValue) {
+    public static <T extends Enum<T>> T getFieldEnumProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Class<T> enumClass, Locale locale, Map<String, Object> args, T defaultValue) {
         return FormUtils.getFieldEnumProperty(formTemplate, fieldTemplate.getName(), property, enumClass, locale, args, defaultValue);
     }
 
-    public static <T extends Enum<T>> T getFieldEnumProperty(FormTemplate formTemplate, String fieldName, String property, Class<T> enumClass, Locale locale, Map<String, String> args, T defaultValue) {
+    public static <T extends Enum<T>> T getFieldEnumProperty(FormTemplate formTemplate, String fieldName, String property, Class<T> enumClass, Locale locale, Map<String, Object> args, T defaultValue) {
         String enumName = FormUtils.getFieldStringProperty(formTemplate, fieldName, property, locale, args, null);
         if (StringUtils.isBlank(enumName)) {
             return defaultValue;
@@ -243,11 +215,11 @@ public class FormUtils {
         return null;
     }
 
-    public static LocalTime getFieldLocalTimeProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Locale locale, Map<String, String> args, LocalTime defaultValue) {
+    public static LocalTime getFieldLocalTimeProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Locale locale, Map<String, Object> args, LocalTime defaultValue) {
         return FormUtils.getFieldLocalTimeProperty(formTemplate, fieldTemplate.getName(), property, locale, args, defaultValue);
     }
 
-    public static LocalTime getFieldLocalTimeProperty(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, String> args, LocalTime defaultValue) {
+    public static LocalTime getFieldLocalTimeProperty(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, Object> args, LocalTime defaultValue) {
         String value = FormUtils.getFieldStringProperty(formTemplate, fieldName, property, locale, args, null);
         if (StringUtils.isBlank(value)) {
             return defaultValue;
@@ -260,21 +232,21 @@ public class FormUtils {
         }
     }
 
-    public static String getFieldStringProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Locale locale, Map<String, String> args, String defaultValue) {
+    public static String getFieldStringProperty(FormTemplate formTemplate, FieldTemplate<?> fieldTemplate, String property, Locale locale, Map<String, Object> args, String defaultValue) {
         return FormUtils.getFieldStringProperty(formTemplate, fieldTemplate.getName(), property, locale, args, defaultValue);
     }
 
     /**
      * @return null if we can't read property value
      */
-    public static String getFieldStringProperty(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, String> args, String defaultValue) {
+    public static String getFieldStringProperty(FormTemplate formTemplate, String fieldName, String property, Locale locale, Map<String, Object> args, String defaultValue) {
         return FormUtils.getFieldStringProperty(formTemplate.getName(), fieldName, property, locale, args, defaultValue, formTemplate.getMessageSource());
     }
 
     /**
      * @return null if we can't read property value
      */
-    public static String getFieldStringProperty(String formName, String fieldName, String property, Locale locale, Map<String, String> args, String defaultValue, MessageSource messageSource) {
+    public static String getFieldStringProperty(String formName, String fieldName, String property, Locale locale, Map<String, Object> args, String defaultValue, MessageSource messageSource) {
         return FormUtils.getString("field", property, List.of(formName, fieldName), locale, args, defaultValue, messageSource);
     }
 
@@ -289,7 +261,7 @@ public class FormUtils {
      *
      * @return null if we can't read property value
      */
-    public static String getString(String keyType, String property, List<String> parts, Locale locale, Map<String, String> args, String defaultValue, MessageSource messageSource) {
+    public static String getString(String keyType, String property, List<String> parts, Locale locale, Map<String, Object> args, String defaultValue, MessageSource messageSource) {
         AssertionUtils.isNotBlank(keyType, "keyType can't be empty");
         AssertionUtils.isNotBlank(property, "property can't be empty");
         List<String> keyParts = FormUtils.constructMessageKeys(parts);

@@ -13,13 +13,13 @@ import java.util.Map;
 public class FlowData {
 
     public static final String LANGUAGE_FIELD_NAME = "S_LANG_TAG";
-    protected Map<String, String> data = new HashMap<>();
+    protected Map<String, Object> data = new HashMap<>();
     protected int currentFormIndex;
 
     @JsonIgnore
     public Locale getLocale() {
-        String languageTag = data.get(LANGUAGE_FIELD_NAME);
-        return null == languageTag ? null : Locale.forLanguageTag(languageTag);
+        Object languageTag = data.get(LANGUAGE_FIELD_NAME);
+        return null == languageTag ? null : Locale.forLanguageTag(languageTag.toString());
     }
 
     public FlowData setLocale(Locale locale) {

@@ -14,7 +14,7 @@ public class MessageSenderNoOp extends MessageSenderAbstract {
     }
 
     @Override
-    protected void send(String receiver, String message, Map<String, String> args, Locale locale) throws IOException {
+    protected void send(String receiver, String message, Map<String, Object> args, Locale locale) throws IOException {
         log.info("send message [{}] to [{}]", message, receiver);
     }
 }

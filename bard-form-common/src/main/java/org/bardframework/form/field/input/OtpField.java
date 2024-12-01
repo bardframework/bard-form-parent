@@ -12,7 +12,6 @@ public class OtpField extends InputField<String> {
     private int length;
     private String resendAction;
     private Integer resendIntervalSeconds;
-    private Boolean canEditIdentifier;
     private Boolean number;
 
     @Override

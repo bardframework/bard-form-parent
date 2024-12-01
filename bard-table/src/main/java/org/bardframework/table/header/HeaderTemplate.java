@@ -21,14 +21,14 @@ public abstract class HeaderTemplate<M, H extends TableHeader, T> extends TableH
 
     private String excelFormat;
 
-    public H toHeader(TableTemplate tableTemplate, Map<String, String> args, Locale locale) {
+    public H toHeader(TableTemplate tableTemplate, Map<String, Object> args, Locale locale) {
         H header = this.getEmptyHeader();
         header.setName(this.getName());
         this.fill(tableTemplate, header, args, locale);
         return header;
     }
 
-    protected void fill(TableTemplate tableTemplate, H header, Map<String, String> args, Locale locale) {
+    protected void fill(TableTemplate tableTemplate, H header, Map<String, Object> args, Locale locale) {
         header.setTitle(TableUtils.getHeaderStringValue(tableTemplate, this, "title", locale, args, this.getName()));
         header.setDescription(TableUtils.getHeaderStringValue(tableTemplate, this, "description", locale, args, this.getName()));
         header.setHidden(TableUtils.getHeaderBooleanValue(tableTemplate, this, "hidden", locale, args, this.getHidden()));

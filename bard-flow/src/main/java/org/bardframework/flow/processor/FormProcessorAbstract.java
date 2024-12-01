@@ -18,7 +18,7 @@ public abstract class FormProcessorAbstract implements FormProcessor {
     }
 
     @Override
-    public boolean mustExecute(Map<String, String> args) {
+    public boolean mustExecute(Map<String, Object> args) {
         return null == executeExpression || Boolean.TRUE.equals(executeExpression.getValue(new StandardEvaluationContext(args), Boolean.class));
     }
 }

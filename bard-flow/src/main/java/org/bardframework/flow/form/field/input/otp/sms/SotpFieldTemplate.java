@@ -2,7 +2,6 @@ package org.bardframework.flow.form.field.input.otp.sms;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.bardframework.flow.form.field.input.otp.OtpFieldTemplate;
 import org.bardframework.flow.form.field.input.otp.OtpGenerator;
 import org.bardframework.flow.processor.message.sender.MessageSenderSms;
@@ -23,24 +22,24 @@ public class SotpFieldTemplate extends OtpFieldTemplate<OtpField, String> {
     }
 
     @Override
-    protected void send(String flowToken, Map<String, String> flowData, String otp, Locale locale, HttpServletResponse httpResponse) throws Exception {
+    protected void send(String flowToken, Map<String, Object> flowData, String otp, Locale locale, HttpServletResponse httpResponse) throws Exception {
         flowData.put(ANSWER_KEY, otp);
         this.messageSender.send(flowData, locale);
     }
 
     @Override
-    public void preProcess(String flowToken, Map<String, String> flowData, Locale locale, HttpServletResponse httpResponse) throws Exception {
+    public void preProcess(String flowToken, Map<String, Object> flowData, Locale locale, HttpServletResponse httpResponse) throws Exception {
         this.sendInternal(flowToken, flowData, locale, httpResponse);
     }
 
     @Override
-    protected boolean isValidOtp(String flowToken, String otp, Map<String, String> flowData) throws Exception {
-        String expectedAnswer = flowData.get(ANSWER_KEY);
-        if (StringUtils.isBlank(expectedAnswer)) {
+    protected boolean isValidOtp(String flowToken, String otp, Map<String, Object> flowData) throws Exception {
+        Object expectedAnswer = flowData.get(ANSWER_KEY);
+        if (null == expectedAnswer) {
             log.debug("sotp answer in flow data is blank, flow token: [{}]", flowToken);
             return false;
         }
-        return expectedAnswer.equalsIgnoreCase(otp);
+        return expectedAnswer.toString().equalsIgnoreCase(otp);
     }
 
     @Override

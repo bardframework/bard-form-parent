@@ -9,7 +9,7 @@ public class HotpService extends OtpServiceAbstract {
     private static final String KEY_URI_TEMPLATE = "otpauth://hotp/::label::?secret=::secret::&issuer=::issuer::&algorithm=::algorithm::&digits=::length::&counter=::counter::";
 
     public String getUri(String issuer, String label, String secretBase32, int counter) {
-        Map<String, String> args = new HashMap<>();
+        Map<String, Object> args = new HashMap<>();
         args.put("algorithm", this.getAlgorithm());
         args.put("length", String.valueOf(this.getLength()));
         args.put("counter", String.valueOf(counter));

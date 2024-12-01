@@ -14,9 +14,9 @@ import java.util.Map;
 @Setter
 @ToString
 public class FlowResponse {
+    private String id;
     private BardForm form;
     private Boolean finished;
-    private Boolean failed;
     private Integer resetDelaySeconds;
     private int steps;
     private int current;
@@ -24,12 +24,6 @@ public class FlowResponse {
     private List<String> errors = new ArrayList<>();
 
     public FlowResponse finished() {
-        this.finished = true;
-        return this;
-    }
-
-    public FlowResponse failed() {
-        this.failed = true;
         this.finished = true;
         return this;
     }

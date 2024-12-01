@@ -21,7 +21,7 @@ public class NewPasswordFieldTemplate extends InputFieldTemplateAbstract<NewPass
     }
 
     @Override
-    public boolean isValid(String flowToken, NewPasswordField field, String value, Map<String, String> flowData) {
+    public boolean isValid(String flowToken, NewPasswordField field, String value, Map<String, Object> flowData) {
         if (StringUtils.isBlank(value)) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 log.debug("field [{}] is required, but it's value is empty", field.getName());
@@ -47,13 +47,8 @@ public class NewPasswordFieldTemplate extends InputFieldTemplateAbstract<NewPass
     }
 
     @Override
-    public String toValue(String value) {
-        return value;
-    }
-
-    @Override
-    public void fill(FormTemplate formTemplate, NewPasswordField field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
+    public void fill(FormTemplate formTemplate, NewPasswordField field, Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, values, args, locale);
         field.setShowConfirmPassword(FormUtils.getFieldBooleanProperty(formTemplate, this, "showConfirmPassword", locale, args, this.getDefaultValue().getShowConfirmPassword()));
         field.setRegex(FormUtils.getFieldStringProperty(formTemplate, this, "regex", locale, args, this.getDefaultValue().getRegex()));
         field.setMinLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "minLength", locale, args, this.getDefaultValue().getMinLength()));

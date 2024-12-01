@@ -6,6 +6,6 @@ import java.util.Map;
 
 public interface MessageProvider {
 
-    String create(Map<String, String> args, Locale locale) throws IOException;
+    String create(Map<String, Object> args, Locale locale) throws IOException;
 
 }

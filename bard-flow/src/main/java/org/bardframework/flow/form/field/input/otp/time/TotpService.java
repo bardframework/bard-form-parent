@@ -19,7 +19,7 @@ public class TotpService extends OtpServiceAbstract {
     private int window = 5;
 
     public String getUri(String issuer, String label, String secretBase32) {
-        Map<String, String> args = new HashMap<>();
+        Map<String, Object> args = new HashMap<>();
         args.put("algorithm", this.getAlgorithm());
         args.put("length", String.valueOf(this.getLength()));
         args.put("periodSeconds", String.valueOf(this.getPeriodSeconds()));

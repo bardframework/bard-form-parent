@@ -14,6 +14,10 @@ public class OtpGeneratorFixed implements OtpGenerator<String> {
     }
 
     public OtpGeneratorFixed(String value) {
+        this.setValue(value);
+    }
+
+    public void setValue(String value) {
         this.value = value;
         this.number = NumberUtils.isDigits(this.value);
     }

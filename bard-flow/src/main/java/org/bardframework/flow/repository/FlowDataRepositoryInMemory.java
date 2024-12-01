@@ -3,12 +3,13 @@ package org.bardframework.flow.repository;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import lombok.extern.slf4j.Slf4j;
+import org.bardframework.flow.FlowData;
 import org.bardframework.flow.exception.InvalidateFlowException;
 
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-public class FlowDataRepositoryInMemory<D> implements FlowDataRepository<D> {
+public class FlowDataRepositoryInMemory<D extends FlowData> implements FlowDataRepository<D> {
 
     private final Cache<String, D> cache;
 

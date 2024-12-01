@@ -19,7 +19,7 @@ public class TextFieldTemplate extends InputFieldTemplateAbstract<TextField, Str
     }
 
     @Override
-    public boolean isValid(String flowToken, TextField field, String value, Map<String, String> flowData) {
+    public boolean isValid(String flowToken, TextField field, String value, Map<String, Object> flowData) {
         if (StringUtils.isBlank(value)) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 log.debug("field [{}] is required, but it's value is empty", field.getName());
@@ -43,16 +43,11 @@ public class TextFieldTemplate extends InputFieldTemplateAbstract<TextField, Str
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, TextField field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
+    public void fill(FormTemplate formTemplate, TextField field, Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, values, args, locale);
         field.setRegex(FormUtils.getFieldStringProperty(formTemplate, this, "regex", locale, args, this.getDefaultValue().getRegex()));
         field.setMask(FormUtils.getFieldStringProperty(formTemplate, this, "mask", locale, args, this.getDefaultValue().getMask()));
         field.setMinLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "minLength", locale, args, this.getDefaultValue().getMinLength()));
         field.setMaxLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxLength", locale, args, this.getDefaultValue().getMaxLength()));
-    }
-
-    @Override
-    public String toValue(String value) {
-        return value;
     }
 }

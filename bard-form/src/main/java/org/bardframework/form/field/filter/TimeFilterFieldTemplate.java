@@ -2,16 +2,15 @@ package org.bardframework.form.field.filter;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
-import org.bardframework.form.field.input.InputField;
 import org.bardframework.form.field.input.InputFieldTemplateAbstract;
 import org.bardframework.form.model.filter.LocalTimeFilter;
 
 import java.time.Duration;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -28,8 +27,8 @@ public class TimeFilterFieldTemplate extends InputFieldTemplateAbstract<TimeFilt
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, TimeFilterField field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
+    public void fill(FormTemplate formTemplate, TimeFilterField field, Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, values, args, locale);
         field.setMinLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "minLength", locale, args, this.getDefaultValue().getMinLength()));
         field.setMaxLength(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxLength", locale, args, this.getDefaultValue().getMaxLength()));
         field.setMinValue(FormUtils.getFieldLocalTimeProperty(formTemplate, this, "minValue", locale, args, this.getDefaultValue().getMinValue()));
@@ -44,26 +43,27 @@ public class TimeFilterFieldTemplate extends InputFieldTemplateAbstract<TimeFilt
     }
 
     @Override
-    public LocalTimeFilter toValue(String value) {
-        if (StringUtils.isBlank(value)) {
+    public LocalTimeFilter toValue(Object value) {
+        if (null == value) {
             return null;
         }
-        String[] parts = value.split(InputField.SEPARATOR);
-        if (parts.length != 2) {
-            throw new IllegalStateException(value + " is not valid for range value");
+        if (!(value instanceof List<?>)) {
+            throw new IllegalStateException(value + " is not valid for: " + this.getClass().getName());
+        }
+        List<String> parts = (List<String>) value;
+        if (parts.isEmpty()) {
+            return null;
         }
         LocalTimeFilter filter = new LocalTimeFilter();
-        if (!parts[0].isBlank()) {
-            filter.setFrom(LocalTime.parse(parts[0]));
-        }
-        if (!parts[1].isBlank()) {
-            filter.setTo(LocalTime.parse(parts[1]));
+        filter.setFrom(LocalTime.parse(parts.get(0)));
+        if (parts.size() > 1) {
+            filter.setTo(LocalTime.parse(parts.get(1)));
         }
         return filter;
     }
 
     @Override
-    public boolean isValid(String flowToken, TimeFilterField field, LocalTimeFilter filter, Map<String, String> flowData) {
+    public boolean isValid(String flowToken, TimeFilterField field, LocalTimeFilter filter, Map<String, Object> flowData) {
         if (null == filter || (null == filter.getFrom() && null == filter.getTo())) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 log.debug("filterField [{}] is required, but it's value is empty", field.getName());

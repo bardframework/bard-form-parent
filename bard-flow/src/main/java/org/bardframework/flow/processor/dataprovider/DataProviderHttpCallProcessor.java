@@ -35,17 +35,17 @@ public class DataProviderHttpCallProcessor extends HttpCaller implements FormPro
     protected String responseFieldName;
     private Expression executeExpression = null;
 
-    public DataProviderHttpCallProcessor(String httpMethod, String urlTemplate, String successPattern, Map<String, String> fieldsFetcher, String errorMessageCode) {
+    public DataProviderHttpCallProcessor(String httpMethod, String urlTemplate, String successPattern, Map<String, Object> fieldsFetcher, String errorMessageCode) {
         super(httpMethod, urlTemplate);
         this.fetchPattern = Pattern.compile(successPattern);
         this.errorMessageCode = errorMessageCode;
-        for (Map.Entry<String, String> entry : fieldsFetcher.entrySet()) {
-            this.fieldsFetcher.put(entry.getKey(), Pattern.compile(entry.getValue()));
+        for (Map.Entry<String, Object> entry : fieldsFetcher.entrySet()) {
+            this.fieldsFetcher.put(entry.getKey(), Pattern.compile(entry.getValue().toString()));
         }
     }
 
     @Override
-    public void process(String flowToken, Map<String, String> flowData, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
+    public void process(String flowToken, Map<String, Object> flowData, Map<String, Object> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
         HttpCallResponse result = super.call(flowData);
         String responseString = null == result.getBody() ? null : new String(result.getBody(), StandardCharsets.UTF_8);
         log.debug("data provider http call result: [{}]", responseString);
@@ -70,7 +70,7 @@ public class DataProviderHttpCallProcessor extends HttpCaller implements FormPro
     }
 
     @Override
-    public boolean mustExecute(Map<String, String> args) {
+    public boolean mustExecute(Map<String, Object> args) {
         return null == executeExpression || Boolean.TRUE.equals(executeExpression.getValue(new StandardEvaluationContext(args), Boolean.class));
     }
 }

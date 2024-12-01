@@ -21,13 +21,13 @@ public class SingleSelectFieldTemplate extends InputFieldTemplateAbstract<Single
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, SingleSelectField field, Map<String, String> args, Locale locale) throws Exception {
-        super.fill(formTemplate, field, args, locale);
+    public void fill(FormTemplate formTemplate, SingleSelectField field, Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception {
+        super.fill(formTemplate, field, values, args, locale);
         field.setOptions(optionDataSource.getOptions(args, locale));
     }
 
     @Override
-    public boolean isValid(String flowToken, SingleSelectField field, String value, Map<String, String> flowData) {
+    public boolean isValid(String flowToken, SingleSelectField field, String value, Map<String, Object> flowData) {
         if (StringUtils.isBlank(value)) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 log.debug("field [{}] is required, but it's value is empty", field.getName());
@@ -40,10 +40,5 @@ public class SingleSelectFieldTemplate extends InputFieldTemplateAbstract<Single
             return false;
         }
         return true;
-    }
-
-    @Override
-    public String toValue(String value) {
-        return value;
     }
 }

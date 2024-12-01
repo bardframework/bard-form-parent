@@ -15,17 +15,17 @@ import java.util.stream.Collectors;
 @Getter
 public abstract class DataProviderHttpRequestProcessorAbstract extends FormProcessorAbstract {
 
-    protected final Map<String, String> mapper;
+    protected final Map<String, Object> mapper;
 
-    public DataProviderHttpRequestProcessorAbstract(Map<String, String> mapper) {
+    public DataProviderHttpRequestProcessorAbstract(Map<String, Object> mapper) {
         this.mapper = mapper;
     }
 
     @Override
-    public void process(String flowToken, Map<String, String> flowData, Map<String, String> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
-        for (Map.Entry<String, String> entry : this.getMapper().entrySet()) {
+    public void process(String flowToken, Map<String, Object> flowData, Map<String, Object> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
+        for (Map.Entry<String, Object> entry : this.getMapper().entrySet()) {
             String name = entry.getKey();
-            String fieldName = entry.getValue();
+            String fieldName = entry.getValue().toString();
             List<String> values = this.getValues(name, httpRequest);
             values = values.stream().filter(StringUtils::isNotBlank).collect(Collectors.toList());
             flowData.put(fieldName, CollectionUtils.isEmpty(values) ? null : String.join(this.getValuesSeparator(), values));

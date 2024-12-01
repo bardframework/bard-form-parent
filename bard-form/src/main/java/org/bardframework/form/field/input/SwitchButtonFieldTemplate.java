@@ -2,7 +2,6 @@ package org.bardframework.form.field.input;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.Map;
 
@@ -15,16 +14,7 @@ public class SwitchButtonFieldTemplate extends InputFieldTemplateAbstract<Switch
     }
 
     @Override
-    public boolean isValid(String flowToken, SwitchButtonField field, Boolean value, Map<String, String> flowData) {
+    public boolean isValid(String flowToken, SwitchButtonField field, Boolean value, Map<String, Object> flowData) {
         return true;
     }
-
-    @Override
-    public Boolean toValue(String value) {
-        if (StringUtils.isBlank(value)) {
-            return null;
-        }
-        return Boolean.parseBoolean(value);
-    }
-
 }

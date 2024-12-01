@@ -27,7 +27,7 @@ public class MessageSenderSms extends MessageSenderAbstract {
     }
 
     @Override
-    protected void send(String receiver, String message, Map<String, String> args, Locale locale) throws IOException {
+    protected void send(String receiver, String message, Map<String, Object> args, Locale locale) throws IOException {
         log.debug("sending message [{}]", message);
         boolean sendResult = this.getSmsSender().send(receiver, message, args);
         if (!sendResult) {

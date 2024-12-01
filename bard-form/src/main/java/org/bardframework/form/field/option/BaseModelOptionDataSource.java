@@ -23,7 +23,7 @@ public abstract class BaseModelOptionDataSource<M extends BaseModel<I>, C extend
     }
 
     @Override
-    protected List<SelectOption> loadOptions(Map<String, String> args, Locale locale) {
+    protected List<SelectOption> loadOptions(Map<String, Object> args, Locale locale) {
         U user = this.getUser();
         List<M> list = repository.get(this.getCriteria(user), null);
         List<SelectOption> options = new ArrayList<>();
