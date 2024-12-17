@@ -11,14 +11,14 @@ import java.util.Map;
 
 @Getter
 @Setter
-public class MultiLocaleSelectFieldTemplate extends MultiSelectFieldTemplateAbstract<MultiLocaleSelectField> {
+public class LocaleMultiSelectFieldTemplate extends MultiSelectFieldTemplateAbstract<LocaleMultiSelectField> {
 
-    public MultiLocaleSelectFieldTemplate(String name) {
+    public LocaleMultiSelectFieldTemplate(String name) {
         super(name, null);
     }
 
     @Override
-    public boolean isValid(String flowToken, MultiLocaleSelectField field, List<String> values, Map<String, Object> flowData) {
+    public boolean isValid(String flowToken, LocaleMultiSelectField field, List<String> values, Map<String, Object> flowData) {
         if (CollectionUtils.isEmpty(values)) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 log.debug("field [{}] is required, but it's value is empty", field.getName());

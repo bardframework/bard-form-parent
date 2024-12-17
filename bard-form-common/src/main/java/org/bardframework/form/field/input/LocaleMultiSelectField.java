@@ -10,13 +10,13 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Builder
-public class MultiLocaleSelectField extends MultiSelectSearchableField {
+public class LocaleMultiSelectField extends MultiSelectSearchableField {
 
     private List<String> availableLocales;
     private List<String> excludeLocales;
 
     @Override
     public FieldType getType() {
-        return InputFieldType.MULTI_LOCALE_SELECT;
+        return InputFieldType.LOCALE_MULTI_SELECT;
     }
 }

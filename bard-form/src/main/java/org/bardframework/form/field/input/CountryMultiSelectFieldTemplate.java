@@ -12,14 +12,14 @@ import java.util.Map;
 
 @Getter
 @Setter
-public class MultiCountrySelectFieldTemplate extends InputFieldTemplateAbstract<MultiCountrySelectField, List<String>> {
+public class CountryMultiSelectFieldTemplate extends InputFieldTemplateAbstract<CountryMultiSelectField, List<String>> {
 
-    public MultiCountrySelectFieldTemplate(String name) {
+    public CountryMultiSelectFieldTemplate(String name) {
         super(name);
     }
 
     @Override
-    public boolean isValid(String flowToken, MultiCountrySelectField field, List<String> values, Map<String, Object> flowData) {
+    public boolean isValid(String flowToken, CountryMultiSelectField field, List<String> values, Map<String, Object> flowData) {
         if (CollectionUtils.isEmpty(values)) {
             if (Boolean.TRUE.equals(field.getRequired())) {
                 log.debug("field [{}] is required, but it's value is empty", field.getName());
@@ -44,7 +44,7 @@ public class MultiCountrySelectFieldTemplate extends InputFieldTemplateAbstract<
     }
 
     @Override
-    public void fill(FormTemplate formTemplate, MultiCountrySelectField field, Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception {
+    public void fill(FormTemplate formTemplate, CountryMultiSelectField field, Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, values, args, locale);
         field.setAvailableCountries(FormUtils.getFieldListProperty(formTemplate, this.getName(), "availableCountries", locale, args, this.getDefaultValue().getAvailableCountries()));
         field.setExcludeCountries(FormUtils.getFieldListProperty(formTemplate, this.getName(), "excludeCountries", locale, args, this.defaultValue.getExcludeCountries()));
