@@ -15,11 +15,6 @@ public class OtpField extends InputField<String> {
     private Boolean number;
 
     @Override
-    public String toString(String value) {
-        return value;
-    }
-
-    @Override
     public FieldType getType() {
         return InputFieldType.OTP;
     }

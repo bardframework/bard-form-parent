@@ -15,11 +15,6 @@ public class CountrySelectField extends InputField<String> {
     private List<String> excludeCountries;
 
     @Override
-    public String toString(String value) {
-        return value;
-    }
-
-    @Override
     public FieldType getType() {
         return InputFieldType.COUNTRY_SELECT;
     }

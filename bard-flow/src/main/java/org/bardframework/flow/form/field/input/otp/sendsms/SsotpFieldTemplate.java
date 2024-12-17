@@ -52,11 +52,11 @@ public class SsotpFieldTemplate extends FlowInputFieldTemplate<SsotpField, Strin
             flowData.remove(RESOLVE_COUNT_KEY);
             return;
         }
-        int resolveTryCount = flowData.containsKey(RESOLVE_COUNT_KEY) ? Integer.parseInt(flowData.get(RESOLVE_COUNT_KEY).toString()) : 0;
+        int resolveTryCount = flowData.containsKey(RESOLVE_COUNT_KEY) ? (int) flowData.get(RESOLVE_COUNT_KEY) : 0;
         if (resolveTryCount >= this.getMaxTryToResolveCount()) {
             throw new InvalidateFlowException(flowToken, "too many try to resolve ssotp, terminating flow...");
         }
-        flowData.put(RESOLVE_COUNT_KEY, String.valueOf(resolveTryCount + 1));
+        flowData.put(RESOLVE_COUNT_KEY, resolveTryCount + 1);
         if (StringUtils.isBlank(receivedOtp)) {
             throw new FlowExecutionException(Collections.singletonList("field.ssotp.error.notReceived"));
         }

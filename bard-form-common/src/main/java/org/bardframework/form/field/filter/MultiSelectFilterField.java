@@ -30,8 +30,4 @@ public class MultiSelectFilterField extends InputField<IdFilter<String>> {
         return FilterFieldType.MULTI_SELECT_FILTER;
     }
 
-    @Override
-    public String toString(IdFilter<String> value) {
-        return null == value ? null : String.join(SEPARATOR, value.getIn());
-    }
 }

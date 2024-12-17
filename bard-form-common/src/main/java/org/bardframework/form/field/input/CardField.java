@@ -27,8 +27,4 @@ public class CardField extends InputField<String> {
         return InputFieldType.CARD;
     }
 
-    @Override
-    public String toString(String value) {
-        return value;
-    }
 }

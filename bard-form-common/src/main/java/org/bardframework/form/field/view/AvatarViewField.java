@@ -2,7 +2,7 @@ package org.bardframework.form.field.view;
 
 import org.bardframework.form.field.FieldType;
 
-public class AvatarViewField extends FileDownloadField {
+public class AvatarViewField extends ImageViewField {
 
     @Override
     public FieldType getType() {

@@ -25,8 +25,4 @@ public class Ip4Field extends InputField<String> {
         return InputFieldType.IP4;
     }
 
-    @Override
-    public String toString(String value) {
-        return value;
-    }
 }

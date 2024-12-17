@@ -29,7 +29,7 @@ public class FormDataProvider {
                 continue;
             }
             InputFieldDataProvider dataProvider = this.getDataProvider(inputField);
-            map.put(inputField.getName(), dataProvider.getValidValueString(inputField));
+            map.put(inputField.getName(), dataProvider.getValidValue(inputField));
         }
         return map;
     }
@@ -44,9 +44,9 @@ public class FormDataProvider {
             InputFieldDataProvider dataProvider = this.getDataProvider(inputField);
             if (RandomUtils.nextBoolean()) {
                 invalidate = true;
-                map.put(inputField.getName(), dataProvider.getInvalidValueString(inputField));
+                map.put(inputField.getName(), dataProvider.getInvalidValue(inputField));
             } else {
-                map.put(inputField.getName(), dataProvider.getValidValueString(inputField));
+                map.put(inputField.getName(), dataProvider.getValidValue(inputField));
             }
         }
         if (!invalidate) {

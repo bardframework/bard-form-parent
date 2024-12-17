@@ -23,8 +23,4 @@ public class HtmlEditorField extends InputField<String> {
         return InputFieldType.HTML_EDITOR;
     }
 
-    @Override
-    public String toString(String value) {
-        return value;
-    }
 }

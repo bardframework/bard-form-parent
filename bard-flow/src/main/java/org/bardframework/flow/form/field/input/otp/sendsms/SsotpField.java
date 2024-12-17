@@ -17,8 +17,4 @@ public class SsotpField extends InputField<String> {
         return InputFieldType.SSOTP;
     }
 
-    @Override
-    public String toString(String value) {
-        return value;
-    }
 }

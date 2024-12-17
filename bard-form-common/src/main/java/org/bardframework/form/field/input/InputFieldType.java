@@ -20,6 +20,7 @@ public enum InputFieldType implements FieldType {
     LOCALE_SELECT,
     MULTI_LOCALE_SELECT,
     LOCATION_SELECT,
+    MULTI_COUNTRY_SELECT,
     MULTI_SELECT,
     MULTI_SELECT_SEARCHABLE,
     NEW_PASSWORD,
@@ -34,5 +35,6 @@ public enum InputFieldType implements FieldType {
     TEXT,
     TEXT_AREA,
     TIME,
+    TIME_ZONE_SELECT,
     WYSIWYG,
 }

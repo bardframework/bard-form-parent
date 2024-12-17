@@ -32,12 +32,4 @@ public class TextFilterField extends InputField<StringFilter> {
         return FilterFieldType.TEXT_FILTER;
     }
 
-    @Override
-    public String toString(StringFilter value) {
-        //FIXME
-        if (null == value) {
-            return null;
-        }
-        return value.getContains();
-    }
 }

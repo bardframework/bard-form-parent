@@ -25,9 +25,4 @@ public class NumberField extends InputField<Long> {
         return InputFieldType.NUMBER;
     }
 
-    @Override
-    public String toString(Long value) {
-        return null == value ? null : value.toString();
-    }
-
 }

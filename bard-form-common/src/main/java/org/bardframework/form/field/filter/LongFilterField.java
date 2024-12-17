@@ -29,8 +29,4 @@ public class LongFilterField extends InputField<LongFilter> {
         return FilterFieldType.NUMBER_FILTER;
     }
 
-    @Override
-    public String toString(LongFilter value) {
-        return String.join(SEPARATOR, null == value.getFrom() ? "" : value.getFrom().toString(), null == value.getTo() ? "" : value.getTo().toString());
-    }
 }

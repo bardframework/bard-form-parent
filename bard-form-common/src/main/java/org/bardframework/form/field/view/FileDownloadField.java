@@ -14,10 +14,6 @@ import java.util.List;
 public class FileDownloadField extends Field {
 
     private List<FileModel> files;
-    private String src;
-    private String fileName;
-    private String contentType;
-    private Integer size;
 
     @Override
     public FieldType getType() {
@@ -28,6 +24,7 @@ public class FileDownloadField extends Field {
     @Setter
     @ToString
     public static class FileModel {
+        private String fileName;
         private String data;
         private String contentType;
         private Integer size;

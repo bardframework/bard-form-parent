@@ -20,8 +20,4 @@ public class SwitchButtonField extends InputField<Boolean> {
         return InputFieldType.SWITCH_BUTTON;
     }
 
-    @Override
-    public String toString(Boolean value) {
-        return null == value ? null : value.toString();
-    }
 }

@@ -11,11 +11,6 @@ public class PhoneNumberField extends InputField<String> {
     private Integer maxLength;
 
     @Override
-    public String toString(String value) {
-        return value;
-    }
-
-    @Override
     public FieldType getType() {
         return InputFieldType.PHONE_NUMBER;
     }

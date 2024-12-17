@@ -26,8 +26,4 @@ public class TimeField extends InputField<LocalTime> {
         return InputFieldType.TIME;
     }
 
-    @Override
-    public String toString(LocalTime value) {
-        return null == value ? null : value.toString();
-    }
 }

@@ -20,11 +20,6 @@ public class LocationSelectField extends InputField<String> {
     }
 
     @Override
-    public String toString(String value) {
-        return value;
-    }
-
-    @Override
     public FieldType getType() {
         return InputFieldType.LOCATION_SELECT;
     }

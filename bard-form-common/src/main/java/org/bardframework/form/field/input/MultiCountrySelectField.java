@@ -5,22 +5,17 @@ import lombok.Setter;
 import lombok.ToString;
 import org.bardframework.form.field.FieldType;
 
+import java.util.List;
+
 @Getter
 @Setter
 @ToString
-public class WysiwygField extends InputField<String> {
-    private Integer maxSize;
-
-    public WysiwygField() {
-    }
-
-    public WysiwygField(String name) {
-        super(name);
-    }
+public class MultiCountrySelectField extends InputField<List<String>> {
+    private List<String> availableCountries;
+    private List<String> excludeCountries;
 
     @Override
     public FieldType getType() {
-        return InputFieldType.WYSIWYG;
+        return InputFieldType.MULTI_COUNTRY_SELECT;
     }
-
 }

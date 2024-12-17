@@ -26,8 +26,4 @@ public class Ip4FilterField extends InputField<StringFilter> {
         return FilterFieldType.IP4_FILTER;
     }
 
-    @Override
-    public String toString(StringFilter value) {
-        return String.join(SEPARATOR, null == value.getFrom() ? "" : value.getFrom(), null == value.getTo() ? "" : value.getTo());
-    }
 }

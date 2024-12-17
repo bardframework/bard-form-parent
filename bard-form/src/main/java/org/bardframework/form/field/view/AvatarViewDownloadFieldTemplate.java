@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AvatarViewDownloadFieldTemplate extends FileDownloadFieldTemplate {
+public class AvatarViewDownloadFieldTemplate extends ImageViewFieldTemplate {
 
     public AvatarViewDownloadFieldTemplate(String name) {
         super(name);

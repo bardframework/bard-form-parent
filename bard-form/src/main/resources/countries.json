@@ -1,0 +1,2161 @@
+[
+  {
+    "defaultName": "Andorra",
+    "alpha2Code": "AD",
+    "callingCode": "+376",
+    "timeZones": [
+      "Europe/Andorra"
+    ]
+  },
+  {
+    "defaultName": "United Arab Emirates",
+    "alpha2Code": "AE",
+    "callingCode": "+971",
+    "timeZones": [
+      "Asia/Dubai"
+    ]
+  },
+  {
+    "defaultName": "Afghanistan",
+    "alpha2Code": "AF",
+    "callingCode": "+93",
+    "timeZones": [
+      "Asia/Kabul"
+    ]
+  },
+  {
+    "defaultName": "Antigua and Barbuda",
+    "alpha2Code": "AG",
+    "callingCode": "+1268",
+    "timeZones": [
+      "America/Antigua"
+    ]
+  },
+  {
+    "defaultName": "Anguilla",
+    "alpha2Code": "AI",
+    "callingCode": "+1264",
+    "timeZones": [
+      "America/Anguilla"
+    ]
+  },
+  {
+    "defaultName": "Albania",
+    "alpha2Code": "AL",
+    "callingCode": "+355",
+    "timeZones": [
+      "Europe/Tirane"
+    ]
+  },
+  {
+    "defaultName": "Armenia",
+    "alpha2Code": "AM",
+    "callingCode": "+374",
+    "timeZones": [
+      "Asia/Yerevan"
+    ]
+  },
+  {
+    "defaultName": "Angola",
+    "alpha2Code": "AO",
+    "callingCode": "+244",
+    "timeZones": [
+      "Africa/Luanda"
+    ]
+  },
+  {
+    "defaultName": "Antarctica",
+    "alpha2Code": "AQ",
+    "callingCode": "+672",
+    "timeZones": [
+      "Antarctica/Casey",
+      "Antarctica/Davis",
+      "Antarctica/DumontDUrville",
+      "Antarctica/Mawson",
+      "Antarctica/McMurdo",
+      "Antarctica/Palmer",
+      "Antarctica/Rothera",
+      "Antarctica/Syowa",
+      "Antarctica/Troll",
+      "Antarctica/Vostok"
+    ]
+  },
+  {
+    "defaultName": "Argentina",
+    "alpha2Code": "AR",
+    "callingCode": "+54",
+    "timeZones": [
+      "America/Argentina/Buenos_Aires",
+      "America/Argentina/Catamarca",
+      "America/Argentina/Cordoba",
+      "America/Argentina/Jujuy",
+      "America/Argentina/La_Rioja",
+      "America/Argentina/Mendoza",
+      "America/Argentina/Rio_Gallegos",
+      "America/Argentina/Salta",
+      "America/Argentina/San_Juan",
+      "America/Argentina/San_Luis",
+      "America/Argentina/Tucuman",
+      "America/Argentina/Ushuaia"
+    ]
+  },
+  {
+    "defaultName": "American Samoa",
+    "alpha2Code": "AS",
+    "callingCode": "+1684",
+    "timeZones": [
+      "Pacific/Pago_Pago"
+    ]
+  },
+  {
+    "defaultName": "Austria",
+    "alpha2Code": "AT",
+    "callingCode": "+43",
+    "timeZones": [
+      "Europe/Vienna"
+    ]
+  },
+  {
+    "defaultName": "Australia",
+    "alpha2Code": "AU",
+    "callingCode": "+61",
+    "timeZones": [
+      "Antarctica/Macquarie",
+      "Australia/Adelaide",
+      "Australia/Brisbane",
+      "Australia/Broken_Hill",
+      "Australia/Darwin",
+      "Australia/Eucla",
+      "Australia/Hobart",
+      "Australia/Lindeman",
+      "Australia/Lord_Howe",
+      "Australia/Melbourne",
+      "Australia/Perth",
+      "Australia/Sydney"
+    ]
+  },
+  {
+    "defaultName": "Aruba",
+    "alpha2Code": "AW",
+    "callingCode": "+297",
+    "timeZones": [
+      "America/Aruba"
+    ]
+  },
+  {
+    "defaultName": "Åland Islands",
+    "alpha2Code": "AX",
+    "callingCode": "+358",
+    "timeZones": [
+      "Europe/Mariehamn"
+    ]
+  },
+  {
+    "defaultName": "Azerbaijan",
+    "alpha2Code": "AZ",
+    "callingCode": "+994",
+    "timeZones": [
+      "Asia/Baku"
+    ]
+  },
+  {
+    "defaultName": "Bosnia and Herzegovina",
+    "alpha2Code": "BA",
+    "callingCode": "+387",
+    "timeZones": [
+      "Europe/Sarajevo"
+    ]
+  },
+  {
+    "defaultName": "Barbados",
+    "alpha2Code": "BB",
+    "callingCode": "+1246",
+    "timeZones": [
+      "America/Barbados"
+    ]
+  },
+  {
+    "defaultName": "Bangladesh",
+    "alpha2Code": "BD",
+    "callingCode": "+880",
+    "timeZones": [
+      "Asia/Dhaka"
+    ]
+  },
+  {
+    "defaultName": "Belgium",
+    "alpha2Code": "BE",
+    "callingCode": "+32",
+    "timeZones": [
+      "Europe/Brussels"
+    ]
+  },
+  {
+    "defaultName": "Burkina Faso",
+    "alpha2Code": "BF",
+    "callingCode": "+226",
+    "timeZones": [
+      "Africa/Ouagadougou"
+    ]
+  },
+  {
+    "defaultName": "Bulgaria",
+    "alpha2Code": "BG",
+    "callingCode": "+359",
+    "timeZones": [
+      "Europe/Sofia"
+    ]
+  },
+  {
+    "defaultName": "Bahrain",
+    "alpha2Code": "BH",
+    "callingCode": "+973",
+    "timeZones": [
+      "Asia/Bahrain"
+    ]
+  },
+  {
+    "defaultName": "Burundi",
+    "alpha2Code": "BI",
+    "callingCode": "+257",
+    "timeZones": [
+      "Africa/Bujumbura"
+    ]
+  },
+  {
+    "defaultName": "Benin",
+    "alpha2Code": "BJ",
+    "callingCode": "+229",
+    "timeZones": [
+      "Africa/Porto-Novo"
+    ]
+  },
+  {
+    "defaultName": "Saint Barthélemy",
+    "alpha2Code": "BL",
+    "callingCode": "+590",
+    "timeZones": [
+      "America/St_Barthelemy"
+    ]
+  },
+  {
+    "defaultName": "Bermuda",
+    "alpha2Code": "BM",
+    "callingCode": "+1441",
+    "timeZones": [
+      "Atlantic/Bermuda"
+    ]
+  },
+  {
+    "defaultName": "Brunei Darussalam",
+    "alpha2Code": "BN",
+    "callingCode": "+673",
+    "timeZones": [
+      "Asia/Brunei"
+    ]
+  },
+  {
+    "defaultName": "Bolivia (Plurinational State of)",
+    "alpha2Code": "BO",
+    "callingCode": "+591",
+    "timeZones": [
+      "America/La_Paz"
+    ]
+  },
+  {
+    "defaultName": "Bonaire, Sint Eustatius and Saba",
+    "alpha2Code": "BQ",
+    "callingCode": "+5997",
+    "timeZones": [
+      "636"
+    ]
+  },
+  {
+    "defaultName": "Brazil",
+    "alpha2Code": "BR",
+    "callingCode": "+55",
+    "timeZones": [
+      "America/Araguaina",
+      "America/Bahia",
+      "America/Belem",
+      "America/Boa_Vista",
+      "America/Campo_Grande",
+      "America/Cuiaba",
+      "America/Eirunepe",
+      "America/Fortaleza",
+      "America/Maceio",
+      "America/Manaus",
+      "America/Noronha",
+      "America/Porto_Velho",
+      "America/Recife",
+      "America/Rio_Branco",
+      "America/Santarem",
+      "America/Sao_Paulo"
+    ]
+  },
+  {
+    "defaultName": "Bahamas",
+    "alpha2Code": "BS",
+    "callingCode": "+1242",
+    "timeZones": [
+      "America/Nassau"
+    ]
+  },
+  {
+    "defaultName": "Bhutan",
+    "alpha2Code": "BT",
+    "callingCode": "+975",
+    "timeZones": [
+      "Asia/Thimphu"
+    ]
+  },
+  {
+    "defaultName": "Botswana",
+    "alpha2Code": "BW",
+    "callingCode": "+267",
+    "timeZones": [
+      "Africa/Gaborone"
+    ]
+  },
+  {
+    "defaultName": "Belarus",
+    "alpha2Code": "BY",
+    "callingCode": "+375",
+    "timeZones": [
+      "Europe/Minsk"
+    ]
+  },
+  {
+    "defaultName": "Belize",
+    "alpha2Code": "BZ",
+    "callingCode": "+501",
+    "timeZones": [
+      "America/Belize"
+    ]
+  },
+  {
+    "defaultName": "Canada",
+    "alpha2Code": "CA",
+    "callingCode": "+1",
+    "timeZones": [
+      "300",
+      "310",
+      "459",
+      "718",
+      "945",
+      "America/Blanc-Sablon",
+      "America/Creston",
+      "America/Dawson",
+      "America/Dawson_Creek",
+      "America/Edmonton",
+      "America/Fort_Nelson",
+      "America/Glace_Bay",
+      "America/Goose_Bay",
+      "America/Halifax",
+      "America/Iqaluit",
+      "America/Moncton",
+      "America/Nipigon",
+      "America/Pangnirtung",
+      "America/Rainy_River",
+      "America/Regina",
+      "America/St_Johns",
+      "America/Swift_Current",
+      "America/Thunder_Bay",
+      "America/Toronto",
+      "America/Vancouver",
+      "America/Whitehorse",
+      "America/Winnipeg",
+      "America/Yellowknife"
+    ]
+  },
+  {
+    "defaultName": "Cocos (Keeling) Islands",
+    "alpha2Code": "CC",
+    "callingCode": "+61",
+    "timeZones": [
+      "Indian/Cocos"
+    ]
+  },
+  {
+    "defaultName": "Congo (Democratic Republic of the)",
+    "alpha2Code": "CD",
+    "callingCode": "+243",
+    "timeZones": [
+      "Africa/Kinshasa",
+      "Africa/Lubumbashi"
+    ]
+  },
+  {
+    "defaultName": "Central African Republic",
+    "alpha2Code": "CF",
+    "callingCode": "+236",
+    "timeZones": [
+      "Africa/Bangui"
+    ]
+  },
+  {
+    "defaultName": "Congo",
+    "alpha2Code": "CG",
+    "callingCode": "+242",
+    "timeZones": [
+      "Africa/Brazzaville"
+    ]
+  },
+  {
+    "defaultName": "Switzerland",
+    "alpha2Code": "CH",
+    "callingCode": "+41",
+    "timeZones": [
+      "Europe/Zurich"
+    ]
+  },
+  {
+    "defaultName": "Côte d\"Ivoire",
+    "alpha2Code": "CI",
+    "callingCode": "+225",
+    "timeZones": [
+      "Africa/Abidjan"
+    ]
+  },
+  {
+    "defaultName": "Cook Islands",
+    "alpha2Code": "CK",
+    "callingCode": "+682",
+    "timeZones": [
+      "Pacific/Rarotonga"
+    ]
+  },
+  {
+    "defaultName": "Chile",
+    "alpha2Code": "CL",
+    "callingCode": "+56",
+    "timeZones": [
+      "America/Punta_Arenas",
+      "America/Santiago",
+      "Pacific/Easter"
+    ]
+  },
+  {
+    "defaultName": "Cameroon",
+    "alpha2Code": "CM",
+    "callingCode": "+237",
+    "timeZones": [
+      "Africa/Douala"
+    ]
+  },
+  {
+    "defaultName": "China",
+    "alpha2Code": "CN",
+    "callingCode": "+86",
+    "timeZones": [
+      "Asia/Shanghai",
+      "Asia/Urumqi"
+    ]
+  },
+  {
+    "defaultName": "Colombia",
+    "alpha2Code": "CO",
+    "callingCode": "+57",
+    "timeZones": [
+      "America/Bogota"
+    ]
+  },
+  {
+    "defaultName": "Costa Rica",
+    "alpha2Code": "CR",
+    "callingCode": "+506",
+    "timeZones": [
+      "America/Costa_Rica"
+    ]
+  },
+  {
+    "defaultName": "Cuba",
+    "alpha2Code": "CU",
+    "callingCode": "+53",
+    "timeZones": [
+      "America/Havana"
+    ]
+  },
+  {
+    "defaultName": "Cabo Verde",
+    "alpha2Code": "CV",
+    "callingCode": "+238",
+    "timeZones": [
+      "Atlantic/Cape_Verde"
+    ]
+  },
+  {
+    "defaultName": "Curaçao",
+    "alpha2Code": "CW",
+    "callingCode": "+599",
+    "timeZones": [
+      "America/Curacao"
+    ]
+  },
+  {
+    "defaultName": "Christmas Island",
+    "alpha2Code": "CX",
+    "callingCode": "+61",
+    "timeZones": [
+      "Indian/Christmas"
+    ]
+  },
+  {
+    "defaultName": "Cyprus",
+    "alpha2Code": "CY",
+    "callingCode": "+357",
+    "timeZones": [
+      "Asia/Famagusta",
+      "Asia/Nicosia"
+    ]
+  },
+  {
+    "defaultName": "Czech Republic",
+    "alpha2Code": "CZ",
+    "callingCode": "+420",
+    "timeZones": [
+      "Europe/Prague"
+    ]
+  },
+  {
+    "defaultName": "Germany",
+    "alpha2Code": "DE",
+    "callingCode": "+49",
+    "timeZones": [
+      "Europe/Berlin",
+      "Europe/Busingen"
+    ]
+  },
+  {
+    "defaultName": "Djibouti",
+    "alpha2Code": "DJ",
+    "callingCode": "+253",
+    "timeZones": [
+      "Africa/Djibouti"
+    ]
+  },
+  {
+    "defaultName": "Denmark",
+    "alpha2Code": "DK",
+    "callingCode": "+45",
+    "timeZones": [
+      "Europe/Copenhagen"
+    ]
+  },
+  {
+    "defaultName": "Dominica",
+    "alpha2Code": "DM",
+    "callingCode": "+1767",
+    "timeZones": [
+      "America/Dominica"
+    ]
+  },
+  {
+    "defaultName": "Dominican Republic",
+    "alpha2Code": "DO",
+    "callingCode": "+1809",
+    "timeZones": [
+      "America/Santo_Domingo"
+    ]
+  },
+  {
+    "defaultName": "Algeria",
+    "alpha2Code": "DZ",
+    "callingCode": "+213",
+    "timeZones": [
+      "Africa/Algiers"
+    ]
+  },
+  {
+    "defaultName": "Ecuador",
+    "alpha2Code": "EC",
+    "callingCode": "+593",
+    "timeZones": [
+      "America/Guayaquil",
+      "Pacific/Galapagos"
+    ]
+  },
+  {
+    "defaultName": "Estonia",
+    "alpha2Code": "EE",
+    "callingCode": "+372",
+    "timeZones": [
+      "Europe/Tallinn"
+    ]
+  },
+  {
+    "defaultName": "Egypt",
+    "alpha2Code": "EG",
+    "callingCode": "+20",
+    "timeZones": [
+      "Africa/Cairo"
+    ]
+  },
+  {
+    "defaultName": "Western Sahara",
+    "alpha2Code": "EH",
+    "callingCode": "+212",
+    "timeZones": [
+      "Africa/El_Aaiun"
+    ]
+  },
+  {
+    "defaultName": "Eritrea",
+    "alpha2Code": "ER",
+    "callingCode": "+291",
+    "timeZones": [
+      "Africa/Asmara"
+    ]
+  },
+  {
+    "defaultName": "Spain",
+    "alpha2Code": "ES",
+    "callingCode": "+34",
+    "timeZones": [
+      "Africa/Ceuta",
+      "Atlantic/Canary",
+      "Europe/Madrid"
+    ]
+  },
+  {
+    "defaultName": "Ethiopia",
+    "alpha2Code": "ET",
+    "callingCode": "+251",
+    "timeZones": [
+      "Africa/Addis_Ababa"
+    ]
+  },
+  {
+    "defaultName": "Finland",
+    "alpha2Code": "FI",
+    "callingCode": "+358",
+    "timeZones": [
+      "Europe/Helsinki"
+    ]
+  },
+  {
+    "defaultName": "Fiji",
+    "alpha2Code": "FJ",
+    "callingCode": "+679",
+    "timeZones": [
+      "Pacific/Fiji"
+    ]
+  },
+  {
+    "defaultName": "Falkland Islands (Malvinas)",
+    "alpha2Code": "FK",
+    "callingCode": "+500",
+    "timeZones": [
+      "Atlantic/Stanley"
+    ]
+  },
+  {
+    "defaultName": "Micronesia (Federated States of)",
+    "alpha2Code": "FM",
+    "callingCode": "+691",
+    "timeZones": [
+      "Pacific/Chuuk",
+      "Pacific/Kosrae",
+      "Pacific/Pohnpei"
+    ]
+  },
+  {
+    "defaultName": "Faroe Islands",
+    "alpha2Code": "FO",
+    "callingCode": "+298",
+    "timeZones": [
+      "Atlantic/Faroe"
+    ]
+  },
+  {
+    "defaultName": "France",
+    "alpha2Code": "FR",
+    "callingCode": "+33",
+    "timeZones": [
+      "Europe/Paris"
+    ]
+  },
+  {
+    "defaultName": "Gabon",
+    "alpha2Code": "GA",
+    "callingCode": "+241",
+    "timeZones": [
+      "Africa/Libreville"
+    ]
+  },
+  {
+    "defaultName": "United Kingdom of Great Britain and Northern Ireland",
+    "alpha2Code": "GB",
+    "callingCode": "+44",
+    "timeZones": [
+      "731"
+    ]
+  },
+  {
+    "defaultName": "Grenada",
+    "alpha2Code": "GD",
+    "callingCode": "+1473",
+    "timeZones": [
+      "America/Grenada"
+    ]
+  },
+  {
+    "defaultName": "Georgia",
+    "alpha2Code": "GE",
+    "callingCode": "+995",
+    "timeZones": [
+      "Asia/Tbilisi"
+    ]
+  },
+  {
+    "defaultName": "French Guiana",
+    "alpha2Code": "GF",
+    "callingCode": "+594",
+    "timeZones": [
+      "America/Cayenne"
+    ]
+  },
+  {
+    "defaultName": "Guernsey",
+    "alpha2Code": "GG",
+    "callingCode": "+44",
+    "timeZones": [
+      "210"
+    ]
+  },
+  {
+    "defaultName": "Ghana",
+    "alpha2Code": "GH",
+    "callingCode": "+233",
+    "timeZones": [
+      "Africa/Accra"
+    ]
+  },
+  {
+    "defaultName": "Gibraltar",
+    "alpha2Code": "GI",
+    "callingCode": "+350",
+    "timeZones": [
+      "Europe/Gibraltar"
+    ]
+  },
+  {
+    "defaultName": "Greenland",
+    "alpha2Code": "GL",
+    "callingCode": "+299",
+    "timeZones": [
+      "America/Danmarkshavn",
+      "America/Nuuk",
+      "America/Scoresbysund",
+      "America/Thule"
+    ]
+  },
+  {
+    "defaultName": "Gambia",
+    "alpha2Code": "GM",
+    "callingCode": "+220",
+    "timeZones": [
+      "Africa/Banjul"
+    ]
+  },
+  {
+    "defaultName": "Guinea",
+    "alpha2Code": "GN",
+    "callingCode": "+224",
+    "timeZones": [
+      "Africa/Conakry"
+    ]
+  },
+  {
+    "defaultName": "Guadeloupe",
+    "alpha2Code": "GP",
+    "callingCode": "+590",
+    "timeZones": [
+      "America/Guadeloupe"
+    ]
+  },
+  {
+    "defaultName": "Equatorial Guinea",
+    "alpha2Code": "GQ",
+    "callingCode": "+240",
+    "timeZones": [
+      "Africa/Malabo"
+    ]
+  },
+  {
+    "defaultName": "Greece",
+    "alpha2Code": "GR",
+    "callingCode": "+30",
+    "timeZones": [
+      "Europe/Athens"
+    ]
+  },
+  {
+    "defaultName": "South Georgia and the South Sandwich Islands",
+    "alpha2Code": "GS",
+    "callingCode": "+500",
+    "timeZones": [
+      "Atlantic/South_Georgia"
+    ]
+  },
+  {
+    "defaultName": "Guatemala",
+    "alpha2Code": "GT",
+    "callingCode": "+502",
+    "timeZones": [
+      "America/Guatemala"
+    ]
+  },
+  {
+    "defaultName": "Guam",
+    "alpha2Code": "GU",
+    "callingCode": "+1671",
+    "timeZones": [
+      "Pacific/Guam"
+    ]
+  },
+  {
+    "defaultName": "Guinea-Bissau",
+    "alpha2Code": "GW",
+    "callingCode": "+245",
+    "timeZones": [
+      "Africa/Bissau"
+    ]
+  },
+  {
+    "defaultName": "Guyana",
+    "alpha2Code": "GY",
+    "callingCode": "+592",
+    "timeZones": [
+      "America/Guyana"
+    ]
+  },
+  {
+    "defaultName": "Hong Kong",
+    "alpha2Code": "HK",
+    "callingCode": "+852",
+    "timeZones": [
+      "Asia/Hong_Kong"
+    ]
+  },
+  {
+    "defaultName": "Honduras",
+    "alpha2Code": "HN",
+    "callingCode": "+504",
+    "timeZones": [
+      "America/Tegucigalpa"
+    ]
+  },
+  {
+    "defaultName": "Croatia",
+    "alpha2Code": "HR",
+    "callingCode": "+385",
+    "timeZones": [
+      "Europe/Zagreb"
+    ]
+  },
+  {
+    "defaultName": "Haiti",
+    "alpha2Code": "HT",
+    "callingCode": "+509",
+    "timeZones": [
+      "America/Port-au-Prince"
+    ]
+  },
+  {
+    "defaultName": "Hungary",
+    "alpha2Code": "HU",
+    "callingCode": "+36",
+    "timeZones": [
+      "Europe/Budapest"
+    ]
+  },
+  {
+    "defaultName": "Indonesia",
+    "alpha2Code": "ID",
+    "callingCode": "+62",
+    "timeZones": [
+      "Asia/Jakarta",
+      "Asia/Jayapura",
+      "Asia/Makassar",
+      "Asia/Pontianak"
+    ]
+  },
+  {
+    "defaultName": "Ireland",
+    "alpha2Code": "IE",
+    "callingCode": "+353",
+    "timeZones": [
+      "Europe/Dublin"
+    ]
+  },
+  {
+    "defaultName": "Israel",
+    "alpha2Code": "IL",
+    "callingCode": "+972",
+    "timeZones": [
+      "326"
+    ]
+  },
+  {
+    "defaultName": "Isle of Man",
+    "alpha2Code": "IM",
+    "callingCode": "+44",
+    "timeZones": [
+      "Europe/Isle_of_Man"
+    ]
+  },
+  {
+    "defaultName": "India",
+    "alpha2Code": "IN",
+    "callingCode": "+91",
+    "timeZones": [
+      "Asia/Kolkata"
+    ]
+  },
+  {
+    "defaultName": "British Indian Ocean Territory",
+    "alpha2Code": "IO",
+    "callingCode": "+246",
+    "timeZones": [
+      "Indian/Chagos"
+    ]
+  },
+  {
+    "defaultName": "Iraq",
+    "alpha2Code": "IQ",
+    "callingCode": "+964",
+    "timeZones": [
+      "Asia/Baghdad"
+    ]
+  },
+  {
+    "defaultName": "Iran (Islamic Republic of)",
+    "alpha2Code": "IR",
+    "callingCode": "+98",
+    "timeZones": [
+      "Asia/Tehran"
+    ]
+  },
+  {
+    "defaultName": "Iceland",
+    "alpha2Code": "IS",
+    "callingCode": "+354",
+    "timeZones": [
+      "Atlantic/Reykjavik"
+    ]
+  },
+  {
+    "defaultName": "Italy",
+    "alpha2Code": "IT",
+    "callingCode": "+39",
+    "timeZones": [
+      "Europe/Rome"
+    ]
+  },
+  {
+    "defaultName": "Jersey",
+    "alpha2Code": "JE",
+    "callingCode": "+44",
+    "timeZones": [
+      "624"
+    ]
+  },
+  {
+    "defaultName": "Jamaica",
+    "alpha2Code": "JM",
+    "callingCode": "+1876",
+    "timeZones": [
+      "736"
+    ]
+  },
+  {
+    "defaultName": "Jordan",
+    "alpha2Code": "JO",
+    "callingCode": "+962",
+    "timeZones": [
+      "Asia/Amman"
+    ]
+  },
+  {
+    "defaultName": "Japan",
+    "alpha2Code": "JP",
+    "callingCode": "+81",
+    "timeZones": [
+      "441"
+    ]
+  },
+  {
+    "defaultName": "Kenya",
+    "alpha2Code": "KE",
+    "callingCode": "+254",
+    "timeZones": [
+      "Africa/Nairobi"
+    ]
+  },
+  {
+    "defaultName": "Kyrgyzstan",
+    "alpha2Code": "KG",
+    "callingCode": "+996",
+    "timeZones": [
+      "Asia/Bishkek"
+    ]
+  },
+  {
+    "defaultName": "Cambodia",
+    "alpha2Code": "KH",
+    "callingCode": "+855",
+    "timeZones": [
+      "Asia/Phnom_Penh"
+    ]
+  },
+  {
+    "defaultName": "Kiribati",
+    "alpha2Code": "KI",
+    "callingCode": "+686",
+    "timeZones": [
+      "Pacific/Kanton",
+      "Pacific/Kiritimati",
+      "Pacific/Tarawa"
+    ]
+  },
+  {
+    "defaultName": "Comoros",
+    "alpha2Code": "KM",
+    "callingCode": "+269",
+    "timeZones": [
+      "Indian/Comoro"
+    ]
+  },
+  {
+    "defaultName": "Saint Kitts and Nevis",
+    "alpha2Code": "KN",
+    "callingCode": "+1869",
+    "timeZones": [
+      "America/St_Kitts"
+    ]
+  },
+  {
+    "defaultName": "Korea (Democratic People\"s Republic of)",
+    "alpha2Code": "KP",
+    "callingCode": "+850",
+    "timeZones": [
+      "Asia/Pyongyang"
+    ]
+  },
+  {
+    "defaultName": "Korea (Republic of)",
+    "alpha2Code": "KR",
+    "callingCode": "+82",
+    "timeZones": [
+      "Asia/Seoul"
+    ]
+  },
+  {
+    "defaultName": "Kuwait",
+    "alpha2Code": "KW",
+    "callingCode": "+965",
+    "timeZones": [
+      "Asia/Kuwait"
+    ]
+  },
+  {
+    "defaultName": "Cayman Islands",
+    "alpha2Code": "KY",
+    "callingCode": "+1345",
+    "timeZones": [
+      "America/Cayman"
+    ]
+  },
+  {
+    "defaultName": "Kazakhstan",
+    "alpha2Code": "KZ",
+    "callingCode": "+7",
+    "timeZones": [
+      "Asia/Almaty",
+      "Asia/Aqtau",
+      "Asia/Aqtobe",
+      "Asia/Atyrau",
+      "Asia/Oral",
+      "Asia/Qostanay",
+      "Asia/Qyzylorda"
+    ]
+  },
+  {
+    "defaultName": "Lao People\"s Democratic Republic",
+    "alpha2Code": "LA",
+    "callingCode": "+856",
+    "timeZones": [
+      "Asia/Vientiane"
+    ]
+  },
+  {
+    "defaultName": "Lebanon",
+    "alpha2Code": "LB",
+    "callingCode": "+961",
+    "timeZones": [
+      "Asia/Beirut"
+    ]
+  },
+  {
+    "defaultName": "Saint Lucia",
+    "alpha2Code": "LC",
+    "callingCode": "+1758",
+    "timeZones": [
+      "America/St_Lucia"
+    ]
+  },
+  {
+    "defaultName": "Liechtenstein",
+    "alpha2Code": "LI",
+    "callingCode": "+423",
+    "timeZones": [
+      "Europe/Vaduz"
+    ]
+  },
+  {
+    "defaultName": "Sri Lanka",
+    "alpha2Code": "LK",
+    "callingCode": "+94",
+    "timeZones": [
+      "Asia/Colombo"
+    ]
+  },
+  {
+    "defaultName": "Liberia",
+    "alpha2Code": "LR",
+    "callingCode": "+231",
+    "timeZones": [
+      "Africa/Monrovia"
+    ]
+  },
+  {
+    "defaultName": "Lesotho",
+    "alpha2Code": "LS",
+    "callingCode": "+266",
+    "timeZones": [
+      "Africa/Maseru"
+    ]
+  },
+  {
+    "defaultName": "Lithuania",
+    "alpha2Code": "LT",
+    "callingCode": "+370",
+    "timeZones": [
+      "Europe/Vilnius"
+    ]
+  },
+  {
+    "defaultName": "Luxembourg",
+    "alpha2Code": "LU",
+    "callingCode": "+352",
+    "timeZones": [
+      "Europe/Luxembourg"
+    ]
+  },
+  {
+    "defaultName": "Latvia",
+    "alpha2Code": "LV",
+    "callingCode": "+371",
+    "timeZones": [
+      "Europe/Riga"
+    ]
+  },
+  {
+    "defaultName": "Libya",
+    "alpha2Code": "LY",
+    "callingCode": "+218",
+    "timeZones": [
+      "Africa/Tripoli"
+    ]
+  },
+  {
+    "defaultName": "Morocco",
+    "alpha2Code": "MA",
+    "callingCode": "+212",
+    "timeZones": [
+      "Africa/Casablanca"
+    ]
+  },
+  {
+    "defaultName": "Monaco",
+    "alpha2Code": "MC",
+    "callingCode": "+377",
+    "timeZones": [
+      "Europe/Monaco"
+    ]
+  },
+  {
+    "defaultName": "Moldova (Republic of)",
+    "alpha2Code": "MD",
+    "callingCode": "+373",
+    "timeZones": [
+      "Europe/Chisinau"
+    ]
+  },
+  {
+    "defaultName": "Montenegro",
+    "alpha2Code": "ME",
+    "callingCode": "+382",
+    "timeZones": [
+      "Europe/Podgorica"
+    ]
+  },
+  {
+    "defaultName": "Saint Martin (French part)",
+    "alpha2Code": "MF",
+    "callingCode": "+590",
+    "timeZones": [
+      "America/Marigot"
+    ]
+  },
+  {
+    "defaultName": "Madagascar",
+    "alpha2Code": "MG",
+    "callingCode": "+261",
+    "timeZones": [
+      "Indian/Antananarivo"
+    ]
+  },
+  {
+    "defaultName": "Marshall Islands",
+    "alpha2Code": "MH",
+    "callingCode": "+692",
+    "timeZones": [
+      "Pacific/Kwajalein",
+      "Pacific/Majuro"
+    ]
+  },
+  {
+    "defaultName": "Macedonia (the former Yugoslav Republic of)",
+    "alpha2Code": "MK",
+    "callingCode": "+389",
+    "timeZones": [
+      "Europe/Skopje"
+    ]
+  },
+  {
+    "defaultName": "Mali",
+    "alpha2Code": "ML",
+    "callingCode": "+223",
+    "timeZones": [
+      "Africa/Bamako"
+    ]
+  },
+  {
+    "defaultName": "Myanmar",
+    "alpha2Code": "MM",
+    "callingCode": "+95",
+    "timeZones": [
+      "Asia/Yangon"
+    ]
+  },
+  {
+    "defaultName": "Mongolia",
+    "alpha2Code": "MN",
+    "callingCode": "+976",
+    "timeZones": [
+      "Asia/Choibalsan",
+      "Asia/Hovd",
+      "Asia/Ulaanbaatar"
+    ]
+  },
+  {
+    "defaultName": "Macao",
+    "alpha2Code": "MO",
+    "callingCode": "+853",
+    "timeZones": [
+      "230"
+    ]
+  },
+  {
+    "defaultName": "Northern Mariana Islands",
+    "alpha2Code": "MP",
+    "callingCode": "+1670",
+    "timeZones": [
+      "Pacific/Saipan"
+    ]
+  },
+  {
+    "defaultName": "Martinique",
+    "alpha2Code": "MQ",
+    "callingCode": "+596",
+    "timeZones": [
+      "America/Martinique"
+    ]
+  },
+  {
+    "defaultName": "Mauritania",
+    "alpha2Code": "MR",
+    "callingCode": "+222",
+    "timeZones": [
+      "Africa/Nouakchott"
+    ]
+  },
+  {
+    "defaultName": "Montserrat",
+    "alpha2Code": "MS",
+    "callingCode": "+1664",
+    "timeZones": [
+      "America/Montserrat"
+    ]
+  },
+  {
+    "defaultName": "Malta",
+    "alpha2Code": "MT",
+    "callingCode": "+356",
+    "timeZones": [
+      "Europe/Malta"
+    ]
+  },
+  {
+    "defaultName": "Mauritius",
+    "alpha2Code": "MU",
+    "callingCode": "+230",
+    "timeZones": [
+      "Indian/Mauritius"
+    ]
+  },
+  {
+    "defaultName": "Maldives",
+    "alpha2Code": "MV",
+    "callingCode": "+960",
+    "timeZones": [
+      "Indian/Maldives"
+    ]
+  },
+  {
+    "defaultName": "Malawi",
+    "alpha2Code": "MW",
+    "callingCode": "+265",
+    "timeZones": [
+      "Africa/Blantyre"
+    ]
+  },
+  {
+    "defaultName": "Mexico",
+    "alpha2Code": "MX",
+    "callingCode": "+52",
+    "timeZones": [
+      "America/Bahia_Banderas",
+      "America/Cancun",
+      "America/Chihuahua",
+      "America/Hermosillo",
+      "America/Matamoros",
+      "America/Mazatlan",
+      "America/Merida",
+      "America/Mexico_City",
+      "America/Monterrey",
+      "America/Ojinaga",
+      "America/Tijuana"
+    ]
+  },
+  {
+    "defaultName": "Malaysia",
+    "alpha2Code": "MY",
+    "callingCode": "+60",
+    "timeZones": [
+      "Asia/Kuala_Lumpur",
+      "Asia/Kuching"
+    ]
+  },
+  {
+    "defaultName": "Mozambique",
+    "alpha2Code": "MZ",
+    "callingCode": "+258",
+    "timeZones": [
+      "Africa/Maputo"
+    ]
+  },
+  {
+    "defaultName": "Namibia",
+    "alpha2Code": "NA",
+    "callingCode": "+264",
+    "timeZones": [
+      "Africa/Windhoek"
+    ]
+  },
+  {
+    "defaultName": "New Caledonia",
+    "alpha2Code": "NC",
+    "callingCode": "+687",
+    "timeZones": [
+      "Pacific/Noumea"
+    ]
+  },
+  {
+    "defaultName": "Niger",
+    "alpha2Code": "NE",
+    "callingCode": "+227",
+    "timeZones": [
+      "Africa/Niamey"
+    ]
+  },
+  {
+    "defaultName": "Norfolk Island",
+    "alpha2Code": "NF",
+    "callingCode": "+672",
+    "timeZones": [
+      "Pacific/Norfolk"
+    ]
+  },
+  {
+    "defaultName": "Nigeria",
+    "alpha2Code": "NG",
+    "callingCode": "+234",
+    "timeZones": [
+      "Africa/Lagos"
+    ]
+  },
+  {
+    "defaultName": "Nicaragua",
+    "alpha2Code": "NI",
+    "callingCode": "+505",
+    "timeZones": [
+      "America/Managua"
+    ]
+  },
+  {
+    "defaultName": "Netherlands",
+    "alpha2Code": "NL",
+    "callingCode": "+31",
+    "timeZones": [
+      "Europe/Amsterdam"
+    ]
+  },
+  {
+    "defaultName": "Norway",
+    "alpha2Code": "NO",
+    "callingCode": "+47",
+    "timeZones": [
+      "Europe/Oslo"
+    ]
+  },
+  {
+    "defaultName": "Nepal",
+    "alpha2Code": "NP",
+    "callingCode": "+977",
+    "timeZones": [
+      "Asia/Kathmandu"
+    ]
+  },
+  {
+    "defaultName": "Nauru",
+    "alpha2Code": "NR",
+    "callingCode": "+674",
+    "timeZones": [
+      "Pacific/Nauru"
+    ]
+  },
+  {
+    "defaultName": "Niue",
+    "alpha2Code": "NU",
+    "callingCode": "+683",
+    "timeZones": [
+      "Pacific/Niue"
+    ]
+  },
+  {
+    "defaultName": "New Zealand",
+    "alpha2Code": "NZ",
+    "callingCode": "+64",
+    "timeZones": [
+      "Pacific/Auckland",
+      "Pacific/Chatham"
+    ]
+  },
+  {
+    "defaultName": "Oman",
+    "alpha2Code": "OM",
+    "callingCode": "+968",
+    "timeZones": [
+      "Asia/Muscat"
+    ]
+  },
+  {
+    "defaultName": "Panama",
+    "alpha2Code": "PA",
+    "callingCode": "+507",
+    "timeZones": [
+      "America/Panama"
+    ]
+  },
+  {
+    "defaultName": "Peru",
+    "alpha2Code": "PE",
+    "callingCode": "+51",
+    "timeZones": [
+      "America/Lima"
+    ]
+  },
+  {
+    "defaultName": "French Polynesia",
+    "alpha2Code": "PF",
+    "callingCode": "+689",
+    "timeZones": [
+      "Pacific/Gambier",
+      "Pacific/Marquesas",
+      "Pacific/Tahiti"
+    ]
+  },
+  {
+    "defaultName": "Papua New Guinea",
+    "alpha2Code": "PG",
+    "callingCode": "+675",
+    "timeZones": [
+      "Pacific/Bougainville",
+      "Pacific/Port_Moresby"
+    ]
+  },
+  {
+    "defaultName": "Philippines",
+    "alpha2Code": "PH",
+    "callingCode": "+63",
+    "timeZones": [
+      "Asia/Manila"
+    ]
+  },
+  {
+    "defaultName": "Pakistan",
+    "alpha2Code": "PK",
+    "callingCode": "+92",
+    "timeZones": [
+      "Asia/Karachi"
+    ]
+  },
+  {
+    "defaultName": "Poland",
+    "alpha2Code": "PL",
+    "callingCode": "+48",
+    "timeZones": [
+      "Europe/Warsaw"
+    ]
+  },
+  {
+    "defaultName": "Saint Pierre and Miquelon",
+    "alpha2Code": "PM",
+    "callingCode": "+508",
+    "timeZones": [
+      "America/Miquelon"
+    ]
+  },
+  {
+    "defaultName": "Pitcairn",
+    "alpha2Code": "PN",
+    "callingCode": "+64",
+    "timeZones": [
+      "Pacific/Pitcairn"
+    ]
+  },
+  {
+    "defaultName": "Puerto Rico",
+    "alpha2Code": "PR",
+    "callingCode": "+1",
+    "timeZones": [
+      "622"
+    ]
+  },
+  {
+    "defaultName": "Palestine, State of",
+    "alpha2Code": "PS",
+    "callingCode": "+970",
+    "timeZones": [
+      "542",
+      "Asia/Gaza"
+    ]
+  },
+  {
+    "defaultName": "Portugal",
+    "alpha2Code": "PT",
+    "callingCode": "+351",
+    "timeZones": [
+      "Atlantic/Azores",
+      "Atlantic/Madeira",
+      "Europe/Lisbon"
+    ]
+  },
+  {
+    "defaultName": "Palau",
+    "alpha2Code": "PW",
+    "callingCode": "+680",
+    "timeZones": [
+      "Pacific/Palau"
+    ]
+  },
+  {
+    "defaultName": "Paraguay",
+    "alpha2Code": "PY",
+    "callingCode": "+595",
+    "timeZones": [
+      "America/Asuncion"
+    ]
+  },
+  {
+    "defaultName": "Qatar",
+    "alpha2Code": "QA",
+    "callingCode": "+974",
+    "timeZones": [
+      "Asia/Qatar"
+    ]
+  },
+  {
+    "defaultName": "Réunion",
+    "alpha2Code": "RE",
+    "callingCode": "+262",
+    "timeZones": [
+      "Indian/Reunion"
+    ]
+  },
+  {
+    "defaultName": "Romania",
+    "alpha2Code": "RO",
+    "callingCode": "+40",
+    "timeZones": [
+      "Europe/Bucharest"
+    ]
+  },
+  {
+    "defaultName": "Serbia",
+    "alpha2Code": "RS",
+    "callingCode": "+381",
+    "timeZones": [
+      "Europe/Belgrade"
+    ]
+  },
+  {
+    "defaultName": "Russian Federation",
+    "alpha2Code": "RU",
+    "callingCode": "+7",
+    "timeZones": [
+      "314",
+      "336",
+      "704",
+      "Asia/Anadyr",
+      "Asia/Barnaul",
+      "Asia/Chita",
+      "Asia/Irkutsk",
+      "Asia/Kamchatka",
+      "Asia/Krasnoyarsk",
+      "Asia/Magadan",
+      "Asia/Novokuznetsk",
+      "Asia/Novosibirsk",
+      "Asia/Omsk",
+      "Asia/Sakhalin",
+      "Asia/Srednekolymsk",
+      "Asia/Tomsk",
+      "Asia/Vladivostok",
+      "Asia/Yakutsk",
+      "Asia/Yekaterinburg",
+      "Europe/Astrakhan",
+      "Europe/Kaliningrad",
+      "Europe/Kirov",
+      "Europe/Samara",
+      "Europe/Saratov",
+      "Europe/Ulyanovsk",
+      "Europe/Volgograd"
+    ]
+  },
+  {
+    "defaultName": "Rwanda",
+    "alpha2Code": "RW",
+    "callingCode": "+250",
+    "timeZones": [
+      "Africa/Kigali"
+    ]
+  },
+  {
+    "defaultName": "Saudi Arabia",
+    "alpha2Code": "SA",
+    "callingCode": "+966",
+    "timeZones": [
+      "Asia/Riyadh"
+    ]
+  },
+  {
+    "defaultName": "Solomon Islands",
+    "alpha2Code": "SB",
+    "callingCode": "+677",
+    "timeZones": [
+      "Pacific/Guadalcanal"
+    ]
+  },
+  {
+    "defaultName": "Seychelles",
+    "alpha2Code": "SC",
+    "callingCode": "+248",
+    "timeZones": [
+      "Indian/Mahe"
+    ]
+  },
+  {
+    "defaultName": "Sudan",
+    "alpha2Code": "SD",
+    "callingCode": "+249",
+    "timeZones": [
+      "Africa/Khartoum"
+    ]
+  },
+  {
+    "defaultName": "Sweden",
+    "alpha2Code": "SE",
+    "callingCode": "+46",
+    "timeZones": [
+      "Europe/Stockholm"
+    ]
+  },
+  {
+    "defaultName": "Singapore",
+    "alpha2Code": "SG",
+    "callingCode": "+65",
+    "timeZones": [
+      "Asia/Singapore"
+    ]
+  },
+  {
+    "defaultName": "Saint Helena, Ascension and Tristan da Cunha",
+    "alpha2Code": "SH",
+    "callingCode": "+290",
+    "timeZones": [
+      "Atlantic/St_Helena"
+    ]
+  },
+  {
+    "defaultName": "Slovenia",
+    "alpha2Code": "SI",
+    "callingCode": "+386",
+    "timeZones": [
+      "Europe/Ljubljana"
+    ]
+  },
+  {
+    "defaultName": "Svalbard and Jan Mayen",
+    "alpha2Code": "SJ",
+    "callingCode": "+4779",
+    "timeZones": [
+      "Arctic/Longyearbyen"
+    ]
+  },
+  {
+    "defaultName": "Slovakia",
+    "alpha2Code": "SK",
+    "callingCode": "+421",
+    "timeZones": [
+      "Europe/Bratislava"
+    ]
+  },
+  {
+    "defaultName": "Sierra Leone",
+    "alpha2Code": "SL",
+    "callingCode": "+232",
+    "timeZones": [
+      "Africa/Freetown"
+    ]
+  },
+  {
+    "defaultName": "San Marino",
+    "alpha2Code": "SM",
+    "callingCode": "+378",
+    "timeZones": [
+      "Europe/San_Marino"
+    ]
+  },
+  {
+    "defaultName": "Senegal",
+    "alpha2Code": "SN",
+    "callingCode": "+221",
+    "timeZones": [
+      "Africa/Dakar"
+    ]
+  },
+  {
+    "defaultName": "Somalia",
+    "alpha2Code": "SO",
+    "callingCode": "+252",
+    "timeZones": [
+      "Africa/Mogadishu"
+    ]
+  },
+  {
+    "defaultName": "Suri",
+    "alpha2Code": "SR",
+    "callingCode": "+597",
+    "timeZones": [
+      "America/Paramaribo"
+    ]
+  },
+  {
+    "defaultName": "South Sudan",
+    "alpha2Code": "SS",
+    "callingCode": "+211",
+    "timeZones": [
+      "Africa/Juba"
+    ]
+  },
+  {
+    "defaultName": "Sao Tome and Principe",
+    "alpha2Code": "ST",
+    "callingCode": "+239",
+    "timeZones": [
+      "Africa/Sao_Tome"
+    ]
+  },
+  {
+    "defaultName": "El Salvador",
+    "alpha2Code": "SV",
+    "callingCode": "+503",
+    "timeZones": [
+      "America/El_Salvador"
+    ]
+  },
+  {
+    "defaultName": "Sint Maarten (Dutch part)",
+    "alpha2Code": "SX",
+    "callingCode": "+1721",
+    "timeZones": [
+      "250"
+    ]
+  },
+  {
+    "defaultName": "Syrian Arab Republic",
+    "alpha2Code": "SY",
+    "callingCode": "+963",
+    "timeZones": [
+      "Asia/Damascus"
+    ]
+  },
+  {
+    "defaultName": "Swaziland",
+    "alpha2Code": "SZ",
+    "callingCode": "+268",
+    "timeZones": [
+      "Africa/Mbabane"
+    ]
+  },
+  {
+    "defaultName": "Turks and Caicos Islands",
+    "alpha2Code": "TC",
+    "callingCode": "+1649",
+    "timeZones": [
+      "America/Grand_Turk"
+    ]
+  },
+  {
+    "defaultName": "Chad",
+    "alpha2Code": "TD",
+    "callingCode": "+235",
+    "timeZones": [
+      "Africa/Ndjamena"
+    ]
+  },
+  {
+    "defaultName": "French Southern Territories",
+    "alpha2Code": "TF",
+    "callingCode": "+33",
+    "timeZones": [
+      "303"
+    ]
+  },
+  {
+    "defaultName": "Togo",
+    "alpha2Code": "TG",
+    "callingCode": "+228",
+    "timeZones": [
+      "Africa/Lome"
+    ]
+  },
+  {
+    "defaultName": "Thailand",
+    "alpha2Code": "TH",
+    "callingCode": "+66",
+    "timeZones": [
+      "Asia/Bangkok"
+    ]
+  },
+  {
+    "defaultName": "Tajikistan",
+    "alpha2Code": "TJ",
+    "callingCode": "+992",
+    "timeZones": [
+      "Asia/Dushanbe"
+    ]
+  },
+  {
+    "defaultName": "Tokelau",
+    "alpha2Code": "TK",
+    "callingCode": "+690",
+    "timeZones": [
+      "Pacific/Fakaofo"
+    ]
+  },
+  {
+    "defaultName": "Timor-Leste",
+    "alpha2Code": "TL",
+    "callingCode": "+670",
+    "timeZones": [
+      "Asia/Dili"
+    ]
+  },
+  {
+    "defaultName": "Turkmenistan",
+    "alpha2Code": "TM",
+    "callingCode": "+993",
+    "timeZones": [
+      "Asia/Ashgabat"
+    ]
+  },
+  {
+    "defaultName": "Tunisia",
+    "alpha2Code": "TN",
+    "callingCode": "+216",
+    "timeZones": [
+      "Africa/Tunis"
+    ]
+  },
+  {
+    "defaultName": "Tonga",
+    "alpha2Code": "TO",
+    "callingCode": "+676",
+    "timeZones": [
+      "Pacific/Tongatapu"
+    ]
+  },
+  {
+    "defaultName": "Turkey",
+    "alpha2Code": "TR",
+    "callingCode": "+90",
+    "timeZones": [
+      "Europe/Istanbul"
+    ]
+  },
+  {
+    "defaultName": "Trinidad and Tobago",
+    "alpha2Code": "TT",
+    "callingCode": "+1868",
+    "timeZones": [
+      "America/Port_of_Spain"
+    ]
+  },
+  {
+    "defaultName": "Tuvalu",
+    "alpha2Code": "TV",
+    "callingCode": "+688",
+    "timeZones": [
+      "Pacific/Funafuti"
+    ]
+  },
+  {
+    "defaultName": "Taiwan, China",
+    "alpha2Code": "TW",
+    "callingCode": "+886",
+    "timeZones": [
+      "Asia/Taipei"
+    ]
+  },
+  {
+    "defaultName": "Tanzania, United Republic of",
+    "alpha2Code": "TZ",
+    "callingCode": "+255",
+    "timeZones": [
+      "Africa/Dar_es_Salaam"
+    ]
+  },
+  {
+    "defaultName": "Ukraine",
+    "alpha2Code": "UA",
+    "callingCode": "+380",
+    "timeZones": [
+      "Europe/Kiev",
+      "Europe/Simferopol",
+      "Europe/Uzhgorod",
+      "Europe/Zaporozhye"
+    ]
+  },
+  {
+    "defaultName": "Uganda",
+    "alpha2Code": "UG",
+    "callingCode": "+256",
+    "timeZones": [
+      "Africa/Kampala"
+    ]
+  },
+  {
+    "defaultName": "United States Minor Outlying Islands",
+    "alpha2Code": "UM",
+    "callingCode": "+1",
+    "timeZones": [
+      "Pacific/Midway",
+      "Pacific/Wake"
+    ]
+  },
+  {
+    "defaultName": "United States of America",
+    "alpha2Code": "US",
+    "callingCode": "+1",
+    "timeZones": [
+      "America/Adak",
+      "America/Anchorage",
+      "America/Boise",
+      "America/Chicago",
+      "America/Denver",
+      "America/Detroit",
+      "America/Indiana/Indianapolis",
+      "America/Indiana/Knox",
+      "America/Indiana/Marengo",
+      "America/Indiana/Petersburg",
+      "America/Indiana/Tell_City",
+      "America/Indiana/Vevay",
+      "America/Indiana/Vincennes",
+      "America/Indiana/Winamac",
+      "America/Juneau",
+      "America/Kentucky/Louisville",
+      "America/Kentucky/Monticello",
+      "America/Los_Angeles",
+      "America/Menominee",
+      "America/Metlakatla",
+      "America/New_York",
+      "America/Nome",
+      "America/North_Dakota/Beulah",
+      "America/North_Dakota/Center",
+      "America/North_Dakota/New_Salem",
+      "America/Phoenix",
+      "America/Sitka",
+      "America/Yakutat",
+      "Pacific/Honolulu"
+    ]
+  },
+  {
+    "defaultName": "Uruguay",
+    "alpha2Code": "UY",
+    "callingCode": "+598",
+    "timeZones": [
+      "America/Montevideo"
+    ]
+  },
+  {
+    "defaultName": "Uzbekistan",
+    "alpha2Code": "UZ",
+    "callingCode": "+998",
+    "timeZones": [
+      "Asia/Samarkand",
+      "Asia/Tashkent"
+    ]
+  },
+  {
+    "defaultName": "Holy See",
+    "alpha2Code": "VA",
+    "callingCode": "+379",
+    "timeZones": [
+      "Europe/Vatican"
+    ]
+  },
+  {
+    "defaultName": "Saint Vincent and the Grenadines",
+    "alpha2Code": "VC",
+    "callingCode": "+1784",
+    "timeZones": [
+      "America/St_Vincent"
+    ]
+  },
+  {
+    "defaultName": "Venezuela (Bolivarian Republic of)",
+    "alpha2Code": "VE",
+    "callingCode": "+58",
+    "timeZones": [
+      "America/Caracas"
+    ]
+  },
+  {
+    "defaultName": "Virgin Islands (British)",
+    "alpha2Code": "VG",
+    "callingCode": "+1284",
+    "timeZones": [
+      "America/Tortola"
+    ]
+  },
+  {
+    "defaultName": "Virgin Islands (U.S.)",
+    "alpha2Code": "VI",
+    "callingCode": "+1 340",
+    "timeZones": [
+      "America/St_Thomas"
+    ]
+  },
+  {
+    "defaultName": "Viet Nam",
+    "alpha2Code": "VN",
+    "callingCode": "+84",
+    "timeZones": [
+      "Asia/Ho_Chi_Minh"
+    ]
+  },
+  {
+    "defaultName": "Vanuatu",
+    "alpha2Code": "VU",
+    "callingCode": "+678",
+    "timeZones": [
+      "Pacific/Efate"
+    ]
+  },
+  {
+    "defaultName": "Wallis and Futuna",
+    "alpha2Code": "WF",
+    "callingCode": "+681",
+    "timeZones": [
+      "Pacific/Wallis"
+    ]
+  },
+  {
+    "defaultName": "Samoa",
+    "alpha2Code": "WS",
+    "callingCode": "+685",
+    "timeZones": [
+      "Pacific/Apia"
+    ]
+  },
+  {
+    "defaultName": "Republic of Kosovo",
+    "alpha2Code": "XK",
+    "callingCode": "+383",
+    "timeZones": []
+  },
+  {
+    "defaultName": "Yemen",
+    "alpha2Code": "YE",
+    "callingCode": "+967",
+    "timeZones": [
+      "Asia/Aden"
+    ]
+  },
+  {
+    "defaultName": "Mayotte",
+    "alpha2Code": "YT",
+    "callingCode": "+262",
+    "timeZones": [
+      "Indian/Mayotte"
+    ]
+  },
+  {
+    "defaultName": "South Africa",
+    "alpha2Code": "ZA",
+    "callingCode": "+27",
+    "timeZones": [
+      "Africa/Johannesburg"
+    ]
+  },
+  {
+    "defaultName": "Zambia",
+    "alpha2Code": "ZM",
+    "callingCode": "+260",
+    "timeZones": [
+      "Africa/Lusaka"
+    ]
+  },
+  {
+    "defaultName": "Zimbabwe",
+    "alpha2Code": "ZW",
+    "callingCode": "+263",
+    "timeZones": [
+      "Africa/Harare"
+    ]
+  }
+]

@@ -34,8 +34,4 @@ public class FileUploadField extends InputField<List<String>> {
         return InputFieldType.FILE_UPLOAD;
     }
 
-    @Override
-    public String toString(List<String> value) {
-        return null == value ? null : String.join(SEPARATOR, value);
-    }
 }

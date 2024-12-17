@@ -28,8 +28,4 @@ public class ListField extends InputField<List<String>> {
         return InputFieldType.LIST;
     }
 
-    @Override
-    public String toString(List<String> values) {
-        return null == values ? null : String.join(SEPARATOR, values);
-    }
 }

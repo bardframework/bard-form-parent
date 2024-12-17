@@ -83,7 +83,7 @@ public abstract class OtpFieldTemplate<F extends OtpField, O> extends FlowInputF
         if (resolveTryCount >= this.getMaxTryToResolveCount()) {
             throw new InvalidateFlowException(flowToken, "invalid otp", this.getOtpMaxTryToResolveCountErrorMessage());
         }
-        flowData.put(RESOLVE_COUNT_KEY, String.valueOf(resolveTryCount + 1));
+        flowData.put(RESOLVE_COUNT_KEY, resolveTryCount + 1);
         return false;
     }
 
@@ -103,8 +103,8 @@ public abstract class OtpFieldTemplate<F extends OtpField, O> extends FlowInputF
             throw new MaxOtpSendExceededException(flowToken, "max otp send (generate) count exceed", this.getMaxSendCountErrorMessage());
         }
         this.send(flowToken, flowData, this.getOtpGenerator().generate(), locale, httpResponse);
-        flowData.put(SENT_TIME_KEY, String.valueOf(System.currentTimeMillis()));
-        flowData.put(GENERATE_COUNT_KEY, String.valueOf(generateCount + 1));
+        flowData.put(SENT_TIME_KEY, System.currentTimeMillis());
+        flowData.put(GENERATE_COUNT_KEY, generateCount + 1);
     }
 
     public void resend(String flowToken, Map<String, Object> flowData, Locale locale, HttpServletResponse httpResponse) throws Exception {

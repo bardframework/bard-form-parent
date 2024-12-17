@@ -10,7 +10,6 @@ import org.bardframework.form.field.Field;
 @Setter
 @ToString
 public abstract class InputField<T> extends Field {
-    public static final String SEPARATOR = ",";
 
     private FieldDescriptionShowType descriptionShowType;
     private String placeholder;
@@ -25,6 +24,4 @@ public abstract class InputField<T> extends Field {
     public InputField(String name) {
         super(name);
     }
-
-    public abstract String toString(T value);
 }

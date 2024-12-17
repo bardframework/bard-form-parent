@@ -28,8 +28,4 @@ public class MultiSelectField extends InputField<List<String>> {
         return InputFieldType.MULTI_SELECT;
     }
 
-    @Override
-    public String toString(List<String> value) {
-        return null == value ? null : String.join(SEPARATOR, value);
-    }
 }

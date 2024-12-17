@@ -30,8 +30,4 @@ public class TextField extends InputField<String> {
         return InputFieldType.TEXT;
     }
 
-    @Override
-    public String toString(String value) {
-        return value;
-    }
 }

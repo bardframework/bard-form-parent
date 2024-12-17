@@ -24,8 +24,4 @@ public class DateField extends InputField<Long> {
         return InputFieldType.DATE;
     }
 
-    @Override
-    public String toString(Long value) {
-        return null == value ? null : value.toString();
-    }
 }

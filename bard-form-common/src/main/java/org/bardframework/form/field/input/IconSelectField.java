@@ -11,11 +11,6 @@ import org.bardframework.form.field.FieldType;
 public class IconSelectField extends InputField<String> {
 
     @Override
-    public String toString(String value) {
-        return value;
-    }
-
-    @Override
     public FieldType getType() {
         return InputFieldType.ICON_SELECT;
     }

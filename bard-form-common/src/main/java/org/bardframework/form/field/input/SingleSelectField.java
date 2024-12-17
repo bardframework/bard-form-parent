@@ -23,11 +23,6 @@ public class SingleSelectField extends InputField<String> {
     }
 
     @Override
-    public String toString(String value) {
-        return value;
-    }
-
-    @Override
     public FieldType getType() {
         return InputFieldType.SINGLE_SELECT;
     }

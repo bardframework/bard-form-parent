@@ -25,11 +25,6 @@ public class SingleSelectFilterField extends InputField<IdFilter<String>> {
     }
 
     @Override
-    public String toString(IdFilter<String> value) {
-        return null == value ? null : value.getEquals();
-    }
-
-    @Override
     public FieldType getType() {
         return FilterFieldType.SINGLE_SELECT_FILTER;
     }

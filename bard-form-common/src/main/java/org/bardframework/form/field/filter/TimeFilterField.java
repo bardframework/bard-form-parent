@@ -32,8 +32,4 @@ public class TimeFilterField extends InputField<LocalTimeFilter> {
         return FilterFieldType.TIME_FILTER;
     }
 
-    @Override
-    public String toString(LocalTimeFilter value) {
-        return String.join(SEPARATOR, null == value.getFrom() ? "" : value.getFrom().toString(), null == value.getTo() ? "" : value.getTo().toString());
-    }
 }
