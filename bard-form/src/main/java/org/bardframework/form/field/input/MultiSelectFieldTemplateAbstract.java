@@ -25,6 +25,7 @@ public abstract class MultiSelectFieldTemplateAbstract<F extends MultiSelectFiel
     @Override
     public void fill(FormTemplate formTemplate, F field, Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, values, args, locale);
+        field.setMinCount(FormUtils.getFieldIntegerProperty(formTemplate, this, "minCount", locale, args, this.getDefaultValue().getMinCount()));
         field.setMaxCount(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxCount", locale, args, this.getDefaultValue().getMaxCount()));
         field.setOptions(null == this.getOptionDataSource() ? List.of() : this.getOptionDataSource().getOptions(args, locale));
     }
@@ -38,8 +39,12 @@ public abstract class MultiSelectFieldTemplateAbstract<F extends MultiSelectFiel
             }
             return true;
         }
-        if (values.size() > field.getMaxCount()) {
-            log.debug("selected option count[{}] of field[{}] is greater than maximum[{}]", values.size(), field.getName(), field.getMaxCount());
+        if (null != field.getMaxCount() && values.size() > field.getMaxCount()) {
+            log.debug("selected option count[{}] of field[{}] is more than maximum[{}]", values.size(), field.getName(), field.getMaxCount());
+            return false;
+        }
+        if (null != field.getMinCount() && values.size() < field.getMinCount()) {
+            log.debug("selected option count[{}] of field[{}] is less than maximum[{}]", values.size(), field.getName(), field.getMinCount());
             return false;
         }
         if (!values.stream().allMatch(value -> field.getOptions().stream().filter(option -> !Boolean.TRUE.equals(option.getDisable())).anyMatch(option -> option.getId().equals(value)))) {

@@ -19,8 +19,10 @@ import org.bardframework.form.exception.FormDataValidationException;
 import org.bardframework.form.field.input.InputFieldTemplateAbstract;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 @Getter
@@ -29,15 +31,22 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
 
     protected final Logger log = LoggerFactory.getLogger(this.getClass());
 
+    protected final String name;
     protected final FlowDataRepository<D> flowDataRepository;
-    protected final List<FlowFormTemplate> forms;
+    protected final Supplier<List<FlowFormTemplate>> formsSupplier;
     protected List<FormProcessor> preProcessors = new ArrayList<>();
     protected List<FormProcessor> postProcessors = new ArrayList<>();
     protected Map<String, List<FormProcessor>> actionProcessors = new HashMap<>();
 
-    public FlowHandlerAbstract(FlowDataRepository<D> flowDataRepository, List<FlowFormTemplate> forms) {
+    @Autowired
+    public FlowHandlerAbstract(String name, FlowDataRepository<D> flowDataRepository, List<FlowFormTemplate> forms) {
+        this(name, flowDataRepository, () -> forms);
+    }
+
+    public FlowHandlerAbstract(String name, FlowDataRepository<D> flowDataRepository, Supplier<List<FlowFormTemplate>> formsSupplier) {
+        this.name = name;
         this.flowDataRepository = flowDataRepository;
-        this.forms = forms;
+        this.formsSupplier = formsSupplier;
     }
 
     @Override
@@ -85,7 +94,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
             if (!Objects.equals(locale, flowData.getLocale())) {
                 this.onLocaleChange(flowToken, flowData, formData, FlowAction.SUBMIT_FORM, flowData.getLocale(), locale, httpRequest, httpResponse);
             }
-            currentFormTemplate.validate(flowToken, flowData.getData(), formData, flowData.getLocale(), httpRequest, httpResponse);
+            FormUtils.validate(flowToken, currentFormTemplate, flowData.getData(), formData, flowData.getLocale(), httpRequest, httpResponse);
             this.fillFlowData(flowData.getData(), formData, currentFormTemplate, httpRequest, httpResponse);
             this.process(currentFormTemplate.getPostProcessors(), flowToken, flowData, formData, httpRequest, httpResponse);
             return this.processNextForm(flowToken, flowData, formData, httpRequest, httpResponse);
@@ -204,7 +213,11 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
             /*
                 فراخوانی پیش پردازش‌های فیلد‌ها (مانند ارسال پیامک یا ...)
              */
-            for (FlowInputFieldTemplate<?, ?> flowInputFieldTemplate : nextFormTemplate.getFieldTemplates(flowData.getData(), formData, FlowInputFieldTemplate.class, httpRequest, httpResponse)) {
+            List<FlowInputFieldTemplate> flowInputFieldTemplates = nextFormTemplate.getFieldTemplates(flowData.getData(), formData, FlowInputFieldTemplate.class, httpRequest, httpResponse).stream()
+                    .filter(Objects::nonNull)
+                    .filter(flowInputFieldTemplate -> flowInputFieldTemplate instanceof FlowInputFieldTemplate<?, ?>)
+                    .toList();
+            for (FlowInputFieldTemplate<?, ?> flowInputFieldTemplate : flowInputFieldTemplates) {
                 flowInputFieldTemplate.preProcess(flowToken, flowData.getData(), flowData.getLocale(), httpResponse);
             }
             /*
@@ -318,6 +331,10 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
 
     public Map<String, List<FormProcessor>> getActionProcessors(D flowData) {
         return actionProcessors;
+    }
+
+    public List<FlowFormTemplate> getForms() {
+        return this.formsSupplier.get();
     }
 
     public enum FlowAction {

@@ -10,8 +10,8 @@ import java.util.Map;
 
 public class FlowHandlerImpl extends FlowHandlerAbstract<FlowData> {
 
-    public FlowHandlerImpl(FlowDataRepository<FlowData> flowDataRepository, List<FlowFormTemplate> forms) {
-        super(flowDataRepository, forms);
+    public FlowHandlerImpl(String name, FlowDataRepository<FlowData> flowDataRepository, List<FlowFormTemplate> forms) {
+        super(name, flowDataRepository, forms);
     }
 
     @Override

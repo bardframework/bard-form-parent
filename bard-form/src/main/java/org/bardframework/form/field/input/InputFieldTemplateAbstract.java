@@ -51,7 +51,8 @@ public abstract class InputFieldTemplateAbstract<F extends InputField<T>, T> ext
             return;
         }
         Object value = formData.get(this.getName());
-        this.validate(flowToken, formTemplate, formField, this.toValue(value), flowData, formData, locale, ex);
+        T cleanValue = this.toValue(value);
+        this.validate(flowToken, formTemplate, formField, cleanValue, flowData, formData, locale, ex);
     }
 
     private void validate(String flowToken, FormTemplate formTemplate, F formField, T value, Map<String, Object> flowData, Map<String, Object> formData, Locale locale, FormDataValidationException ex)

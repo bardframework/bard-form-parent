@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.model.SelectOption;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ public class EnumOptionDataSource extends CachableOptionDataSource {
     private final Class<? extends Enum<?>> enumOptionsClass;
     private String keyPrefix;
 
-    public EnumOptionDataSource(Class<? extends Enum<?>> enumOptionsClass, @Autowired MessageSource messageSource) {
+    public EnumOptionDataSource(Class<? extends Enum<?>> enumOptionsClass, MessageSource messageSource) {
         this.messageSource = messageSource;
         this.enumOptionsClass = enumOptionsClass;
     }

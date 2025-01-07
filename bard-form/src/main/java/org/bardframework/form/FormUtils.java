@@ -4,10 +4,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.commons.utils.AssertionUtils;
 import org.bardframework.commons.utils.StringTemplateUtils;
+import org.bardframework.form.exception.FormDataValidationException;
 import org.bardframework.form.field.FieldTemplate;
+import org.bardframework.form.field.input.InputFieldTemplateAbstract;
 import org.springframework.context.MessageSource;
 
 import java.time.LocalTime;
@@ -295,5 +299,45 @@ public class FormUtils {
         keys.add(prefix);
         keys.addAll(subKeys);
         return keys;
+    }
+
+    public static void validate(String flowToken, FormTemplate formTemplate, Map<String, Object> flowData, Map<String, Object> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
+        FormDataValidationException ex = new FormDataValidationException();
+        Map<String, Object> clonedFormData = new HashMap<>(formData);
+        if (CollectionUtils.isNotEmpty(formTemplate.getFormTemplates())) {
+            for (FormTemplate childFormTemplate : formTemplate.getFormTemplates()) {
+                Map<String, Object> childFormData = new HashMap<>();
+                if (clonedFormData.containsKey(childFormTemplate.getName())) {
+                    childFormData = new HashMap<>((Map) clonedFormData.get(childFormTemplate.getName()));
+                }
+                clonedFormData.remove(childFormTemplate.getName());
+                FormUtils.validate(flowToken, childFormTemplate, flowData, childFormData, locale, httpRequest, httpResponse, ex);
+            }
+        }
+        FormUtils.validate(flowToken, formTemplate, flowData, clonedFormData, locale, httpRequest, httpResponse, ex);
+        if (!MapUtils.isEmpty(ex.getInvalidFields())) {
+            throw ex;
+        }
+    }
+
+    public static void validate(String flowToken, FormTemplate formTemplate, Map<String, Object> flowData, Map<String, Object> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse, FormDataValidationException ex) throws Exception {
+        Set<String> allowedFieldNames = formTemplate.getAllowedInputFields(flowData, formData, locale, httpRequest, httpResponse);
+        Set<String> illegalFields = new HashSet<>(formData.keySet());
+        illegalFields.removeAll(allowedFieldNames);
+        if (!illegalFields.isEmpty()) {
+            if (formTemplate.isFailOnUnknownSubmitFields()) {
+                illegalFields.forEach(illegalField -> ex.addFieldError(illegalField, "illegal field"));
+                throw ex;
+            } else {
+                log.warn("illegal fields[{}] exist in form [{}].", illegalFields, formTemplate.getName());
+            }
+        }
+        /*
+            در بخش اعتبارسنچی ابتدا فیلدها براساس اولیت اعتبارسنجی مرتب می شوند
+            مرتب‌سازی برای کنترل سناریوهایی است که ترتیب اعتبارسنجی فیلدها مهم است (مانند فیلد کپچا که باید پیش از همه اعتبارسنجی شود)
+         */
+        for (InputFieldTemplateAbstract<?, ?> inputFieldTemplate : formTemplate.getFieldTemplates(flowData, formData, InputFieldTemplateAbstract.class, httpRequest, httpResponse).stream().sorted(Comparator.comparingInt(InputFieldTemplateAbstract::getValidationOrder)).toList()) {
+            inputFieldTemplate.validate(flowToken, formTemplate, flowData, formData, locale, ex);
+        }
     }
 }

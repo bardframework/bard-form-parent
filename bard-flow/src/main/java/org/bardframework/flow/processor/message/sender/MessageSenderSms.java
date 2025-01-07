@@ -4,7 +4,9 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.bardframework.commons.sms.SmsSender;
 import org.bardframework.flow.processor.message.creator.MessageProvider;
+import org.bardframework.flow.processor.message.creator.MessageProviderMessageSource;
 import org.bardframework.form.field.FieldTemplate;
+import org.springframework.context.MessageSource;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -21,8 +23,8 @@ public class MessageSenderSms extends MessageSenderAbstract {
         this.smsSender = smsSender;
     }
 
-    public MessageSenderSms(String receiverFieldName, SmsSender smsSender, MessageProvider messageProvider, String errorMessageKey) {
-        super(receiverFieldName, messageProvider, errorMessageKey);
+    public MessageSenderSms(MessageSource messageSource, SmsSender smsSender, String receiverFieldName, String messageKey, String errorMessageKey) {
+        super(receiverFieldName, new MessageProviderMessageSource(messageKey, messageSource), errorMessageKey);
         this.smsSender = smsSender;
     }
 

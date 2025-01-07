@@ -4,7 +4,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.bardframework.flow.form.field.input.otp.OtpFieldTemplate;
 import org.bardframework.flow.form.field.input.otp.OtpGenerator;
-import org.bardframework.flow.processor.message.sender.MessageSenderEmail;
+import org.bardframework.flow.processor.message.sender.MessageSender;
 import org.bardframework.form.field.input.OtpField;
 
 import java.util.Locale;
@@ -14,9 +14,9 @@ import java.util.Map;
 public class EotpFieldTemplate extends OtpFieldTemplate<OtpField, String> {
 
     private static final String ANSWER_KEY = "X_GENERATED_EOTP";
-    private final MessageSenderEmail messageSender;
+    private final MessageSender messageSender;
 
-    public EotpFieldTemplate(String name, OtpGenerator<String> otpGenerator, int maxTryToResolveCount, MessageSenderEmail messageSender) {
+    public EotpFieldTemplate(String name, OtpGenerator<String> otpGenerator, int maxTryToResolveCount, MessageSender messageSender) {
         super(name, otpGenerator, maxTryToResolveCount);
         this.messageSender = messageSender;
     }

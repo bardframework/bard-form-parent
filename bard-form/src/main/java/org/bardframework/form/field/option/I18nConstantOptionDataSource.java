@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.bardframework.form.model.SelectOption;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ public class I18nConstantOptionDataSource extends CachableOptionDataSource {
     protected final List<SelectOption> options;
     protected String keyPrefix;
 
-    public I18nConstantOptionDataSource(List<SelectOption> options, @Autowired MessageSource messageSource) {
+    public I18nConstantOptionDataSource(List<SelectOption> options, MessageSource messageSource) {
         this.messageSource = messageSource;
         this.options = options;
     }

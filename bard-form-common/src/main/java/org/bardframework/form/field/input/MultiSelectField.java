@@ -12,6 +12,7 @@ import java.util.List;
 @Setter
 @ToString
 public class MultiSelectField extends InputField<List<String>> {
+    private Integer minCount;
     private Integer maxCount;
     private List<SelectOption> options;
 

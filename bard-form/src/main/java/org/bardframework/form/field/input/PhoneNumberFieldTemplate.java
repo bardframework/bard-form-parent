@@ -32,10 +32,10 @@ public class PhoneNumberFieldTemplate extends InputFieldTemplateAbstract<PhoneNu
             return;
         }
         String fieldName = this.getName();
-        Object stringValue = formData.get(fieldName);
+        Object value = formData.get(fieldName);
         try {
-            String value = this.toValue(stringValue);
-            if (!this.isValid(flowToken, formField, value, formData)) {
+            String cleanValue = this.toValue(value);
+            if (!this.isValid(flowToken, formField, cleanValue, formData)) {
                 ex.addFieldError(fieldName, formField.getErrorMessage());
                 return;
             }
