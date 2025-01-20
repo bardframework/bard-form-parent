@@ -23,7 +23,7 @@ public class SingleSelectFieldTemplate extends InputFieldTemplateAbstract<Single
     @Override
     public void fill(FormTemplate formTemplate, SingleSelectField field, Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception {
         super.fill(formTemplate, field, values, args, locale);
-        field.setOptions(optionDataSource.getOptions(args, locale));
+        field.setOptions(optionDataSource.getOptions(values, args, locale));
     }
 
     @Override

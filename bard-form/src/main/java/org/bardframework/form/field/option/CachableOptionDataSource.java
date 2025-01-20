@@ -31,7 +31,7 @@ public abstract class CachableOptionDataSource implements OptionDataSource {
     }
 
     @Override
-    public List<SelectOption> getOptions(Map<String, Object> args, Locale locale) {
+    public List<SelectOption> getOptions(Map<String, Object> values, Map<String, Object> args, Locale locale) {
         List<SelectOption> options = cache.getIfPresent(locale);
         if (null == options) {
             options = this.loadOptions(args, locale);

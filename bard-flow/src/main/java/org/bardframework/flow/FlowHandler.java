@@ -22,7 +22,7 @@ public interface FlowHandler {
     FlowResponse getCurrent(String flowToken, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
             throws Exception;
 
-    default String generateFlowToken() {
+    default String generateFlowToken(Map<String, Object> initValues) {
         return RandomStringUtils.randomAlphanumeric(10, 50);
     }
 }

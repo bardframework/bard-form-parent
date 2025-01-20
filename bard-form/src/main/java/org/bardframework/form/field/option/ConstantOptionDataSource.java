@@ -15,7 +15,7 @@ public class ConstantOptionDataSource implements OptionDataSource {
     }
 
     @Override
-    public List<SelectOption> getOptions(Map<String, Object> args, Locale locale) throws Exception {
+    public List<SelectOption> getOptions(Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception {
         return options;
     }
 }

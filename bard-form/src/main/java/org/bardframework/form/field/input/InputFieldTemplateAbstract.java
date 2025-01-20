@@ -85,7 +85,7 @@ public abstract class InputFieldTemplateAbstract<F extends InputField<T>, T> ext
         }
     }
 
-    private String getErrorMessage(FormTemplate formTemplate, Map<String, Object> formData, Locale locale) {
+    public String getErrorMessage(FormTemplate formTemplate, Map<String, Object> formData, Locale locale) {
         return FormUtils.getFieldStringProperty(formTemplate, this, "errorMessage", locale, formData, this.getDefaultValue().getErrorMessage());
     }
 

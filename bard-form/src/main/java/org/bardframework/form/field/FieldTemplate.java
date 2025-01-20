@@ -2,6 +2,7 @@ package org.bardframework.form.field;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.SneakyThrows;
 import org.bardframework.commons.utils.ReflectionUtils;
 import org.bardframework.form.FormTemplate;
 import org.bardframework.form.FormUtils;
@@ -32,7 +33,8 @@ public abstract class FieldTemplate<F extends Field> {
         this.defaultValue = ReflectionUtils.newInstance(this.fieldClazz);
     }
 
-    public F toField(FormTemplate formTemplate, Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception {
+    @SneakyThrows
+    public F toField(FormTemplate formTemplate, Map<String, Object> values, Map<String, Object> args, Locale locale) {
         F field = this.getEmptyField();
         this.fill(formTemplate, field, values, args, locale);
         return field;

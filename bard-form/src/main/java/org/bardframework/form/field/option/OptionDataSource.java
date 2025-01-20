@@ -9,10 +9,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public interface OptionDataSource {
-    List<SelectOption> getOptions(Map<String, Object> args, Locale locale) throws Exception;
+    List<SelectOption> getOptions(Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception;
 
     @JsonIgnore
-    default List<String> getIds(Map<String, Object> args, Locale locale) throws Exception {
-        return this.getOptions(args, locale).stream().map(SelectOption::getId).collect(Collectors.toList());
+    default List<String> getIds(Map<String, Object> values, Map<String, Object> args, Locale locale) throws Exception {
+        return this.getOptions(values, args, locale).stream().map(SelectOption::getId).collect(Collectors.toList());
     }
 }

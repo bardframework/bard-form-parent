@@ -27,7 +27,7 @@ public abstract class MultiSelectFieldTemplateAbstract<F extends MultiSelectFiel
         super.fill(formTemplate, field, values, args, locale);
         field.setMinCount(FormUtils.getFieldIntegerProperty(formTemplate, this, "minCount", locale, args, this.getDefaultValue().getMinCount()));
         field.setMaxCount(FormUtils.getFieldIntegerProperty(formTemplate, this, "maxCount", locale, args, this.getDefaultValue().getMaxCount()));
-        field.setOptions(null == this.getOptionDataSource() ? List.of() : this.getOptionDataSource().getOptions(args, locale));
+        field.setOptions(null == this.getOptionDataSource() ? List.of() : this.getOptionDataSource().getOptions(values, args, locale));
     }
 
     @Override

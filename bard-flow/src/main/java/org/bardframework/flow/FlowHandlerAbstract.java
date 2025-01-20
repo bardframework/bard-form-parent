@@ -53,7 +53,7 @@ public abstract class FlowHandlerAbstract<D extends FlowData> implements FlowHan
     public FlowResponse start(Map<String, Object> initValues, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
             throws Exception {
         D flowData = ReflectionUtils.newInstance(ReflectionUtils.getGenericArgType(this.getClass(), 0));
-        String flowToken = this.generateFlowToken();
+        String flowToken = this.generateFlowToken(initValues);
         flowData.setLocale(locale);
         flowData.getData().putAll(initValues);
         flowData.setCurrentFormIndex(-1);
