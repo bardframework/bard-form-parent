@@ -47,14 +47,14 @@ public abstract class OtpFieldTemplate<F extends OtpField, O> extends FlowInputF
     protected abstract boolean isValidOtp(String flowToken, String otp, Map<String, Object> flowData) throws Exception;
 
     @PostConstruct
-    void init() {
+    protected void init() {
         if (StringUtils.isNoneBlank(this.getResendAction())) {
-            this.setActionProcessors(Map.of(this.getResendAction(), List.of(new FormProcessorAbstract() {
+            this.getActionProcessors().put(this.getResendAction(), List.of(new FormProcessorAbstract() {
                 @Override
                 public void process(String flowToken, Map<String, Object> flowData, Map<String, Object> formData, Locale locale, HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
                     resend(flowToken, flowData, locale, httpResponse);
                 }
-            })));
+            }));
         }
     }
 

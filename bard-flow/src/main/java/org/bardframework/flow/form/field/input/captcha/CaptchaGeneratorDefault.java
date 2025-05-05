@@ -33,4 +33,12 @@ public class CaptchaGeneratorDefault implements OtpGenerator<GeneratedCaptcha> {
     public Boolean isNumber() {
         return type == CaptchaType.ENGLISH_NUMBER;
     }
+
+    public String getLang() {
+        return switch (this.getType()) {
+            case ARABIC_CHAR, ARABIC_NUMBER_CHAR -> "ar";
+            case PERSIAN_CHAR, PERSIAN_NUMBER_CHAR, PERSIAN_NUMBER_TEXT -> "fa";
+            case ENGLISH_CHAR, ENGLISH_NUMBER_CHAR, ENGLISH_NUMBER -> "en";
+        };
+    }
 }

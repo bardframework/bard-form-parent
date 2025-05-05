@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.ToString;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Base class for the various attribute filters. It can be added to a criteria class as a member, to support the
@@ -72,18 +71,6 @@ public abstract class Filter<T, F> {
         return (F) this;
     }
 
-
-    /**
-     * <p>Setter for the field <code>in</code>.</p>
-     *
-     * @param in a {@link Collection} object.
-     * @return a {@link Filter} object.
-     */
-    @JsonIgnore
-    public F setIn(T... in) {
-        return this.setIn(List.of(in));
-    }
-
     /**
      * <p>Setter for the field <code>notIn</code>.</p>
      *
@@ -95,17 +82,7 @@ public abstract class Filter<T, F> {
         return (F) this;
     }
 
-    /**
-     * <p>Setter for the field <code>notIn</code>.</p>
-     *
-     * @param notIn a {@link Collection} object.
-     * @return a {@link Filter} object.
-     */
     @JsonIgnore
-    public F setNotIn(T... notIn) {
-        return this.setNotIn(List.of(notIn));
-    }
-
     public boolean isEmpty() {
         return null == this.getEquals()
                 && null == this.getNotEquals()
