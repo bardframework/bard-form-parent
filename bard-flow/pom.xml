@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.bardframework.form</groupId>
         <artifactId>bard-form-parent</artifactId>
-        <version>4.1.14</version>
+        <version>4.5.4</version>
     </parent>
 
     <artifactId>bard-flow</artifactId>

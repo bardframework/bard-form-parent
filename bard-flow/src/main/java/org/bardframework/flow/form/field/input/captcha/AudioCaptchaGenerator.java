@@ -5,12 +5,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import javax.sound.sampled.*;
 import java.io.*;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -18,13 +19,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Getter
 @Setter
-@Component
 public class AudioCaptchaGenerator {
 
-    private final Map<String, Map<String, List<byte[]>>> audios = new HashMap<>();
-    private final boolean enabled;
+    protected final Map<String, Map<String, List<byte[]>>> audios = new HashMap<>();
+    protected final boolean enabled;
 
     public AudioCaptchaGenerator(@Value("${captcha.audio.enabled:false}") boolean enabled) throws Exception {
         this.enabled = enabled;
@@ -32,7 +33,12 @@ public class AudioCaptchaGenerator {
             return;
         }
         ClassLoader classLoader = getClass().getClassLoader();
-        File baseDir = new File(classLoader.getResource("audio_captcha").toURI());
+        URL audioCaptchaDir = classLoader.getResource("audio_captcha");
+        if (null == audioCaptchaDir) {
+            log.warn("audio captcha is enabled, but dir is null");
+            return;
+        }
+        File baseDir = new File(audioCaptchaDir.toURI());
         Files.find(baseDir.toPath(), 10, (path, basicFileAttributes) -> path.toFile().isFile())
                 .forEach(path -> {
                     Path relativePath = baseDir.toPath().relativize(path);
@@ -85,7 +91,7 @@ public class AudioCaptchaGenerator {
             }
         }
 
-        AudioInputStream appendedStream = audioStreams.get(0);
+        AudioInputStream appendedStream = audioStreams.getFirst();
         for (int i = 1; i < audioStreams.size(); i++) {
             appendedStream = new AudioInputStream(
                     new SequenceInputStream(appendedStream, audioStreams.get(i)),

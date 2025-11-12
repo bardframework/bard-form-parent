@@ -3,34 +3,34 @@ package org.bardframework.table.header;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import org.bardframework.crud.api.base.BaseModel;
-import org.bardframework.crud.api.base.BaseRepository;
 import org.springframework.context.MessageSource;
 
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+import java.util.function.BiFunction;
 
-public abstract class BaseModelHeaderTemplate<M extends BaseModel<I>, R extends BaseRepository<M, ?, I, U>, I, U> extends HeaderTemplate<M, StringHeader, I> {
+public abstract class BaseModelHeaderTemplate<M extends BaseModel<I>, I, U> extends HeaderTemplate<Object, StringHeader, I> {
     private final Cache<I, M> cache;
-    private final R repository;
+    private final BiFunction<I, U, M> fetchFunction;
 
-    protected BaseModelHeaderTemplate(R repository, long cacheExpirationMs) {
+    protected BaseModelHeaderTemplate(BiFunction<I, U, M> fetchFunction, long cacheExpirationMs) {
+        this.fetchFunction = fetchFunction;
         this.cache = Caffeine.newBuilder()
                 .maximumSize(10000)
                 .expireAfterWrite(cacheExpirationMs, TimeUnit.MILLISECONDS)
                 .build();
-        this.repository = repository;
     }
 
     @Override
-    public Object format(I value, MessageSource messageSource, Locale locale) {
+    public Object format(I id, MessageSource messageSource, Locale locale) {
         U user = this.getUser();
-        M model = cache.getIfPresent(value);
+        M model = cache.getIfPresent(id);
         if (null == model) {
-            model = this.repository.get(value, user);
+            model = fetchFunction.apply(id, user);
             if (null == model) {
                 return null;
             }
-            this.cache.put(value, model);
+            this.cache.put(id, model);
         }
         return this.getTitle(model);
     }
