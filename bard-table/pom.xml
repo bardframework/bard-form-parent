@@ -10,6 +10,7 @@
 
     <artifactId>bard-table</artifactId>
     <packaging>jar</packaging>
+    <name>Bard Framework - Form - Table</name>
 
     <dependencies>
         <dependency>

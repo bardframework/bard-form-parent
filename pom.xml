@@ -12,6 +12,7 @@
     <groupId>org.bardframework.form</groupId>
     <artifactId>bard-form-parent</artifactId>
     <version>4.5.4</version>
+    <name>Bard Framework - Form Parent</name>
 
     <packaging>pom</packaging>
     <modules>

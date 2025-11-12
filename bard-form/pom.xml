@@ -10,6 +10,7 @@
 
     <artifactId>bard-form</artifactId>
     <packaging>jar</packaging>
+    <name>Bard Framework - Form - Form</name>
 
     <dependencies>
         <dependency>

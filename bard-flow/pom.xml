@@ -10,6 +10,7 @@
 
     <artifactId>bard-flow</artifactId>
     <packaging>jar</packaging>
+    <name>Bard Framework - Form - Flow</name>
 
     <dependencies>
         <dependency>

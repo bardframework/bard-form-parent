@@ -10,6 +10,7 @@
 
     <artifactId>bard-flow-redis</artifactId>
     <packaging>jar</packaging>
+    <name>Bard Framework - Form - Redis Flow</name>
 
     <dependencies>
         <dependency>
