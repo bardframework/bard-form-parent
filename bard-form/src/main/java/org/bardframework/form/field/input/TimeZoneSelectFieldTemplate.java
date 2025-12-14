@@ -2,7 +2,6 @@ package org.bardframework.form.field.input;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionLikeType;
-import com.fasterxml.jackson.databind.type.TypeFactory;
 import lombok.SneakyThrows;
 import org.bardframework.commons.web.utils.ResourceUtils;
 import org.bardframework.form.common.Country;
@@ -21,7 +20,7 @@ public class TimeZoneSelectFieldTemplate extends CountrySelectFieldTemplate {
     @SneakyThrows
     protected TimeZoneSelectFieldTemplate(String name) {
         super(name);
-        CollectionLikeType listType = TypeFactory.defaultInstance().constructCollectionLikeType(ArrayList.class, Country.class);
+        CollectionLikeType listType = objectMapper.getTypeFactory().constructCollectionLikeType(ArrayList.class, Country.class);
         List<Country> countries = objectMapper.readValue(ResourceUtils.getResource("classpath:countries.json").getContentAsByteArray(), listType);
         for (Country country : countries) {
             countriesMap.put(country.getAlpha2Code(), country);
