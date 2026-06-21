@@ -13,13 +13,13 @@ import java.util.Map;
 
 @Setter
 @Getter
-public class EnumOptionDataSource extends CachableOptionDataSource {
+public class EnumOptionDataSource<E extends Enum<?>> extends CachableOptionDataSource {
 
-    private final MessageSource messageSource;
-    private final Class<? extends Enum<?>> enumOptionsClass;
-    private String keyPrefix;
+    protected final MessageSource messageSource;
+    protected final Class<? extends E> enumOptionsClass;
+    protected String keyPrefix;
 
-    public EnumOptionDataSource(Class<? extends Enum<?>> enumOptionsClass, MessageSource messageSource) {
+    public EnumOptionDataSource(Class<? extends E> enumOptionsClass, MessageSource messageSource) {
         this.messageSource = messageSource;
         this.enumOptionsClass = enumOptionsClass;
     }
@@ -27,14 +27,27 @@ public class EnumOptionDataSource extends CachableOptionDataSource {
     @Override
     protected List<SelectOption> loadOptions(Map<String, Object> args, Locale locale) {
         List<SelectOption> options = new ArrayList<>();
-        for (Enum<?> anEnum : enumOptionsClass.getEnumConstants()) {
-            String titleMessageKey = this.getMessageKey(anEnum);
-            options.add(new SelectOption(anEnum.toString(), messageSource.getMessage(titleMessageKey, null, titleMessageKey, locale), null));
+        for (E anEnum : enumOptionsClass.getEnumConstants()) {
+            options.add(new SelectOption(this.toId(anEnum, locale), this.toTitle(anEnum, locale), null));
         }
         return options;
     }
 
-    protected String getMessageKey(Enum<?> anEnum) {
+    protected String toId(E anEnum, Locale locale) {
+        return anEnum.toString();
+    }
+
+    protected String toTitle(E anEnum, Locale locale) {
+        String titleMessageKey = this.getMessageKey(anEnum, locale);
+        return messageSource.getMessage(titleMessageKey, null, titleMessageKey, locale);
+    }
+
+
+    protected String toType(E anEnum, Locale locale) {
+        return null;
+    }
+
+    protected String getMessageKey(E anEnum, Locale locale) {
         String prefix;
         if (null == keyPrefix) {
             prefix = anEnum.getClass().getSimpleName() + ".";
