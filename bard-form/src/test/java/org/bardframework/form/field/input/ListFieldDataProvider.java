@@ -1,7 +1,7 @@
 package org.bardframework.form.field.input;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.databind.node.TextNode;
+import tools.jackson.databind.node.ObjectNode;
+import tools.jackson.databind.node.StringNode;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.boot.test.context.TestComponent;
@@ -59,7 +59,7 @@ public class ListFieldDataProvider implements InputFieldDataProvider<ListField, 
         if (null == value) {
             objectNode.remove(property);
         } else {
-            objectNode.putArray(property).addAll(value.stream().map(TextNode::new).collect(Collectors.toList()));
+            objectNode.putArray(property).addAll(value.stream().map(StringNode::new).collect(Collectors.toList()));
         }
     }
 

@@ -1,6 +1,6 @@
 package org.bardframework.form.field.input;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import tools.jackson.databind.node.ObjectNode;
 import org.apache.commons.lang3.RandomUtils;
 import org.bardframework.commons.utils.DateTimeUtils;
 import org.springframework.stereotype.Component;

@@ -94,7 +94,7 @@ Two consequences worth internalising:
 2. **Fallback.** A key without the form name (`field.firstName.title`) applies to every form that
    does not override it, so shared fields are defined once.
 
-Values support `${placeholder}` substitution from the current data map.
+Values support `::placeholder::` substitution from the current data map (`StringTemplateUtils`).
 
 ### Conditional fields
 

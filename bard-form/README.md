@@ -74,8 +74,12 @@ field.mobile.title=شماره موبایل        # applies to "mobile" in every
 
 Two things follow. First, **behaviour is configuration**: `required`, `disable`, `maxLength`,
 `minValue` are read exactly like `title`, so what a form demands can change without a rebuild.
-Second, values support `${placeholder}` substitution from the current data map, so a title can name
-the user or quote a number from an earlier step.
+Second, values support `::placeholder::` substitution from the current data map, so a title can name
+the user or quote a number from an earlier step:
+
+```properties
+form.verify.description=کد به شماره ::mobile:: ارسال شد
+```
 
 With `WildcardReloadableMessageSource` from
 [`common-web`](https://github.com/bardframework/bard-commons) and a non-zero `cacheSeconds`, edits
