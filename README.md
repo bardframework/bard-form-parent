@@ -1,7 +1,7 @@
 Bard Form &amp; Flow
 ==================
 
-[![Maven Central](https://img.shields.io/badge/maven--central-5.3.4-blue.svg)](https://repo1.maven.org/maven2/org/bardframework/form/)
+[![Maven Central](https://img.shields.io/badge/maven--central-6.1.4-blue.svg)](https://repo1.maven.org/maven2/org/bardframework/form/)
 [![License](http://img.shields.io/:license-apache-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 **Server-driven forms and tables, and a flow engine for stateless applications.**
@@ -10,7 +10,7 @@ The server describes a form; the client renders it. The server owns every label,
 rule, every visibility condition and — in a flow — which step comes next. Clients hold no state and
 make no decisions.
 
-`groupId` `org.bardframework.form`, version **5.3.4** (managed by [`bard-bom`](https://github.com/bardframework/bard-bom)).
+`groupId` `org.bardframework.form`, version **6.1.4** (managed by [`bard-bom`](https://github.com/bardframework/bard-bom)).
 
 ## Artifacts
 

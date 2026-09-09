@@ -1,7 +1,7 @@
 bard-table
 ==========
 
-[![Maven Central](https://img.shields.io/badge/maven--central-5.3.4-blue.svg)](https://repo1.maven.org/maven2/org/bardframework/form/bard-table/)
+[![Maven Central](https://img.shields.io/badge/maven--central-6.1.4-blue.svg)](https://repo1.maven.org/maven2/org/bardframework/form/bard-table/)
 [![License](http://img.shields.io/:license-apache-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 The template engine of [`bard-form`](../bard-form), applied to tables. One bean describes an entire
@@ -13,7 +13,7 @@ Part of [**Bard Form &amp; Flow**](../README.md) · [Bard Framework](https://git
 <dependency>
     <groupId>org.bardframework.form</groupId>
     <artifactId>bard-table</artifactId>
-    <version>5.3.4</version>
+    <version>6.1.4</version>
 </dependency>
 ```
 

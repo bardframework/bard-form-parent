@@ -1,7 +1,7 @@
 bard-form-common
 ================
 
-[![Maven Central](https://img.shields.io/badge/maven--central-5.3.4-blue.svg)](https://repo1.maven.org/maven2/org/bardframework/form/bard-form-common/)
+[![Maven Central](https://img.shields.io/badge/maven--central-6.1.4-blue.svg)](https://repo1.maven.org/maven2/org/bardframework/form/bard-form-common/)
 [![License](http://img.shields.io/:license-apache-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 **The wire format.** Plain data classes describing a form, a table, a field and a filter — the
@@ -16,7 +16,7 @@ Part of [**Bard Form &amp; Flow**](../README.md) · [Bard Framework](https://git
 <dependency>
     <groupId>org.bardframework.form</groupId>
     <artifactId>bard-form-common</artifactId>
-    <version>5.3.4</version>
+    <version>6.1.4</version>
 </dependency>
 ```
 
