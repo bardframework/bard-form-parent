@@ -10,7 +10,8 @@ The server describes a form; the client renders it. The server owns every label,
 rule, every visibility condition and — in a flow — which step comes next. Clients hold no state and
 make no decisions.
 
-`groupId` `org.bardframework.form`, version **6.1.4** (managed by [`bard-bom`](https://github.com/bardframework/bard-bom)).
+`groupId` `org.bardframework.form`, version **5.6.4** (managed by [
+`bard-bom`](https://github.com/bardframework/bard-bom)).
 
 ## Artifacts
 

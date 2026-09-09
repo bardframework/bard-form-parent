@@ -17,7 +17,7 @@ Part of [**Bard Form &amp; Flow**](../README.md) · [Bard Framework](https://git
 <dependency>
     <groupId>org.bardframework.form</groupId>
     <artifactId>bard-flow</artifactId>
-    <version>6.1.4</version>
+    <version>5.6.4</version>
 </dependency>
 ```
 
