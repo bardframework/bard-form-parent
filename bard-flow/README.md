@@ -1,7 +1,7 @@
 bard-flow
 =========
 
-[![Maven Central](https://img.shields.io/badge/maven--central-6.1.4-blue.svg)](https://repo1.maven.org/maven2/org/bardframework/form/bard-flow/)
+[![Maven Central](https://img.shields.io/badge/maven--central-5.6.4-blue.svg)](https://repo1.maven.org/maven2/org/bardframework/form/bard-flow/)
 [![License](http://img.shields.io/:license-apache-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 **A flow engine for stateless applications** — multi-step conversations whose state lives on the
